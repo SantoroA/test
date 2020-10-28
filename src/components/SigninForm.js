@@ -7,24 +7,14 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import useToggle from '../hooks/useToggle';
 
-const SignupForm = ({ handleSubmit }) => {
+const SigninForm = ({ handleSubmit }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const [ name, setName ] = useState('');
-	const [ checked, toggleChecked ] = useToggle(false);
 
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
-				<h2>Register here and create an account</h2>
-				<TextField
-					fullWidth
-					required
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-					label="Name"
-					variant="outlined"
-				/>
+				<h2>Already have an account? Log in here</h2>
 				<TextField
 					fullWidth
 					type="email"
@@ -44,20 +34,7 @@ const SignupForm = ({ handleSubmit }) => {
 					label="Password"
 					variant="outlined"
 				/>
-				<TextField
-					fullWidth
-					type="password"
-					required
-					id="confirm-password"
-					label="Confirm Password"
-					variant="outlined"
-				/>
-				<FormGroup>
-					<FormControlLabel
-						control={<Checkbox checked={checked} onChange={toggleChecked} name="checked" color="primary" />}
-						label="I agree..."
-					/>
-				</FormGroup>
+
 				<Button type="submit" variant="contained" color="primary">
 					Register
 				</Button>
@@ -66,4 +43,4 @@ const SignupForm = ({ handleSubmit }) => {
 	);
 };
 
-export default SignupForm;
+export default SigninForm;
