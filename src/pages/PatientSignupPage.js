@@ -16,15 +16,28 @@ const useStyles = makeStyles({
 	  display: 'flex',
 	  alignSelf: 'left',
 	  backgroundColor: '#fff',
+	  justifyContent: 'center',
 	},
 	h1: {
-	  paddingTop: '3em',
+	  marginTop: '3em',
 	  textAlign: 'center',
+	  padding: '2em',
+	  justifyContent: 'center',
 	},
 	img: {
 		width: '8.5em',
 		height: '1.5em',
-		margin: '1em',
+		paddingInlineStart: '1em',
+	},
+	container: {
+		display: 'flex',
+		justifyContent: 'center',
+		marginBottom: '2em',
+		flexDirection: 'column',
+	},
+	text: {
+		marginTop: '0',
+		textAlign: 'center',
 	}
   });
 
@@ -38,10 +51,14 @@ const PatientSignupPage = () => {
 	};
 	return (
 		<div>
-			<Container style={{ alignItems: 'center' }}>
+			<Container className={ classes.container }>
+				<div>
 				<AppBar className={ classes.logo }><img src={logo} alt='Logo' className={ classes.img }></img>
 				</AppBar>
-				<h1 className={ classes.h1 }>Are you a patient?</h1>
+				</div>
+				<div className={ classes.h1 }>
+				<h1>Are you a patient?</h1>
+				</div>
 				<form>
 				<Grid container spacing={4}>
 					<Grid item xs={6} sm={4}>
@@ -51,7 +68,7 @@ const PatientSignupPage = () => {
 						<SigninForm handleSubmit={signin} />
 					</Grid>
 					</Grid>
-					<div style={{ textAlign: 'center' }}>
+					<div className={ classes.text }>
 				<p>Are you a doctor?</p>
 				<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
 				</div>
