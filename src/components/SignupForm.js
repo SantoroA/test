@@ -6,17 +6,43 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import useToggle from '../hooks/useToggle';
+import { Grid } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+	paper: {
+	  marginTop: theme.spacing(4),
+	  display: 'flex',
+	  flexDirection: 'column',
+	  alignItems: 'center',
+	  paddingBottom: '20px',
+	  spacing: '10px',
+	},
+	form: {
+	  width: '100%',
+	  marginTop: theme.spacing(3),
+	  paddingBottom: '20px',
+	},
+	item: {
+	padding: theme.spacing(1, 0),
+	},
+	submit: {
+	  width: '100%',
+	  margin: theme.spacing(3, 0, 2),
+	},
+  }));
 
 const SignupForm = ({ handleSubmit }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ checked, toggleChecked ] = useToggle(false);
+	const classes = useStyles();
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
+		<div className={classes.paper}>
+			<form onSubmit={handleSubmit} className={classes.form}>
 				<h2>Register here and create an account</h2>
+				<Grid className={classes.item}>
 				<TextField
 					fullWidth
 					required
@@ -24,7 +50,8 @@ const SignupForm = ({ handleSubmit }) => {
 					onChange={(e) => setName(e.target.value)}
 					label="Name"
 					variant="outlined"
-				/>
+				/></Grid>
+				<Grid className={classes.item}>
 				<TextField
 					fullWidth
 					type="email"
@@ -33,7 +60,8 @@ const SignupForm = ({ handleSubmit }) => {
 					onChange={(e) => setEmail(e.target.value)}
 					label="Email"
 					variant="outlined"
-				/>
+				/></Grid>
+				<Grid className={classes.item}>
 				<TextField
 					fullWidth
 					required
@@ -43,7 +71,8 @@ const SignupForm = ({ handleSubmit }) => {
 					onChange={(e) => setPassword(e.target.value)}
 					label="Password"
 					variant="outlined"
-				/>
+				/></Grid>
+				<Grid className={classes.item}>
 				<TextField
 					fullWidth
 					type="password"
@@ -51,14 +80,14 @@ const SignupForm = ({ handleSubmit }) => {
 					id="confirm-password"
 					label="Confirm Password"
 					variant="outlined"
-				/>
-				<FormGroup>
+				/></Grid>
+				<FormGroup className={ classes.item }>
 					<FormControlLabel
 						control={<Checkbox checked={checked} onChange={toggleChecked} name="checked" color="primary" />}
-						label="I agree..."
+						label="I agree to the General Terms and Privacy Policy"
 					/>
 				</FormGroup>
-				<Button type="submit" variant="contained" color="primary">
+				<Button type="submit" variant="contained" color="primary" className={ classes.submit }>
 					Register
 				</Button>
 			</form>
