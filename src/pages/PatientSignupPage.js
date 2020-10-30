@@ -18,16 +18,29 @@ const useStyles = makeStyles({
 		height: '5%',
 		display: 'flex',
 		alignSelf: 'left',
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		justifyContent: 'center'
 	},
 	h1: {
-		paddingTop: '3em',
-		textAlign: 'center'
+		marginTop: '3em',
+		textAlign: 'center',
+		padding: '2em',
+		justifyContent: 'center'
 	},
 	img: {
 		width: '8.5em',
 		height: '1.5em',
-		margin: '1em'
+		paddingInlineStart: '1em'
+	},
+	container: {
+		display: 'flex',
+		justifyContent: 'center',
+		marginBottom: '2em',
+		flexDirection: 'column'
+	},
+	text: {
+		marginTop: '0',
+		textAlign: 'center'
 	}
 });
 
@@ -46,24 +59,27 @@ const PatientSignupPage = () => {
 
 	return (
 		<div>
-			<Container style={{ alignItems: 'center' }}>
-				<AppBar className={classes.logo}>
-					<img src={logo} alt="Logo" className={classes.img} />
-				</AppBar>
-				<h1 className={classes.h1}>Are you a patient?</h1>
+			<Container className={classes.container}>
 				<div>
-					<Grid container spacing={4}>
-						<Grid item xs={6} sm={4}>
-							<SignupForm handleSubmit={signup} />
-						</Grid>
-						<Grid item xs={6} sm={4}>
-							<SigninForm handleSubmit={signin} toggleDialogOpen={toggleDialogOpen} />
-						</Grid>
+					<AppBar className={classes.logo}>
+						<img src={logo} alt="Logo" className={classes.img} />
+					</AppBar>
+				</div>
+				<div className={classes.h1}>
+					<h1>Are you a patient?</h1>
+				</div>
+
+				<Grid container spacing={4}>
+					<Grid item xs={6} sm={4}>
+						<SignupForm handleSubmit={signup} />
 					</Grid>
-					<div style={{ textAlign: 'center' }}>
-						<p>Are you a doctor?</p>
-						<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
-					</div>
+					<Grid item xs={6} sm={4}>
+						<SigninForm handleSubmit={signin} />
+					</Grid>
+				</Grid>
+				<div className={classes.text}>
+					<p>Are you a doctor?</p>
+					<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
 				</div>
 				<RecoverPassDialog
 					recoverPassword={recoverPassword}
