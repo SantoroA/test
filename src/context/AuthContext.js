@@ -1,6 +1,6 @@
 import createDataContext from './createDataContext';
 import dianurseApi from '../api/dianurseApi';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 const authReducer = (state, action) => {
 	switch (action.type) {
@@ -17,16 +17,18 @@ const authReducer = (state, action) => {
 	}
 };
 
-const tryLocalSignin = (dispatch) => async () => {
-	const token = await localStorage.getItem('token');
-	const history = useHistory();
-	if (token) {
-		dispatch({ type: 'signin', payload: token });
-	} else {
-		history.push('/');
-		console.log('you must sign in ');
-	}
-};
+//only if the token lasts for a while:
+
+// const tryLocalSignin = (dispatch) => async () => {
+// 	const token = await localStorage.getItem('token');
+// 	const history = useHistory();
+// 	if (token) {
+// 		dispatch({ type: 'signin', payload: token });
+// 	} else {
+// 		history.push('/');
+// 		console.log('you must sign in ');
+// 	}
+// };
 
 const clearErrorMessage = (dispatch) => () => {
 	dispatch({ type: 'clear_error_message' });
@@ -35,7 +37,7 @@ const clearErrorMessage = (dispatch) => () => {
 const signup = (dispatch) => {
 	return async ({ name, email, password }) => {
 		try {
-			const response = await dianurseApi.post('/signup', {
+			const response = await dianurseApi.post('/account/register', {
 				name,
 				email,
 				password
@@ -64,6 +66,17 @@ const signin = (dispatch) => async ({ email, password }) => {
 	}
 };
 
+const recoverPassword = (dispatch) => async ({ email }) => {
+	try {
+		await dianurseApi.post('/account/passwordrecovery');
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
 const signout = (dispatch) => async () => {
 	await localStorage.removeItem('token');
 	dispatch({ type: 'signout' });
@@ -71,6 +84,6 @@ const signout = (dispatch) => async () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signin, signout, signup, clearErrorMessage, tryLocalSignin },
+	{ signin, signout, signup, clearErrorMessage },
 	{ token: null, errorMessage: '' }
 );
