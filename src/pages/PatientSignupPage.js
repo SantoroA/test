@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import logo from '../assets/dianurse-logo.png';
 import AppBar from '@material-ui/core/AppBar';
 import RecoverPassDialog from '../components/RecoverPassDialog';
+import MessageDialog from '../components/MessageDialog';
 
 const useStyles = makeStyles({
 	logo: {
@@ -45,15 +46,21 @@ const useStyles = makeStyles({
 });
 
 const PatientSignupPage = () => {
-	const [ dialogOpen, toggleDialogOpen ] = useToggle(false);
+	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
+	const [ messageDialogOpen, toggleMessageDialogOpen ] = useToggle(false);
+	const [ dialogSuccessMessage, setDialogSuccessMessage ] = useState(null);
 	const { state, signup, signin, clearErrorMessage } = useContext(AuthContext);
 	const classes = useStyles();
 
-	const recoverPassword = async ({ email }) => {
+	const recoverPassword = async (email) => {
 		try {
-			await dianurseApi.post('/account/passwordrecovery');
+			const response = await dianurseApi.post('/account/passwordrecovery', { email });
+			setDialogSuccessMessage(response.data);
+			toggleMessageDialogOpen();
 		} catch (err) {
-			console.log(err.message);
+			//TODO: change success message accordind to status code
+			setDialogSuccessMessage(err.message);
+			toggleMessageDialogOpen();
 		}
 	};
 
@@ -74,7 +81,7 @@ const PatientSignupPage = () => {
 						<SignupForm handleSubmit={signup} />
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<SigninForm handleSubmit={signin} toggleDialogOpen={toggleDialogOpen} />
+						<SigninForm handleSubmit={signin} togglePasswordRecoveryOpen={togglePasswordRecoveryOpen} />
 					</Grid>
 				</Grid>
 				<div className={classes.text}>
@@ -83,8 +90,13 @@ const PatientSignupPage = () => {
 				</div>
 				<RecoverPassDialog
 					recoverPassword={recoverPassword}
-					toggleDialogOpen={toggleDialogOpen}
-					dialogOpen={dialogOpen}
+					togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+					passwordRecoveryOpen={passwordRecoveryOpen}
+				/>
+				<MessageDialog
+					messageDialogOpen={messageDialogOpen}
+					toggleMessageDialogOpen={toggleMessageDialogOpen}
+					dialogSuccessMessage={dialogSuccessMessage}
 				/>
 			</Container>
 		</div>
