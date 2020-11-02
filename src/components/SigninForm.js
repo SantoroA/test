@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SigninForm = ({ handleSubmit, toggleDialogOpen }) => {
+const SigninForm = ({ handleSubmit, togglePasswordRecoveryOpen }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
@@ -58,7 +58,7 @@ const SigninForm = ({ handleSubmit, toggleDialogOpen }) => {
 						variant="outlined"
 					/>
 				</Grid>
-				<Button variant="outlined" color="primary" onClick={toggleDialogOpen}>
+				<Button variant="outlined" color="primary" onClick={togglePasswordRecoveryOpen}>
 					Forgot your password?
 				</Button>
 				<Button type="submit" variant="contained" color="primary" className={classes.submit}>

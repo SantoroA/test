@@ -7,27 +7,38 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const RecoverPassDialog = ({ toggleDialogOpen, dialogOpen, RecoverPassword }) => {
+const RecoverPassDialog = ({ passwordRecoveryOpen, togglePasswordRecoveryOpen, recoverPassword }) => {
 	const [ email, setEmail ] = useState('');
 	return (
 		<div>
-			<Dialog open={dialogOpen} onClose={toggleDialogOpen} aria-labelledby="form-dialog-title">
+			<Dialog
+				open={passwordRecoveryOpen}
+				onClose={togglePasswordRecoveryOpen}
+				aria-labelledby="form-dialog-title"
+			>
 				<DialogTitle id="form-dialog-title">Recover Password</DialogTitle>
 				<DialogContent>
-					<DialogContentText value={email} onChange={(e) => setEmail(e.target.value)}>
-						Type in your email and we will send a password recovery email
-					</DialogContentText>
-					<TextField autoFocus margin="dense" id="name" label="Email Address" type="email" fullWidth />
+					<DialogContentText>Type in your email and we will send a password recovery email</DialogContentText>
+					<TextField
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						required
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Email Address"
+						type="email"
+						fullWidth
+					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={toggleDialogOpen} color="primary">
+					<Button onClick={togglePasswordRecoveryOpen} color="primary">
 						Cancel
 					</Button>
 					<Button
 						onClick={() => {
-							console.log('clicked');
-							toggleDialogOpen();
-							RecoverPassword({ email });
+							togglePasswordRecoveryOpen();
+							recoverPassword(email);
 						}}
 						color="primary"
 					>

@@ -42,6 +42,10 @@ const signup = (dispatch) => {
 				email,
 				password
 			});
+
+			//TODO: encript decript sensitive data
+			//save userID in local storage and say whether you are a doctor or not (amIHCP)
+
 			await localStorage.setItem('token', response.data.token);
 			dispatch({ type: 'signin', payload: response.data.token });
 		} catch (err) {

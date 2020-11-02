@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-	baseURL: 'https://api.thepowow.tech/dianurse/v1'
+	baseURL: 'https://cors-anywhere.herokuapp.com/https://api.thepowow.tech/dianurse/v1'
 });
 
 // instance.interceptors.request.use(
