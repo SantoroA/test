@@ -66,17 +66,6 @@ const signin = (dispatch) => async ({ email, password }) => {
 	}
 };
 
-const recoverPassword = (dispatch) => async ({ email }) => {
-	try {
-		await dianurseApi.post('/account/passwordrecovery');
-	} catch (err) {
-		dispatch({
-			type: 'add_error',
-			payload: err.message
-		});
-	}
-};
-
 const signout = (dispatch) => async () => {
 	await localStorage.removeItem('token');
 	dispatch({ type: 'signout' });

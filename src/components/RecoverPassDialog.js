@@ -25,6 +25,7 @@ const RecoverPassDialog = ({ toggleDialogOpen, dialogOpen, RecoverPassword }) =>
 					</Button>
 					<Button
 						onClick={() => {
+							console.log('clicked');
 							toggleDialogOpen();
 							RecoverPassword({ email });
 						}}
