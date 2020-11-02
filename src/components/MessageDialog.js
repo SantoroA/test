@@ -6,26 +6,21 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function MessageDialog({ messageDialogOpen, toggleMessageDialogOpen, dialogSuccessMessage }) {
+export default function MessageDialog({ dialogMessage, dialogOpen, closeDialog }) {
 	return (
 		<div>
 			<Dialog
-				open={messageDialogOpen}
-				onClose={toggleMessageDialogOpen}
+				open={dialogOpen}
+				onClose={closeDialog}
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle id="alert-dialog-title">{dialogSuccessMessage}</DialogTitle>
-				{/* <DialogContent>
-					<DialogContentText id="alert-dialog-description">{dialogSuccessMessage}</DialogContentText>
-				</DialogContent> */}
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">{dialogMessage}</DialogContentText>
+				</DialogContent>
 				<DialogActions>
-					<Button
-						//TODO: redirect to email.
-						onClick={toggleMessageDialogOpen}
-						color="primary"
-					>
-						Go to email
+					<Button onClick={closeDialog} color="primary">
+						Close
 					</Button>
 				</DialogActions>
 			</Dialog>

@@ -1,9 +1,12 @@
 import createDataContext from './createDataContext';
 import dianurseApi from '../api/dianurseApi';
-// import { useHistory } from 'react-router-dom';
 
 const authReducer = (state, action) => {
 	switch (action.type) {
+		case 'set_dialog_message':
+			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
+		case 'close_dialog':
+			return { ...state, dialogMessage: '', messageDialogOpen: false };
 		case 'signin':
 			return { token: action.payload, errorMessage: '' };
 		case 'add_error':
@@ -35,21 +38,22 @@ const clearErrorMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => {
-	return async ({ name, email, password }) => {
+	return async ({ email, password }) => {
 		try {
 			const response = await dianurseApi.post('/account/register', {
-				name,
 				email,
 				password
 			});
+
 			console.log(response);
 
 			//TODO: encript decript sensitive data
 			//save userID in local storage and say whether you are a doctor or not (amIHCP)
 
 			// await localStorage.setItem('token', response.data.token);
-			// dispatch({ type: 'signin', payload: response.data.token });
+			dispatch({ type: 'set_dialog_message', payload: response.data });
 		} catch (err) {
+			console.log(err.message);
 			dispatch({ type: 'add_error', payload: err.message });
 		}
 	};
@@ -76,8 +80,25 @@ const signout = (dispatch) => async () => {
 	dispatch({ type: 'signout' });
 };
 
+const recoverPassword = (dispatch) => async ({ email }) => {
+	console.log('inside auth context');
+	try {
+		const response = await dianurseApi.post('/account/passwordrecovery', { email });
+		dispatch({ type: 'set_dialog_message', payload: response.data });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+const closeDialog = (dispatch) => () => {
+	dispatch({ type: 'close_dialog' });
+};
+
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signin, signout, signup, clearErrorMessage },
-	{ token: null, errorMessage: '' }
+	{ signin, signout, signup, clearErrorMessage, recoverPassword, closeDialog },
+	{ token: null, errorMessage: '', dialogMessage: '', messageDialogOpen: false }
 );
