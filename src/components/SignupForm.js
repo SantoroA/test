@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import useToggle from '../hooks/useToggle';
 import { Grid } from '@material-ui/core';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -34,13 +35,26 @@ const useStyles = makeStyles((theme) => ({
 const SignupForm = ({ handleSubmit }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const [ confirmPassword, setConfirmPassword ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
 
+	useEffect(
+		() => {
+			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+				if (value !== password) {
+					return false;
+				}
+				return true;
+			});
+		},
+		[ password ]
+	);
+
 	return (
 		<div className={classes.paper}>
-			<form onSubmit={handleSubmit} className={classes.form}>
+			<ValidatorForm onSubmit={handleSubmit} className={classes.form}>
 				<h2>Register here and create an account</h2>
 				<Grid className={classes.item}>
 					<TextField
@@ -64,37 +78,49 @@ const SignupForm = ({ handleSubmit }) => {
 					/>
 				</Grid>
 				<Grid className={classes.item}>
-					<TextField
-						fullWidth
-						required
-						type="password"
-						id="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+					<TextValidator
 						label="Password"
+						required
+						fullWidth
 						variant="outlined"
+						onChange={(e) => setPassword(e.target.value)}
+						type="password"
+						validators={[ 'required' ]}
+						value={password}
 					/>
 				</Grid>
 				<Grid className={classes.item}>
-					<TextField
-						fullWidth
-						type="password"
+					<TextValidator
+						label="Repeat password"
 						required
-						id="confirm-password"
-						label="Confirm Password"
+						fullWidth
+						onChange={(e) => setConfirmPassword(e.target.value)}
+						name="repeatPassword"
+						type="password"
+						validators={[ 'isPasswordMatch', 'required' ]}
+						errorMessages={[ 'password mismatch', 'this field is required' ]}
+						value={confirmPassword}
 						variant="outlined"
 					/>
 				</Grid>
 				<div className={classes.item}>
 					<FormControlLabel
-						control={<Checkbox checked={checked} onChange={toggleChecked} name="checked" color="primary" />}
+						control={
+							<Checkbox
+								checked={checked}
+								required
+								onChange={toggleChecked}
+								name="checked"
+								color="primary"
+							/>
+						}
 						label="I agree to the General Terms and Privacy Policy"
 					/>
 				</div>
 				<Button type="submit" variant="contained" color="primary" className={classes.submit}>
 					Register
 				</Button>
-			</form>
+			</ValidatorForm>
 		</div>
 	);
 };

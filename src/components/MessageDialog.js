@@ -21,7 +21,7 @@ export default function MessageDialog({ messageDialogOpen, toggleMessageDialogOp
 				</DialogContent> */}
 				<DialogActions>
 					<Button
-						//TODO: redirect to email
+						//TODO: redirect to email.
 						onClick={toggleMessageDialogOpen}
 						color="primary"
 					>
