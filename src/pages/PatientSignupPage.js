@@ -74,7 +74,7 @@ const PatientSignupPage = () => {
 						<SignupForm handleSubmit={signup} />
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<SigninForm handleSubmit={signin} />
+						<SigninForm handleSubmit={signin} toggleDialogOpen={toggleDialogOpen} />
 					</Grid>
 				</Grid>
 				<div className={classes.text}>

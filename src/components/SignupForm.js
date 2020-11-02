@@ -18,15 +18,9 @@ const useStyles = makeStyles((theme) => ({
 		spacing: '10px'
 	},
 	form: {
-<<<<<<< HEAD
 		width: '100%',
-		marginTop: theme.spacing(3),
-		paddingBottom: '20px'
-=======
-	  width: '100%',
-	  marginTop: theme.spacing(4),
-	  justifyContent: 'center',
->>>>>>> b889cfc561619043d39328b3a28e09694a12c445
+		marginTop: theme.spacing(4),
+		justifyContent: 'center'
 	},
 	item: {
 		padding: theme.spacing(1, 0)
