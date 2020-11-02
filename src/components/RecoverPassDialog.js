@@ -38,7 +38,7 @@ const RecoverPassDialog = ({ passwordRecoveryOpen, togglePasswordRecoveryOpen, r
 					<Button
 						onClick={() => {
 							togglePasswordRecoveryOpen();
-							recoverPassword(email);
+							recoverPassword({ email });
 						}}
 						color="primary"
 					>

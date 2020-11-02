@@ -54,7 +54,7 @@ const SignupForm = ({ handleSubmit }) => {
 
 	return (
 		<div className={classes.paper}>
-			<ValidatorForm onSubmit={handleSubmit} className={classes.form}>
+			<ValidatorForm onSubmit={() => handleSubmit({ email, password })} className={classes.form}>
 				<h2>Register here and create an account</h2>
 				<Grid className={classes.item}>
 					<TextField

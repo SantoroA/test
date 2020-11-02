@@ -47,22 +47,8 @@ const useStyles = makeStyles({
 
 const PatientSignupPage = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const [ messageDialogOpen, toggleMessageDialogOpen ] = useToggle(false);
-	const [ dialogSuccessMessage, setDialogSuccessMessage ] = useState(null);
-	const { state, signup, signin, clearErrorMessage } = useContext(AuthContext);
+	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
 	const classes = useStyles();
-
-	const recoverPassword = async (email) => {
-		try {
-			const response = await dianurseApi.post('/account/passwordrecovery', { email });
-			setDialogSuccessMessage(response.data);
-			toggleMessageDialogOpen();
-		} catch (err) {
-			//TODO: change success message accordind to status code
-			setDialogSuccessMessage(err.message);
-			toggleMessageDialogOpen();
-		}
-	};
 
 	return (
 		<div>
@@ -94,9 +80,9 @@ const PatientSignupPage = () => {
 					passwordRecoveryOpen={passwordRecoveryOpen}
 				/>
 				<MessageDialog
-					messageDialogOpen={messageDialogOpen}
-					toggleMessageDialogOpen={toggleMessageDialogOpen}
-					dialogSuccessMessage={dialogSuccessMessage}
+					dialogMessage={state.dialogMessage}
+					closeDialog={closeDialog}
+					dialogOpen={state.messageDialogOpen}
 				/>
 			</Container>
 		</div>
