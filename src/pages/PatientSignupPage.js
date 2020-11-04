@@ -42,6 +42,9 @@ const useStyles = makeStyles({
 	text: {
 		marginTop: '0',
 		textAlign: 'center'
+	},
+	forms: {
+		justifyContent: 'center'
 	}
 });
 
@@ -62,18 +65,22 @@ const PatientSignupPage = () => {
 					<h1>Are you a patient?</h1>
 				</div>
 
-				<Grid container spacing={4}>
+				<Grid className={classes.forms} container spacing={4}>
 					<Grid item xs={6} sm={4}>
 						<SignupForm handleSubmit={signup} />
 					</Grid>
 					<Grid item xs={6} sm={4}>
-						<SigninForm handleSubmit={signin} togglePasswordRecoveryOpen={togglePasswordRecoveryOpen} />
+						<SigninForm
+							handleSubmit={signin}
+							errorMessage={state.errorMessage}
+							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+						/>
+						<div className={classes.text}>
+							<p>Are you a doctor?</p>
+							<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
+						</div>
 					</Grid>
 				</Grid>
-				<div className={classes.text}>
-					<p>Are you a doctor?</p>
-					<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
-				</div>
 				<RecoverPassDialog
 					recoverPassword={recoverPassword}
 					togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
