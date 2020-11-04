@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,14 +7,15 @@ import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
-		marginTop: theme.spacing(4),
+		padding: theme.spacing(4),
 		display: 'flex',
+		flexWrap: 'wrap',
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
 	form: {
 		width: '100%',
-		marginTop: theme.spacing(4),
+
 		justifyContent: 'center'
 	},
 	item: {
@@ -26,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SigninForm = ({ handleSubmit, togglePasswordRecoveryOpen }) => {
+const SigninForm = ({ handleSubmit, errorMessage, togglePasswordRecoveryOpen }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
 
 	return (
-		<div className={classes.paper}>
+		<Paper elevation={3} className={classes.paper}>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -67,11 +68,12 @@ const SigninForm = ({ handleSubmit, togglePasswordRecoveryOpen }) => {
 				<Button variant="outlined" color="primary" onClick={togglePasswordRecoveryOpen}>
 					Forgot your password?
 				</Button>
+				{errorMessage && <p>{errorMessage}</p>}
 				<Button type="submit" variant="contained" color="primary" className={classes.submit}>
 					Log In
 				</Button>
 			</form>
-		</div>
+		</Paper>
 	);
 };
 

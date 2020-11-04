@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
+import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
@@ -11,12 +12,11 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
-		marginTop: theme.spacing(4),
+		padding: theme.spacing(4),
 		display: 'flex',
+		flexWrap: 'wrap',
 		flexDirection: 'column',
-		alignItems: 'center',
-		paddingBottom: '20px',
-		spacing: '10px'
+		alignItems: 'center'
 	},
 	form: {
 		width: '100%',
@@ -53,7 +53,7 @@ const SignupForm = ({ handleSubmit }) => {
 	);
 
 	return (
-		<div className={classes.paper}>
+		<Paper elevation={3} className={classes.paper}>
 			<ValidatorForm onSubmit={() => handleSubmit({ email, password })} className={classes.form}>
 				<h2>Register here and create an account</h2>
 				<Grid className={classes.item}>
@@ -121,7 +121,7 @@ const SignupForm = ({ handleSubmit }) => {
 					Register
 				</Button>
 			</ValidatorForm>
-		</div>
+		</Paper>
 	);
 };
 
