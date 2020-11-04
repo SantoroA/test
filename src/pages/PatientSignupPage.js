@@ -66,19 +66,17 @@ const PatientSignupPage = () => {
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>
-					<Grid item xs={6} sm={4}>
+					<Grid item xs={6} md={4}>
 						<SignupForm handleSubmit={signup} />
 					</Grid>
-					<Grid item xs={6} sm={4}>
+					<Grid item xs={6} md={4}>
 						<SigninForm
 							handleSubmit={signin}
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+							switchProfileText="Go to Doctor Pofile"
+							switchProfilePath="/doctorsignup"
 						/>
-						<div className={classes.text}>
-							<p>Are you a doctor?</p>
-							<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
-						</div>
 					</Grid>
 				</Grid>
 				<RecoverPassDialog
