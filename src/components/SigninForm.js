@@ -33,7 +33,13 @@ const SigninForm = ({ handleSubmit, togglePasswordRecoveryOpen }) => {
 
 	return (
 		<div className={classes.paper}>
-			<form onSubmit={handleSubmit} className={classes.form}>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					handleSubmit({ email, password });
+				}}
+				className={classes.form}
+			>
 				<h2>Already have an account? Log in here</h2>
 				<Grid className={classes.item}>
 					<TextField
