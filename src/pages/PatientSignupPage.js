@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import useToggle from '../hooks/useToggle';
+import Navbar from '../components/Navbar';
 import dianurseApi from '../api/dianurseApi';
 import { Link } from 'react-router-dom';
 import SignupForm from '../components/SignupForm';
@@ -14,35 +15,20 @@ import RecoverPassDialog from '../components/RecoverPassDialog';
 import MessageDialog from '../components/MessageDialog';
 
 const useStyles = makeStyles({
-	logo: {
-		maxWidth: '100%',
-		height: '5%',
-		display: 'flex',
-		alignSelf: 'left',
-		backgroundColor: '#fff',
-		justifyContent: 'center'
-	},
 	h1: {
 		marginTop: '3em',
 		textAlign: 'center',
 		padding: '2em',
 		justifyContent: 'center'
 	},
-	img: {
-		width: '8.5em',
-		height: '1.5em',
-		paddingInlineStart: '1em'
-	},
+
 	container: {
 		display: 'flex',
 		justifyContent: 'center',
 		marginBottom: '2em',
 		flexDirection: 'column'
 	},
-	text: {
-		marginTop: '0',
-		textAlign: 'center'
-	},
+
 	forms: {
 		justifyContent: 'center'
 	}
@@ -53,32 +39,36 @@ const PatientSignupPage = () => {
 	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
 	const classes = useStyles();
 
+	useEffect(() => {
+		clearErrorMessage();
+		return clearErrorMessage();
+	}, []);
+
 	return (
 		<div>
+			<Navbar />
 			<Container className={classes.container}>
-				<div>
+				{/* <div>
 					<AppBar className={classes.logo}>
 						<img src={logo} alt="Logo" className={classes.img} />
 					</AppBar>
-				</div>
+				</div> */}
 				<div className={classes.h1}>
 					<h1>Are you a patient?</h1>
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>
-					<Grid item xs={6} sm={4}>
+					<Grid item xs={6} md={4}>
 						<SignupForm handleSubmit={signup} />
 					</Grid>
-					<Grid item xs={6} sm={4}>
+					<Grid item xs={6} md={4}>
 						<SigninForm
 							handleSubmit={signin}
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+							switchProfileText="Go to Doctor Pofile"
+							switchProfilePath="/doctorsignup"
 						/>
-						<div className={classes.text}>
-							<p>Are you a doctor?</p>
-							<Link to={'/doctorsignup'}>Go to Doctor Profile</Link>
-						</div>
 					</Grid>
 				</Grid>
 				<RecoverPassDialog

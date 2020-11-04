@@ -59,22 +59,24 @@ const signup = (dispatch) => {
 	};
 };
 
-const signin = (dispatch) => async ({ email, password }) => {
-	// console.log('inside signin auth context');
-	try {
-		const response = await dianurseApi.post('/account/login', {
-			email,
-			password
-		});
-		console.log(response);
-		await localStorage.setItem('token', response.data.token);
-		dispatch({ type: 'signin', payload: response.data.token });
-	} catch (err) {
-		dispatch({
-			type: 'add_error',
-			payload: err.message
-		});
-	}
+const signin = (dispatch) => {
+	return async ({ email, password }) => {
+		// console.log('inside signin auth context');
+		try {
+			const response = await dianurseApi.post('/account/login', {
+				email,
+				password
+			});
+			console.log(response);
+			// await localStorage.setItem('token', response.data.token);
+			// dispatch({ type: 'signin', payload: response.data.token });
+		} catch (err) {
+			dispatch({
+				type: 'add_error',
+				payload: err.message
+			});
+		}
+	};
 };
 
 const signout = (dispatch) => async () => {
