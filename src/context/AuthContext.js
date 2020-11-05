@@ -67,9 +67,15 @@ const signin = (dispatch) => {
 				email,
 				password
 			});
-			console.log(response);
-			// await localStorage.setItem('token', response.data.token);
-			// dispatch({ type: 'signin', payload: response.data.token });
+			// console.log(response);
+			const user = {
+				amIHCP: response.data.amIHCP,
+				token: response.data.token,
+				userId: response.data.userId
+			};
+			// console.log(user);
+			await localStorage.setItem('user', JSON.stringify(user));
+			dispatch({ type: 'signin', payload: response.data.token });
 		} catch (err) {
 			dispatch({
 				type: 'add_error',

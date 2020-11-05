@@ -34,7 +34,7 @@ export default function ButtonAppBar() {
 			<AppBar className={classes.navbar} position="static">
 				<Toolbar className={classes.toolbar}>
 					<img src={logo} alt="Logo" className={classes.img} />
-					<Button color="black">Login</Button>
+					<Button color="primary">Login</Button>
 				</Toolbar>
 			</AppBar>
 		</div>
