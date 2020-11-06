@@ -8,7 +8,7 @@ const authReducer = (state, action) => {
 		case 'close_dialog':
 			return { ...state, dialogMessage: '', messageDialogOpen: false };
 		case 'signin':
-			return { token: action.payload, errorMessage: '' };
+			return { ...state, token: action.payload, errorMessage: '' };
 		case 'add_error':
 			return { ...state, errorMessage: action.payload };
 		case 'clear_error_message':
@@ -67,7 +67,7 @@ const signin = (dispatch) => {
 				email,
 				password
 			});
-			// console.log(response);
+			console.log(response);
 			const user = {
 				amIHCP: response.data.amIHCP,
 				token: response.data.token,
