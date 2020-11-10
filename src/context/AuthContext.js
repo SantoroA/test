@@ -10,7 +10,7 @@ const authReducer = (state, action) => {
 		case 'signin':
 			return { ...state, token: action.payload, errorMessage: '' };
 		case 'add_error':
-			return { ...state, errorMessage: action.payload };
+			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
 		case 'clear_error_message':
 			return { ...state, errorMessage: '' };
 		case 'signout':
@@ -44,8 +44,8 @@ const signup = (dispatch) => {
 				email,
 				amIHCP,
 				password: 'Teste1234_',
-				'X-DEVICE-TYPE': 'desktop',
-
+				preferredLang: 'en'
+				// 'X-DEVICE-TYPE': 'desktop'
 			});
 
 			console.log(response);
