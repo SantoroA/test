@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SignupForm = ({ handleSubmit }) => {
+const RegisterForm = ({ handleSubmit }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ confirmPassword, setConfirmPassword ] = useState('');
@@ -53,9 +53,9 @@ const SignupForm = ({ handleSubmit }) => {
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
-			<ValidatorForm onSubmit={() => handleSubmit({ email, password })} className={classes.form}>
+			<ValidatorForm onSubmit={() => handleSubmit({ email })} className={classes.form}>
 				<h2>Register here and create an account</h2>
-				<Grid className={classes.item}>
+				{/* <Grid className={classes.item}>
 					<TextField
 						fullWidth
 						required
@@ -64,7 +64,7 @@ const SignupForm = ({ handleSubmit }) => {
 						label="Name"
 						variant="outlined"
 					/>
-				</Grid>
+				</Grid> */}
 				<Grid className={classes.item}>
 					<TextField
 						fullWidth
@@ -76,7 +76,7 @@ const SignupForm = ({ handleSubmit }) => {
 						variant="outlined"
 					/>
 				</Grid>
-				<Grid className={classes.item}>
+				{/* <Grid className={classes.item}>
 					<TextValidator
 						label="Password"
 						required
@@ -101,7 +101,7 @@ const SignupForm = ({ handleSubmit }) => {
 						value={confirmPassword}
 						variant="outlined"
 					/>
-				</Grid>
+				</Grid> */}
 				<div className={classes.item}>
 					<FormControlLabel
 						control={
@@ -124,4 +124,4 @@ const SignupForm = ({ handleSubmit }) => {
 	);
 };
 
-export default SignupForm;
+export default RegisterForm;
