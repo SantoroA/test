@@ -4,6 +4,8 @@ const instance = axios.create({
 	baseURL: 'https://cors-anywhere.herokuapp.com/https://api.thepowow.tech/dianurse/v1'
 });
 
+// TODO: retrieve token from localhost when opening app
+
 // instance.interceptors.request.use(
 // 	async (config) => {
 // 		const token = await localStorage.getItem('token');

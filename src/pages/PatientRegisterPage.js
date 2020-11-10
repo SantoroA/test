@@ -1,16 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import useToggle from '../hooks/useToggle';
 import Navbar from '../components/Navbar';
-import dianurseApi from '../api/dianurseApi';
-import { Link } from 'react-router-dom';
 import RegisterForm from '../components/RegisterForm';
 import SigninForm from '../components/SigninForm';
 import { Context as AuthContext } from '../context/AuthContext';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import logo from '../assets/dianurse-logo.png';
-import AppBar from '@material-ui/core/AppBar';
 import RecoverPassDialog from '../components/RecoverPassDialog';
 import MessageDialog from '../components/MessageDialog';
 
@@ -48,18 +44,13 @@ const PatientRegisterPage = () => {
 		<div>
 			<Navbar />
 			<Container className={classes.container}>
-				{/* <div>
-					<AppBar className={classes.logo}>
-						<img src={logo} alt="Logo" className={classes.img} />
-					</AppBar>
-				</div> */}
 				<div className={classes.h1}>
 					<h1>Are you a patient?</h1>
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>
 					<Grid item xs={6} md={4}>
-						<RegisterForm handleSubmit={signup} />
+						<RegisterForm handleSubmit={signup} amIHCP={false} />
 					</Grid>
 					<Grid item xs={6} md={4}>
 						<SigninForm
@@ -67,7 +58,7 @@ const PatientRegisterPage = () => {
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							switchProfileText="Go to Doctor Pofile"
-							switchProfilePath="/doctorsignup"
+							switchProfilePath="/doctorregister"
 						/>
 					</Grid>
 				</Grid>

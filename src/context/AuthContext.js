@@ -10,7 +10,7 @@ const authReducer = (state, action) => {
 		case 'signin':
 			return { ...state, token: action.payload, errorMessage: '' };
 		case 'add_error':
-			return { ...state, errorMessage: action.payload };
+			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
 		case 'clear_error_message':
 			return { ...state, errorMessage: '' };
 		case 'signout':
@@ -38,12 +38,14 @@ const clearErrorMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => {
-	return async ({ email }) => {
+	return async ({ email, amIHCP }) => {
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
+				amIHCP,
 				password: 'Teste1234_',
-				'X-DEVICE-TYPE': 'desktop'
+				preferredLang: 'en'
+				// 'X-DEVICE-TYPE': 'desktop'
 			});
 
 			console.log(response);
