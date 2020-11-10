@@ -38,12 +38,14 @@ const clearErrorMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => {
-	return async ({ email }) => {
+	return async ({ email, amIHCP }) => {
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
+				amIHCP,
 				password: 'Teste1234_',
-				'X-DEVICE-TYPE': 'desktop'
+				'X-DEVICE-TYPE': 'desktop',
+
 			});
 
 			console.log(response);

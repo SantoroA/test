@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const RegisterForm = ({ handleSubmit }) => {
+const RegisterForm = ({ handleSubmit, amIHCP }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ confirmPassword, setConfirmPassword ] = useState('');
@@ -53,7 +53,7 @@ const RegisterForm = ({ handleSubmit }) => {
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
-			<ValidatorForm onSubmit={() => handleSubmit({ email })} className={classes.form}>
+			<ValidatorForm onSubmit={() => handleSubmit({ email, amIHCP })} className={classes.form}>
 				<h2>Register here and create an account</h2>
 				{/* <Grid className={classes.item}>
 					<TextField

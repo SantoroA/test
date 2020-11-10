@@ -9,8 +9,6 @@ import { Context as AuthContext } from '../context/AuthContext';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import logo from '../assets/dianurse-logo.png';
-import AppBar from '@material-ui/core/AppBar';
 import RecoverPassDialog from '../components/RecoverPassDialog';
 import MessageDialog from '../components/MessageDialog';
 
@@ -59,7 +57,7 @@ const PatientRegisterPage = () => {
 
 				<Grid className={classes.forms} container spacing={4}>
 					<Grid item xs={6} md={4}>
-						<RegisterForm handleSubmit={signup} />
+						<RegisterForm handleSubmit={signup} amIHCP={false} />
 					</Grid>
 					<Grid item xs={6} md={4}>
 						<SigninForm
@@ -67,7 +65,7 @@ const PatientRegisterPage = () => {
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							switchProfileText="Go to Doctor Pofile"
-							switchProfilePath="/doctorsignup"
+							switchProfilePath="/doctorregister"
 						/>
 					</Grid>
 				</Grid>
