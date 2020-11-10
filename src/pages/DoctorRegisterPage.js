@@ -1,10 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import useToggle from '../hooks/useToggle';
-import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import RegisterForm from '../components/RegisterForm';
-import Container from '@material-ui/core/Container';
+import SigninForm from '../components/SigninForm';
 import { Context as AuthContext } from '../context/AuthContext';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import RecoverPassDialog from '../components/RecoverPassDialog';
+import MessageDialog from '../components/MessageDialog';
 
 const useStyles = makeStyles({
 	h1: {
@@ -37,11 +41,36 @@ const DoctorRegisterPage = () => {
 	}, []);
 	return (
 		<div>
-			<Container>
-				<h1>Are you a doctor? Sign up</h1>
-				<RegisterForm handleSubmit={signup} amIHCP={true} />
-				<p>Are you a patient?</p>
-				<Link to={'/'}>Go to Patient Profile</Link>
+			<Navbar />
+			<Container className={classes.container}>
+				<div className={classes.h1}>
+					<h1>Are you a doctor?</h1>
+				</div>
+
+				<Grid className={classes.forms} container spacing={4}>
+					<Grid item xs={6} md={4}>
+						<RegisterForm handleSubmit={signup} amIHCP={true} />
+					</Grid>
+					<Grid item xs={6} md={4}>
+						<SigninForm
+							handleSubmit={signin}
+							errorMessage={state.errorMessage}
+							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+							switchProfileText="Go to Patient Pofile"
+							switchProfilePath="/patientregister"
+						/>
+					</Grid>
+				</Grid>
+				<RecoverPassDialog
+					recoverPassword={recoverPassword}
+					togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+					passwordRecoveryOpen={passwordRecoveryOpen}
+				/>
+				<MessageDialog
+					dialogMessage={state.dialogMessage}
+					closeDialog={closeDialog}
+					dialogOpen={state.messageDialogOpen}
+				/>
 			</Container>
 		</div>
 	);

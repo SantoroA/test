@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import useToggle from '../hooks/useToggle';
 import Navbar from '../components/Navbar';
-import dianurseApi from '../api/dianurseApi';
-import { Link } from 'react-router-dom';
 import RegisterForm from '../components/RegisterForm';
 import SigninForm from '../components/SigninForm';
 import { Context as AuthContext } from '../context/AuthContext';
@@ -46,11 +44,6 @@ const PatientRegisterPage = () => {
 		<div>
 			<Navbar />
 			<Container className={classes.container}>
-				{/* <div>
-					<AppBar className={classes.logo}>
-						<img src={logo} alt="Logo" className={classes.img} />
-					</AppBar>
-				</div> */}
 				<div className={classes.h1}>
 					<h1>Are you a patient?</h1>
 				</div>
