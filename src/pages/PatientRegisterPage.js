@@ -3,7 +3,7 @@ import useToggle from '../hooks/useToggle';
 import Navbar from '../components/Navbar';
 import dianurseApi from '../api/dianurseApi';
 import { Link } from 'react-router-dom';
-import SignupForm from '../components/SignupForm';
+import RegisterForm from '../components/RegisterForm';
 import SigninForm from '../components/SigninForm';
 import { Context as AuthContext } from '../context/AuthContext';
 import Container from '@material-ui/core/Container';
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const PatientSignupPage = () => {
+const PatientRegisterPage = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
 	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
 	const classes = useStyles();
@@ -59,7 +59,7 @@ const PatientSignupPage = () => {
 
 				<Grid className={classes.forms} container spacing={4}>
 					<Grid item xs={6} md={4}>
-						<SignupForm handleSubmit={signup} />
+						<RegisterForm handleSubmit={signup} />
 					</Grid>
 					<Grid item xs={6} md={4}>
 						<SigninForm
@@ -86,4 +86,4 @@ const PatientSignupPage = () => {
 	);
 };
 
-export default PatientSignupPage;
+export default PatientRegisterPage;

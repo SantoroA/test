@@ -38,11 +38,12 @@ const clearErrorMessage = (dispatch) => () => {
 };
 
 const signup = (dispatch) => {
-	return async ({ email, password }) => {
+	return async ({ email }) => {
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
-				password
+				password: 'Teste1234_',
+				'X-DEVICE-TYPE': 'desktop'
 			});
 
 			console.log(response);
@@ -68,6 +69,8 @@ const signin = (dispatch) => {
 				password
 			});
 			console.log(response);
+
+			//TODO: how to encript? (ex: keychain)
 			const user = {
 				amIHCP: response.data.amIHCP,
 				token: response.data.token,
