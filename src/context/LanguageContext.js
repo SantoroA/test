@@ -1,28 +1,28 @@
 import createDataContext from './createDataContext';
 
-let preferredLanguage;
+let navigatorLanguage;
 
 if (navigator.language.includes('bg')) {
-	preferredLanguage = 'bg-BG';
+	navigatorLanguage = 'bg-BG';
 } else {
-	preferredLanguage = 'en-EN';
+	navigatorLanguage = 'en-EN';
 }
 
 const languageReducer = (state, action) => {
 	switch (action.type) {
 		case 'set_language':
-			return { ...state, language: action.payload };
+			return { language: action.payload };
 		default:
-			return state;
+			return { language: navigatorLanguage };
 	}
 };
 
-const changeLanguage = (dispatch) => ({ language }) => {
-	dispatch({ type: 'setLanguage', payload: language });
+const changeLanguage = (dispatch) => (language) => {
+	dispatch({ type: 'set_language', payload: language });
 };
 
 export const { Provider, Context } = createDataContext(
 	languageReducer,
 	{ changeLanguage },
-	{ language: preferredLanguage }
+	{ language: navigatorLanguage }
 );
