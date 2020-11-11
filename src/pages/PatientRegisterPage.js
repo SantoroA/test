@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import RecoverPassDialog from '../components/RecoverPassDialog';
 import MessageDialog from '../components/MessageDialog';
+import { Context as LanguageContext } from '../context/LanguageContext';
 
 const useStyles = makeStyles({
 	h1: {
@@ -30,9 +31,20 @@ const useStyles = makeStyles({
 	}
 });
 
+const translationTest = {
+	'en-EN': {
+		greeting: 'Are you a patient?'
+	},
+	'bg-BG': {
+		greeting: 'Вие сте пациент?'
+	}
+};
+
 const PatientRegisterPage = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
 	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+	const { state: { language } } = useContext(LanguageContext);
+	const { greeting } = translationTest[language];
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -45,7 +57,7 @@ const PatientRegisterPage = () => {
 			<Navbar />
 			<Container className={classes.container}>
 				<div className={classes.h1}>
-					<h1>Are you a patient?</h1>
+					<h1>{greeting}</h1>
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>
@@ -57,7 +69,7 @@ const PatientRegisterPage = () => {
 							handleSubmit={signin}
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
-							switchProfileText="Go to Doctor Pofile"
+							switchProfileText="Doctor"
 							switchProfilePath="/doctorregister"
 						/>
 					</Grid>

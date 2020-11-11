@@ -37,7 +37,6 @@ const RegisterForm = ({ handleSubmit, amIHCP }) => {
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
-	console.log(language);
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
