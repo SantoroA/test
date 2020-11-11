@@ -1,6 +1,12 @@
 import createDataContext from './createDataContext';
 
-const navigatorLanguage = navigator.language;
+let preferredLanguage;
+
+if (navigator.language.includes('bg')) {
+	preferredLanguage = 'bg-BG';
+} else {
+	preferredLanguage = 'en-EN';
+}
 
 const languageReducer = (state, action) => {
 	switch (action.type) {
@@ -18,5 +24,5 @@ const changeLanguage = (dispatch) => ({ language }) => {
 export const { Provider, Context } = createDataContext(
 	languageReducer,
 	{ changeLanguage },
-	{ language: navigatorLanguage }
+	{ language: preferredLanguage }
 );

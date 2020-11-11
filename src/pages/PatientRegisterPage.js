@@ -57,7 +57,7 @@ const PatientRegisterPage = () => {
 							handleSubmit={signin}
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
-							switchProfileText="Go to Doctor Pofile"
+							switchProfileText="Doctor"
 							switchProfilePath="/doctorregister"
 						/>
 					</Grid>

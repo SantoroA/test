@@ -98,10 +98,10 @@ const SigninForm = ({
 				</form>
 			</Paper>
 			<div className={classes.text}>
-				<p> Are you a doctor?</p>
+				<p> Are you a {switchProfileText}?</p>
 				<div>
 					<Link className={classes.link} to={switchProfilePath}>
-						{switchProfileText}
+						Go to {switchProfileText} Profile
 					</Link>
 				</div>
 			</div>
