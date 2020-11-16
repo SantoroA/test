@@ -1,6 +1,5 @@
 import createDataContext from './createDataContext';
 import dianurseApi from '../api/dianurseApi';
-import * as jwtEncrypt from 'jwt-token-encrypt';
 
 const authReducer = (state, action) => {
 	switch (action.type) {
@@ -60,14 +59,15 @@ const signup = (dispatch) => {
 	};
 };
 
-const facebookSignin = (dispatch) => async () => {
-	console.log('clicked');
-	// try {
-	// 	const response = await dianurseApi.post('/account/auth/facebook/callback');
-	// 	console.log(response);
-	// } catch (err) {
-	// 	console.log('error');
-	// }
+const handleFacebookLogin = (dispatch) => async (accessToken) => {
+	console.log(accessToken);
+	try {
+		const response = await dianurseApi.post('/auth/facebook/login', accessToken);
+		console.log(response);
+		dispatch({ type: 'signin', payload: response.data.token });
+	} catch (err) {
+		console.log('error');
+	}
 };
 
 const signin = (dispatch) => {
@@ -86,7 +86,7 @@ const signin = (dispatch) => {
 				userId: response.data.userId
 			};
 			// console.log(user);
-			await localStorage.setItem('user', JSON.stringify(user));
+			// await localStorage.setItem('user', JSON.stringify(user));
 			dispatch({ type: 'signin', payload: response.data.token });
 		} catch (err) {
 			dispatch({
@@ -120,6 +120,6 @@ const closeDialog = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signin, signout, signup, clearErrorMessage, facebookSignin, recoverPassword, closeDialog },
+	{ signin, signout, signup, handleFacebookLogin, clearErrorMessage, recoverPassword, closeDialog },
 	{ token: null, errorMessage: '', dialogMessage: '', messageDialogOpen: false }
 );

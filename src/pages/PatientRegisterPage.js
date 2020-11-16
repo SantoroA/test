@@ -42,7 +42,7 @@ const translationTest = {
 
 const PatientRegisterPage = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog, facebookSignin } = useContext(
+	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog, handleFacebookLogin } = useContext(
 		AuthContext
 	);
 	const { state: { language } } = useContext(LanguageContext);
@@ -64,7 +64,7 @@ const PatientRegisterPage = () => {
 
 				<Grid className={classes.forms} container spacing={4}>
 					<Grid item xs={6} md={4}>
-						<RegisterForm handleSubmit={signup} facebookSignin={facebookSignin} amIHCP={false} />
+						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={6} md={4}>
 						<SigninForm
