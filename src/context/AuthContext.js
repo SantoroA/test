@@ -60,8 +60,9 @@ const register = (dispatch) => {
 	};
 };
 
-const handleFacebookLogin = (dispatch) => async (accessToken) => {
-	console.log(accessToken);
+const handleFacebookLogin = (dispatch) => async (fbResponse) => {
+	console.log(fbResponse);
+	const { accessToken } = fbResponse;
 	try {
 		const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 		console.log(response);
