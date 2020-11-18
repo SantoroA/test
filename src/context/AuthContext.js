@@ -4,19 +4,22 @@ import dianurseApi from '../api/dianurseApi';
 const authReducer = (state, action) => {
 	switch (action.type) {
 		case 'set_dialog_message':
-			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'close_dialog':
-			return { ...state, dialogMessage: '', messageDialogOpen: false };
-		case 'signin_Facebook':
-			return { token: action.payload, errorMessage: '' };
-		case 'signin':
-			return { ...state, token: action.payload, errorMessage: '' };
+			return { ...state, dialogMessage: '', dialogOpen: false };
+		case 'login':
+			return {
+				...state,
+				loginData: action.payload,
+				dialogMessage: '',
+				dialogOpen: false
+			};
 		case 'add_error':
-			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
-		case 'clear_error_message':
-			return { ...state, errorMessage: '' };
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
-			return { token: null, errorMessage: '' };
+			return { loginData: null, dialogMessage: '' };
+		case 'open_dialog':
+			return { ...state, dialogOpen: true };
 		default:
 			return state;
 	}
@@ -24,23 +27,20 @@ const authReducer = (state, action) => {
 
 //only if the token lasts for a while:
 
-// const tryLocalSignin = (dispatch) => async () => {
+// const tryLocallogin = (dispatch) => async () => {
 // 	const token = await localStorage.getItem('token');
 // 	const history = useHistory();
 // 	if (token) {
-// 		dispatch({ type: 'signin', payload: token });
+// 		dispatch({ type: 'login', payload: token });
 // 	} else {
 // 		history.push('/');
 // 		console.log('you must sign in ');
 // 	}
 // };
 
-const clearErrorMessage = (dispatch) => () => {
-	dispatch({ type: 'clear_error_message' });
-};
-
-const signup = (dispatch) => {
+const register = (dispatch) => {
 	return async ({ email, amIHCP, preferredLang }) => {
+		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
@@ -64,14 +64,18 @@ const handleFacebookLogin = (dispatch) => async (accessToken) => {
 	try {
 		const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 		console.log(response);
-		dispatch({ type: 'signin', payload: response.data.token });
+		dispatch({ type: 'login', payload: response.data.token });
 	} catch (err) {
-		console.log('error');
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
 	}
 };
 
-const signin = (dispatch) => {
+const login = (dispatch) => {
 	return async ({ email, password }) => {
+		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/login', {
 				email,
@@ -79,15 +83,15 @@ const signin = (dispatch) => {
 			});
 			console.log(response);
 
-			//TODO: how to encript? (ex: keychain)
+			//TODO: store in COOKIES
 			const user = {
 				amIHCP: response.data.amIHCP,
 				token: response.data.token,
-				userId: response.data.userId
+				userId: response.data.userId,
+				user: response.data.user
 			};
-			// console.log(user);
-			// await localStorage.setItem('user', JSON.stringify(user));
-			dispatch({ type: 'signin', payload: response.data.token });
+
+			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
 				type: 'add_error',
@@ -103,6 +107,7 @@ const signout = (dispatch) => async () => {
 };
 
 const recoverPassword = (dispatch) => async ({ email }) => {
+	dispatch({ type: 'open_dialog' });
 	try {
 		const response = await dianurseApi.post('/account/passwordrecovery', { email });
 		dispatch({ type: 'set_dialog_message', payload: response.data });
@@ -120,6 +125,6 @@ const closeDialog = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signin, signout, signup, handleFacebookLogin, clearErrorMessage, recoverPassword, closeDialog },
-	{ token: null, errorMessage: '', dialogMessage: '', messageDialogOpen: false }
+	{ login, signout, register, handleFacebookLogin, recoverPassword, closeDialog },
+	{ loginData: null, errorMessage: '', dialogMessage: '', dialogOpen: false }
 );

@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import useToggle from '../hooks/useToggle';
 import RegisterForm from './RegisterForm';
-import SigninForm from './SigninForm';
+import LoginForm from './LoginForm';
 import { Context as AuthContext } from '../context/AuthContext';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -29,25 +29,20 @@ const useStyles = makeStyles({
 });
 
 const translationTest = {
-	'en-EN': {
+	en: {
 		greeting: 'Are you a patient?'
 	},
-	'bg-BG': {
+	bg: {
 		greeting: 'Вие сте пациент?'
 	}
 };
 
 const GetStartedPatient = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { state, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+	const { recoverPassword } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
 	const { greeting } = translationTest[language];
 	const classes = useStyles();
-
-	useEffect(() => {
-		clearErrorMessage();
-		return clearErrorMessage();
-	}, []);
 
 	return (
 		<div>
@@ -61,12 +56,10 @@ const GetStartedPatient = () => {
 						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={6} md={4}>
-						<SigninForm
-							handleSubmit={signin}
-							errorMessage={state.errorMessage}
+						<LoginForm
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							switchProfileText="Doctor"
-							switchProfilePath="/doctorregister"
+							switchProfilePath="/getstarted/json?patient=1"
 						/>
 					</Grid>
 				</Grid>
@@ -75,11 +68,7 @@ const GetStartedPatient = () => {
 					togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 					passwordRecoveryOpen={passwordRecoveryOpen}
 				/>
-				<MessageDialog
-					dialogMessage={state.dialogMessage}
-					closeDialog={closeDialog}
-					dialogOpen={state.messageDialogOpen}
-				/>
+				<MessageDialog />
 			</Container>
 		</div>
 	);

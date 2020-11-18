@@ -6,13 +6,13 @@ import GetStartedDoctor from '../components/GetStartedDoctor';
 const queryString = require('query-string');
 
 const GetStartedPage = ({ location }) => {
-	const isPatient = queryString.parse(location.search);
-	console.log(isPatient);
+	const { patient } = queryString.parse(location.search);
+	console.log(patient);
 
 	return (
 		<div>
 			<Navbar />
-			{isPatient === '0' ? <GetStartedPatient /> : <GetStartedDoctor />}
+			{patient === '0' ? <GetStartedPatient /> : <GetStartedDoctor />}
 		</div>
 	);
 };

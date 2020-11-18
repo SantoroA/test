@@ -3,9 +3,9 @@ import createDataContext from './createDataContext';
 let navigatorLanguage;
 
 if (navigator.language.includes('bg')) {
-	navigatorLanguage = 'bg-BG';
+	navigatorLanguage = 'bg';
 } else {
-	navigatorLanguage = 'en-EN';
+	navigatorLanguage = 'en';
 }
 
 const languageReducer = (state, action) => {
