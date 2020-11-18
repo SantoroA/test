@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Context as LanguageContext } from '../context/LanguageContext';
 import logo from '../assets/dianurse-logo.png';
 import { makeStyles } from '@material-ui/core/styles';

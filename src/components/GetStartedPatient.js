@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import useToggle from '../hooks/useToggle';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
@@ -39,7 +39,6 @@ const translationTest = {
 
 const GetStartedPatient = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-
 	const { recoverPassword } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
 	const { greeting } = translationTest[language];
