@@ -6,30 +6,32 @@ import GetStartedPage from './pages/GetStartedPage';
 import HomePage from './pages/HomePage';
 import './App.css';
 
-const App = () => {
-	const { state: { loginData } } = useContext(AuthContext);
-	console.log();
-	if (loginData) {
-		return <HomePage />;
-	} else {
-		return (
-			<Router>
+const Routes = () => {
+	const { state: { isLoggedIn } } = useContext(AuthContext);
+
+	return (
+		<Router>
+			{isLoggedIn ? (
+				<HomePage />
+			) : (
 				<Switch>
 					<Route path="/getstarted/json" exact component={GetStartedPage} />
 					<Route path="/" exact render={() => <h1>Root</h1>} />
 					<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 				</Switch>
-			</Router>
-		);
-	}
+			)}
+		</Router>
+	);
 };
 
-export default () => {
+const App = () => {
 	return (
 		<AuthProvider>
 			<LanguageProvider>
-				<App />
+				<Routes />
 			</LanguageProvider>
 		</AuthProvider>
 	);
 };
+
+export default App;
