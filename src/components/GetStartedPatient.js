@@ -1,63 +1,72 @@
 import React, { useContext, useState, useEffect } from 'react';
 import useToggle from '../hooks/useToggle';
-import Navbar from '../components/Navbar';
-import RegisterForm from '../components/RegisterForm';
-import SigninForm from '../components/SigninForm';
+import RegisterForm from './RegisterForm';
+import SigninForm from './SigninForm';
 import { Context as AuthContext } from '../context/AuthContext';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import RecoverPassDialog from '../components/RecoverPassDialog';
-import MessageDialog from '../components/MessageDialog';
+import RecoverPassDialog from './RecoverPassDialog';
+import MessageDialog from './MessageDialog';
+import { Context as LanguageContext } from '../context/LanguageContext';
 
 const useStyles = makeStyles({
-	h1: {
-		marginTop: '3em',
-		textAlign: 'center',
-		padding: '2em',
+	forms: {
 		justifyContent: 'center'
 	},
-
 	container: {
 		display: 'flex',
 		justifyContent: 'center',
 		marginBottom: '2em',
 		flexDirection: 'column'
 	},
-
-	forms: {
+	h1: {
+		marginTop: '3em',
+		textAlign: 'center',
+		padding: '2em',
 		justifyContent: 'center'
 	}
 });
 
-const DoctorRegisterPage = () => {
+const translationTest = {
+	'en-EN': {
+		greeting: 'Are you a patient?'
+	},
+	'bg-BG': {
+		greeting: 'Вие сте пациент?'
+	}
+};
+
+const GetStartedPatient = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { state, signup, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+	const { state, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+	const { state: { language } } = useContext(LanguageContext);
+	const { greeting } = translationTest[language];
 	const classes = useStyles();
 
 	useEffect(() => {
 		clearErrorMessage();
 		return clearErrorMessage();
 	}, []);
+
 	return (
 		<div>
-			<Navbar />
 			<Container className={classes.container}>
 				<div className={classes.h1}>
-					<h1>Are you a doctor?</h1>
+					<h1>{greeting}</h1>
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>
 					<Grid item xs={6} md={4}>
-						<RegisterForm handleSubmit={signup} amIHCP={true} />
+						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={6} md={4}>
 						<SigninForm
 							handleSubmit={signin}
 							errorMessage={state.errorMessage}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
-							switchProfileText="Patient"
-							switchProfilePath="/"
+							switchProfileText="Doctor"
+							switchProfilePath="/doctorregister"
 						/>
 					</Grid>
 				</Grid>
@@ -76,4 +85,4 @@ const DoctorRegisterPage = () => {
 	);
 };
 
-export default DoctorRegisterPage;
+export default GetStartedPatient;

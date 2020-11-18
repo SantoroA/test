@@ -62,7 +62,7 @@ const signup = (dispatch) => {
 const handleFacebookLogin = (dispatch) => async (accessToken) => {
 	console.log(accessToken);
 	try {
-		const response = await dianurseApi.post('/auth/facebook/login', accessToken);
+		const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 		console.log(response);
 		dispatch({ type: 'signin', payload: response.data.token });
 	} catch (err) {
