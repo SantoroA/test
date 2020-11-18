@@ -7,9 +7,7 @@ const authReducer = (state, action) => {
 			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
 		case 'close_dialog':
 			return { ...state, dialogMessage: '', messageDialogOpen: false };
-		case 'signin_Facebook':
-			return { token: action.payload, errorMessage: '' };
-		case 'signin':
+		case 'login':
 			return { ...state, token: action.payload, errorMessage: '' };
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
@@ -24,11 +22,11 @@ const authReducer = (state, action) => {
 
 //only if the token lasts for a while:
 
-// const tryLocalSignin = (dispatch) => async () => {
+// const tryLocallogin = (dispatch) => async () => {
 // 	const token = await localStorage.getItem('token');
 // 	const history = useHistory();
 // 	if (token) {
-// 		dispatch({ type: 'signin', payload: token });
+// 		dispatch({ type: 'login', payload: token });
 // 	} else {
 // 		history.push('/');
 // 		console.log('you must sign in ');
@@ -39,7 +37,7 @@ const clearErrorMessage = (dispatch) => () => {
 	dispatch({ type: 'clear_error_message' });
 };
 
-const signup = (dispatch) => {
+const register = (dispatch) => {
 	return async ({ email, amIHCP, preferredLang }) => {
 		try {
 			const response = await dianurseApi.post('/account/register', {
@@ -64,13 +62,13 @@ const handleFacebookLogin = (dispatch) => async (accessToken) => {
 	try {
 		const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 		console.log(response);
-		dispatch({ type: 'signin', payload: response.data.token });
+		dispatch({ type: 'login', payload: response.data.token });
 	} catch (err) {
 		console.log('error');
 	}
 };
 
-const signin = (dispatch) => {
+const login = (dispatch) => {
 	return async ({ email, password }) => {
 		try {
 			const response = await dianurseApi.post('/account/login', {
@@ -87,7 +85,7 @@ const signin = (dispatch) => {
 			};
 			// console.log(user);
 			// await localStorage.setItem('user', JSON.stringify(user));
-			dispatch({ type: 'signin', payload: response.data.token });
+			dispatch({ type: 'login', payload: response.data.token });
 		} catch (err) {
 			dispatch({
 				type: 'add_error',
@@ -120,6 +118,6 @@ const closeDialog = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signin, signout, signup, handleFacebookLogin, clearErrorMessage, recoverPassword, closeDialog },
+	{ login, signout, register, handleFacebookLogin, clearErrorMessage, recoverPassword, closeDialog },
 	{ token: null, errorMessage: '', dialogMessage: '', messageDialogOpen: false }
 );

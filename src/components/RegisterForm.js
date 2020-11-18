@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm = ({ amIHCP }) => {
-	const { signup, handleFacebookLogin } = useContext(AuthContext);
+	const { register, handleFacebookLogin } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
@@ -63,7 +63,10 @@ const RegisterForm = ({ amIHCP }) => {
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
-			<ValidatorForm onSubmit={() => signup({ email, amIHCP, preferredLang: language })} className={classes.form}>
+			<ValidatorForm
+				onSubmit={() => register({ email, amIHCP, preferredLang: language })}
+				className={classes.form}
+			>
 				<h2>Register here and create an account</h2>
 
 				<Grid className={classes.item}>

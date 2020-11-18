@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context as AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -43,16 +44,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const SigninForm = ({
-	handleSubmit,
-	errorMessage,
-	togglePasswordRecoveryOpen,
-	switchProfileText,
-	switchProfilePath
-}) => {
+const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfilePath }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
+	const { login } = useContext(AuthContext);
 
 	return (
 		<div className={classes.container}>
@@ -60,7 +56,7 @@ const SigninForm = ({
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
-						handleSubmit({ email, password });
+						login({ email, password });
 					}}
 					className={classes.form}
 				>
@@ -91,7 +87,7 @@ const SigninForm = ({
 					<Button variant="outlined" color="primary" onClick={togglePasswordRecoveryOpen}>
 						Forgot your password?
 					</Button>
-					{errorMessage && <p>{errorMessage}</p>}
+
 					<Button type="submit" variant="contained" color="primary" className={classes.submit}>
 						Log In
 					</Button>
@@ -109,4 +105,4 @@ const SigninForm = ({
 	);
 };
 
-export default SigninForm;
+export default LoginForm;

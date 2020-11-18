@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import useToggle from '../hooks/useToggle';
 import RegisterForm from './RegisterForm';
-import SigninForm from './SigninForm';
+import LoginForm from './LoginForm';
 import { Context as AuthContext } from '../context/AuthContext';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -39,7 +39,7 @@ const translationTest = {
 
 const GetStartedPatient = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { state, signin, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+	const { state, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
 	const { greeting } = translationTest[language];
 	const classes = useStyles();
@@ -61,9 +61,7 @@ const GetStartedPatient = () => {
 						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={6} md={4}>
-						<SigninForm
-							handleSubmit={signin}
-							errorMessage={state.errorMessage}
+						<LoginForm
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							switchProfileText="Doctor"
 							switchProfilePath="/doctorregister"
