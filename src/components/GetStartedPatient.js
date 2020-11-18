@@ -29,10 +29,10 @@ const useStyles = makeStyles({
 });
 
 const translationTest = {
-	'en-EN': {
+	en: {
 		greeting: 'Are you a patient?'
 	},
-	'bg-BG': {
+	bg: {
 		greeting: 'Вие сте пациент?'
 	}
 };
