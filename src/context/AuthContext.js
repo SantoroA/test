@@ -4,17 +4,17 @@ import dianurseApi from '../api/dianurseApi';
 const authReducer = (state, action) => {
 	switch (action.type) {
 		case 'set_dialog_message':
-			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'close_dialog':
-			return { ...state, dialogMessage: '', messageDialogOpen: false };
+			return { ...state, dialogMessage: '', dialogOpen: false };
 		case 'login':
-			return { ...state, token: action.payload, errorMessage: '' };
+			return { ...state, token: action.payload, dialogMessage: '' };
 		case 'add_error':
-			return { ...state, dialogMessage: action.payload, messageDialogOpen: true };
-		case 'clear_error_message':
-			return { ...state, errorMessage: '' };
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
-			return { token: null, errorMessage: '' };
+			return { token: null, dialogMessage: '' };
+		case 'open_dialog':
+			return { ...state, dialogOpen: true };
 		default:
 			return state;
 	}
@@ -33,12 +33,9 @@ const authReducer = (state, action) => {
 // 	}
 // };
 
-const clearErrorMessage = (dispatch) => () => {
-	dispatch({ type: 'clear_error_message' });
-};
-
 const register = (dispatch) => {
 	return async ({ email, amIHCP, preferredLang }) => {
+		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
@@ -64,7 +61,10 @@ const handleFacebookLogin = (dispatch) => async (accessToken) => {
 		console.log(response);
 		dispatch({ type: 'login', payload: response.data.token });
 	} catch (err) {
-		console.log('error');
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
 	}
 };
 
@@ -101,6 +101,7 @@ const signout = (dispatch) => async () => {
 };
 
 const recoverPassword = (dispatch) => async ({ email }) => {
+	dispatch({ type: 'open_dialog' });
 	try {
 		const response = await dianurseApi.post('/account/passwordrecovery', { email });
 		dispatch({ type: 'set_dialog_message', payload: response.data });
@@ -118,6 +119,6 @@ const closeDialog = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ login, signout, register, handleFacebookLogin, clearErrorMessage, recoverPassword, closeDialog },
-	{ token: null, errorMessage: '', dialogMessage: '', messageDialogOpen: false }
+	{ login, signout, register, handleFacebookLogin, recoverPassword, closeDialog },
+	{ token: null, errorMessage: '', dialogMessage: '', dialogOpen: false }
 );

@@ -64,7 +64,9 @@ const RegisterForm = ({ amIHCP }) => {
 	return (
 		<Paper elevation={3} className={classes.paper}>
 			<ValidatorForm
-				onSubmit={() => register({ email, amIHCP, preferredLang: language })}
+				onSubmit={() => {
+					register({ email, amIHCP, preferredLang: language });
+				}}
 				className={classes.form}
 			>
 				<h2>Register here and create an account</h2>

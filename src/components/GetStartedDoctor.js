@@ -31,13 +31,10 @@ const useStyles = makeStyles({
 
 const DoctorRegisterPage = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { state, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+
+	const { recoverPassword } = useContext(AuthContext);
 	const classes = useStyles();
 
-	useEffect(() => {
-		clearErrorMessage();
-		return clearErrorMessage();
-	}, []);
 	return (
 		<div>
 			<Container className={classes.container}>
@@ -62,11 +59,7 @@ const DoctorRegisterPage = () => {
 					togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 					passwordRecoveryOpen={passwordRecoveryOpen}
 				/>
-				<MessageDialog
-					dialogMessage={state.dialogMessage}
-					closeDialog={closeDialog}
-					dialogOpen={state.messageDialogOpen}
-				/>
+				<MessageDialog />
 			</Container>
 		</div>
 	);

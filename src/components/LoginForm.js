@@ -54,9 +54,9 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 		<div className={classes.container}>
 			<Paper elevation={3} className={classes.paper}>
 				<form
-					onSubmit={(e) => {
+					onSubmit={async (e) => {
 						e.preventDefault();
-						login({ email, password });
+						await login({ email, password });
 					}}
 					className={classes.form}
 				>

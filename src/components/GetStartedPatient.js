@@ -39,15 +39,11 @@ const translationTest = {
 
 const GetStartedPatient = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { state, clearErrorMessage, recoverPassword, closeDialog } = useContext(AuthContext);
+
+	const { recoverPassword } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
 	const { greeting } = translationTest[language];
 	const classes = useStyles();
-
-	useEffect(() => {
-		clearErrorMessage();
-		return clearErrorMessage();
-	}, []);
 
 	return (
 		<div>
@@ -73,11 +69,7 @@ const GetStartedPatient = () => {
 					togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 					passwordRecoveryOpen={passwordRecoveryOpen}
 				/>
-				<MessageDialog
-					dialogMessage={state.dialogMessage}
-					closeDialog={closeDialog}
-					dialogOpen={state.messageDialogOpen}
-				/>
+				<MessageDialog />
 			</Container>
 		</div>
 	);
