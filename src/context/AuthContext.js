@@ -8,11 +8,16 @@ const authReducer = (state, action) => {
 		case 'close_dialog':
 			return { ...state, dialogMessage: '', dialogOpen: false };
 		case 'login':
-			return { ...state, token: action.payload, dialogMessage: '' };
+			return {
+				...state,
+				loginData: action.payload,
+				dialogMessage: '',
+				dialogOpen: false
+			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
-			return { token: null, dialogMessage: '' };
+			return { loginData: null, dialogMessage: '' };
 		case 'open_dialog':
 			return { ...state, dialogOpen: true };
 		default:
@@ -70,6 +75,7 @@ const handleFacebookLogin = (dispatch) => async (accessToken) => {
 
 const login = (dispatch) => {
 	return async ({ email, password }) => {
+		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/login', {
 				email,
@@ -77,15 +83,15 @@ const login = (dispatch) => {
 			});
 			console.log(response);
 
-			//TODO: how to encript? (ex: keychain)
+			//TODO: store in COOKIES
 			const user = {
 				amIHCP: response.data.amIHCP,
 				token: response.data.token,
-				userId: response.data.userId
+				userId: response.data.userId,
+				user: response.data.user
 			};
-			// console.log(user);
-			// await localStorage.setItem('user', JSON.stringify(user));
-			dispatch({ type: 'login', payload: response.data.token });
+
+			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
 				type: 'add_error',
@@ -120,5 +126,5 @@ const closeDialog = (dispatch) => () => {
 export const { Provider, Context } = createDataContext(
 	authReducer,
 	{ login, signout, register, handleFacebookLogin, recoverPassword, closeDialog },
-	{ token: null, errorMessage: '', dialogMessage: '', dialogOpen: false }
+	{ loginData: null, errorMessage: '', dialogMessage: '', dialogOpen: false }
 );

@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import GetStartedPage from './pages/GetStartedPage';
 import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext';
 import { Provider as LanguageProvider } from './context/LanguageContext';
+import GetStartedPage from './pages/GetStartedPage';
+import HomePage from './pages/HomePage';
 import './App.css';
 
 const App = () => {
-	const { state: { token } } = useContext(AuthContext);
+	const { state: { loginData } } = useContext(AuthContext);
 	console.log();
-	if (token) {
-		return <div>Your token is ok</div>;
+	if (loginData) {
+		return <HomePage />;
 	} else {
 		return (
 			<Router>

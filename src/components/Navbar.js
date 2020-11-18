@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
-import { Context as LanguageContext } from '../context/LanguageContext';
-import logo from '../assets/dianurse-logo.png';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Typography from '@material-ui/core/Typography';
+import { Context as LanguageContext } from '../context/LanguageContext';
+import { Context as AuthContext } from '../context/AuthContext';
+import logo from '../assets/dianurse-logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
 		flexGrow: 1,
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		color: 'black'
 	},
 	toolbar: {
 		justifyContent: 'space-between'
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
 	const { state: { language }, changeLanguage } = useContext(LanguageContext);
+	const { state: { loginData } } = useContext(AuthContext);
 	const classes = useStyles();
 	const handleChange = (event) => {
 		changeLanguage(event.target.value);
@@ -52,7 +55,7 @@ export default function ButtonAppBar() {
 							<MenuItem value={'bg'}>Bulgarian</MenuItem>
 						</Select>
 					</FormControl>
-					<Button color="primary">Login</Button>
+					{loginData && <Typography>{loginData.user}</Typography>}
 				</Toolbar>
 			</AppBar>
 		</div>

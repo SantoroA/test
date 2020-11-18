@@ -66,6 +66,7 @@ const RegisterForm = ({ amIHCP }) => {
 			<ValidatorForm
 				onSubmit={() => {
 					register({ email, amIHCP, preferredLang: language });
+					setEmail('');
 				}}
 				className={classes.form}
 			>
@@ -105,7 +106,6 @@ const RegisterForm = ({ amIHCP }) => {
 			<Grid className={classes.redes} container>
 				<FacebookLogin
 					appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-					onClick={console.log('clicked')}
 					fields="name,email,picture"
 					callback={(response) => {
 						const { accessToken } = response;

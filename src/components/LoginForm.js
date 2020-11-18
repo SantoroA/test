@@ -49,14 +49,19 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
 	const { login } = useContext(AuthContext);
+	const handleSubmit = async () => {
+		await login({ email, password });
+		setEmail('');
+		setPassword('');
+	};
 
 	return (
 		<div className={classes.container}>
 			<Paper elevation={3} className={classes.paper}>
 				<form
-					onSubmit={async (e) => {
+					onSubmit={(e) => {
 						e.preventDefault();
-						await login({ email, password });
+						handleSubmit();
 					}}
 					className={classes.form}
 				>

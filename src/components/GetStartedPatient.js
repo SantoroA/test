@@ -59,7 +59,7 @@ const GetStartedPatient = () => {
 						<LoginForm
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							switchProfileText="Doctor"
-							switchProfilePath="/doctorregister"
+							switchProfilePath="/getstarted/json?patient=1"
 						/>
 					</Grid>
 				</Grid>
