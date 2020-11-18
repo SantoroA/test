@@ -11,13 +11,14 @@ const authReducer = (state, action) => {
 			return {
 				...state,
 				loginData: action.payload,
+				isLoggedIn: true,
 				dialogMessage: '',
 				dialogOpen: false
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
-			return { loginData: null, dialogMessage: '' };
+			return { loginData: null, dialogMessage: '', isLoggedIn: false };
 		case 'open_dialog':
 			return { ...state, dialogOpen: true };
 		default:
@@ -25,7 +26,7 @@ const authReducer = (state, action) => {
 	}
 };
 
-//only if the token lasts for a while:
+//TODO: get from cookies
 
 // const tryLocallogin = (dispatch) => async () => {
 // 	const token = await localStorage.getItem('token');
@@ -59,8 +60,9 @@ const register = (dispatch) => {
 	};
 };
 
-const handleFacebookLogin = (dispatch) => async (accessToken) => {
-	console.log(accessToken);
+const handleFacebookLogin = (dispatch) => async (fbResponse) => {
+	console.log(fbResponse);
+	const { accessToken } = fbResponse;
 	try {
 		const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 		console.log(response);
@@ -84,12 +86,12 @@ const login = (dispatch) => {
 			console.log(response);
 
 			//TODO: store in COOKIES
-			const user = {
-				amIHCP: response.data.amIHCP,
-				token: response.data.token,
-				userId: response.data.userId,
-				user: response.data.user
-			};
+			// const user = {
+			// 	amIHCP: response.data.amIHCP,
+			// 	token: response.data.token,
+			// 	userId: response.data.userId,
+			// 	user: response.data.user
+			// };
 
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
@@ -126,5 +128,5 @@ const closeDialog = (dispatch) => () => {
 export const { Provider, Context } = createDataContext(
 	authReducer,
 	{ login, signout, register, handleFacebookLogin, recoverPassword, closeDialog },
-	{ loginData: null, errorMessage: '', dialogMessage: '', dialogOpen: false }
+	{ loginData: null, errorMessage: '', dialogMessage: '', dialogOpen: false, isLoggedIn: false }
 );

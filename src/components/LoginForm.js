@@ -49,8 +49,8 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
 	const { login } = useContext(AuthContext);
-	const handleSubmit = async () => {
-		await login({ email, password });
+	const handleSubmit = () => {
+		login({ email, password });
 		setEmail('');
 		setPassword('');
 	};

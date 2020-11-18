@@ -1,6 +1,6 @@
 import React, { useReducer, createContext } from 'react';
 
-export default (reducer, actions, defaultValue) => {
+const createDataContext = (reducer, actions, defaultValue) => {
 	const Context = createContext();
 
 	const Provider = ({ children }) => {
@@ -16,3 +16,5 @@ export default (reducer, actions, defaultValue) => {
 
 	return { Context, Provider };
 };
+
+export default createDataContext;
