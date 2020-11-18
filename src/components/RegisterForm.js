@@ -99,7 +99,7 @@ const RegisterForm = ({ amIHCP }) => {
 			<Typography variant="h6">Or login with your social media</Typography>
 			<Grid className={classes.redes} container>
 				<FacebookLogin
-					appId="1126552864168051"
+					appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 					onClick={console.log('clicked')}
 					fields="name,email,picture"
 					callback={(response) => {
