@@ -3,6 +3,7 @@ import useToggle from '../hooks/useToggle';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as LanguageContext } from '../context/LanguageContext';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,8 +30,19 @@ const useStyles = makeStyles({
 	}
 });
 
+const translationTest = {
+	'en-EN': {
+		greeting: 'Are you a doctor?'
+	},
+	'bg-BG': {
+		greeting: 'Доктор ли си?'
+	}
+};
+
 const DoctorRegisterPage = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
+	const { state: { language } } = useContext(LanguageContext);
+	const { greeting } = translationTest[language];
 	const { recoverPassword } = useContext(AuthContext);
 	const classes = useStyles();
 
@@ -38,7 +50,7 @@ const DoctorRegisterPage = () => {
 		<div>
 			<Container className={classes.container}>
 				<div className={classes.h1}>
-					<h1>Are you a doctor?</h1>
+					<h1>{greeting}</h1>
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>

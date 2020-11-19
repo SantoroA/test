@@ -54,21 +54,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm = ({ amIHCP }) => {
-	const { register, handleFacebookLogin } = useContext(AuthContext);
+	const { register, handleFacebookLogin, handleGoogleLogin } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
 
-	const responseGoogle = (response) => {
-		console.log(response);
-	};
-
 	return (
 		<Paper elevation={3} className={classes.paper}>
 			<ValidatorForm
 				onSubmit={() => {
-					register({ email, amIHCP, preferredLang: language });
+					register({ email, amIHCP, preferredLang: language, subdomain: 'en' });
 					setEmail('');
 				}}
 				className={classes.form}
@@ -137,8 +133,8 @@ const RegisterForm = ({ amIHCP }) => {
 							<i className="fab fa-google" />
 						</Button>
 					)}
-					onSuccess={responseGoogle}
-					onFailure={responseGoogle}
+					onSuccess={(response) => handleGoogleLogin(response)}
+					onFailure={(response) => handleGoogleLogin(response)}
 					cookiePolicy={'single_host_origin'}
 				/>
 			</Grid>

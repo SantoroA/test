@@ -19,11 +19,22 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
-		case 'fbLogin':
+		case 'fb_login':
 			return {
 				...state,
 				userName: action.payload.name,
 				userId: action.payload.id,
+				userToken: action.payload.accessToken,
+				// userAmIHCP: action.payload.amIHCP,
+				isLoggedIn: true,
+				dialogMessage: '',
+				dialogOpen: false
+			};
+		case 'gg_login':
+			return {
+				...state,
+				userName: action.payload.profileObj.name,
+				userId: action.payload.googleId,
 				userToken: action.payload.accessToken,
 				// userAmIHCP: action.payload.amIHCP,
 				isLoggedIn: true,
@@ -78,7 +89,7 @@ const register = (dispatch) => {
 const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
 
-	dispatch({ type: 'fbLogin', payload: fbResponse });
+	dispatch({ type: 'fb_login', payload: fbResponse });
 	// try {
 	// 	const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 	// 	console.log(response);
@@ -89,6 +100,11 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	// 		payload: err.message
 	// 	});
 	// }
+};
+
+const handleGoogleLogin = (dispatch) => (ggResponse) => {
+	console.log(ggResponse);
+	dispatch({ type: 'gg_login', payload: ggResponse });
 };
 
 const login = (dispatch) => {
@@ -143,7 +159,7 @@ const closeDialog = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ login, signout, register, handleFacebookLogin, recoverPassword, closeDialog },
+	{ login, signout, register, handleFacebookLogin, handleGoogleLogin, recoverPassword, closeDialog },
 	{
 		useName: '',
 		userId: '',
