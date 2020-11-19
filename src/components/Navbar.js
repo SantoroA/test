@@ -51,8 +51,8 @@ export default function ButtonAppBar() {
 					<img src={logo} alt="Logo" className={classes.img} />
 					<FormControl variant="outlined" className={classes.formControl}>
 						<Select value={language} onChange={handleChange}>
-							<MenuItem value={'en'}>English</MenuItem>
-							<MenuItem value={'bg'}>Bulgarian</MenuItem>
+							<MenuItem value={'en-EN'}>English</MenuItem>
+							<MenuItem value={'bg-BG'}>Bulgarian</MenuItem>
 						</Select>
 					</FormControl>
 					{userName && <Typography>{userName}</Typography>}
