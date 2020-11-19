@@ -3,6 +3,8 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext';
 import { Provider as LanguageProvider } from './context/LanguageContext';
 import GetStartedPage from './pages/GetStartedPage';
+import RecoverPasswordPage from './pages/RecoverPasswordPage';
+
 import HomePage from './pages/HomePage';
 import './App.css';
 
@@ -16,6 +18,7 @@ const Routes = () => {
 			) : (
 				<Switch>
 					<Route path="/getstarted/json" exact component={GetStartedPage} />
+					<Route path="/recoverpassword" exact component={RecoverPasswordPage} />
 					<Route path="/" exact render={() => <h1>Root</h1>} />
 					<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 				</Switch>
