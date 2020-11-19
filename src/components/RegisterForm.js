@@ -8,11 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import AppleIcon from '@material-ui/icons/Apple';
+// import AppleIcon from '@material-ui/icons/Apple';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
 import useToggle from '../hooks/useToggle';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import { Context as LanguageContext } from '../context/LanguageContext';
 
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: 20,
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		width: '100%'
 	}
 }));
@@ -60,6 +61,10 @@ const RegisterForm = ({ amIHCP }) => {
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
+
+	const responseGoogle = (response) => {
+		console.log(response);
+	};
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
@@ -122,12 +127,27 @@ const RegisterForm = ({ amIHCP }) => {
 					)}
 				/>
 
-				<Button variant="contained" color="primary" className={classes.socialMedia}>
+				{/* <Button variant="contained" color="primary" className={classes.socialMedia}>
 					<AppleIcon />
-				</Button>
-				<Button variant="contained" color="primary" className={classes.socialMedia}>
-					<MailOutlineIcon />
-				</Button>
+				</Button> */}
+				<GoogleLogin
+					clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+					render={(renderProps) => (
+						<Button
+							onClick={renderProps.onClick}
+							disabled={renderProps.disabled}
+							variant="contained"
+							color="primary"
+							className={classes.socialMedia}
+						>
+							<MailOutlineIcon />
+						</Button>
+					)}
+					buttonText="Login"
+					onSuccess={responseGoogle}
+					onFailure={responseGoogle}
+					cookiePolicy={'single_host_origin'}
+				/>
 			</Grid>
 		</Paper>
 	);
