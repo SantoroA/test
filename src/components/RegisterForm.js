@@ -137,7 +137,6 @@ const RegisterForm = ({ amIHCP }) => {
 							<i className="fab fa-google" />
 						</Button>
 					)}
-					buttonText="Login"
 					onSuccess={responseGoogle}
 					onFailure={responseGoogle}
 					cookiePolicy={'single_host_origin'}
