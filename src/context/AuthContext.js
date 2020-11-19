@@ -10,7 +10,11 @@ const authReducer = (state, action) => {
 		case 'login':
 			return {
 				...state,
-				loginData: action.payload,
+				userName: action.payload.user,
+				userId: action.payload.userId,
+				userToken: action.payload.token,
+				userAmIHCP: action.payload.amIHCP,
+				// loginData: action.payload,
 				isLoggedIn: true,
 				dialogMessage: '',
 				dialogOpen: false
@@ -18,7 +22,10 @@ const authReducer = (state, action) => {
 		case 'fbLogin':
 			return {
 				...state,
-				loginData: action.payload,
+				userName: action.payload.name,
+				userId: action.payload.id,
+				userToken: action.payload.accessToken,
+				// userAmIHCP: action.payload.amIHCP,
 				isLoggedIn: true,
 				dialogMessage: '',
 				dialogOpen: false
@@ -71,7 +78,7 @@ const register = (dispatch) => {
 const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
 
-	dispatch({ type: 'login', payload: fbResponse.data });
+	dispatch({ type: 'fbLogin', payload: fbResponse });
 	// try {
 	// 	const response = await dianurseApi.post('/account/auth/facebook', accessToken);
 	// 	console.log(response);
@@ -137,5 +144,14 @@ const closeDialog = (dispatch) => () => {
 export const { Provider, Context } = createDataContext(
 	authReducer,
 	{ login, signout, register, handleFacebookLogin, recoverPassword, closeDialog },
-	{ loginData: null, errorMessage: '', dialogMessage: '', dialogOpen: false, isLoggedIn: false }
+	{
+		useName: '',
+		userId: '',
+		userToken: '',
+		userAmIHCP: '',
+		errorMessage: '',
+		dialogMessage: '',
+		dialogOpen: false,
+		isLoggedIn: false
+	}
 );
