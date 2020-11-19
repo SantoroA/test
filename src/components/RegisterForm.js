@@ -1,5 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as LanguageContext } from '../context/LanguageContext';
+
+import useToggle from '../hooks/useToggle';
 import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -9,11 +12,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
-import useToggle from '../hooks/useToggle';
+
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 import { ValidatorForm } from 'react-material-ui-form-validator';
-import { Context as LanguageContext } from '../context/LanguageContext';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
