@@ -7,8 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-// import AppleIcon from '@material-ui/icons/Apple';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
 import useToggle from '../hooks/useToggle';
@@ -38,13 +36,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	socialMedia: {
-		color: 'primary',
 		borderRadius: 15,
 		height: 30,
 		width: 30,
 		padding: 20,
 		minHeight: 0,
-		minWidth: 0
+		minWidth: 0,
+		fontSize: 20
 	},
 	redes: {
 		marginTop: 20,
@@ -126,12 +124,8 @@ const RegisterForm = ({ amIHCP }) => {
 						</Button>
 					)}
 				/>
-
-				{/* <Button variant="contained" color="primary" className={classes.socialMedia}>
-					<AppleIcon />
-				</Button> */}
 				<GoogleLogin
-					clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+					clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
 					render={(renderProps) => (
 						<Button
 							onClick={renderProps.onClick}
@@ -140,7 +134,7 @@ const RegisterForm = ({ amIHCP }) => {
 							color="primary"
 							className={classes.socialMedia}
 						>
-							<MailOutlineIcon />
+							<i className="fab fa-google" />
 						</Button>
 					)}
 					buttonText="Login"

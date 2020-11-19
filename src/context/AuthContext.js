@@ -71,17 +71,17 @@ const register = (dispatch) => {
 const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
 
-	try {
-		dispatch({ type: 'login', payload: fbResponse.data });
-		// const response = await dianurseApi.post('/account/auth/facebook', accessToken);
-		// console.log(response);
-		// dispatch({ type: 'login', payload: response.data.token });
-	} catch (err) {
-		dispatch({
-			type: 'add_error',
-			payload: err.message
-		});
-	}
+	dispatch({ type: 'login', payload: fbResponse.data });
+	// try {
+	// 	const response = await dianurseApi.post('/account/auth/facebook', accessToken);
+	// 	console.log(response);
+	// 	dispatch({ type: 'login', payload: response.data.token });
+	// } catch (err) {
+	// 	dispatch({
+	// 		type: 'add_error',
+	// 		payload: err.message
+	// 	});
+	// }
 };
 
 const login = (dispatch) => {
