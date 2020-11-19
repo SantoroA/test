@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
 	const { state: { language }, changeLanguage } = useContext(LanguageContext);
-	const { state: { loginData } } = useContext(AuthContext);
+	const { state: { userName } } = useContext(AuthContext);
 	const classes = useStyles();
 	const handleChange = (event) => {
 		changeLanguage(event.target.value);
@@ -55,7 +55,7 @@ export default function ButtonAppBar() {
 							<MenuItem value={'bg'}>Bulgarian</MenuItem>
 						</Select>
 					</FormControl>
-					{loginData && <Typography>{loginData.user}</Typography>}
+					{userName && <Typography>{userName}</Typography>}
 				</Toolbar>
 			</AppBar>
 		</div>
