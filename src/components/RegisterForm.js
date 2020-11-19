@@ -7,12 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import AppleIcon from '@material-ui/icons/Apple';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
 import useToggle from '../hooks/useToggle';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import { Context as LanguageContext } from '../context/LanguageContext';
 
@@ -37,19 +36,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	socialMedia: {
-		color: 'primary',
 		borderRadius: 15,
 		height: 30,
 		width: 30,
 		padding: 20,
 		minHeight: 0,
-		minWidth: 0
+		minWidth: 0,
+		fontSize: 20
 	},
 	redes: {
 		marginTop: 20,
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		width: '100%'
 	}
 }));
@@ -60,6 +59,10 @@ const RegisterForm = ({ amIHCP }) => {
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
+
+	const responseGoogle = (response) => {
+		console.log(response);
+	};
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
@@ -121,13 +124,23 @@ const RegisterForm = ({ amIHCP }) => {
 						</Button>
 					)}
 				/>
-
-				<Button variant="contained" color="primary" className={classes.socialMedia}>
-					<AppleIcon />
-				</Button>
-				<Button variant="contained" color="primary" className={classes.socialMedia}>
-					<MailOutlineIcon />
-				</Button>
+				<GoogleLogin
+					clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
+					render={(renderProps) => (
+						<Button
+							onClick={renderProps.onClick}
+							disabled={renderProps.disabled}
+							variant="contained"
+							color="primary"
+							className={classes.socialMedia}
+						>
+							<i className="fab fa-google" />
+						</Button>
+					)}
+					onSuccess={responseGoogle}
+					onFailure={responseGoogle}
+					cookiePolicy={'single_host_origin'}
+				/>
 			</Grid>
 		</Paper>
 	);

@@ -15,6 +15,14 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
+		case 'fbLogin':
+			return {
+				...state,
+				loginData: action.payload,
+				isLoggedIn: true,
+				dialogMessage: '',
+				dialogOpen: false
+			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
@@ -62,17 +70,18 @@ const register = (dispatch) => {
 
 const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
-	const { accessToken } = fbResponse;
-	try {
-		const response = await dianurseApi.post('/account/auth/facebook', accessToken);
-		console.log(response);
-		dispatch({ type: 'login', payload: response.data.token });
-	} catch (err) {
-		dispatch({
-			type: 'add_error',
-			payload: err.message
-		});
-	}
+
+	dispatch({ type: 'login', payload: fbResponse.data });
+	// try {
+	// 	const response = await dianurseApi.post('/account/auth/facebook', accessToken);
+	// 	console.log(response);
+	// 	dispatch({ type: 'login', payload: response.data.token });
+	// } catch (err) {
+	// 	dispatch({
+	// 		type: 'add_error',
+	// 		payload: err.message
+	// 	});
+	// }
 };
 
 const login = (dispatch) => {
