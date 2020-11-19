@@ -60,11 +60,18 @@ const RegisterForm = ({ amIHCP }) => {
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
 
+	let subdomain;
+	if (language === 'bg-BG') {
+		subdomain = 'bg';
+	} else {
+		subdomain = 'en';
+	}
+
 	return (
 		<Paper elevation={3} className={classes.paper}>
 			<ValidatorForm
 				onSubmit={() => {
-					register({ email, amIHCP, preferredLang: language, subdomain: 'en' });
+					register({ email, amIHCP, preferredLang: language, subdomain });
 					setEmail('');
 				}}
 				className={classes.form}
