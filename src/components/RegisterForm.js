@@ -63,7 +63,7 @@ const RegisterForm = ({ amIHCP }) => {
 	const classes = useStyles();
 
 	let subdomain;
-	if (language === 'bg-BG') {
+	if (language === 'bg_BG') {
 		subdomain = 'bg';
 	} else {
 		subdomain = 'en';

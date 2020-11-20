@@ -29,10 +29,10 @@ const useStyles = makeStyles({
 });
 
 const translationTest = {
-	'en-EN': {
+	en_EN: {
 		greeting: 'Are you a patient?'
 	},
-	'bg-BG': {
+	bg_BG: {
 		greeting: 'Вие сте пациент?'
 	}
 };
@@ -52,10 +52,10 @@ const GetStartedPatient = () => {
 				</div>
 
 				<Grid className={classes.forms} container spacing={4}>
-					<Grid item xs={6} md={4}>
+					<Grid item xs={12} sm={6} md={4}>
 						<RegisterForm amIHCP={false} />
 					</Grid>
-					<Grid item xs={6} md={4}>
+					<Grid item xs={12} sm={6} md={4}>
 						<LoginForm
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							switchProfileText="Doctor"

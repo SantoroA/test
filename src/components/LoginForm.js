@@ -6,6 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -41,6 +44,22 @@ const useStyles = makeStyles((theme) => ({
 	text: {
 		marginTop: '0',
 		textAlign: 'center'
+	},
+	socialMedia: {
+		borderRadius: 15,
+		height: 30,
+		width: 30,
+		padding: 20,
+		minHeight: 0,
+		minWidth: 0,
+		fontSize: 20
+	},
+	redes: {
+		marginTop: 20,
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		width: '100%'
 	}
 }));
 
@@ -48,7 +67,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
-	const { login } = useContext(AuthContext);
+	const { login, handleFacebookLogin, handleGoogleLogin } = useContext(AuthContext);
 	const handleSubmit = () => {
 		login({ email, password });
 		setEmail('');
@@ -97,6 +116,42 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 						Log In
 					</Button>
 				</form>
+				<Grid className={classes.redes} container>
+					<FacebookLogin
+						appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+						fields="name,email,picture"
+						callback={(response) => {
+							handleFacebookLogin(response);
+						}}
+						render={(renderProps) => (
+							<Button
+								variant="contained"
+								onClick={renderProps.onClick}
+								color="primary"
+								className={classes.socialMedia}
+							>
+								<FacebookIcon />
+							</Button>
+						)}
+					/>
+					<GoogleLogin
+						clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
+						render={(renderProps) => (
+							<Button
+								onClick={renderProps.onClick}
+								disabled={renderProps.disabled}
+								variant="contained"
+								color="primary"
+								className={classes.socialMedia}
+							>
+								<i className="fab fa-google" />
+							</Button>
+						)}
+						onSuccess={(response) => handleGoogleLogin(response)}
+						onFailure={(response) => handleGoogleLogin(response)}
+						cookiePolicy={'single_host_origin'}
+					/>
+				</Grid>
 			</Paper>
 			<div className={classes.text}>
 				<p> Are you a {switchProfileText}?</p>

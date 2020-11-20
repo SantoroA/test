@@ -66,14 +66,15 @@ const authReducer = (state, action) => {
 // };
 
 const register = (dispatch) => {
-	return async ({ email, amIHCP, preferredLang }) => {
+	return async ({ email, amIHCP, preferredLang, subdomain }) => {
 		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
 				amIHCP,
 				password: 'Teste1234_',
-				preferredLang
+				preferredLang,
+				subdomain
 			});
 
 			console.log(response);
