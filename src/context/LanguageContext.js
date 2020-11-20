@@ -5,7 +5,7 @@ let navigatorLanguage;
 if (navigator.language.includes('bg')) {
 	navigatorLanguage = 'bg_BG';
 } else {
-	navigatorLanguage = 'en_EN';
+	navigatorLanguage = 'en_US';
 }
 
 const languageReducer = (state, action) => {

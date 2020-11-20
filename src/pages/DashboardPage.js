@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 
-const HomePage = () => {
+const DashboardPage = () => {
 	return (
 		<div>
 			<Navbar />
@@ -9,4 +9,4 @@ const HomePage = () => {
 	);
 };
 
-export default HomePage;
+export default DashboardPage;
