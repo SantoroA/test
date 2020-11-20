@@ -73,7 +73,7 @@ const RegisterForm = ({ amIHCP }) => {
 		<Paper elevation={3} className={classes.paper}>
 			<ValidatorForm
 				onSubmit={() => {
-					register({ email, amIHCP, preferredLang: language, subdomain });
+					register({ email, amIHCP, preferredLanguage: language, subdomain });
 					setEmail('');
 				}}
 				className={classes.form}
