@@ -12,23 +12,25 @@ const Routes = () => {
 
 	return (
 		<Router>
-			{isLoggedIn ? (
+			{/* {isLoggedIn ? (
 				<Switch>
 					<Route path="/" exact render={() => <h1>Root</h1>}>
 						<Redirect to="/dashboard" />
 					</Route>
 					<Route path="/dashboard" exact component={DashboardPage} />
 				</Switch>
-			) : (
-				<Switch>
-					<Route path="/getstarted/json" exact component={GetStartedPage} />
-					<Route path="/recoverpassword" exact component={RecoverPasswordPage} />
-					<Route path="/" exact render={() => <h1>Root</h1>}>
-						<Redirect to="/getstarted/json" />
-					</Route>
-					<Route render={() => <h1>ERROR NOT FOUND</h1>} />
-				</Switch>
-			)}
+			) : ( */}
+			<Switch>
+				<Route path="/getstarted/json" exact component={GetStartedPage} />
+				{/* //TODO: REMOVE DASHBOARD ROUTE AND UNCOMMENT ISLOGGEDIN WHEN DEPLOY */}
+				<Route path="/dashboard" exact component={DashboardPage} />
+				<Route path="/recoverpassword" exact component={RecoverPasswordPage} />
+				<Route path="/" exact render={() => <h1>Root</h1>}>
+					<Redirect to="/getstarted/json" />
+				</Route>
+				<Route render={() => <h1>ERROR NOT FOUND</h1>} />
+			</Switch>
+			{/* )} */}
 		</Router>
 	);
 };
