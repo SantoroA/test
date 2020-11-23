@@ -26,7 +26,7 @@ const Routes = () => {
 				<Route path="/dashboard" exact component={DashboardPage} />
 				<Route path="/recoverpassword" exact component={RecoverPasswordPage} />
 				<Route path="/" exact render={() => <h1>Root</h1>}>
-					<Redirect to="/getstarted/json" />
+					<Redirect to="/getstarted/json?patient=0" />
 				</Route>
 				<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 			</Switch>
