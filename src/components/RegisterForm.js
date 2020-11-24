@@ -86,7 +86,7 @@ const RegisterForm = ({ amIHCP }) => {
 						type="email"
 						required
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={(e) => setEmail(e.target.value.toLocaleLowerCase())}
 						label="Email"
 						variant="outlined"
 					/>
@@ -115,8 +115,8 @@ const RegisterForm = ({ amIHCP }) => {
 				<FacebookLogin
 					appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 					fields="name,email,picture"
-					callback={(response) => {
-						handleFacebookRegister({ response, language });
+					callback={(fbResponse) => {
+						handleFacebookRegister({ fbResponse, language });
 					}}
 					render={(renderProps) => (
 						<Button

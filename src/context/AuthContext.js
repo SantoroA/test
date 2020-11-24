@@ -103,7 +103,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
 
 	try {
-		const response = await dianurseApi.post('/account/auth/socialmedia', { email: fbResponse.email });
+		const response = await dianurseApi.post('/account/auth/socialmedia', { email: fbResponse.email.toLowerCase() });
 		console.log(response);
 		// dispatch({ type: 'login', payload: response.data.token });
 	} catch (err) {
@@ -120,7 +120,7 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language }) =>
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
 			username: fbResponse.name,
 			id: fbResponse.id,
-			email: fbResponse.email,
+			email: fbResponse.email.toLowerCase(),
 			picture: fbResponse.picture.data.url,
 			preferredLanguage: language
 		});
@@ -138,7 +138,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia', {
-			email: ggResponse.profileObj.email
+			email: ggResponse.profileObj.email.toLowerCase()
 		});
 		console.log(response);
 		// dispatch({ type: 'login', payload: response.data.token });
@@ -156,7 +156,7 @@ const handleGoogleRegister = (dispatch) => async ({ ggResponse, language }) => {
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
 			username: ggResponse.profileObj.name,
 			id: ggResponse.googleId,
-			email: ggResponse.profileObj.email,
+			email: ggResponse.profileObj.email.toLowerCase(),
 			picture: ggResponse.profileObj.imageUrl,
 			preferredLanguage: language
 		});
