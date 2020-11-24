@@ -18,28 +18,6 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
-		// case 'fb_login':
-		// 	return {
-		// 		...state,
-		// 		userName: action.payload.name,
-		// 		userId: action.payload.id,
-		// 		userToken: action.payload.accessToken,
-		// 		userAmIHCP: action.payload.amIHCP,
-		// 		isLoggedIn: true,
-		// 		dialogMessage: '',
-		// 		dialogOpen: false
-		// 	};
-		// case 'gg_login':
-		// 	return {
-		// 		...state,
-		// 		userName: action.payload.profileObj.name,
-		// 		userId: action.payload.googleId,
-		// 		userToken: action.payload.accessToken,
-		// 		userAmIHCP: action.payload.amIHCP,
-		// 		isLoggedIn: true,
-		// 		dialogMessage: '',
-		// 		dialogOpen: false
-		// 	};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
@@ -86,27 +64,6 @@ const register = (dispatch) => {
 	};
 };
 
-const handleFacebookLogin = (dispatch) => async (fbResponse) => {
-	console.log(fbResponse);
-
-	dispatch({ type: 'fb_login', payload: fbResponse });
-	// try {
-	// 	const response = await dianurseApi.post('/account/auth/facebook', accessToken);
-	// 	console.log(response);
-	// 	dispatch({ type: 'login', payload: response.data.token });
-	// } catch (err) {
-	// 	dispatch({
-	// 		type: 'add_error',
-	// 		payload: err.message
-	// 	});
-	// }
-};
-
-const handleGoogleLogin = (dispatch) => (ggResponse) => {
-	console.log(ggResponse);
-	dispatch({ type: 'gg_login', payload: ggResponse });
-};
-
 const login = (dispatch) => {
 	return async ({ email, password }) => {
 		dispatch({ type: 'open_dialog' });
@@ -140,6 +97,80 @@ const signout = (dispatch) => async () => {
 	dispatch({ type: 'signout' });
 };
 
+//SOCIAL MEDIA LOGIN AND REGISTER
+
+const handleFacebookLogin = (dispatch) => async (fbResponse) => {
+	console.log(fbResponse);
+
+	try {
+		const response = await dianurseApi.post('/account/auth/socialmedia', { email: fbResponse.email });
+		console.log(response);
+		// dispatch({ type: 'login', payload: response.data.token });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+const handleFacebookRegister = (dispatch) => async ({ fbResponse, language }) => {
+	console.log(fbResponse, language);
+	try {
+		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
+			username: fbResponse.name,
+			id: fbResponse.id,
+			email: fbResponse.email,
+			picture: fbResponse.picture.data.url,
+			preferredLanguage: language
+		});
+		console.log(response);
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+const handleGoogleLogin = (dispatch) => async (ggResponse) => {
+	console.log(ggResponse);
+
+	try {
+		const response = await dianurseApi.post('/account/auth/socialmedia', {
+			email: ggResponse.profileObj.email
+		});
+		console.log(response);
+		// dispatch({ type: 'login', payload: response.data.token });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+const handleGoogleRegister = (dispatch) => async ({ ggResponse, language }) => {
+	console.log(ggResponse, language);
+	try {
+		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
+			username: ggResponse.profileObj.name,
+			id: ggResponse.googleId,
+			email: ggResponse.profileObj.email,
+			picture: ggResponse.profileObj.imageUrl,
+			preferredLanguage: language
+		});
+		console.log(response);
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+//RECOVER PASSWORD
+
 const recoverPassword = (dispatch) => async ({ email }) => {
 	dispatch({ type: 'open_dialog' });
 	try {
@@ -159,7 +190,17 @@ const closeDialog = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ login, signout, register, handleFacebookLogin, handleGoogleLogin, recoverPassword, closeDialog },
+	{
+		login,
+		signout,
+		register,
+		handleFacebookLogin,
+		handleFacebookRegister,
+		handleGoogleLogin,
+		handleGoogleRegister,
+		recoverPassword,
+		closeDialog
+	},
 	{
 		useName: '',
 		userId: '',
@@ -168,6 +209,6 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true
+		isLoggedIn: false
 	}
 );
