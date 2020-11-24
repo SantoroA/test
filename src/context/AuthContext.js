@@ -14,33 +14,32 @@ const authReducer = (state, action) => {
 				userId: action.payload.userId,
 				userToken: action.payload.token,
 				userAmIHCP: action.payload.amIHCP,
-				// loginData: action.payload,
 				isLoggedIn: true,
 				dialogMessage: '',
 				dialogOpen: false
 			};
-		case 'fb_login':
-			return {
-				...state,
-				userName: action.payload.name,
-				userId: action.payload.id,
-				userToken: action.payload.accessToken,
-				// userAmIHCP: action.payload.amIHCP,
-				isLoggedIn: true,
-				dialogMessage: '',
-				dialogOpen: false
-			};
-		case 'gg_login':
-			return {
-				...state,
-				userName: action.payload.profileObj.name,
-				userId: action.payload.googleId,
-				userToken: action.payload.accessToken,
-				// userAmIHCP: action.payload.amIHCP,
-				isLoggedIn: true,
-				dialogMessage: '',
-				dialogOpen: false
-			};
+		// case 'fb_login':
+		// 	return {
+		// 		...state,
+		// 		userName: action.payload.name,
+		// 		userId: action.payload.id,
+		// 		userToken: action.payload.accessToken,
+		// 		userAmIHCP: action.payload.amIHCP,
+		// 		isLoggedIn: true,
+		// 		dialogMessage: '',
+		// 		dialogOpen: false
+		// 	};
+		// case 'gg_login':
+		// 	return {
+		// 		...state,
+		// 		userName: action.payload.profileObj.name,
+		// 		userId: action.payload.googleId,
+		// 		userToken: action.payload.accessToken,
+		// 		userAmIHCP: action.payload.amIHCP,
+		// 		isLoggedIn: true,
+		// 		dialogMessage: '',
+		// 		dialogOpen: false
+		// 	};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
@@ -165,7 +164,7 @@ export const { Provider, Context } = createDataContext(
 		useName: '',
 		userId: '',
 		userToken: '',
-		userAmIHCP: '',
+		userAmIHCP: false,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
