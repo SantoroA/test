@@ -5,8 +5,8 @@ import { Provider as LanguageProvider } from './context/LanguageContext';
 import GetStartedPage from './pages/GetStartedPage';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import DashboardPage from './pages/DashboardPage';
-import PatientOnboardingPage from './pages/PatientOnboardingPage';
-import DoctorOnboardingPage from './pages/DoctorOnboardingPage';
+import ReservationPrescreening from './pages/ReservationPrescreening';
+
 import './App.css';
 
 const Routes = () => {
@@ -41,7 +41,7 @@ const PrivateRouteDoctor = () => {
 				<Redirect to="/doctordashboard" />
 			</Route>
 			<Route path="/doctordashboard" exact component={DashboardPage} />
-			<Route path="/doctoronboarding" exact component={DoctorOnboardingPage} />
+			<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 		</Switch>
 	);
 };
@@ -52,8 +52,9 @@ const PrivateRoutePatient = () => {
 			<Route path="/" exact render={() => <h1>Root</h1>}>
 				<Redirect to="/patientdashboard" />
 			</Route>
-			<Route path="/patientonboarding" exact component={PatientOnboardingPage} />
+			<Route path="/reservation/prescreening" exact component={ReservationPrescreening} />
 			<Route path="/patientdashboard" exact component={DashboardPage} />
+			<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 		</Switch>
 	);
 };
