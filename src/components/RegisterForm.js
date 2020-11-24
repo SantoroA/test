@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm = ({ amIHCP }) => {
-	const { register, handleFacebookLogin, handleGoogleLogin } = useContext(AuthContext);
+	const { register, handleFacebookRegister, handleGoogleRegister } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
@@ -116,7 +116,7 @@ const RegisterForm = ({ amIHCP }) => {
 					appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 					fields="name,email,picture"
 					callback={(response) => {
-						handleFacebookLogin(response);
+						handleFacebookRegister({ response, language });
 					}}
 					render={(renderProps) => (
 						<Button
@@ -142,8 +142,8 @@ const RegisterForm = ({ amIHCP }) => {
 							<i className="fab fa-google" />
 						</Button>
 					)}
-					onSuccess={(response) => handleGoogleLogin(response)}
-					onFailure={(response) => handleGoogleLogin(response)}
+					onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language })}
+					onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language })}
 					cookiePolicy={'single_host_origin'}
 				/>
 			</Grid>

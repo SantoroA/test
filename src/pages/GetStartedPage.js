@@ -7,7 +7,7 @@ const queryString = require('query-string');
 
 const GetStartedPage = ({ location }) => {
 	const { patient } = queryString.parse(location.search);
-	console.log(patient);
+	// console.log(patient);
 
 	return (
 		<div>
