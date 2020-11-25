@@ -86,7 +86,7 @@ const RegisterForm = ({ amIHCP }) => {
 						type="email"
 						required
 						value={email}
-						onChange={(e) => setEmail(e.target.value.toLocaleLowerCase())}
+						onChange={(e) => setEmail(e.target.value)}
 						label="Email"
 						variant="outlined"
 					/>
