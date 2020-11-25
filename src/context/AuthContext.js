@@ -14,10 +14,11 @@ const authReducer = (state, action) => {
 				userId: action.payload.userId,
 				userToken: action.payload.token,
 				userAmIHCP: action.payload.amIHCP,
+				isFirstTimeUser: action.payload.isFirstTimeUser,
+				preferredLanguage: action.payload.preferredLanguage,
 				isLoggedIn: true,
 				dialogMessage: '',
-				dialogOpen: false,
-				isFirstTimeUser: true
+				dialogOpen: false
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
@@ -218,6 +219,8 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false
+		isLoggedIn: true,
+		isFirstTimeUser: true,
+		preferredLanguage: 'en-US'
 	}
 );
