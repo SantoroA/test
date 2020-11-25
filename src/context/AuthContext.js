@@ -106,7 +106,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia', {
 			email: fbResponse.email,
-			type: 'facebook'
+			id: fbResponse.id
 		});
 		console.log(response);
 		// dispatch({ type: 'login', payload: response.data.token });
@@ -145,7 +145,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia', {
 			email: ggResponse.profileObj.email,
-			type: 'google'
+			id: ggResponse.googleId
 		});
 		console.log(response);
 		// dispatch({ type: 'login', payload: response.data.token });
