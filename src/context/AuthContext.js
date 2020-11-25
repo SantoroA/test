@@ -219,7 +219,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: true,
 		preferredLanguage: 'en-US'
 	}
