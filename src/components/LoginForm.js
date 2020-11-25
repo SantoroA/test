@@ -120,8 +120,8 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 					<FacebookLogin
 						appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 						fields="name,email,picture"
-						callback={(response) => {
-							handleFacebookLogin(response);
+						callback={(fbResponse) => {
+							handleFacebookLogin(fbResponse);
 						}}
 						render={(renderProps) => (
 							<Button
@@ -147,8 +147,8 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 								<i className="fab fa-google" />
 							</Button>
 						)}
-						onSuccess={(response) => handleGoogleLogin(response)}
-						onFailure={(response) => handleGoogleLogin(response)}
+						onSuccess={(ggResponse) => handleGoogleLogin(ggResponse)}
+						onFailure={(ggResponse) => handleGoogleLogin(ggResponse)}
 						cookiePolicy={'single_host_origin'}
 					/>
 				</Grid>
