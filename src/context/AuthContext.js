@@ -16,7 +16,8 @@ const authReducer = (state, action) => {
 				userAmIHCP: action.payload.amIHCP,
 				isLoggedIn: true,
 				dialogMessage: '',
-				dialogOpen: false
+				dialogOpen: false,
+				isFirstTimeUser: true
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
@@ -103,7 +104,10 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
 
 	try {
-		const response = await dianurseApi.post('/account/auth/socialmedia', { email: fbResponse.email.toLowerCase() });
+		const response = await dianurseApi.post('/account/auth/socialmedia', {
+			email: fbResponse.email.toLowerCase(),
+			type: 'facebook'
+		});
 		console.log(response);
 		// dispatch({ type: 'login', payload: response.data.token });
 	} catch (err) {
@@ -114,7 +118,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	}
 };
 
-const handleFacebookRegister = (dispatch) => async ({ fbResponse, language }) => {
+const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subdomain }) => {
 	console.log(fbResponse, language);
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
@@ -122,7 +126,9 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language }) =>
 			id: fbResponse.id,
 			email: fbResponse.email.toLowerCase(),
 			picture: fbResponse.picture.data.url,
-			preferredLanguage: language
+			preferredLanguage: language,
+			subdomain,
+			type: 'facebook'
 		});
 		console.log(response);
 	} catch (err) {
@@ -138,7 +144,8 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia', {
-			email: ggResponse.profileObj.email.toLowerCase()
+			email: ggResponse.profileObj.email.toLowerCase(),
+			type: 'google'
 		});
 		console.log(response);
 		// dispatch({ type: 'login', payload: response.data.token });
@@ -150,7 +157,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 	}
 };
 
-const handleGoogleRegister = (dispatch) => async ({ ggResponse, language }) => {
+const handleGoogleRegister = (dispatch) => async ({ ggResponse, language, subdomain }) => {
 	console.log(ggResponse, language);
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
@@ -158,7 +165,9 @@ const handleGoogleRegister = (dispatch) => async ({ ggResponse, language }) => {
 			id: ggResponse.googleId,
 			email: ggResponse.profileObj.email.toLowerCase(),
 			picture: ggResponse.profileObj.imageUrl,
-			preferredLanguage: language
+			preferredLanguage: language,
+			subdomain,
+			type: 'google'
 		});
 		console.log(response);
 	} catch (err) {
