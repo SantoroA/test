@@ -116,7 +116,7 @@ const RegisterForm = ({ amIHCP }) => {
 					appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 					fields="name,email,picture"
 					callback={(fbResponse) => {
-						handleFacebookRegister({ fbResponse, language });
+						handleFacebookRegister({ fbResponse, language, subdomain });
 					}}
 					render={(renderProps) => (
 						<Button
@@ -142,8 +142,8 @@ const RegisterForm = ({ amIHCP }) => {
 							<i className="fab fa-google" />
 						</Button>
 					)}
-					onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language })}
-					onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language })}
+					onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
+					onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 					cookiePolicy={'single_host_origin'}
 				/>
 			</Grid>
