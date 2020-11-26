@@ -2,6 +2,9 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as LanguageContext } from '../context/LanguageContext';
 import useToggle from '../hooks/useToggle';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -11,9 +14,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
+import { ValidatorForm } from 'react-material-ui-form-validator';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
-import { ValidatorForm } from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -53,13 +56,19 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const RegisterForm = ({ amIHCP }) => {
+const RegisterForm = () => {
 	const { register, handleFacebookRegister, handleGoogleRegister } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
+	const [ role, setRole ] = useState('patient');
 
+	const handleRoleChange = (event) => {
+		setRole(event.target.value);
+	};
+
+	// console.log(amIHCP);
 	let subdomain;
 	if (language === 'bg_BG') {
 		subdomain = 'bg';
@@ -71,7 +80,7 @@ const RegisterForm = ({ amIHCP }) => {
 		<Paper elevation={3} className={classes.paper}>
 			<ValidatorForm
 				onSubmit={() => {
-					register({ email, amIHCP, preferredLanguage: language, subdomain });
+					register({ email, preferredLanguage: language, subdomain });
 					setEmail('');
 				}}
 				className={classes.form}
@@ -89,6 +98,15 @@ const RegisterForm = ({ amIHCP }) => {
 						variant="outlined"
 					/>
 				</Grid>
+				<div className={classes.item}>
+					<FormControl>
+						<Typography variant="subtitle1">Are you a patient or doctor?</Typography>
+						<RadioGroup aria-label="is doctor" name="isDoctor" value={role} onChange={handleRoleChange}>
+							<FormControlLabel value="patient" control={<Radio />} label="Patient" />
+							<FormControlLabel value="doctor" control={<Radio />} label="Doctor" />
+						</RadioGroup>
+					</FormControl>
+				</div>
 
 				<div className={classes.item}>
 					<FormControlLabel
@@ -108,7 +126,7 @@ const RegisterForm = ({ amIHCP }) => {
 					Register
 				</Button>
 			</ValidatorForm>
-			<Typography variant="h6">Or login with your social media</Typography>
+			<Typography variant="h6">Or register with your social media</Typography>
 			<Grid className={classes.redes} container>
 				<FacebookLogin
 					appId={process.env.REACT_APP_FACEBOOK_APP_ID}

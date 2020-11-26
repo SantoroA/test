@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
+import { Context as AuthContext } from '../context/AuthContext';
+import { Context as LanguageContext } from '../context/LanguageContext';
 import useToggle from '../hooks/useToggle';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
-import { Context as AuthContext } from '../context/AuthContext';
+import RecoverPassDialog from './RecoverPassDialog';
+import MessageDialog from './MessageDialog';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import RecoverPassDialog from './RecoverPassDialog';
-import MessageDialog from './MessageDialog';
-import { Context as LanguageContext } from '../context/LanguageContext';
 
 const useStyles = makeStyles({
 	forms: {
@@ -30,14 +30,14 @@ const useStyles = makeStyles({
 
 const translationTest = {
 	en_US: {
-		greeting: 'Are you a patient?'
+		greeting: "Hi there! Let's get started!"
 	},
 	bg_BG: {
-		greeting: 'Вие сте пациент?'
+		greeting: 'Здрасти! Да започваме!'
 	}
 };
 
-const GetStartedPatient = () => {
+const GetStarted = () => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
 	const { recoverPassword } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
@@ -56,11 +56,7 @@ const GetStartedPatient = () => {
 						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={12} sm={6} md={4}>
-						<LoginForm
-							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
-							switchProfileText="Doctor"
-							switchProfilePath="/getstarted/json?patient=1"
-						/>
+						<LoginForm togglePasswordRecoveryOpen={togglePasswordRecoveryOpen} />
 					</Grid>
 				</Grid>
 				<RecoverPassDialog
@@ -74,4 +70,4 @@ const GetStartedPatient = () => {
 	);
 };
 
-export default GetStartedPatient;
+export default GetStarted;

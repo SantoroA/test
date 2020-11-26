@@ -28,7 +28,7 @@ const ReservationPrescreening = () => {
 						step
 						nextStep={nextStep}
 						previousStep={previousStep}
-						isMainPatient
+						isMainPatient={isMainPatient}
 						setIsMainPatient={setIsMainPatient}
 					/>
 				</div>
@@ -41,7 +41,7 @@ const ReservationPrescreening = () => {
 						step
 						nextStep={nextStep}
 						previousStep={previousStep}
-						insuranceType
+						insuranceType={insuranceType}
 						setInsuranceType={setInsuranceType}
 					/>
 				</div>
@@ -54,7 +54,7 @@ const ReservationPrescreening = () => {
 						step
 						nextStep={nextStep}
 						previousStep={previousStep}
-						reasonForVisit
+						reasonForVisit={reasonForVisit}
 						setReasonForVisit={setReasonForVisit}
 					/>
 				</div>
