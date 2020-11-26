@@ -6,7 +6,7 @@ import DoctorDashboardPage from '../pages/doctor/DoctorDashboardPage';
 const PublicRoute = () => {
 	return (
 		<Switch>
-			<Route path="/getstarted/json" exact component={GetStartedPage} />
+			<Route path="/getstarted" exact component={GetStartedPage} />
 			<Route path="/doctor/dashboard" exact component={DoctorDashboardPage} />
 			<Route path="/recoverpassword" exact component={RecoverPasswordPage} />
 			<Route path="/" exact render={() => <h1>Root</h1>}>
