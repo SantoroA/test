@@ -5,7 +5,7 @@ import DoctorDashboardPage from '../pages/doctor/DoctorDashboardPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientCoachMarkPage from '../pages/patient/PatientCoachMarkPage';
 import DoctorCoachMarkPage from '../pages/doctor/DoctorCoachMarkPage';
-import ReservationPrescreening from '../pages/ReservationPrescreening';
+import ReservationPrescreening from '../pages/patient/ReservationPrescreening';
 
 const PrivateRoute = () => {
 	const { state: { userAmIHCP } } = useContext(AuthContext);

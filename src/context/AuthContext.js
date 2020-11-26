@@ -34,7 +34,7 @@ const authReducer = (state, action) => {
 //TODO: get from cookies
 
 // const tryLocallogin = (dispatch) => async () => {
-// 	const token = await localStorage.getItem('token');
+// 	const user = await dianurseApi.get('/getcookie', {user});
 // 	const history = useHistory();
 // 	if (token) {
 // 		dispatch({ type: 'login', payload: token });
@@ -76,14 +76,6 @@ const login = (dispatch) => {
 			});
 			console.log(response);
 
-			//TODO: store in COOKIES
-			// const user = {
-			// 	amIHCP: response.data.amIHCP,
-			// 	token: response.data.token,
-			// 	userId: response.data.userId,
-			// 	user: response.data.user
-			// };
-
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
@@ -110,7 +102,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 			id: fbResponse.id
 		});
 		console.log(response);
-		// dispatch({ type: 'login', payload: response.data.token });
+		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -149,7 +141,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 			id: ggResponse.googleId
 		});
 		console.log(response);
-		// dispatch({ type: 'login', payload: response.data.token });
+		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
