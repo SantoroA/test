@@ -3,10 +3,6 @@ import dianurseApi from '../api/dianurseApi';
 
 const authReducer = (state, action) => {
 	switch (action.type) {
-		case 'set_dialog_message':
-			return { ...state, dialogMessage: action.payload, dialogOpen: true };
-		case 'close_dialog':
-			return { ...state, dialogMessage: '', dialogOpen: false };
 		case 'login':
 			return {
 				...state,
@@ -24,8 +20,12 @@ const authReducer = (state, action) => {
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
 			return { loginData: null, dialogMessage: '', isLoggedIn: false };
+		case 'set_dialog_message':
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'open_dialog':
 			return { ...state, dialogOpen: true };
+		case 'close_dialog':
+			return { ...state, dialogMessage: '', dialogOpen: false };
 		default:
 			return state;
 	}
@@ -186,6 +186,24 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 	}
 };
 
+const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, recToken }) => {
+	console.log(newPassword, newPasswordMatch, recToken);
+	try {
+		const response = await dianurseApi.post(`/account/passwordrecovery/changepassword/:${recToken}`, {
+			newPassword,
+			newPasswordMatch
+		});
+		dispatch({ type: 'set_dialog_message', payload: response.data });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+// DIALOG
+
 const closeDialog = (dispatch) => () => {
 	dispatch({ type: 'close_dialog' });
 };
@@ -201,7 +219,8 @@ export const { Provider, Context } = createDataContext(
 		handleGoogleLogin,
 		handleGoogleRegister,
 		recoverPassword,
-		closeDialog
+		closeDialog,
+		changePassword
 	},
 	{
 		useName: '',
