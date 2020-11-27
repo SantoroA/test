@@ -5,6 +5,7 @@ import DoctorDashboardPage from '../pages/doctor/DoctorDashboardPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientCoachMarkPage from '../pages/patient/PatientCoachMarkPage';
 import DoctorCoachMarkPage from '../pages/doctor/DoctorCoachMarkPage';
+import CompleteProfilePage from '../pages/CompleteProfilePage';
 import ReservationPrescreening from '../pages/patient/ReservationPrescreening';
 
 const PrivateRoute = () => {
@@ -20,6 +21,7 @@ const PrivateRouteDoctor = () => {
 				{isFirstTimeUser ? <Redirect to="/doctor/coachmark" /> : <Redirect to="/doctor/dashboard" />}
 			</Route>
 			<Route path="/doctor/dashboard" exact component={DoctorDashboardPage} />
+			<Route path="/doctor/completeprofile" exact component={CompleteProfilePage} />
 			<Route path="/doctor/coachmark" exact component={DoctorCoachMarkPage} />
 			<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 		</Switch>
@@ -35,6 +37,7 @@ const PrivateRoutePatient = () => {
 			</Route>
 			<Route path="/reservation/prescreening" exact component={ReservationPrescreening} />
 			<Route path="/patient/dashboard" exact component={PatientDashboardPage} />
+			<Route path="/patient/completeprofile" exact component={CompleteProfilePage} />
 			<Route path="/patient/coachmark" exact component={PatientCoachMarkPage} />
 			<Route render={() => <h1>ERROR NOT FOUND</h1>} />
 		</Switch>
