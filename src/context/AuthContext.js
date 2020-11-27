@@ -33,19 +33,19 @@ const authReducer = (state, action) => {
 
 //TODO: get from cookies
 
-const tryLocallogin = (dispatch) => async () => {
-	const loginInfo = await dianurseApi.get('/account/getcookie', { loginInfo });
-	// const response = await dianurseApi.get('/accou' {
-	// 	Autho....
-	// })
-	const history = useHistory();
-	if (token) {
-		dispatch({ type: 'login', payload: token });
-	} else {
-		history.push('/');
-		console.log('you must sign in ');
-	}
-};
+// const tryLocallogin = (dispatch) => async () => {
+// 	const loginInfo = await dianurseApi.get('/account/getcookie', { loginInfo });
+// const response = await dianurseApi.get('/accou' {
+// 	Autho....
+// })
+// const history = useHistory();
+// if (token) {
+// 	dispatch({ type: 'login', payload: token });
+// } else {
+// 	history.push('/');
+// 	console.log('you must sign in ');
+// }
+// };
 
 const register = (dispatch) => {
 	return async ({ email, amIHCP, preferredLanguage, subdomain }) => {
@@ -233,7 +233,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: true,
 		preferredLanguage: 'en-US'
 	}

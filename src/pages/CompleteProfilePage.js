@@ -1,12 +1,16 @@
-import React from 'react';
-import Navbar from '../../components/Navbar';
-import Typography from '@material-ui/core/Typography';
+import React, { useContext } from 'react';
+// import { Context as AuthContext } from '../context/AuthContext';
+import Navbar from '../components/Navbar';
+import CompleteProfileForm from '../components/CompleteProfileForm';
+import ContactInfoForm from '../components/ContactInfoForm';
 
 const CompleteProfilePage = () => {
+	// const { userAmIHCP } = useContext(AuthContext);
 	return (
 		<div>
 			<Navbar />
-			<Typography variant="h4">Complete Profile</Typography>
+			<CompleteProfileForm />
+			<ContactInfoForm />
 		</div>
 	);
 };
