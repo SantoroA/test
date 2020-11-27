@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Context as AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	container: {

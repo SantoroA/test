@@ -33,16 +33,19 @@ const authReducer = (state, action) => {
 
 //TODO: get from cookies
 
-// const tryLocallogin = (dispatch) => async () => {
-// 	const user = await dianurseApi.get('/getcookie', {user});
-// 	const history = useHistory();
-// 	if (token) {
-// 		dispatch({ type: 'login', payload: token });
-// 	} else {
-// 		history.push('/');
-// 		console.log('you must sign in ');
-// 	}
-// };
+const tryLocallogin = (dispatch) => async () => {
+	const loginInfo = await dianurseApi.get('/account/getcookie', { loginInfo });
+	// const response = await dianurseApi.get('/accou' {
+	// 	Autho....
+	// })
+	const history = useHistory();
+	if (token) {
+		dispatch({ type: 'login', payload: token });
+	} else {
+		history.push('/');
+		console.log('you must sign in ');
+	}
+};
 
 const register = (dispatch) => {
 	return async ({ email, amIHCP, preferredLanguage, subdomain }) => {
@@ -189,7 +192,7 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, recToken }) => {
 	console.log(newPassword, newPasswordMatch, recToken);
 	try {
-		const response = await dianurseApi.post(`/account/passwordrecovery/changepassword/:${recToken}`, {
+		const response = await dianurseApi.post(`/account/passwordrecovery/changepassword/${recToken}`, {
 			newPassword,
 			newPasswordMatch
 		});
