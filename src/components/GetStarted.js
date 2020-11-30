@@ -37,7 +37,7 @@ const translationTest = {
 	}
 };
 
-const GetStarted = () => {
+const GetStarted = ({ loginCredentials }) => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
 	const { recoverPassword } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
@@ -56,7 +56,10 @@ const GetStarted = () => {
 						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={12} sm={6} md={4}>
-						<LoginForm togglePasswordRecoveryOpen={togglePasswordRecoveryOpen} />
+						<LoginForm
+							loginCredentials={loginCredentials}
+							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+						/>
 					</Grid>
 				</Grid>
 				<RecoverPassDialog

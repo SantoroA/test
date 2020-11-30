@@ -63,7 +63,18 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const LoginForm = ({ togglePasswordRecoveryOpen }) => {
+const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
+	const decodeToken = () => {
+		let decodedToken = atob(loginCredentials);
+		let decodedPassword = decodedToken.split('=')[1].split('&');
+		// let decodedEmail = decoded[1];
+		// let decodedPass = decoded[0];
+		console.log(decodedToken, decodedPassword);
+	};
+	if (loginCredentials) {
+		decodeToken();
+	}
+	// console.log(loginCredentials);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();

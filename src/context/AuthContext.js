@@ -193,7 +193,7 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, recToken }) => {
 	console.log(newPassword, newPasswordMatch, recToken);
 	try {
-		const response = await dianurseApi.post(`/account/passwordrecovery/changepassword/${recToken}`, {
+		const response = await dianurseApi.post(`/account/passwordrecovery/${recToken}`, {
 			newPassword,
 			newPasswordMatch
 		});
@@ -201,7 +201,8 @@ const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, rec
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
-			payload: err.message
+			payload: 'Ops, something went wrong. Please try again later.'
+			//error of type 502 ex
 		});
 	}
 };

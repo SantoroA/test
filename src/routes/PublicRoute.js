@@ -7,9 +7,9 @@ const PublicRoute = () => {
 	return (
 		<Switch>
 			<Route path="/getstarted" exact component={GetStartedPage} />
-			{/* <Route path="/doctor/dashboard" exact component={DoctorDashboardPage} /> */}
-			<Route path="/recoverpassword:recToken" exact component={ChangePasswordPage} />
 			<Route path="/recoverpassword" exact component={ChangePasswordPage} />
+			<Route path="/getstarted/:loginCredentials" exact component={GetStartedPage} />
+			<Route path="/recoverpassword/:recToken" exact component={ChangePasswordPage} />
 			<Route path="/" render={() => <h1>Root</h1>}>
 				<Redirect to="/getstarted" />
 			</Route>
