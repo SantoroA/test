@@ -121,7 +121,7 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 			username: fbResponse.name,
 			id: fbResponse.id,
 			//get element zero
-			email: fbResponse.email[0],
+			email: fbResponse.email,
 			picture: fbResponse.picture.data.url,
 			preferredLanguage: language,
 			subdomain,
