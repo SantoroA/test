@@ -120,7 +120,8 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
 			username: fbResponse.name,
 			id: fbResponse.id,
-			email: fbResponse.email,
+			//get element zero
+			email: fbResponse.email[0],
 			picture: fbResponse.picture.data.url,
 			preferredLanguage: language,
 			subdomain,
@@ -233,8 +234,8 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
-		isFirstTimeUser: true,
+		isLoggedIn: false,
+		isFirstTimeUser: false,
 		preferredLanguage: 'en-US'
 	}
 );
