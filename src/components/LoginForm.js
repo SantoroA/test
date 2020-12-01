@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
-import FacebookIcon from '@material-ui/icons/Facebook';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfilePath }) => {
+const LoginForm = ({ togglePasswordRecoveryOpen }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
@@ -116,6 +116,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 						Log In
 					</Button>
 				</form>
+				<Typography variant="h6">Or login with your social media</Typography>
 				<Grid className={classes.redes} container>
 					<FacebookLogin
 						appId={process.env.REACT_APP_FACEBOOK_APP_ID}
@@ -153,14 +154,6 @@ const LoginForm = ({ togglePasswordRecoveryOpen, switchProfileText, switchProfil
 					/>
 				</Grid>
 			</Paper>
-			<div className={classes.text}>
-				<p> Are you a {switchProfileText}?</p>
-				<div>
-					<Link className={classes.link} to={switchProfilePath}>
-						Go to {switchProfileText} Profile
-					</Link>
-				</div>
-			</div>
 		</div>
 	);
 };

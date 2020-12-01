@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import FormUserReason from '../components/reservations/FormUserReason';
-import FormUserInsurance from '../components/reservations/FormUserInsurance';
-import FormWhoIsPatient from '../components/reservations/FormWhoIsPatient';
-import FormUserRecommendation from '../components/reservations/FormUserRecommendation';
+import Navbar from '../../components/Navbar';
+import FormUserReason from '../../components/reservations/FormUserReason';
+import FormUserInsurance from '../../components/reservations/FormUserInsurance';
+import FormWhoIsPatient from '../../components/reservations/FormWhoIsPatient';
+import FormUserRecommendation from '../../components/reservations/FormUserRecommendation';
 
 const ReservationPrescreening = () => {
 	const [ step, setStep ] = useState(1);
@@ -28,7 +28,7 @@ const ReservationPrescreening = () => {
 						step
 						nextStep={nextStep}
 						previousStep={previousStep}
-						isMainPatient
+						isMainPatient={isMainPatient}
 						setIsMainPatient={setIsMainPatient}
 					/>
 				</div>
@@ -41,7 +41,7 @@ const ReservationPrescreening = () => {
 						step
 						nextStep={nextStep}
 						previousStep={previousStep}
-						insuranceType
+						insuranceType={insuranceType}
 						setInsuranceType={setInsuranceType}
 					/>
 				</div>
@@ -54,7 +54,7 @@ const ReservationPrescreening = () => {
 						step
 						nextStep={nextStep}
 						previousStep={previousStep}
-						reasonForVisit
+						reasonForVisit={reasonForVisit}
 						setReasonForVisit={setReasonForVisit}
 					/>
 				</div>

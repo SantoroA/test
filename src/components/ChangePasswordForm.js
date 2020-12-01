@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { Context as AuthContext } from '../context/AuthContext';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
@@ -29,13 +29,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const RecoverPasswordForm = () => {
-	const [ oldPassword, setOldPassword ] = useState('');
-	const [ newPassword, setNewPassword ] = useState('');
-	const [ repeatPassword, setRepeatPassword ] = useState('');
-
+const ChangePasswordForm = ({ recToken }) => {
 	const classes = useStyles();
-
+	const { changePassword } = useContext(AuthContext);
+	const [ newPassword, setNewPassword ] = useState('');
+	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
 	useEffect(
 		() => {
 			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -50,19 +48,13 @@ const RecoverPasswordForm = () => {
 
 	return (
 		<Paper elevation={3} className={classes.paper}>
-			<ValidatorForm onSubmit={() => {}} className={classes.form}>
+			<ValidatorForm
+				onSubmit={() => {
+					changePassword({ newPassword, newPasswordMatch, recToken });
+				}}
+				className={classes.form}
+			>
 				<Typography variant="h5">Change your password</Typography>
-				<Grid className={classes.item}>
-					<TextField
-						fullWidth
-						type="password"
-						required
-						value={oldPassword}
-						onChange={(e) => setOldPassword(e.target.value)}
-						label="Old Password"
-						variant="outlined"
-					/>
-				</Grid>
 				<Grid className={classes.item}>
 					<TextValidator
 						fullWidth
@@ -80,8 +72,8 @@ const RecoverPasswordForm = () => {
 						fullWidth
 						type="password"
 						required
-						value={repeatPassword}
-						onChange={(e) => setRepeatPassword(e.target.value)}
+						value={newPasswordMatch}
+						onChange={(e) => setNewPasswordMatch(e.target.value)}
 						label="Confirm Password"
 						variant="outlined"
 						validators={[ 'isPasswordMatch', 'required' ]}
@@ -97,4 +89,4 @@ const RecoverPasswordForm = () => {
 	);
 };
 
-export default RecoverPasswordForm;
+export default ChangePasswordForm;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import RecoverPasswordForm from '../components/RecoverPasswordForm';
+import ChangePasswordForm from '../components/ChangePasswordForm';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,15 +15,17 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const RecoverPasswordPage = () => {
+const ChangePasswordPage = (props) => {
 	const classes = useStyles();
+	const { recToken } = props.match.params;
+
 	return (
 		<div>
 			<Navbar />
 			<Container>
 				<Grid container className={classes.container}>
 					<Grid item xs={12} sm={6} md={4}>
-						<RecoverPasswordForm />
+						<ChangePasswordForm recToken={recToken} />
 					</Grid>
 				</Grid>
 			</Container>
@@ -31,4 +33,4 @@ const RecoverPasswordPage = () => {
 	);
 };
 
-export default RecoverPasswordPage;
+export default ChangePasswordPage;

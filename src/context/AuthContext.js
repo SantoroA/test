@@ -3,10 +3,6 @@ import dianurseApi from '../api/dianurseApi';
 
 const authReducer = (state, action) => {
 	switch (action.type) {
-		case 'set_dialog_message':
-			return { ...state, dialogMessage: action.payload, dialogOpen: true };
-		case 'close_dialog':
-			return { ...state, dialogMessage: '', dialogOpen: false };
 		case 'login':
 			return {
 				...state,
@@ -24,8 +20,12 @@ const authReducer = (state, action) => {
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'signout':
 			return { loginData: null, dialogMessage: '', isLoggedIn: false };
+		case 'set_dialog_message':
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'open_dialog':
 			return { ...state, dialogOpen: true };
+		case 'close_dialog':
+			return { ...state, dialogMessage: '', dialogOpen: false };
 		default:
 			return state;
 	}
@@ -34,14 +34,17 @@ const authReducer = (state, action) => {
 //TODO: get from cookies
 
 // const tryLocallogin = (dispatch) => async () => {
-// 	const token = await localStorage.getItem('token');
-// 	const history = useHistory();
-// 	if (token) {
-// 		dispatch({ type: 'login', payload: token });
-// 	} else {
-// 		history.push('/');
-// 		console.log('you must sign in ');
-// 	}
+// 	const loginInfo = await dianurseApi.get('/account/getcookie', { loginInfo });
+// const response = await dianurseApi.get('/accou' {
+// 	Autho....
+// })
+// const history = useHistory();
+// if (token) {
+// 	dispatch({ type: 'login', payload: token });
+// } else {
+// 	history.push('/');
+// 	console.log('you must sign in ');
+// }
 // };
 
 const register = (dispatch) => {
@@ -76,14 +79,6 @@ const login = (dispatch) => {
 			});
 			console.log(response);
 
-			//TODO: store in COOKIES
-			// const user = {
-			// 	amIHCP: response.data.amIHCP,
-			// 	token: response.data.token,
-			// 	userId: response.data.userId,
-			// 	user: response.data.user
-			// };
-
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
@@ -110,7 +105,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 			id: fbResponse.id
 		});
 		console.log(response);
-		// dispatch({ type: 'login', payload: response.data.token });
+		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -125,6 +120,7 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
 			username: fbResponse.name,
 			id: fbResponse.id,
+			//get element zero
 			email: fbResponse.email,
 			picture: fbResponse.picture.data.url,
 			preferredLanguage: language,
@@ -149,7 +145,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 			id: ggResponse.googleId
 		});
 		console.log(response);
-		// dispatch({ type: 'login', payload: response.data.token });
+		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -194,6 +190,24 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 	}
 };
 
+const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, recToken }) => {
+	console.log(newPassword, newPasswordMatch, recToken);
+	try {
+		const response = await dianurseApi.post(`/account/passwordrecovery/changepassword/${recToken}`, {
+			newPassword,
+			newPasswordMatch
+		});
+		dispatch({ type: 'set_dialog_message', payload: response.data });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
+};
+
+// DIALOG
+
 const closeDialog = (dispatch) => () => {
 	dispatch({ type: 'close_dialog' });
 };
@@ -209,7 +223,8 @@ export const { Provider, Context } = createDataContext(
 		handleGoogleLogin,
 		handleGoogleRegister,
 		recoverPassword,
-		closeDialog
+		closeDialog,
+		changePassword
 	},
 	{
 		useName: '',
@@ -219,8 +234,8 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
-		isFirstTimeUser: true,
+		isLoggedIn: false,
+		isFirstTimeUser: false,
 		preferredLanguage: 'en-US'
 	}
 );
