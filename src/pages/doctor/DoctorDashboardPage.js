@@ -126,7 +126,7 @@ const DoctorDashboardPage = (props) => {
   };
 
   const handleLogout = () => {
-    props.history.push("/getstarted/json");
+    props.history.push("/getstarted");
   };
 
   return (
@@ -145,7 +145,7 @@ const DoctorDashboardPage = (props) => {
             >
               <AccountCircle fontSize="large" />
               <Typography variant="h6" className={classes.loginName}>
-                Doctor's Name: {userName}
+                {userName}
               </Typography>
             </IconButton>
             <Menu
@@ -181,9 +181,9 @@ const DoctorDashboardPage = (props) => {
           {/* fetch the foto as url- it's received from the back-end  */}
           {/* get data request and display the response from the back-end on the page */}
           <Typography variant="h4" className={classes.text}>
-            Doctor's Name: {userName}
+            {userName}
             <Typography className={classes.text} variant="h6">
-              Add your specialty:
+              My specialty:
             </Typography>
           </Typography>
         </div>
@@ -199,7 +199,6 @@ const DoctorDashboardPage = (props) => {
               <b>LV 00.00</b>
             </p>
           </Typography>
-          {/* how it works with the status, to be added */}
           <FormGroup row>
             <FormControlLabel
               control={
