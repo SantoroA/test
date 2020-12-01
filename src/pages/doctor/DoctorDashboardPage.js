@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const DashboardPage = (props) => {
+const DoctorDashboardPage = (props) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     checkedA: true,
@@ -249,4 +249,4 @@ const DashboardPage = (props) => {
   );
 };
 
-export default DashboardPage;
+export default DoctorDashboardPage;

@@ -215,7 +215,7 @@ export const { Provider, Context } = createDataContext(
 		useName: '',
 		userId: '',
 		userToken: '',
-		userAmIHCP: false,
+		userAmIHCP: true,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
