@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as LanguageContext } from '../context/LanguageContext';
 import useToggle from '../hooks/useToggle';
-import RegisterForm from './RegisterForm';
-import LoginForm from './LoginForm';
+import RegisterForm from './forms/RegisterForm';
+import LoginForm from './forms/LoginForm';
 import RecoverPassDialog from './RecoverPassDialog';
 import MessageDialog from './MessageDialog';
 import Container from '@material-ui/core/Container';
@@ -37,7 +37,7 @@ const translationTest = {
 	}
 };
 
-const GetStarted = () => {
+const GetStarted = ({ loginCredentials }) => {
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
 	const { recoverPassword } = useContext(AuthContext);
 	const { state: { language } } = useContext(LanguageContext);
@@ -56,7 +56,10 @@ const GetStarted = () => {
 						<RegisterForm amIHCP={false} />
 					</Grid>
 					<Grid item xs={12} sm={6} md={4}>
-						<LoginForm togglePasswordRecoveryOpen={togglePasswordRecoveryOpen} />
+						<LoginForm
+							loginCredentials={loginCredentials}
+							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
+						/>
 					</Grid>
 				</Grid>
 				<RecoverPassDialog

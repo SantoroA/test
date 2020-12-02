@@ -2,11 +2,13 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import GetStarted from '../components/GetStarted';
 
-const GetStartedPage = () => {
+const GetStartedPage = (props) => {
+	const { loginCredentials } = props.match.params;
+
 	return (
 		<div>
 			<Navbar />
-			<GetStarted />
+			<GetStarted loginCredentials={loginCredentials} />
 		</div>
 	);
 };

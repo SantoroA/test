@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Context as AuthContext } from '../context/AuthContext';
-import { Context as LanguageContext } from '../context/LanguageContext';
-import useToggle from '../hooks/useToggle';
+import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as LanguageContext } from '../../context/LanguageContext';
+import useToggle from '../../hooks/useToggle';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
