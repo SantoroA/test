@@ -86,8 +86,8 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 	// if (loginCredentials) {
 	// 	decodeToken();
 	// }
-	const handleSubmit = () => {
-		login({ email, password });
+	const handleSubmit = async () => {
+		await login({ email, password });
 		setEmail('');
 		setPassword('');
 	};

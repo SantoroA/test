@@ -61,23 +61,23 @@ const getCookie = (dispatch) => {
 		}
 	};
 };
-const saveCookie = (dispatch) => {
-	return async (userToken) => {
-		try {
-			const response = await dianurseApi.get('/account/savecookie', {
-				//mandar pela header
-				params: {
-					token: userToken
-				},
-				withCredentials: true
-			});
-			console.log(response);
-		} catch (err) {
-			console.log(err.message);
-			dispatch({ type: 'add_error', payload: err.message });
-		}
-	};
-};
+// const saveCookie = (dispatch) => {
+// 	return async (userToken) => {
+// 		try {
+// 			const response = await dianurseApi.get('/account/savecookie', {
+// 				//mandar pela header
+// 				params: {
+// 					token: userToken
+// 				},
+// 				withCredentials: true
+// 			});
+// 			console.log(response);
+// 		} catch (err) {
+// 			console.log(err.message);
+// 			dispatch({ type: 'add_error', payload: err.message });
+// 		}
+// 	};
+// };
 
 // instance.interceptors.request.use(
 // 		async (config) => {
@@ -137,7 +137,13 @@ const login = (dispatch) => {
 				password
 			});
 			console.log(response);
-
+			dianurseApi.get('/account/savecookie', {
+				//mandar pela header
+				params: {
+					token: response.data.token
+				},
+				withCredentials: true
+			});
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
