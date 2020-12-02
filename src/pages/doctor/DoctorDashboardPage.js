@@ -1,12 +1,14 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
-import Typography from '@material-ui/core/Typography';
+import AppBar from '../../components/dashboard/AppBar.js';
+import MainInfo from '../../components/dashboard/MainInfo.js';
+import TabsPage from '../../components/dashboard/Tabs.js';
 
 const DoctorDashboardPage = () => {
 	return (
 		<div>
-			<Navbar />
-			<Typography variant="h4">Doctor Dashboard</Typography>
+			<AppBar />
+			<MainInfo />
+			<TabsPage />
 		</div>
 	);
 };
