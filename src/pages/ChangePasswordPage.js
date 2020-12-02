@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import ChangePasswordForm from '../components/ChangePasswordForm';
+import ChangePasswordForm from '../components/forms/ChangePasswordForm';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
