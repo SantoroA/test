@@ -18,8 +18,19 @@ const authReducer = (state, action) => {
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
-		case 'signout':
-			return { loginData: null, dialogMessage: '', isLoggedIn: false };
+		case 'logout':
+			return {
+				...state,
+				userName: '',
+				userId: '',
+				userToken: '',
+				userAmIHCP: '',
+				isFirstTimeUser: '',
+				preferredLanguage: '',
+				isLoggedIn: false,
+				dialogMessage: '',
+				dialogOpen: false
+			};
 		case 'set_dialog_message':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'open_dialog':
@@ -31,7 +42,55 @@ const authReducer = (state, action) => {
 	}
 };
 
-//TODO: get from cookies
+// COOKIE
+
+const getCookie = (dispatch) => {
+	return async () => {
+		try {
+			const response = await dianurseApi.get('/account/getcookie', {
+				withCredentials: true
+			});
+			console.log(response);
+			dispatch({ type: 'login', payload: response.data });
+		} catch (err) {
+			console.log(err.message);
+			if (err.request.status === 401) {
+				console.log('redirect to login');
+			}
+			dispatch({ type: 'add_error', payload: err.message });
+		}
+	};
+};
+const saveCookie = (dispatch) => {
+	return async (userToken) => {
+		try {
+			const response = await dianurseApi.get('/account/savecookie', {
+				//mandar pela header
+				params: {
+					token: userToken
+				},
+				withCredentials: true
+			});
+			console.log(response);
+		} catch (err) {
+			console.log(err.message);
+			dispatch({ type: 'add_error', payload: err.message });
+		}
+	};
+};
+
+// instance.interceptors.request.use(
+// 		async (config) => {
+// 			const token = await localStorage.getItem('token');
+// 			if (token) {
+// 				config.headers.Authorization = `Bearer ${token}`;
+// 			}
+// 			return config;
+// 		},
+// 		(err) => {
+// 			return Promise.reject(err);
+// 		}
+// 	);
 
 // const tryLocallogin = (dispatch) => async () => {
 // 	const loginInfo = await dianurseApi.get('/account/getcookie', { loginInfo });
@@ -89,10 +148,25 @@ const login = (dispatch) => {
 	};
 };
 
-const signout = (dispatch) => async () => {
-	await localStorage.removeItem('token');
-	dispatch({ type: 'signout' });
+const logout = (dispatch) => {
+	return async () => {
+		try {
+			const response = await dianurseApi.get('/account/logout', {
+				withCredentials: true
+			});
+			console.log(response);
+
+			dispatch({ type: 'logout' });
+		} catch (err) {
+			console.log(err.message);
+			dispatch({ type: 'add_error', payload: err.message });
+		}
+	};
 };
+
+// async () => {
+// 	await localStorage.removeItem('token');
+// };
 
 //SOCIAL MEDIA LOGIN AND REGISTER
 
@@ -217,8 +291,10 @@ export const { Provider, Context } = createDataContext(
 	authReducer,
 	{
 		login,
-		signout,
+		logout,
 		register,
+		saveCookie,
+		getCookie,
 		handleFacebookLogin,
 		handleFacebookRegister,
 		handleGoogleLogin,

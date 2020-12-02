@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context as AuthContext } from '../context/AuthContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -66,10 +66,10 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 	const decodeToken = () => {
 		let decodedToken = atob(loginCredentials);
-		let decodedPassword = decodedToken.split('=')[1].split('&');
-		// let decodedEmail = decoded[1];
-		// let decodedPass = decoded[0];
-		console.log(decodedToken, decodedPassword);
+		let decoded = decodedToken.split('=');
+		let decodedEmail = decoded[2];
+		let decodedPass = decoded[1].split('&')[0];
+		console.log(decodedEmail, decodedPass);
 	};
 	if (loginCredentials) {
 		decodeToken();

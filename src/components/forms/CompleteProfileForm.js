@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Context as AuthContext } from '../context/AuthContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';

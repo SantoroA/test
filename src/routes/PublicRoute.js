@@ -1,7 +1,7 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import GetStartedPage from '../pages/GetStartedPage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
-import DoctorDashboardPage from '../pages/doctor/DoctorDashboardPage';
+// import LoadingPage from '../pages/LoadingPage';
 
 const PublicRoute = () => {
 	return (
