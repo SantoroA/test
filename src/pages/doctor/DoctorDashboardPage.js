@@ -14,12 +14,14 @@ import Rating from "@material-ui/lab/Rating";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import Link from "@material-ui/core/Link";
-import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
-import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
-import EventAvailableOutlinedIcon from '@material-ui/icons/EventAvailableOutlined';
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
+import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
+import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
+import EventAvailableOutlinedIcon from "@material-ui/icons/EventAvailableOutlined";
 
+// theming
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#000",
     marginLeft: "0.5em",
   },
-  menu: {
+  menu_style: {
     marginTop: "3em",
   },
   body: {
@@ -83,50 +85,45 @@ const useStyles = makeStyles((theme) => ({
   },
   rating: {
     display: "flex",
-    flexDirection: "row",
   },
-  links: {
-    textAlign: "center",
-    color: "#000",
-    margin: "1.5em",
-    fontWeight: 500,
-    textDecoration: "underline",
-    fontSize: "1.5em",
+  wrapperTab: {
+    textTransform: "capitalize",
+    fontSize: "1.2em",
   },
   icons: {
-    color: "#6c6c5a", 
+    color: "#6c6c5a",
     marginRight: "0.3em",
     marginLeft: "1em",
-  }
+  },
 }));
 
 const DoctorDashboardPage = (props) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
+    checkedPublic: false,
+    checkedPrivate: true,
   });
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [value, setValue] = React.useState(0);
+  const [menu, setMenu] = React.useState(null);
+  const open = Boolean(menu);
   const {
     state: { userName },
   } = useContext(AuthContext);
-  console.log(userName);
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const handleChangeValue = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+    setMenu(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    props.history.push("/getstarted");
+    setMenu(null);
   };
 
   return (
@@ -150,8 +147,8 @@ const DoctorDashboardPage = (props) => {
             </IconButton>
             <Menu
               id="menu-appbar"
-              className={classes.menu}
-              anchorEl={anchorEl}
+              className={classes.menu_style}
+              anchorEl={menu}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "center",
@@ -168,9 +165,7 @@ const DoctorDashboardPage = (props) => {
               <MenuItem onClick={handleClose}>Past Appointments</MenuItem>
               <MenuItem onClick={handleClose}>Membership</MenuItem>
               <MenuItem onClick={handleClose}>Help</MenuItem>
-              <MenuItem type="button" onClick={handleLogout} value="Logout">
-                Logout
-              </MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
           </>
         </Toolbar>
@@ -183,7 +178,7 @@ const DoctorDashboardPage = (props) => {
           <Typography variant="h4" className={classes.text}>
             {userName}
             <Typography className={classes.text} variant="h6">
-              My specialty:
+              Specialty:
             </Typography>
           </Typography>
         </div>
@@ -203,9 +198,9 @@ const DoctorDashboardPage = (props) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={state.checkedB}
+                  checked={state.checkedPublic}
                   onChange={handleChange}
-                  name="checkedB"
+                  name="checkedPublic"
                   color="primary"
                 />
               }
@@ -214,36 +209,40 @@ const DoctorDashboardPage = (props) => {
           </FormGroup>
         </div>
       </div>
-      <div style={ {textAlign: "center"} }>
-      <Link
-          component="button"
-          variant="body2"
-          className={classes.links}
-        > <VideocamOutlinedIcon className={classes.icons} />
-          My Appointments
-        </Link>
-        <Link
-          component="button"
-          variant="body2"
-          className={classes.links}
-        > <PeopleAltOutlinedIcon className={classes.icons} />
-          My Patients
-        </Link>
-        <Link
-          component="button"
-          variant="body2"
-          className={classes.links}
-        > <AccountBalanceWalletOutlinedIcon className={classes.icons} />
-          My Earnings 
-        </Link>
-        <Link
-          component="button"
-          variant="body2"
-          className={classes.links}
-        > <EventAvailableOutlinedIcon className={classes.icons} />
-          Availability
-        </Link>
-        </div>
+      <div>
+        <Tabs
+          value={value}
+          onChange={handleChangeValue}
+          variant="fullWidth"
+          indicatorColor="primary"
+          textColor="#000"
+          aria-label="icon label tabs"
+          flexDirection= "row"
+        >
+          <Tab
+            className={classes.wrapperTab}
+            icon={<VideocamOutlinedIcon className={classes.icons} />}
+            label="My Appointments"
+          />
+          <Tab
+            className={classes.wrapperTab}
+            icon={<PeopleAltOutlinedIcon className={classes.icons} />}
+            label="My Patients"
+          />
+          <Tab
+            className={classes.wrapperTab}
+            icon={
+              <AccountBalanceWalletOutlinedIcon className={classes.icons} />
+            }
+            label="My Earnings"
+          />
+          <Tab
+            className={classes.wrapperTab}
+            icon={<EventAvailableOutlinedIcon className={classes.icons} />}
+            label="Availability"
+          />
+        </Tabs>
+      </div>
     </div>
   );
 };
