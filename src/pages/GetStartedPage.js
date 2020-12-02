@@ -4,7 +4,7 @@ import GetStarted from '../components/GetStarted';
 
 const GetStartedPage = (props) => {
 	const { loginCredentials } = props.match.params;
-	console.log(loginCredentials);
+
 	return (
 		<div>
 			<Navbar />
