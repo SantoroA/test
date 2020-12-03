@@ -61,50 +61,6 @@ const getCookie = (dispatch) => {
 		}
 	};
 };
-// const saveCookie = (dispatch) => {
-// 	return async (userToken) => {
-// 		try {
-// 			const response = await dianurseApi.get('/account/savecookie', {
-// 				//mandar pela header
-// 				params: {
-// 					token: userToken
-// 				},
-// 				withCredentials: true
-// 			});
-// 			console.log(response);
-// 		} catch (err) {
-// 			console.log(err.message);
-// 			dispatch({ type: 'add_error', payload: err.message });
-// 		}
-// 	};
-// };
-
-// instance.interceptors.request.use(
-// 		async (config) => {
-// 			const token = await localStorage.getItem('token');
-// 			if (token) {
-// 				config.headers.Authorization = `Bearer ${token}`;
-// 			}
-// 			return config;
-// 		},
-// 		(err) => {
-// 			return Promise.reject(err);
-// 		}
-// 	);
-
-// const tryLocallogin = (dispatch) => async () => {
-// 	const loginInfo = await dianurseApi.get('/account/getcookie', { loginInfo });
-// const response = await dianurseApi.get('/accou' {
-// 	Autho....
-// })
-// const history = useHistory();
-// if (token) {
-// 	dispatch({ type: 'login', payload: token });
-// } else {
-// 	history.push('/');
-// 	console.log('you must sign in ');
-// }
-// };
 
 const register = (dispatch) => {
 	return async ({ email, amIHCP, preferredLanguage, subdomain }) => {
@@ -138,7 +94,6 @@ const login = (dispatch) => {
 			});
 			console.log(response, response.data.token);
 			const cookieResponse = await dianurseApi.get('/account/savecookie', {
-				//mandar pela header
 				headers: {
 					token: response.data.token
 				},
@@ -170,10 +125,6 @@ const logout = (dispatch) => {
 		}
 	};
 };
-
-// async () => {
-// 	await localStorage.removeItem('token');
-// };
 
 //SOCIAL MEDIA LOGIN AND REGISTER
 

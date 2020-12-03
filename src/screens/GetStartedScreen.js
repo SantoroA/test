@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import GetStarted from '../components/GetStarted';
 
-const GetStartedPage = (props) => {
+const GetStartedScreen = (props) => {
 	const { loginCredentials } = props.match.params;
 
 	return (
@@ -13,4 +13,4 @@ const GetStartedPage = (props) => {
 	);
 };
 
-export default GetStartedPage;
+export default GetStartedScreen;

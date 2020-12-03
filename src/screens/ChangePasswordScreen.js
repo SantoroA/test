@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const ChangePasswordPage = (props) => {
+const ChangePasswordScreen = (props) => {
 	const classes = useStyles();
 	const { recToken } = props.match.params;
 
@@ -33,4 +33,4 @@ const ChangePasswordPage = (props) => {
 	);
 };
 
-export default ChangePasswordPage;
+export default ChangePasswordScreen;
