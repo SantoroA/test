@@ -136,14 +136,15 @@ const login = (dispatch) => {
 				email,
 				password
 			});
-			console.log(response);
-			dianurseApi.get('/account/savecookie', {
+			console.log(response, response.data.token);
+			const cookieResponse = await dianurseApi.get('/account/savecookie', {
 				//mandar pela header
-				params: {
+				headers: {
 					token: response.data.token
 				},
 				withCredentials: true
 			});
+			console.log(cookieResponse);
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
@@ -185,6 +186,13 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 			id: fbResponse.id
 		});
 		console.log(response);
+		const cookieResponse = await dianurseApi.get('/account/savecookie', {
+			headers: {
+				token: response.data.token
+			},
+			withCredentials: true
+		});
+		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
@@ -225,6 +233,12 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 			id: ggResponse.googleId
 		});
 		console.log(response);
+		const cookieResponse = await dianurseApi.get('/account/savecookie', {
+			headers: {
+				token: response.data.token
+			},
+			withCredentials: true
+		});
 		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
@@ -299,7 +313,6 @@ export const { Provider, Context } = createDataContext(
 		login,
 		logout,
 		register,
-		saveCookie,
 		getCookie,
 		handleFacebookLogin,
 		handleFacebookRegister,
@@ -317,7 +330,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US'
 	}
