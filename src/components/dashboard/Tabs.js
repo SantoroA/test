@@ -8,7 +8,7 @@ import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceW
 import EventAvailableOutlinedIcon from '@material-ui/icons/EventAvailableOutlined';
 
 // theming
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
 	wrapperTab: {
 		textTransform: 'capitalize',
 		fontSize: '1.2em'
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: '0.3em',
 		marginLeft: '1em'
 	}
-}));
+});
 
 const TabsPage = () => {
 	const [ value, setValue ] = useState(0);
