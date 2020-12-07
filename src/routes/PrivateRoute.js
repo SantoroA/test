@@ -1,12 +1,31 @@
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Context as AuthContext } from '../context/AuthContext';
-import DoctorDashboardScreen from '../screens/doctor/DoctorDashboardScreen';
-import PatientDashboardScreen from '../screens/patient/PatientDashboardScreen';
-import PatientCoachMarkScreen from '../screens/patient/PatientCoachMarkScreen';
-import DoctorCoachMarkScreen from '../screens/doctor/DoctorCoachMarkScreen';
-import CompleteProfileScreen from '../screens/CompleteProfileScreen';
-import ReservationPrescreening from '../screens/patient/ReservationPrescreening';
+import LoadingScreen from '../screens/public/LoadingScreen';
+//doctor screens
+import DocDashboardScreen from '../screens/doctor/DocDashboardScreen';
+import DocCoachMarkScreen from '../screens/doctor/DocCoachMarkScreen';
+import DocCompleteProfileScreen from '../screens/doctor/DocCompleteProfileScreen';
+import DocHelpScreen from '../screens/doctor/DocHelpScreen';
+import DocMembershipScreen from '../screens/doctor/DocMembershipScreen';
+import DocMyPatientsScreen from '../screens/doctor/DocMyPatientsScreen';
+import DocPastAppointmentsScreen from '../screens/doctor/DocPastAppointmentsScreen';
+import DocVideoCallScreen from '../screens/doctor/DocVideoCallScreen';
+import DocVideoPrecallScreen from '../screens/doctor/DocVideoPrecallScreen';
+import DocViewPublicProfileScreen from '../screens/doctor/DocViewPublicProfileScreen';
+//patient screens
+import PatAssistantScreen from '../screens/patient/PatAssistantScreen';
+import PatCoachMarkScreen from '../screens/patient/PatCoachMarkScreen';
+import PatCompleteProfileScreen from '../screens/patient/PatCompleteProfileScreen';
+import PatDashboardScreen from '../screens/patient/PatDashboardScreen';
+import PatDoctorSearchDetailScreen from '../screens/patient/PatDoctorSearchDetailScreen';
+import PatDoctorSearchScreen from '../screens/patient/PatDoctorSearchScreen';
+import PatHelperScreen from '../screens/patient/PatHelperScreen';
+import PatHelpScreen from '../screens/patient/PatHelpScreen';
+import PatMembershipScreen from '../screens/patient/PatMembershipScreen';
+import PatPastAppointmentsScreen from '../screens/patient/PatPastAppointmentsScreen';
+import PatVideoCallScreen from '../screens/patient/PatVideoCallScreen';
+import PatVideoPrecallScreen from '../screens/patient/PatVideoPrecallScreen';
 
 const PrivateRoute = () => {
 	const { state: { userAmIHCP } } = useContext(AuthContext);
@@ -17,11 +36,17 @@ const PrivateRouteDoctor = () => {
 	const { state: { isFirstTimeUser } } = useContext(AuthContext);
 	return (
 		<Switch>
-			<Route path="/in/doctor/dashboard" exact component={DoctorDashboardScreen} />
-			<Route path="/in/doctor/completeprofile" exact component={CompleteProfileScreen} />
-			<Route path="/in/doctor/coachmark" exact component={DoctorCoachMarkScreen} />
-
-			<Route path="/" render={() => <h1>Root</h1>}>
+			<Route path="/in/doctor/dashboard" exact component={DocDashboardScreen} />
+			<Route path="/in/doctor/coachmark" exact component={DocCoachMarkScreen} />
+			<Route path="/in/doctor/completeprofile" exact component={DocCompleteProfileScreen} />
+			<Route path="/in/doctor/help" exact component={DocHelpScreen} />
+			<Route path="/in/doctor/membership" exact component={DocMembershipScreen} />
+			<Route path="/in/doctor/mypatients" exact component={DocMyPatientsScreen} />
+			<Route path="/in/doctor/pastappointments" exact component={DocPastAppointmentsScreen} />
+			<Route path="/in/doctor/videocall" exact component={DocVideoCallScreen} />
+			<Route path="/in/doctor/videoprecall" exact component={DocVideoPrecallScreen} />
+			<Route path="/in/doctor/viewprofile" exact component={DocViewPublicProfileScreen} />
+			<Route path="/" render={() => <LoadingScreen />}>
 				{isFirstTimeUser ? <Redirect to="/in/doctor/coachmark" /> : <Redirect to="/in/doctor/dashboard" />}
 			</Route>
 		</Switch>
@@ -32,10 +57,18 @@ const PrivateRoutePatient = () => {
 	const { state: { isFirstTimeUser } } = useContext(AuthContext);
 	return (
 		<Switch>
-			<Route path="/in/reservation/prescreening" exact component={ReservationPrescreening} />
-			<Route path="/in/patient/dashboard" exact component={PatientDashboardScreen} />
-			<Route path="/in/patient/completeprofile" exact component={CompleteProfileScreen} />
-			<Route path="/in/patient/coachmark" exact component={PatientCoachMarkScreen} />
+			<Route path="/in/patient/dashboard" exact component={PatDashboardScreen} />
+			<Route path="/in/patient/coachmark" exact component={PatCoachMarkScreen} />
+			<Route path="/in/patient/completeprofile" exact component={PatCompleteProfileScreen} />
+			<Route path="/in/patient/assistant" exact component={PatAssistantScreen} />
+			<Route path="/in/patient/doctorsearchdetail" exact component={PatDoctorSearchDetailScreen} />
+			<Route path="/in/patient/doctorsearch" exact component={PatDoctorSearchScreen} />
+			<Route path="/in/patient/helper" exact component={PatHelperScreen} />
+			<Route path="/in/patient/help" exact component={PatHelpScreen} />
+			<Route path="/in/patient/membership" exact component={PatMembershipScreen} />
+			<Route path="/in/patient/pastappointments" exact component={PatPastAppointmentsScreen} />
+			<Route path="/in/patient/videocall" exact component={PatVideoCallScreen} />
+			<Route path="/in/patient/videoprecall" exact component={PatVideoPrecallScreen} />
 			<Route path="/" render={() => <h1>Root</h1>}>
 				{isFirstTimeUser ? (
 					<Redirect to="/in/patient/completeprofile" />

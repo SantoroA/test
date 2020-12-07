@@ -2,12 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext';
 import { Provider as LanguageProvider } from './context/LanguageContext';
-import Loader from 'react-loader-spinner';
+import LoadingScreen from './screens/public/LoadingScreen';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import 'fontsource-open-sans';
 
-import './App.css';
+const theme = createMuiTheme({
+	typography: {
+		fontFamily: 'Open Sans'
+		// fontSize: 14
+	}
+});
 
 const Routes = () => {
 	const [ isLoading, setIsLoading ] = useState(true);
@@ -19,18 +26,16 @@ const Routes = () => {
 		};
 		loadPage();
 	}, []);
-	return isLoading ? <Loading /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
-};
-
-const Loading = () => {
-	return <Loader type="TailSpin" color="black" height={50} width={50} />;
+	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };
 
 const App = () => {
 	return (
 		<AuthProvider>
 			<LanguageProvider>
-				<Routes />
+				<ThemeProvider theme={theme}>
+					<Routes />
+				</ThemeProvider>
 			</LanguageProvider>
 		</AuthProvider>
 	);

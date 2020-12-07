@@ -2,13 +2,13 @@ import React from 'react';
 import Navbar from '../../components/Navbar';
 import Typography from '@material-ui/core/Typography';
 
-const DoctorCoachMarkScreen = () => {
+const PatHelpScreen = () => {
 	return (
 		<div>
 			<Navbar />
-			<Typography variant="h4">Doctor Coach Mark</Typography>
+			<Typography variant="h4">Help</Typography>
 		</div>
 	);
 };
 
-export default DoctorCoachMarkScreen;
+export default PatHelpScreen;

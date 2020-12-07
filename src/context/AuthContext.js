@@ -54,10 +54,10 @@ const getCookie = (dispatch) => {
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			console.log(err.message);
-			if (err.request.status === 401) {
-				console.log('redirect to login');
-			}
-			dispatch({ type: 'add_error', payload: err.message });
+			// if (err.request.status === 401) {
+			// 	console.log('redirect to login');
+			// }
+			// dispatch({ type: 'add_error', payload: err.message });
 		}
 	};
 };
@@ -190,6 +190,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 			},
 			withCredentials: true
 		});
+		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
@@ -242,7 +243,7 @@ const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, rec
 			newPassword,
 			newPasswordMatch
 		});
-		dispatch({ type: 'set_dialog_message', payload: response.data });
+		dispatch({ type: 'set_dialog_message', payload: response.data.message });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',

@@ -5,10 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
 import { Context as LanguageContext } from '../context/LanguageContext';
 import { Context as AuthContext } from '../context/AuthContext';
 import logo from '../assets/dianurse-logo.png';
+import NavMenu from '../components/NavMenu';
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
@@ -26,8 +26,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1
 	},
 	img: {
-		width: '8.5em',
-		height: '1.3em',
+		height: '2em',
 		paddingInlineStart: '1em'
 	},
 	formControl: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
 	const { state: { language }, changeLanguage } = useContext(LanguageContext);
-	const { state: { userName } } = useContext(AuthContext);
+	const { state: { isLoggedIn } } = useContext(AuthContext);
 	const classes = useStyles();
 	const handleChange = (event) => {
 		changeLanguage(event.target.value);
@@ -55,7 +54,7 @@ export default function ButtonAppBar() {
 							<MenuItem value={'bg_BG'}>Bulgarian</MenuItem>
 						</Select>
 					</FormControl>
-					{userName && <Typography>{userName}</Typography>}
+					{isLoggedIn && <NavMenu />}
 				</Toolbar>
 			</AppBar>
 		</div>

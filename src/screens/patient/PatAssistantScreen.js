@@ -5,7 +5,7 @@ import FormUserInsurance from '../../components/reservations/FormUserInsurance';
 import FormWhoIsPatient from '../../components/reservations/FormWhoIsPatient';
 import FormUserRecommendation from '../../components/reservations/FormUserRecommendation';
 
-const ReservationPrescreening = () => {
+const PatAssistantScreen = () => {
 	const [ step, setStep ] = useState(1);
 	const [ isMainPatient, setIsMainPatient ] = useState(true);
 	const [ insuranceType, setInsuranceType ] = useState('');
@@ -77,4 +77,4 @@ const ReservationPrescreening = () => {
 	}
 };
 
-export default ReservationPrescreening;
+export default PatAssistantScreen;

@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import GetStartedScreen from '../screens/GetStartedScreen';
-import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import GetStartedScreen from '../screens/public/GetStartedScreen';
+import ChangePasswordScreen from '../screens/public/ChangePasswordScreen';
 
 const PublicRoute = () => {
 	return (

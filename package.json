@@ -18,6 +18,7 @@
 		"axios": "^0.21.0",
 		"dotenv": "^8.2.0",
 		"facebook-login": "^1.4.1",
+		"fontsource-open-sans": "^3.0.9",
 		"jwt-token-encrypt": "^1.0.4",
 		"material-ui-phone-number": "^2.2.6",
 		"query-string": "^6.13.7",
