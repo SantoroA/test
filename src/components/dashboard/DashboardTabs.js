@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const TabsPage = () => {
+const DashboardTabs = () => {
 	const [ value, setValue ] = useState(0);
 	const classes = useStyles();
 	const handleChangeValue = (event, newValue) => {
@@ -63,4 +63,4 @@ const TabsPage = () => {
 	);
 };
 
-export default TabsPage;
+export default DashboardTabs;

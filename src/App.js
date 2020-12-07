@@ -7,12 +7,11 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import 'fontsource-open-sans';
+import 'fontsource-roboto';
 
 const theme = createMuiTheme({
 	typography: {
-		fontFamily: 'Open Sans'
-		// fontSize: 14
+		fontFamily: 'Roboto'
 	}
 });
 

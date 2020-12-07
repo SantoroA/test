@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Context as AuthContext } from '../context/AuthContext';
+//MaterialUI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { Context as AuthContext } from '../context/AuthContext';
 
 const useStyles = makeStyles({
 	iconButton: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles({
 const NavMenu = () => {
 	const classes = useStyles();
 	const [ menuItem, setMenuItem ] = useState(null);
-	const { state: { userName } } = useContext(AuthContext);
+	const { logout, state: { userName } } = useContext(AuthContext);
 
 	const handleChange = (event) => {
 		setMenuItem(event.currentTarget);
@@ -56,11 +58,28 @@ const NavMenu = () => {
 				open={Boolean(menuItem)}
 				onClose={handleClose}
 			>
-				<MenuItem onClick={handleClose}>Profile Settings</MenuItem>
-				<MenuItem onClick={handleClose}>Past Appointments</MenuItem>
-				<MenuItem onClick={handleClose}>Membership</MenuItem>
-				<MenuItem onClick={handleClose}>Help</MenuItem>
-				<MenuItem onClick={handleClose}>Logout</MenuItem>
+				<MenuItem component={Link} to="/in/doctor/completeprofile" onClick={handleClose}>
+					Profile Settings
+				</MenuItem>
+				<MenuItem component={Link} to="/in/doctor/pastappointments" onClick={handleClose}>
+					Past Appointments
+				</MenuItem>
+				<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
+					Membership
+				</MenuItem>
+				<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
+					Help
+				</MenuItem>
+				<MenuItem
+					component={Link}
+					to="/"
+					onClick={() => {
+						logout();
+						handleClose();
+					}}
+				>
+					Logout
+				</MenuItem>
 			</Menu>
 		</div>
 	);

@@ -19,6 +19,8 @@
 		"dotenv": "^8.2.0",
 		"facebook-login": "^1.4.1",
 		"fontsource-open-sans": "^3.0.9",
+		"fontsource-poppins": "^3.0.10",
+		"fontsource-roboto": "^3.0.3",
 		"jwt-token-encrypt": "^1.0.4",
 		"material-ui-phone-number": "^2.2.6",
 		"query-string": "^6.13.7",

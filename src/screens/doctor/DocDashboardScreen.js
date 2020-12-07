@@ -1,14 +1,14 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
 import MainInfo from '../../components/dashboard/MainInfo';
-import TabsPage from '../../components/dashboard/Tabs';
+import DashboardTabs from '../../components/dashboard/DashboardTabs';
 
 const DocDashboardScreen = () => {
 	return (
 		<div>
 			<Navbar />
 			<MainInfo />
-			<TabsPage />
+			<DashboardTabs />
 		</div>
 	);
 };
