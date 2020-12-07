@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar';
 import Typography from '@material-ui/core/Typography';
 
-const DoctorCoachMarkPage = () => {
+const DoctorCoachMarkScreen = () => {
 	return (
 		<div>
 			<Navbar />
@@ -11,4 +11,4 @@ const DoctorCoachMarkPage = () => {
 	);
 };
 
-export default DoctorCoachMarkPage;
+export default DoctorCoachMarkScreen;

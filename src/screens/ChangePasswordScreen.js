@@ -4,6 +4,7 @@ import ChangePasswordForm from '../components/forms/ChangePasswordForm';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import MessageDialog from '../components/MessageDialog';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const ChangePasswordPage = (props) => {
+const ChangePasswordScreen = (props) => {
 	const classes = useStyles();
 	const { recToken } = props.match.params;
 
@@ -29,8 +30,9 @@ const ChangePasswordPage = (props) => {
 					</Grid>
 				</Grid>
 			</Container>
+			<MessageDialog />
 		</div>
 	);
 };
 
-export default ChangePasswordPage;
+export default ChangePasswordScreen;

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import CompleteProfileForm from '../components/forms/CompleteProfileForm';
 import ContactInfoForm from '../components/forms/ContactInfoForm';
 
-const CompleteProfilePage = () => {
+const CompleteProfileScreen = () => {
 	// const { userAmIHCP } = useContext(AuthContext);
 	return (
 		<div>
@@ -15,4 +15,4 @@ const CompleteProfilePage = () => {
 	);
 };
 
-export default CompleteProfilePage;
+export default CompleteProfileScreen;

@@ -1,14 +1,14 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import GetStartedPage from '../pages/GetStartedPage';
-import ChangePasswordPage from '../pages/ChangePasswordPage';
+import GetStartedScreen from '../screens/GetStartedScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 
 const PublicRoute = () => {
 	return (
 		<Switch>
-			<Route path="/getstarted" exact component={GetStartedPage} />
-			<Route path="/recoverpassword" exact component={ChangePasswordPage} />
-			<Route path="/getstarted/:loginCredentials" exact component={GetStartedPage} />
-			<Route path="/recoverpassword/:recToken" exact component={ChangePasswordPage} />
+			<Route path="/getstarted" exact component={GetStartedScreen} />
+			<Route path="/recoverpassword" exact component={ChangePasswordScreen} />
+			<Route path="/getstarted/:loginCredentials" exact component={GetStartedScreen} />
+			<Route path="/recoverpassword/:recToken" exact component={ChangePasswordScreen} />
 			<Route path="/" render={() => <h1>Root</h1>}>
 				<Redirect to="/getstarted" />
 			</Route>
