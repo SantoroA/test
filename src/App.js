@@ -13,14 +13,17 @@ const Routes = () => {
 	const [ isLoading, setIsLoading ] = useState(true);
 	const { getCookie, state: { isLoggedIn } } = useContext(AuthContext);
 	useEffect(() => {
-		getCookie();
-		setIsLoading(false);
+		const loadPage = async () => {
+			await getCookie();
+			setIsLoading(false);
+		};
+		loadPage();
 	}, []);
-	return isLoading ? (
-		<Loader type="TailSpin" color="black" height={50} width={50} />
-	) : (
-		<Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>
-	);
+	return isLoading ? <Loading /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
+};
+
+const Loading = () => {
+	return <Loader type="TailSpin" color="black" height={50} width={50} />;
 };
 
 const App = () => {
