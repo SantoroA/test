@@ -46,7 +46,7 @@ const PrivateRouteDoctor = () => {
 			<Route path="/in/doctor/videocall" exact component={DocVideoCallScreen} />
 			<Route path="/in/doctor/videoprecall" exact component={DocVideoPrecallScreen} />
 			<Route path="/in/doctor/viewprofile" exact component={DocViewPublicProfileScreen} />
-			<Route path="/" render={() => <LoadingScreen />}>
+			<Route path="/" component={LoadingScreen}>
 				{isFirstTimeUser ? <Redirect to="/in/doctor/coachmark" /> : <Redirect to="/in/doctor/dashboard" />}
 			</Route>
 		</Switch>
@@ -69,7 +69,7 @@ const PrivateRoutePatient = () => {
 			<Route path="/in/patient/pastappointments" exact component={PatPastAppointmentsScreen} />
 			<Route path="/in/patient/videocall" exact component={PatVideoCallScreen} />
 			<Route path="/in/patient/videoprecall" exact component={PatVideoPrecallScreen} />
-			<Route path="/" render={() => <h1>Root</h1>}>
+			<Route path="/" component={LoadingScreen}>
 				{isFirstTimeUser ? (
 					<Redirect to="/in/patient/completeprofile" />
 				) : (

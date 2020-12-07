@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select';
 import { Context as LanguageContext } from '../context/LanguageContext';
 import { Context as AuthContext } from '../context/AuthContext';
 import logo from '../assets/dianurse-logo.png';
-import NavMenu from '../components/NavMenu';
+import NavMenu from './NavMenu';
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {

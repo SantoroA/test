@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 const NavMenu = () => {
 	const classes = useStyles();
 	const [ menuItem, setMenuItem ] = useState(null);
-	const { logout, state: { userName } } = useContext(AuthContext);
+	const { logout, state: { userName, userAmIHCP } } = useContext(AuthContext);
 
 	const handleChange = (event) => {
 		setMenuItem(event.currentTarget);
@@ -50,37 +50,71 @@ const NavMenu = () => {
 					{userName}
 				</Typography>
 			</IconButton>
-			<Menu
-				id="menu-appbar"
-				className={classes.menuStyle}
-				anchorEl={menuItem}
-				keepMounted
-				open={Boolean(menuItem)}
-				onClose={handleClose}
-			>
-				<MenuItem component={Link} to="/in/doctor/completeprofile" onClick={handleClose}>
-					Profile Settings
-				</MenuItem>
-				<MenuItem component={Link} to="/in/doctor/pastappointments" onClick={handleClose}>
-					Past Appointments
-				</MenuItem>
-				<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
-					Membership
-				</MenuItem>
-				<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
-					Help
-				</MenuItem>
-				<MenuItem
-					component={Link}
-					to="/"
-					onClick={() => {
-						logout();
-						handleClose();
-					}}
+			{userAmIHCP ? (
+				<Menu
+					id="menu-appbar"
+					className={classes.menuStyle}
+					anchorEl={menuItem}
+					keepMounted
+					open={Boolean(menuItem)}
+					onClose={handleClose}
 				>
-					Logout
-				</MenuItem>
-			</Menu>
+					<MenuItem component={Link} to="/in/patient/completeprofile" onClick={handleClose}>
+						Profile Settings
+					</MenuItem>
+					<MenuItem component={Link} to="/in/patient/pastappointments" onClick={handleClose}>
+						Past Appointments
+					</MenuItem>
+					<MenuItem component={Link} to="/in/patient/membership" onClick={handleClose}>
+						Membership
+					</MenuItem>
+					<MenuItem component={Link} to="/in/patient/help" onClick={handleClose}>
+						Help
+					</MenuItem>
+					<MenuItem
+						component={Link}
+						to="/"
+						onClick={() => {
+							logout();
+							handleClose();
+						}}
+					>
+						Logout
+					</MenuItem>
+				</Menu>
+			) : (
+				<Menu
+					id="menu-appbar"
+					className={classes.menuStyle}
+					anchorEl={menuItem}
+					keepMounted
+					open={Boolean(menuItem)}
+					onClose={handleClose}
+				>
+					<MenuItem component={Link} to="/in/doctor/completeprofile" onClick={handleClose}>
+						Profile Settings
+					</MenuItem>
+					<MenuItem component={Link} to="/in/doctor/pastappointments" onClick={handleClose}>
+						Past Appointments
+					</MenuItem>
+					<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
+						Payment Method
+					</MenuItem>
+					<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
+						Help
+					</MenuItem>
+					<MenuItem
+						component={Link}
+						to="/"
+						onClick={() => {
+							logout();
+							handleClose();
+						}}
+					>
+						Logout
+					</MenuItem>
+				</Menu>
+			)}
 		</div>
 	);
 };

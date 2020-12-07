@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const MainInfo = () => {
+const DocDashUserInfo = () => {
 	const classes = useStyles();
 	const [ state, setState ] = useState({
 		checkedPublic: false,
@@ -104,4 +104,4 @@ const MainInfo = () => {
 	);
 };
 
-export default MainInfo;
+export default DocDashUserInfo;
