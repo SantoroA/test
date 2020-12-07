@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 // theming
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles ({
 	body: {
 		display: 'flex',
 		textAlign: 'center',
@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: '#166cbc',
 		marginRight: '0'
 	},
-	first_block: {
+	firstBlock: {
 		display: 'flex',
 		flexDirection: 'row'
 	},
-	second_block: {
-		margin: theme.spacing(8, 0, 8, 20)
+	secondBlock: {
+		margin: (8, 0, 8, 20)
 	},
 	rating: {
 		display: 'flex'
 	}
-}));
+});
 
 const MainInfo = () => {
 	const classes = useStyles();
@@ -62,7 +62,7 @@ const MainInfo = () => {
 	return (
 		<div>
 			<div className={classes.body}>
-				<div className={classes.first_block}>
+				<div className={classes.firstBlock}>
 					<Avatar className={classes.avatar} />
 					{/* fetch the foto as url- it's received from the back-end  */}
 					{/* get data request and display the response from the back-end on the page */}
@@ -73,7 +73,7 @@ const MainInfo = () => {
 						</Typography>
 					</Typography>
 				</div>
-				<div className={classes.second_block}>
+				<div className={classes.secondBlock}>
 					{/* to be dynamic later, the doc should click on reviews */}
 					<div className={classes.rating}>
 						<Rating name="read-only" value={0} readOnly />
