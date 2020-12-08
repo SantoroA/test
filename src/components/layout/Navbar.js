@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
+import { Context as LanguageContext } from '../../context/LanguageContext';
+import { Context as AuthContext } from '../../context/AuthContext';
+import logo from '../../assets/dianurse-logo.png';
+import NavMenu from '../groups/NavMenu';
+//MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { Context as LanguageContext } from '../context/LanguageContext';
-import { Context as AuthContext } from '../context/AuthContext';
-import logo from '../assets/dianurse-logo.png';
-import NavMenu from './NavMenu';
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {

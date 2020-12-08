@@ -1,10 +1,11 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
-import ChangePasswordForm from '../../components/forms/ChangePasswordForm';
+import Navbar from '../../components/layout/Navbar';
+import ChangePasswordForm from '../../components/groups/ChangePasswordForm';
+import MessageDialog from '../../components/layout/MessageDialog';
+//MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MessageDialog from '../../components/MessageDialog';
 
 const useStyles = makeStyles((theme) => ({
 	container: {

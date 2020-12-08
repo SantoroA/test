@@ -6,6 +6,9 @@ import { ValidatorForm } from 'react-material-ui-form-validator';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 import AppleLogin from 'react-apple-login';
+//CUSTOM UI
+import ButtonFilled from '../customUi/ButtonFilled';
+import TextInput from '../customUi/TextInput';
 //Material UI
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -15,8 +18,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import AppleIcon from '@material-ui/icons/Apple';
 import { makeStyles } from '@material-ui/core/styles';
@@ -91,7 +92,7 @@ const RegisterForm = () => {
 				<h2>Register here and create an account</h2>
 
 				<Grid className={classes.item}>
-					<TextField
+					<TextInput
 						fullWidth
 						type="email"
 						required
@@ -125,9 +126,9 @@ const RegisterForm = () => {
 						label="I agree to the General Terms and Privacy Policy"
 					/>
 				</div>
-				<Button type="submit" variant="contained" color="primary" className={classes.submit}>
+				<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
 					Register
-				</Button>
+				</ButtonFilled>
 			</ValidatorForm>
 			<Typography variant="h6">Or register with your social media</Typography>
 			<Grid className={classes.redes} container>
@@ -138,20 +139,20 @@ const RegisterForm = () => {
 						handleFacebookRegister({ fbResponse, language, subdomain });
 					}}
 					render={(renderProps) => (
-						<Button
+						<ButtonFilled
 							variant="contained"
 							onClick={renderProps.onClick}
 							color="primary"
 							className={classes.socialMedia}
 						>
 							<FacebookIcon />
-						</Button>
+						</ButtonFilled>
 					)}
 				/>
 				<GoogleLogin
 					clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
 					render={(renderProps) => (
-						<Button
+						<ButtonFilled
 							onClick={renderProps.onClick}
 							disabled={renderProps.disabled}
 							variant="contained"
@@ -159,7 +160,7 @@ const RegisterForm = () => {
 							className={classes.socialMedia}
 						>
 							<i className="fab fa-google" />
-						</Button>
+						</ButtonFilled>
 					)}
 					onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 					onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
@@ -174,7 +175,7 @@ const RegisterForm = () => {
 						handleAppleRegister({ appleResponse, language, subdomain });
 					}}
 					render={(renderProps) => (
-						<Button
+						<ButtonFilled
 							onClick={renderProps.onClick}
 							disabled={renderProps.disabled}
 							variant="contained"
@@ -182,7 +183,7 @@ const RegisterForm = () => {
 							className={classes.socialMedia}
 						>
 							<AppleIcon />
-						</Button>
+						</ButtonFilled>
 					)}
 				/>
 			</Grid>

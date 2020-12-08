@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Context as AuthContext } from '../context/AuthContext';
-import { Context as LanguageContext } from '../context/LanguageContext';
-import useToggle from '../hooks/useToggle';
-import RegisterForm from './forms/RegisterForm';
-import LoginForm from './forms/LoginForm';
+import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as LanguageContext } from '../../context/LanguageContext';
+import useToggle from '../../hooks/useToggle';
+import RegisterForm from '../groups/RegisterForm';
+import LoginForm from '../groups/LoginForm';
 import RecoverPassDialog from './RecoverPassDialog';
 import MessageDialog from './MessageDialog';
+//MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';

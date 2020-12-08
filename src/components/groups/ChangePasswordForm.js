@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Context as AuthContext } from '../../context/AuthContext';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+
+//MATERIAL UI
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { Context as AuthContext } from '../../context/AuthContext';
-
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {

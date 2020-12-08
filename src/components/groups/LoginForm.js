@@ -3,10 +3,12 @@ import { Context as AuthContext } from '../../context/AuthContext';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 import AppleLogin from 'react-apple-login';
+//CUSTOM UI
+import ButtonFilled from '../customUi/ButtonFilled';
+import TextInput from '../customUi/TextInput';
 //MATERIAL UI
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	submit: {
 		width: '100%',
-		margin: theme.spacing(3, 0, 2)
+		marginTop: 12
 	},
 	link: {
 		borderWidth: 1,
@@ -98,7 +100,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 				>
 					<h2>Already have an account? Log in here</h2>
 					<Grid className={classes.item}>
-						<TextField
+						<TextInput
 							fullWidth
 							type="email"
 							required
@@ -109,7 +111,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 						/>
 					</Grid>
 					<Grid className={classes.item}>
-						<TextField
+						<TextInput
 							fullWidth
 							required
 							type="password"
@@ -124,9 +126,9 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 						Forgot your password?
 					</Button>
 
-					<Button type="submit" variant="contained" color="primary" className={classes.submit}>
+					<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
 						Log In
-					</Button>
+					</ButtonFilled>
 				</form>
 				<Typography variant="h6">Or login with your social media</Typography>
 				<Grid className={classes.redes} container>
@@ -137,20 +139,20 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 							handleFacebookLogin(fbResponse);
 						}}
 						render={(renderProps) => (
-							<Button
+							<ButtonFilled
 								variant="contained"
 								onClick={renderProps.onClick}
 								color="primary"
 								className={classes.socialMedia}
 							>
 								<FacebookIcon />
-							</Button>
+							</ButtonFilled>
 						)}
 					/>
 					<GoogleLogin
 						clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
 						render={(renderProps) => (
-							<Button
+							<ButtonFilled
 								onClick={renderProps.onClick}
 								disabled={renderProps.disabled}
 								variant="contained"
@@ -158,7 +160,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 								className={classes.socialMedia}
 							>
 								<i className="fab fa-google" />
-							</Button>
+							</ButtonFilled>
 						)}
 						onSuccess={(ggResponse) => handleGoogleLogin(ggResponse)}
 						onFailure={(ggResponse) => handleGoogleLogin(ggResponse)}
@@ -173,7 +175,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 							handleAppleLogin({ appleResponse });
 						}}
 						render={(renderProps) => (
-							<Button
+							<ButtonFilled
 								onClick={renderProps.onClick}
 								disabled={renderProps.disabled}
 								variant="contained"
@@ -181,7 +183,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 								className={classes.socialMedia}
 							>
 								<AppleIcon />
-							</Button>
+							</ButtonFilled>
 						)}
 					/>
 				</Grid>

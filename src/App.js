@@ -12,6 +12,11 @@ import 'fontsource-roboto';
 const theme = createMuiTheme({
 	typography: {
 		fontFamily: 'Roboto'
+	},
+	palette: {
+		primary: {
+			main: '#00A99D'
+		}
 	}
 });
 
@@ -24,6 +29,7 @@ const Routes = () => {
 			setIsLoading(false);
 		};
 		loadPage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };

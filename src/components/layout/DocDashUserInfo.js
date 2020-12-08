@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
+import { Context as AuthContext } from '../../context/AuthContext';
+//CUSTOM UI
+
+//MATERIAL UI
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Context as AuthContext } from '../../context/AuthContext';
 import Rating from '@material-ui/lab/Rating';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';

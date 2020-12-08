@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import FormUserReason from '../../components/assistant/FormUserReason';
-import FormUserInsurance from '../../components/assistant/FormUserInsurance';
-import FormWhoIsPatient from '../../components/assistant/FormWhoIsPatient';
-import FormUserRecommendation from '../../components/assistant/FormUserRecommendation';
+import Navbar from '../../components/layout/Navbar';
+import FormUserReason from '../../components/groups/FormUserReason';
+import FormUserInsurance from '../../components/groups/FormUserInsurance';
+import FormWhoIsPatient from '../../components/groups/FormWhoIsPatient';
+import FormUserRecommendation from '../../components/groups/FormUserRecommendation';
 
 const PatAssistantScreen = () => {
 	const [ step, setStep ] = useState(1);
