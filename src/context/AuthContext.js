@@ -178,48 +178,48 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 const handleAppleLogin = (dispatch) => async (appleResponse) => {
 	console.log(appleResponse);
 
-	// try {
-	// 	const response = await dianurseApi.post('/account/auth/socialmedia', {
-	// 		email: appleResponse.email,
-	// 		id: appleResponse.id
-	// 	});
-	// 	console.log(response);
-	// 	const cookieResponse = await dianurseApi.get('/account/savecookie', {
-	// 		headers: {
-	// 			token: response.data.token
-	// 		},
-	// 		withCredentials: true
-	// 	});
-	// 	console.log(cookieResponse);
-	// 	dispatch({ type: 'login', payload: response.data });
-	// } catch (err) {
-	// 	dispatch({
-	// 		type: 'add_error',
-	// 		payload: err.message
-	// 	});
-	// }
+	try {
+		const response = await dianurseApi.post('/account/auth/socialmedia', {
+			email: appleResponse.user.email[0],
+			id: appleResponse.authorization.id_token
+		});
+		console.log(response);
+		const cookieResponse = await dianurseApi.get('/account/savecookie', {
+			headers: {
+				token: response.data.token
+			},
+			withCredentials: true
+		});
+		console.log(cookieResponse);
+		dispatch({ type: 'login', payload: response.data });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
 };
 
 const handleAppleRegister = (dispatch) => async ({ appleResponse, language, subdomain }) => {
 	console.log(appleResponse, language);
-	// try {
-	// 	const response = await dianurseApi.post('/account/auth/socialmedia/register', {
-	// 		username: appleResponse.name,
-	// 		id: appleResponse.id,
-	// 		//get element zero
-	// 		email: appleResponse.email,
-	// 		picture: appleResponse.picture.data.url,
-	// 		preferredLanguage: language,
-	// 		subdomain,
-	// 		type: 'apple'
-	// 	});
-	// 	console.log(response);
-	// } catch (err) {
-	// 	dispatch({
-	// 		type: 'add_error',
-	// 		payload: err.message
-	// 	});
-	// }
+	try {
+		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
+			username: `${appleResponse.user.name.firstName} ${appleResponse.user.name.lastName}`,
+			id: appleResponse.authorization.id_token,
+			//get element zero
+			email: appleResponse.user.email,
+			// picture: appleResponse.picture.data.url,
+			preferredLanguage: language,
+			subdomain,
+			type: 'apple'
+		});
+		console.log(response);
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: err.message
+		});
+	}
 };
 
 //GOOGLE
