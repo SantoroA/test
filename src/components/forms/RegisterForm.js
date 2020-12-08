@@ -2,6 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { Context as LanguageContext } from '../../context/LanguageContext';
 import useToggle from '../../hooks/useToggle';
+import { ValidatorForm } from 'react-material-ui-form-validator';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
+import AppleLogin from 'react-apple-login';
+//Material UI
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,10 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import AppleIcon from '@material-ui/icons/Apple';
 import { makeStyles } from '@material-ui/core/styles';
-import { ValidatorForm } from 'react-material-ui-form-validator';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import GoogleLogin from 'react-google-login';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -57,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm = () => {
-	const { register, handleFacebookRegister, handleGoogleRegister } = useContext(AuthContext);
+	const { register, handleFacebookRegister, handleGoogleRegister, handleAppleRegister } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
@@ -161,6 +164,26 @@ const RegisterForm = () => {
 					onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 					onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 					cookiePolicy={'single_host_origin'}
+				/>
+				<AppleLogin
+					clientId="com.react.apple.login"
+					redirectURI=""
+					responseType={'code'}
+					responseMode={'query'}
+					callback={(appleResponse) => {
+						handleAppleRegister({ appleResponse, language, subdomain });
+					}}
+					render={(renderProps) => (
+						<Button
+							onClick={renderProps.onClick}
+							disabled={renderProps.disabled}
+							variant="contained"
+							color="primary"
+							className={classes.socialMedia}
+						>
+							<AppleIcon />
+						</Button>
+					)}
 				/>
 			</Grid>
 		</Paper>

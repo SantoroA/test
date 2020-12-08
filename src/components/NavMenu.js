@@ -59,16 +59,16 @@ const NavMenu = () => {
 					open={Boolean(menuItem)}
 					onClose={handleClose}
 				>
-					<MenuItem component={Link} to="/in/patient/completeprofile" onClick={handleClose}>
+					<MenuItem component={Link} to="/in/doctor/completeprofile" onClick={handleClose}>
 						Profile Settings
 					</MenuItem>
-					<MenuItem component={Link} to="/in/patient/pastappointments" onClick={handleClose}>
+					<MenuItem component={Link} to="/in/doctor/pastappointments" onClick={handleClose}>
 						Past Appointments
 					</MenuItem>
-					<MenuItem component={Link} to="/in/patient/membership" onClick={handleClose}>
-						Membership
+					<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
+						Payment Method
 					</MenuItem>
-					<MenuItem component={Link} to="/in/patient/help" onClick={handleClose}>
+					<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
 						Help
 					</MenuItem>
 					<MenuItem
@@ -91,16 +91,16 @@ const NavMenu = () => {
 					open={Boolean(menuItem)}
 					onClose={handleClose}
 				>
-					<MenuItem component={Link} to="/in/doctor/completeprofile" onClick={handleClose}>
+					<MenuItem component={Link} to="/in/patient/completeprofile" onClick={handleClose}>
 						Profile Settings
 					</MenuItem>
-					<MenuItem component={Link} to="/in/doctor/pastappointments" onClick={handleClose}>
+					<MenuItem component={Link} to="/in/patient/pastappointments" onClick={handleClose}>
 						Past Appointments
 					</MenuItem>
-					<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
-						Payment Method
+					<MenuItem component={Link} to="/in/patient/membership" onClick={handleClose}>
+						Membership
 					</MenuItem>
-					<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
+					<MenuItem component={Link} to="/in/patient/help" onClick={handleClose}>
 						Help
 					</MenuItem>
 					<MenuItem

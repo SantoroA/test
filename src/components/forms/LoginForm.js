@@ -1,5 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
+import AppleLogin from 'react-apple-login';
+//MATERIAL UI
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -7,8 +11,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import GoogleLogin from 'react-google-login';
+import AppleIcon from '@material-ui/icons/Apple';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -67,7 +70,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
-	const { login, handleFacebookLogin, handleGoogleLogin } = useContext(AuthContext);
+	const { login, handleFacebookLogin, handleGoogleLogin, handleAppleLogin } = useContext(AuthContext);
 	useEffect(() => {
 		if (loginCredentials) {
 			let decodedToken = atob(loginCredentials);
@@ -76,16 +79,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 			setPassword(decoded[1].split('&')[0]);
 		}
 	});
-	// const decodeToken = () => {
-	// 	let decodedToken = atob(loginCredentials);
-	// 	let decoded = decodedToken.split('=');
-	// 	let decodedEmail = decoded[2];
-	// 	let decodedPass = decoded[1].split('&')[0];
-	// 	console.log(decodedEmail, decodedPass);
-	// };
-	// if (loginCredentials) {
-	// 	decodeToken();
-	// }
+
 	const handleSubmit = async () => {
 		await login({ email, password });
 		setEmail('');
@@ -169,6 +163,26 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 						onSuccess={(ggResponse) => handleGoogleLogin(ggResponse)}
 						onFailure={(ggResponse) => handleGoogleLogin(ggResponse)}
 						cookiePolicy={'single_host_origin'}
+					/>
+					<AppleLogin
+						clientId="com.react.apple.login"
+						redirectURI=""
+						responseType={'code'}
+						responseMode={'query'}
+						callback={(appleResponse) => {
+							handleAppleLogin({ appleResponse });
+						}}
+						render={(renderProps) => (
+							<Button
+								onClick={renderProps.onClick}
+								disabled={renderProps.disabled}
+								variant="contained"
+								color="primary"
+								className={classes.socialMedia}
+							>
+								<AppleIcon />
+							</Button>
+						)}
 					/>
 				</Grid>
 			</Paper>
