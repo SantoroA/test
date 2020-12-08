@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import ChangePasswordForm from '../components/forms/ChangePasswordForm';
+import Navbar from '../../components/Navbar';
+import ChangePasswordForm from '../../components/forms/ChangePasswordForm';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MessageDialog from '../components/MessageDialog';
+import MessageDialog from '../../components/MessageDialog';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -29,8 +29,8 @@ const ChangePasswordScreen = (props) => {
 						<ChangePasswordForm recToken={recToken} />
 					</Grid>
 				</Grid>
+				<MessageDialog />
 			</Container>
-			<MessageDialog />
 		</div>
 	);
 };

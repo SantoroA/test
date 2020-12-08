@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const TabsPage = () => {
+const PatDashboardTabs = () => {
 	const [ value, setValue ] = useState(0);
 	const classes = useStyles();
 	const handleChangeValue = (event, newValue) => {
@@ -34,9 +34,7 @@ const TabsPage = () => {
 				onChange={handleChangeValue}
 				variant="fullWidth"
 				indicatorColor="primary"
-				textColor="#000"
 				aria-label="icon label tabs"
-				flexDirection="row"
 			>
 				<Tab
 					className={classes.wrapperTab}
@@ -46,21 +44,26 @@ const TabsPage = () => {
 				<Tab
 					className={classes.wrapperTab}
 					icon={<PeopleAltOutlinedIcon className={classes.icons} />}
-					label="My Patients"
+					label="Documents"
 				/>
 				<Tab
 					className={classes.wrapperTab}
 					icon={<AccountBalanceWalletOutlinedIcon className={classes.icons} />}
-					label="My Earnings"
+					label="Prescriptions"
 				/>
 				<Tab
 					className={classes.wrapperTab}
 					icon={<EventAvailableOutlinedIcon className={classes.icons} />}
-					label="Availability"
+					label="LabTests"
+				/>
+				<Tab
+					className={classes.wrapperTab}
+					icon={<EventAvailableOutlinedIcon className={classes.icons} />}
+					label="Questionaries"
 				/>
 			</Tabs>
 		</div>
 	);
 };
 
-export default TabsPage;
+export default PatDashboardTabs;

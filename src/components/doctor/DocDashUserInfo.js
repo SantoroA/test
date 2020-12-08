@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 // theming
-const useStyles = makeStyles ({
+const useStyles = makeStyles({
 	body: {
 		display: 'flex',
 		textAlign: 'center',
@@ -45,7 +45,7 @@ const useStyles = makeStyles ({
 	}
 });
 
-const MainInfo = () => {
+const DocDashUserInfo = () => {
 	const classes = useStyles();
 	const [ state, setState ] = useState({
 		checkedPublic: false,
@@ -68,7 +68,7 @@ const MainInfo = () => {
 					{/* get data request and display the response from the back-end on the page */}
 					<Typography variant="h4" className={classes.text}>
 						{userName}
-						<Typography className={classes.text} variant="h6">
+						<Typography className={classes.text} variant="body1">
 							Specialty:
 						</Typography>
 					</Typography>
@@ -104,4 +104,4 @@ const MainInfo = () => {
 	);
 };
 
-export default MainInfo;
+export default DocDashUserInfo;

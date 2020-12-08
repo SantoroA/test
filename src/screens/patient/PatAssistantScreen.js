@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
-import FormUserReason from '../../components/reservations/FormUserReason';
-import FormUserInsurance from '../../components/reservations/FormUserInsurance';
-import FormWhoIsPatient from '../../components/reservations/FormWhoIsPatient';
-import FormUserRecommendation from '../../components/reservations/FormUserRecommendation';
+import FormUserReason from '../../components/assistant/FormUserReason';
+import FormUserInsurance from '../../components/assistant/FormUserInsurance';
+import FormWhoIsPatient from '../../components/assistant/FormWhoIsPatient';
+import FormUserRecommendation from '../../components/assistant/FormUserRecommendation';
 
-const ReservationPrescreening = () => {
+const PatAssistantScreen = () => {
 	const [ step, setStep ] = useState(1);
 	const [ isMainPatient, setIsMainPatient ] = useState(true);
 	const [ insuranceType, setInsuranceType ] = useState('');
@@ -77,4 +77,4 @@ const ReservationPrescreening = () => {
 	}
 };
 
-export default ReservationPrescreening;
+export default PatAssistantScreen;

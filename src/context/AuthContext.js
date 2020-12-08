@@ -54,10 +54,6 @@ const getCookie = (dispatch) => {
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			console.log(err.message);
-			if (err.request.status === 401) {
-				console.log('redirect to login');
-			}
-			dispatch({ type: 'add_error', payload: err.message });
 		}
 	};
 };
@@ -128,6 +124,8 @@ const logout = (dispatch) => {
 
 //SOCIAL MEDIA LOGIN AND REGISTER
 
+//FACEBOOK
+
 const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	console.log(fbResponse);
 
@@ -175,6 +173,57 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 	}
 };
 
+//APPLE
+
+const handleAppleLogin = (dispatch) => async (appleResponse) => {
+	console.log(appleResponse);
+
+	// try {
+	// 	const response = await dianurseApi.post('/account/auth/socialmedia', {
+	// 		email: appleResponse.email,
+	// 		id: appleResponse.id
+	// 	});
+	// 	console.log(response);
+	// 	const cookieResponse = await dianurseApi.get('/account/savecookie', {
+	// 		headers: {
+	// 			token: response.data.token
+	// 		},
+	// 		withCredentials: true
+	// 	});
+	// 	console.log(cookieResponse);
+	// 	dispatch({ type: 'login', payload: response.data });
+	// } catch (err) {
+	// 	dispatch({
+	// 		type: 'add_error',
+	// 		payload: err.message
+	// 	});
+	// }
+};
+
+const handleAppleRegister = (dispatch) => async ({ appleResponse, language, subdomain }) => {
+	console.log(appleResponse, language);
+	// try {
+	// 	const response = await dianurseApi.post('/account/auth/socialmedia/register', {
+	// 		username: appleResponse.name,
+	// 		id: appleResponse.id,
+	// 		//get element zero
+	// 		email: appleResponse.email,
+	// 		picture: appleResponse.picture.data.url,
+	// 		preferredLanguage: language,
+	// 		subdomain,
+	// 		type: 'apple'
+	// 	});
+	// 	console.log(response);
+	// } catch (err) {
+	// 	dispatch({
+	// 		type: 'add_error',
+	// 		payload: err.message
+	// 	});
+	// }
+};
+
+//GOOGLE
+
 const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 	console.log(ggResponse);
 
@@ -190,6 +239,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 			},
 			withCredentials: true
 		});
+		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
 	} catch (err) {
 		dispatch({
@@ -242,7 +292,7 @@ const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, rec
 			newPassword,
 			newPasswordMatch
 		});
-		dispatch({ type: 'set_dialog_message', payload: response.data });
+		dispatch({ type: 'set_dialog_message', payload: response.data.message });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -269,6 +319,8 @@ export const { Provider, Context } = createDataContext(
 		handleFacebookRegister,
 		handleGoogleLogin,
 		handleGoogleRegister,
+		handleAppleLogin,
+		handleAppleRegister,
 		recoverPassword,
 		closeDialog,
 		changePassword
@@ -277,11 +329,11 @@ export const { Provider, Context } = createDataContext(
 		useName: '',
 		userId: '',
 		userToken: '',
-		userAmIHCP: true,
+		userAmIHCP: false,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US'
 	}
