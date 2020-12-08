@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
-import CompleteProfileForm from '../../components/forms/CompleteProfileForm';
-import ContactInfoForm from '../../components/forms/ContactInfoForm';
+import Navbar from '../../components/layout/Navbar';
+import CompleteProfileForm from '../../components/groups/CompleteProfileForm';
+import ContactInfoForm from '../../components/groups/ContactInfoForm';
 
 const PatCompleteProfileScreen = () => {
 	return (

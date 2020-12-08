@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
+import { Context as AuthContext } from '../../context/AuthContext';
+//CUSTOM UI
+import ButtonFilled from '../customUi/ButtonFilled';
+//MATERIAL UI
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Context as AuthContext } from '../../context/AuthContext';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
@@ -33,7 +36,7 @@ const PatDashUserInfo = () => {
 
 	return (
 		<div>
-			<Grid container flexDirection="row" className={classes.body}>
+			<Grid container className={classes.body}>
 				<Grid item>
 					<Avatar className={classes.avatar} />
 					{/* fetch the foto as url- it's received from the back-end  */}
@@ -42,11 +45,10 @@ const PatDashUserInfo = () => {
 						{userName}
 					</Typography>
 				</Grid>
-				<Grid item flexDirection="column" className={classes.secondBlock}>
+
+				<Grid item className={classes.secondBlock}>
 					<Grid item>
-						<Button variant="contained" color="primary">
-							Search for a Doctor
-						</Button>
+						<ButtonFilled variant="contained">Search for a Doctor</ButtonFilled>
 					</Grid>
 					<Grid item>
 						<Button variant="outlined" color="primary">
