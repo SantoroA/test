@@ -1,6 +1,6 @@
 import React from 'react';
 import FormServiceAvailability from '../groups/FormServiceAvailability';
-import FormAmTimeSlots from '../groups/FormAmTimeSlots';
+import FormTimeSlots from '../groups/FormTimeSlots';
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -21,11 +21,11 @@ const TabAvailability = () => {
 	return (
 		<div>
 			<Grid className={classes.root} container>
-				<Paper>
+				<Paper className={classes.section}>
 					<FormServiceAvailability />
 				</Paper>
 				<Paper className={classes.section}>
-					<FormAmTimeSlots />
+					<FormTimeSlots />
 				</Paper>
 			</Grid>
 		</div>

@@ -14,19 +14,18 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles({
 	section: {
 		justifyContent: 'space-around',
 		padding: '2em'
-	},
-	checkboxGroup: {
-		justifyContent: 'space-around',
-		padding: '1em'
 	}
 });
 
-const FormAmTimeSlots = () => {
+const FormTimeSlots = () => {
 	const [ timeStart, setTimeStart ] = useState('07:00');
 	const [ timeEnd, setTimeEnd ] = useState('12:00');
 	const [ amount, setAmount ] = useState(75);
@@ -40,7 +39,7 @@ const FormAmTimeSlots = () => {
 	return (
 		<div>
 			<Typography align="center" variant="h4">
-				AM Time Slots
+				Time Slots
 			</Typography>
 
 			<FormGroup row className={classes.section}>
@@ -89,9 +88,18 @@ const FormAmTimeSlots = () => {
 				<ButtonFilled type="submit" variant="contained" color="primary">
 					Save
 				</ButtonFilled>
+				<ButtonFilled variant="contained" color="primary">
+					<AddIcon />
+				</ButtonFilled>
+				<ButtonFilled variant="contained" color="primary">
+					<EditIcon />
+				</ButtonFilled>
+				<ButtonFilled variant="contained" color="primary">
+					<DeleteForeverIcon />
+				</ButtonFilled>
 			</FormGroup>
 		</div>
 	);
 };
 
-export default FormAmTimeSlots;
+export default FormTimeSlots;
