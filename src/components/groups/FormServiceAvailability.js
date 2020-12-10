@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 //CUSTOM UI
 import TextInput from '../customUi/TextInput';
 //MATERIAL UI
@@ -49,7 +48,7 @@ const FormServiceAvailability = () => {
 	};
 
 	return (
-		<Paper>
+		<div>
 			<Typography align="center" variant="h4">
 				Service Availability
 			</Typography>
@@ -116,7 +115,7 @@ const FormServiceAvailability = () => {
 					</FormGroup>
 				</Grid>
 			</Grid>
-		</Paper>
+		</div>
 	);
 };
 
