@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
+import TabAvailability from '../tabs/TabAvailability';
+import PropTypes from 'prop-types';
+//MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
@@ -20,18 +26,50 @@ const useStyles = makeStyles({
 	}
 });
 
+//TAB PANEL
+function TabPanel(props) {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`wrapped-tabpanel-${index}`}
+			aria-labelledby={`wrapped-tab-${index}`}
+			{...other}
+		>
+			{value === index && <Box p={3}>{children}</Box>}
+		</div>
+	);
+}
+
+TabPanel.propTypes = {
+	children: PropTypes.node,
+	index: PropTypes.any.isRequired,
+	value: PropTypes.any.isRequired
+};
+
+function a11yProps(index) {
+	return {
+		id: `simple-tab-${index}`,
+		'aria-controls': `simple-tabpanel-${index}`
+	};
+}
+
+//MAIN FUNCTION
+
 const DocDashboardTabs = () => {
 	const [ value, setValue ] = useState(0);
 	const classes = useStyles();
-	const handleChangeValue = (event, newValue) => {
+	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
 	return (
-		<div>
+		<Container>
 			<Tabs
 				value={value}
-				onChange={handleChangeValue}
+				onChange={handleChange}
 				variant="fullWidth"
 				indicatorColor="primary"
 				aria-label="icon label tabs"
@@ -40,24 +78,31 @@ const DocDashboardTabs = () => {
 					className={classes.wrapperTab}
 					icon={<VideocamOutlinedIcon className={classes.icons} />}
 					label="My Appointments"
+					{...a11yProps(0)}
 				/>
 				<Tab
 					className={classes.wrapperTab}
 					icon={<PeopleAltOutlinedIcon className={classes.icons} />}
 					label="My Patients"
+					{...a11yProps(1)}
 				/>
 				<Tab
 					className={classes.wrapperTab}
 					icon={<AccountBalanceWalletOutlinedIcon className={classes.icons} />}
 					label="My Earnings"
+					{...a11yProps(2)}
 				/>
 				<Tab
 					className={classes.wrapperTab}
 					icon={<EventAvailableOutlinedIcon className={classes.icons} />}
 					label="Availability"
+					{...a11yProps(3)}
 				/>
 			</Tabs>
-		</div>
+			<TabPanel value={value} index={3}>
+				<TabAvailability />
+			</TabPanel>
+		</Container>
 	);
 };
 
