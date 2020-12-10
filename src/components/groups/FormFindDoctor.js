@@ -1,135 +1,66 @@
-import React from 'react';
-//MATERIAL UI
-
+import React, { useState } from 'react';
 import TextInput from '../../components/customUi/TextInput';
-import ButtonFilled from '../../components/customUi/ButtonFilled'
-import Dropdown from '../../components/customUi/Dropdown'
-import InputLabel from '@material-ui/core/InputLabel';
+import ButtonIcon from '../../components/customUi/ButtonIcon'
+//MATERIAL UI
+//GRID ?
 import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles({
-    content: {
-    backgroundColor: '#C4C4C4',
-    height: 100,
-    }, 
 	formControl: {
         width: '40rem' ,
         margin: 'auto',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between'
-	},
+    },
+    ButtonIcon: {
+        borderRadius: 50 
+    },
 
 });
 const SearchDoctor = () => {
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [speciality, setSpeciality ] = useState('');
     const classes = useStyles();
 	
 	return (
-		<div className={classes.content}>
-            <FormControl className={classes.formControl}>
-<InputLabel shrink htmlFor="speciality">speciality</InputLabel>
-<Dropdown
-				native
-				label="Speciality"
-				variant = 'outlined'
-				// value={state.age}
-				// onChange={handleChange}
-				name="Speciality"
-				inputProps={{
-					id: 'speciality',
-				}}>
-
-          <option value={'Cardiologist'}>Cardiologist</option> 
-          <option value={'Endocrinologist'}>Endocrinologist</option>
-          <option value={'Diestist'}>Dietist</option>
-
-			</Dropdown>
-			<TextInput
-        id="date"
-        label="Date"
-		type="date"
-		variant = 'outlined'
-		defaultValue= {selectedDate} // today day?
-        InputLabelProps={{
-        shrink: true,
-        }}
-			/>
-			<ButtonFilled>Search</ButtonFilled>
-            </FormControl>
-            {/* <FormControl className={classes.input}>
-			<TextInput
-         id="time"
-		 label="Select Desired Time"
-		 type="time"
-		 defaultValue="07:30"
-		 variant = 'outlined'
-		className={classes.textField}
-		 InputLabelProps={{
-		   shrink: true,
-		 }}
-		 inputProps={{
-		   step: 3000, // 30 min
-		 }}
-			/>
-</FormControl>
-<FormControl className={classes.input}>
-		<Dropdown
-				native
-				// value={state.age}
-				// onChange={handleChange}
-				variant = 'outlined'
-				label="Price"
-				inputProps={{
-				  name: 'age',
-				  id: 'outlined-age-native-simple',
-				}}>
-  		<option aria-label="None" value="" />
-          <option value={10}>10</option> 
-          <option value={20}>20</option>
-          <option value={30}>30</option>
-
-			</Dropdown>
-         </FormControl >
-         <FormControl className={classes.input}>
-			<Dropdown
-				native
-				// value={state.age}
-				// onChange={handleChange}
-				label="Review"
-				variant = 'outlined'
-				inputProps={{
-				  name: 'Review',
-				  id: 'outlined-age-native-simple',
-				}}>
-  		<option aria-label="None" value="" />
-          <option value={10}>10</option> 
-          <option value={20}>20</option>
-          <option value={30}>30</option>
-
-			</Dropdown>
-            </FormControl >
-            <FormControl className={classes.input}>
-			<Dropdown
-				native
-				// value={state.age}
-				// onChange={handleChange}
-				label="More filter"
-				variant = 'outlined'
-				inputProps={{
-				  name: 'More filter',
-				  id: 'outlined-age-native-simple',
-				}}>
-  		<option aria-label="None" value="" />
-          <option value={10}>10</option> 
-          <option value={20}>20</option>
-          <option value={30}>30</option>
-
-			</Dropdown>
-            </FormControl > */}
-
-		</div>
+	<div >
+        <FormControl className={classes.formControl} onSubmit={() => {console.log(speciality, selectedDate)}}>
+            <TextInput
+                id="Speciality"
+                label="Speciality"
+                select
+                variant = 'outlined'
+                style= {{ // eliminate when we have the right style
+                    width: 300
+                }}
+                value={speciality}
+				onChange={(e) => setSpeciality(e.target.value)}
+                InputLabelProps={{
+                    shrink: true,
+                }}>   
+                <option value={'Cardiologist'} >Cardiologist</option> 
+                <option value={'Endocrinologist'}>Endocrinologist</option>
+                <option value={'Diestist'}>Dietist</option>
+            </TextInput> 
+            <TextInput
+                id="date"
+                label="Date"
+		        type="date"
+                variant = 'outlined'
+                value={selectedDate}
+				onChange={(e) => setSelectedDate(e.target.value)}
+		        defaultValue= {selectedDate} // today day?
+                InputLabelProps={{
+                    shrink: true,
+                }} />
+		    <ButtonIcon type='submit'>
+                <SearchIcon/>
+            </ButtonIcon>
+        </FormControl>
+	</div>
 	);
 };
 
