@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import TabAvailability from '../tabs/TabAvailability';
 import PropTypes from 'prop-types';
+//CUSTOM ICONS
+import CalendarIcon from '../customIcons/CalendarIcon';
+import PeopleIcon from '../customIcons/PeopleIcon';
+import EarningsIcon from '../customIcons/EarningsIcon';
+import ClockIcon from '../customIcons/ClockIcon';
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -21,8 +27,7 @@ const useStyles = makeStyles({
 	},
 	icons: {
 		color: '#6c6c5a',
-		marginRight: '0.3em',
-		marginLeft: '1em'
+		fontSize: '2rem'
 	}
 });
 
@@ -76,25 +81,25 @@ const DocDashboardTabs = () => {
 			>
 				<Tab
 					className={classes.wrapperTab}
-					icon={<VideocamOutlinedIcon className={classes.icons} />}
+					icon={<CalendarIcon className={classes.icons} />}
 					label="My Appointments"
 					{...a11yProps(0)}
 				/>
 				<Tab
 					className={classes.wrapperTab}
-					icon={<PeopleAltOutlinedIcon className={classes.icons} />}
+					icon={<PeopleIcon className={classes.icons} />}
 					label="My Patients"
 					{...a11yProps(1)}
 				/>
 				<Tab
 					className={classes.wrapperTab}
-					icon={<AccountBalanceWalletOutlinedIcon className={classes.icons} />}
+					icon={<EarningsIcon className={classes.icons} />}
 					label="My Earnings"
 					{...a11yProps(2)}
 				/>
 				<Tab
 					className={classes.wrapperTab}
-					icon={<EventAvailableOutlinedIcon className={classes.icons} />}
+					icon={<ClockIcon className={classes.icons} />}
 					label="Availability"
 					{...a11yProps(3)}
 				/>
