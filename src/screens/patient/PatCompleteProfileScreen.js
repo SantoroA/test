@@ -1,15 +1,15 @@
 import React from 'react';
-import Navbar from '../../components/layout/Navbar';
+import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
+
 import CompleteProfileForm from '../../components/groups/CompleteProfileForm';
 import ContactInfoForm from '../../components/groups/ContactInfoForm';
 
 const PatCompleteProfileScreen = () => {
 	return (
-		<div>
-			<Navbar />
+		<PatLayoutContainer>
 			<CompleteProfileForm />
 			<ContactInfoForm />
-		</div>
+		</PatLayoutContainer>
 	);
 };
 

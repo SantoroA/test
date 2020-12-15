@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 const TextInput = withStyles({
 	root: {
 		'& fieldset': {
-			borderRadius: 25
+			borderRadius: 4
 		},
 
 		'& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
