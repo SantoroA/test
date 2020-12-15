@@ -5,6 +5,7 @@ import DocDashboardTabs from '../../components/layout/DocDashboardTabs';
 import DocUserOptions from '../../components/groups/DocUserOptions';
 //MATEIAL UI
 import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -29,6 +30,7 @@ const DocDashboardScreen = () => {
 					<DocUserOptions />
 				</Grid>
 			</Grid>
+			<Divider variant="middle" />
 			<DocDashboardTabs />
 		</DocLayoutContainer>
 	);
