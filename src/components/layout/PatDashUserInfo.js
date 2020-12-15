@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
+import { NavLink } from 'react-router-dom';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 //MATERIAL UI
@@ -26,6 +27,12 @@ const useStyles = makeStyles({
 	avatar: {
 		marginRight: '1em',
 		marginTop: '3.5em'
+	},
+	button: {
+		textDecoration: 'none'
+	},
+	buttonContainer: {
+		marginBottom: '1em'
 	}
 });
 
@@ -47,8 +54,10 @@ const PatDashUserInfo = () => {
 				</Grid>
 
 				<Grid item className={classes.secondBlock}>
-					<Grid item>
-						<ButtonFilled variant="contained">Search for a Doctor</ButtonFilled>
+					<Grid item className={classes.buttonContainer}>
+						<NavLink className={classes.button} to="/in/patient/doctorsearch">
+							<ButtonFilled variant="contained">Search for a Doctor</ButtonFilled>
+						</NavLink>
 					</Grid>
 					<Grid item>
 						<Button variant="outlined" color="primary">
