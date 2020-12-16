@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import logo from '../../assets/dianurse-logo.png';
 import useToggle from '../../hooks/useToggle';
@@ -8,7 +8,6 @@ import RecoverPassDialog from '../../components/layout/RecoverPassDialog';
 import MessageDialog from '../../components/layout/MessageDialog';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -58,7 +57,7 @@ const GetStartedScreen = (props) => {
 							toggleIsLogin={toggleIsLogin}
 						/>
 					) : (
-						<RegisterForm amIHCP={false} toggleIsLogin={toggleIsLogin} />
+						<RegisterForm toggleIsLogin={toggleIsLogin} amIHCP={false} toggleIsLogin={toggleIsLogin} />
 					)}
 				</Grid>
 			</Grid>
