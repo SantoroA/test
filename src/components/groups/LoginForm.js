@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: '1rem'
 	},
 	submit: {
-		width: '194px',
-		height: '48px'
+		width: '100%',
+		height: '48px',
+		margin: '1rem'
 	},
-
 	redes: {
 		marginTop: 20,
 		display: 'flex',
@@ -112,18 +112,18 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 							variant="outlined"
 						/>
 					</Paper>
+					<Grid container>
+						<Grid item xs={6}>
+							<Button onClick={togglePasswordRecoveryOpen}>Forgot your password?</Button>
+							<Button onClick={toggleIsLogin}>Sign up now</Button>
+						</Grid>
+						<Grid item xs={6}>
+							<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
+								Log In
+							</ButtonFilled>
+						</Grid>
+					</Grid>
 				</form>
-				<Grid container>
-					<Grid item xs={6}>
-						<Button onClick={togglePasswordRecoveryOpen}>Forgot your password?</Button>
-						<Button onClick={toggleIsLogin}>Sign up now</Button>
-					</Grid>
-					<Grid item xs={6}>
-						<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
-							Log In
-						</ButtonFilled>
-					</Grid>
-				</Grid>
 				<Divider className={classes.divider} />
 				<Typography variant="body1">Or login with:</Typography>
 				<Grid className={classes.redes} container>
