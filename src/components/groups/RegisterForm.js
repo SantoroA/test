@@ -85,6 +85,9 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			color: '#00A99D'
 		}
+	},
+	socialMediaButton: {
+		margin: '1rem'
 	}
 }));
 
@@ -213,15 +216,17 @@ const RegisterForm = ({ toggleIsLogin }) => {
 						onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 						cookiePolicy={'single_host_origin'}
 					/>
-					<AppleLogin
-						clientId="com.react.apple.login"
-						redirectURI=""
-						responseType={'code'}
-						responseMode={'query'}
-						callback={(appleResponse) => {
-							handleAppleRegister({ appleResponse, language, subdomain });
-						}}
-					/>
+					<div className={classes.socialMediaButton}>
+						<AppleLogin
+							clientId="com.react.apple.login"
+							redirectURI=""
+							responseType={'code'}
+							responseMode={'query'}
+							callback={(appleResponse) => {
+								handleAppleRegister({ appleResponse, language, subdomain });
+							}}
+						/>
+					</div>
 				</Grid>
 			</Grid>
 		</Grid>
