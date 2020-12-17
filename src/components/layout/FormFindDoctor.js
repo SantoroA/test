@@ -43,7 +43,6 @@ const DoctorSearch = () => {
 					params:search
 				})
 				setDoctors(response.data)
-
 				let dateChoose = new Date(date).toDateString().split(" ")
 				setformatDate(`${dateChoose[0]}, ${dateChoose[2]} 
 					${new Date(date).toLocaleString('default', { month: 'long' })}`)				
@@ -62,6 +61,13 @@ const DoctorSearch = () => {
 		} catch (err) {
 			console.log(err.message);
 		}}
+	const convertTime = (start) => {
+		let hours = new Date(start).getHours()
+		let min = new Date(start).getMinutes()
+		let realMin = min<10?'00':min
+		return `${hours}:${realMin}`
+
+	}
 
 	return (
 		<div>
@@ -81,8 +87,8 @@ const DoctorSearch = () => {
 				return <DoctorCard 
 							key={el.time._id}
 							appointmentId={el.time._id}
-							start={el.time.appointmentTimeStart}
-							end= {el.time.appointmentTimeEnd}
+							start={convertTime(el.time.appointmentTimeStart)}
+							end= {convertTime(el.time.appointmentTimeEnd)}
 							image={el.doctor.picture}
 							description={el.doctor.description}		
 							fullName={el.doctor.fullName}
