@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TabAvailability from '../tabs/TabAvailability';
 import PropTypes from 'prop-types';
+import TabCustom from '../customUi/TabCustom';
 //CUSTOM ICONS
 import CalendarIcon from '../customIcons/CalendarIcon';
 import PeopleIcon from '../customIcons/PeopleIcon';
@@ -10,24 +11,16 @@ import ClockIcon from '../customIcons/ClockIcon';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
-import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
-import EventAvailableOutlinedIcon from '@material-ui/icons/EventAvailableOutlined';
 
-// theming
 const useStyles = makeStyles({
 	wrapperTab: {
 		textTransform: 'capitalize',
-		fontSize: '1.2em'
+		fontSize: '1.2rem'
 	},
 	icons: {
-		color: '#6c6c5a',
-		fontSize: '2rem'
+		fontSize: '2.3rem'
 	}
 });
 
@@ -79,25 +72,25 @@ const DocDashboardTabs = () => {
 				indicatorColor="primary"
 				aria-label="icon label tabs"
 			>
-				<Tab
+				<TabCustom
 					className={classes.wrapperTab}
 					icon={<CalendarIcon className={classes.icons} />}
 					label="My Appointments"
 					{...a11yProps(0)}
 				/>
-				<Tab
+				<TabCustom
 					className={classes.wrapperTab}
 					icon={<PeopleIcon className={classes.icons} />}
 					label="My Patients"
 					{...a11yProps(1)}
 				/>
-				<Tab
+				<TabCustom
 					className={classes.wrapperTab}
 					icon={<EarningsIcon className={classes.icons} />}
 					label="My Earnings"
 					{...a11yProps(2)}
 				/>
-				<Tab
+				<TabCustom
 					className={classes.wrapperTab}
 					icon={<ClockIcon className={classes.icons} />}
 					label="Availability"

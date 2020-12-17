@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			color: '#00A99D'
 		}
+	},
+	socialMediaButton: {
+		margin: '1rem'
 	}
 }));
 
@@ -170,15 +173,17 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 						onFailure={(ggResponse) => handleGoogleLogin(ggResponse)}
 						cookiePolicy={'single_host_origin'}
 					/>
-					<AppleLogin
-						clientId="com.react.apple.login"
-						redirectURI=""
-						responseType={'code'}
-						responseMode={'query'}
-						callback={(appleResponse) => {
-							handleAppleLogin({ appleResponse });
-						}}
-					/>
+					<div className={classes.socialMediaButton}>
+						<AppleLogin
+							clientId="com.react.apple.login"
+							redirectURI=""
+							responseType={'code'}
+							responseMode={'query'}
+							callback={(appleResponse) => {
+								handleAppleLogin({ appleResponse });
+							}}
+						/>
+					</div>
 				</Grid>
 			</Grid>
 		</Grid>

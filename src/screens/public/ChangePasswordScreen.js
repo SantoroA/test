@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../../components/groups/Navbar';
 import ChangePasswordForm from '../../components/groups/ChangePasswordForm';
-import MessageDialog from '../../components/layout/MessageDialog';
+import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
