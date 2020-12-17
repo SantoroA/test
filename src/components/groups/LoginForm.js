@@ -10,6 +10,7 @@ import TextInput from '../customUi/TextInput';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -18,46 +19,31 @@ import AppleIcon from '@material-ui/icons/Apple';
 const useStyles = makeStyles((theme) => ({
 	container: {
 		alignItems: 'center',
+		justifyContent: 'center',
 		display: 'flex',
 		flexDirection: 'column'
 	},
 	paper: {
-		padding: theme.spacing(4),
+		padding: '2rem',
 		display: 'flex',
-		flexWrap: 'wrap',
 		flexDirection: 'column',
-		alignItems: 'center'
+		marginBottom: '2rem',
+		marginTop: '2rem'
 	},
-	form: {
+	formContainer: {
 		width: '100%',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		display: 'flex',
+		flexDirection: 'column',
+		textAlign: 'center'
 	},
-	item: {
-		padding: theme.spacing(1, 0)
+	inputs: {
+		marginBottom: '1rem'
 	},
 	submit: {
 		width: '100%',
-		marginTop: 12
-	},
-	link: {
-		borderWidth: 1,
-		borderColor: 'black',
-		textDecoration: 'none',
-		padding: theme.spacing(1),
-		borderRadius: 5
-	},
-	text: {
-		marginTop: '0',
-		textAlign: 'center'
-	},
-	socialMedia: {
-		borderRadius: 15,
-		height: 30,
-		width: 30,
-		padding: 20,
-		minHeight: 0,
-		minWidth: 0,
-		fontSize: 20
+		height: '48px',
+		margin: '1rem'
 	},
 	redes: {
 		marginTop: 20,
@@ -65,10 +51,14 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		width: '100%'
+	},
+	divider: {
+		marginTop: '1rem',
+		marginBottom: '1rem'
 	}
 }));
 
-const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
+const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials }) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const classes = useStyles();
@@ -89,28 +79,28 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 	};
 
 	return (
-		<div className={classes.container}>
-			<Paper elevation={3} className={classes.paper}>
+		<Grid container className={classes.container}>
+			<Grid className={classes.formContainer} xs={6} item>
+				<Typography variant="body1">Already have an account? Log in here</Typography>
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
 						handleSubmit();
 					}}
-					className={classes.form}
 				>
-					<h2>Already have an account? Log in here</h2>
-					<Grid className={classes.item}>
-						<TextInput
-							fullWidth
-							type="email"
-							required
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							label="Email"
-							variant="outlined"
-						/>
-					</Grid>
-					<Grid className={classes.item}>
+					<Paper elevation={0} className={classes.paper}>
+						<div className={classes.inputs}>
+							<TextInput
+								fullWidth
+								type="email"
+								required
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								label="Email"
+								variant="outlined"
+							/>
+						</div>
+
 						<TextInput
 							fullWidth
 							required
@@ -121,16 +111,21 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 							label="Password"
 							variant="outlined"
 						/>
+					</Paper>
+					<Grid container>
+						<Grid item xs={6}>
+							<Button onClick={togglePasswordRecoveryOpen}>Forgot your password?</Button>
+							<Button onClick={toggleIsLogin}>Sign up now</Button>
+						</Grid>
+						<Grid item xs={6}>
+							<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
+								Log In
+							</ButtonFilled>
+						</Grid>
 					</Grid>
-					<Button variant="outlined" color="primary" onClick={togglePasswordRecoveryOpen}>
-						Forgot your password?
-					</Button>
-
-					<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
-						Log In
-					</ButtonFilled>
 				</form>
-				<Typography variant="h6">Or login with your social media</Typography>
+				<Divider className={classes.divider} />
+				<Typography variant="body1">Or login with:</Typography>
 				<Grid className={classes.redes} container>
 					<FacebookLogin
 						appId={process.env.REACT_APP_FACEBOOK_APP_ID}
@@ -187,8 +182,8 @@ const LoginForm = ({ togglePasswordRecoveryOpen, loginCredentials }) => {
 						)}
 					/>
 				</Grid>
-			</Paper>
-		</div>
+			</Grid>
+		</Grid>
 	);
 };
 

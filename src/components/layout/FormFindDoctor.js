@@ -1,31 +1,38 @@
 import React, {useState} from 'react';
+import dianurseApi from '../../api/dianurseApi';
 import Search from '../../components/groups/FormFindDoctor'
 import DoctorFilter from '../../components/groups/DoctorFilter'
 import DoctorCard from '../../components/groups/DoctorCard'
-import dianurseApi from '../../api/dianurseApi';
+import Calendar from '../customUi/Calendar'
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Box } from '@material-ui/core';
 
+
 const useStyles = makeStyles({
 	dateSearch: {
-        padding: '10px',
+        padding: '15px',
         width: '43.5rem',
-        margin: 'auto'
-    }
+        marginLeft: '12%'
+	},
+	cardCalendar: {
+		display: 'flex',
+		flexDirection: 'row',
+		width: "75%",
+		margin: "auto"
+	}
 })
 
 const DoctorSearch = () => {
 	const [doctors, setDoctors] = useState([]);
 	const [typeOfHCP, setTypeOfHCP ] = useState('Cardiologist');
 	const [date, setDate ] = useState('');
-	const [appointment, setAppointment ] = useState('');
+	const [formatDate, setformatDate ] = useState('');
 	const classes = useStyles();
 
-	// functions
 	const selectSpeciality = (e) => { setTypeOfHCP(e.target.value)}
 	const selectDate = (e) => { setDate(e.target.value)}
 	const handleSubmit = async(e) => {
-		console.log(typeOfHCP, date)
 		const search = {
 			typeOfHCP,
 			date
@@ -36,27 +43,25 @@ const DoctorSearch = () => {
 					params:search
 				})
 				setDoctors(response.data)
-				console.log(response.data)
-				
+
+				let dateChoose = new Date(date).toDateString().split(" ")
+				setformatDate(`${dateChoose[0]}, ${dateChoose[2]} 
+					${new Date(date).toLocaleString('default', { month: 'long' })}`)				
 			} catch (err) {
 				console.log(err.message);
 			}
-					
-
 	}
+
 	const reserve = async(appointmentId) => {
 		let patientId = "5fd0ccfb428d89002a2b5687" // pegar do context
 		try {
 			const response = await dianurseApi.post(`/appointment/addAppointment/${patientId}`, {
 				appointmentId
 			})
-			console.log(response.data)
-			
+			console.log(response.data)	
 		} catch (err) {
 			console.log(err.message);
-		}
-		console.log('clicked')
-	}
+		}}
 
 	return (
 		<div>
@@ -68,8 +73,10 @@ const DoctorSearch = () => {
 				chooseDate={date}/>
             <DoctorFilter/>
 			<Box className={classes.dateSearch} >
-                <Typography variant="h5" color="textSecondary" component="p">Mon, 30 September</Typography>
+                <Typography variant="h5" color="textSecondary" component="p">{formatDate}</Typography>
             </Box>
+			<Box className={classes.cardCalendar}>
+				<Box>
 			{doctors.map((el)=> {
 				return <DoctorCard 
 							key={el.time._id}
@@ -86,12 +93,12 @@ const DoctorSearch = () => {
 							getAppointment ={
 								(e) => {
 									e.preventDefault();
-									reserve(el.time._id)
-								}
-						}
-							/>
+									reserve(el.time._id)}
+						}/>
 			})}
-            
+			</Box>
+			<Calendar/>
+            </Box>
 		</div>
 	);
 };

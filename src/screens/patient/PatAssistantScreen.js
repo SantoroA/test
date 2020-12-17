@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/layout/Navbar';
+import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
+
 import FormUserReason from '../../components/groups/FormUserReason';
 import FormUserInsurance from '../../components/groups/FormUserInsurance';
 import FormWhoIsPatient from '../../components/groups/FormWhoIsPatient';
@@ -22,8 +23,7 @@ const PatAssistantScreen = () => {
 	switch (step) {
 		case 1:
 			return (
-				<div>
-					<Navbar />
+				<PatLayoutContainer>
 					<FormWhoIsPatient
 						step
 						nextStep={nextStep}
@@ -31,12 +31,11 @@ const PatAssistantScreen = () => {
 						isMainPatient={isMainPatient}
 						setIsMainPatient={setIsMainPatient}
 					/>
-				</div>
+				</PatLayoutContainer>
 			);
 		case 2:
 			return (
-				<div>
-					<Navbar />
+				<PatLayoutContainer>
 					<FormUserInsurance
 						step
 						nextStep={nextStep}
@@ -44,12 +43,11 @@ const PatAssistantScreen = () => {
 						insuranceType={insuranceType}
 						setInsuranceType={setInsuranceType}
 					/>
-				</div>
+				</PatLayoutContainer>
 			);
 		case 3:
 			return (
-				<div>
-					<Navbar />
+				<PatLayoutContainer>
 					<FormUserReason
 						step
 						nextStep={nextStep}
@@ -57,22 +55,20 @@ const PatAssistantScreen = () => {
 						reasonForVisit={reasonForVisit}
 						setReasonForVisit={setReasonForVisit}
 					/>
-				</div>
+				</PatLayoutContainer>
 			);
 		case 4:
 			return (
-				<div>
-					<Navbar />
+				<PatLayoutContainer>
 					<FormUserRecommendation step nextStep={nextStep} previousStep={previousStep} />
-				</div>
+				</PatLayoutContainer>
 			);
 
 		default:
 			return (
-				<div>
-					<Navbar />
+				<PatLayoutContainer>
 					<FormUserRecommendation />
-				</div>
+				</PatLayoutContainer>
 			);
 	}
 };

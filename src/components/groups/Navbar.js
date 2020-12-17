@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Context as LanguageContext } from '../../context/LanguageContext';
 import { Context as AuthContext } from '../../context/AuthContext';
 import logo from '../../assets/dianurse-logo.png';
-import NavMenu from '../groups/NavMenu';
+import NavMenu from './NavMenu';
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

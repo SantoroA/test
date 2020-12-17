@@ -4,9 +4,7 @@ import ButtonFilled from '../../components/customUi/ButtonFilled';
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { Card, CardMedia, CardContent, CardActions, Typography, Box } from '@material-ui/core';
-import { Divider } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import { Card, CardMedia, CardContent, CardActions, Typography, Box, Divider, Button } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
@@ -16,10 +14,8 @@ const useStyles = makeStyles({
         background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)',
         width: '870px',
         height: '230px',
-        margin: 'auto',
         marginTop: '20px',
         marginBottom: '10px',
-        // justifyContent: 'space-between',
         borderRadius: '10px',
         boxShadow: 'none',
     },
@@ -98,7 +94,6 @@ lineHeight: '18px',
 
 
 
-
 const DoctorCard = (props) => {
     const classes = useStyles();
 	return (
@@ -140,7 +135,6 @@ const DoctorCard = (props) => {
 
 export default DoctorCard;
 
-// Dashboard doctor, availability
 
 
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextInput from '../../components/customUi/TextInput';
-import ButtonIcon from '../../components/customUi/ButtonIcon'
+import ButtonIcon from '../../components/customUi/ButtonIcon';
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -8,16 +8,15 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles({
 	formControl: {
-        width: '40rem' ,
-        margin: 'auto',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    ButtonIcon: {
-        borderRadius: 50 
-    },
-
+		width: '40rem',
+		margin: 'auto',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+	ButtonIcon: {
+		borderRadius: 50
+	}
 });
 const SearchDoctor = (props) => {
     const classes = useStyles();
@@ -30,7 +29,7 @@ const SearchDoctor = (props) => {
                 label="Speciality"
                 select
                 variant = 'outlined'
-                style= {{ // eliminate when we have the right style
+                style= {{ 
                     width: 300
                 }}
                 value={props.chooseSpeciality}
@@ -61,7 +60,3 @@ const SearchDoctor = (props) => {
 };
 
 export default SearchDoctor;
-
-
-
-

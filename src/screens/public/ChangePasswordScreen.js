@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../components/layout/Navbar';
+import Navbar from '../../components/groups/Navbar';
 import ChangePasswordForm from '../../components/groups/ChangePasswordForm';
 import MessageDialog from '../../components/layout/MessageDialog';
 //MATERIAL UI

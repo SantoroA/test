@@ -1,13 +1,12 @@
 import React from 'react';
-import Navbar from '../../components/layout/Navbar';
+import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import Typography from '@material-ui/core/Typography';
 
 const DocVideoPrecallScreen = () => {
 	return (
-		<div>
-			<Navbar />
+		<DocLayoutContainer>
 			<Typography variant="h4">Doctor Video Precall</Typography>
-		</div>
+		</DocLayoutContainer>
 	);
 };
 
