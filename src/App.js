@@ -15,22 +15,22 @@ const theme = createMuiTheme({
 	},
 	palette: {
 		primary: {
-			main: '#00A99D'
+			main: '#07B597'
 		}
 	}
 });
 
 const Routes = () => {
-	const [ isLoading, setIsLoading ] = useState(true);
+	const [ isLoading, setIsLoading ] = useState(false);
 	const { getCookie, state: { isLoggedIn } } = useContext(AuthContext);
-	useEffect(() => {
-		const loadPage = async () => {
-			await getCookie();
-			setIsLoading(false);
-		};
-		loadPage();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// useEffect(() => {
+	// 	const loadPage = async () => {
+	// 		await getCookie();
+	// 		setIsLoading(false);
+	// 	};
+	// 	loadPage();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };
 
