@@ -3,9 +3,8 @@ import Radio from '@material-ui/core/Radio';
 
 const RadioStyled = withStyles({
 	root: {
-		color: '#00A99D',
 		'&$checked': {
-			color: '#00A99D'
+			color: '#07B597'
 		}
 	},
 	checked: {}

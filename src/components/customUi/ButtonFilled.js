@@ -7,7 +7,11 @@ const ButtonFilled = styled(Button)({
 	borderRadius: '10px',
 	color: 'white',
 	fontWeight: 'bold',
-	textTransform: 'none'
+	textTransform: 'none',
+
+	'&:hover': {
+		background: '#0BC7E0'
+	}
 });
 
 export default ButtonFilled;
