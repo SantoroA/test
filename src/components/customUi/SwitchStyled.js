@@ -3,12 +3,12 @@ import Switch from '@material-ui/core/Switch';
 
 const SwitchStyled = withStyles({
 	switchBase: {
-		color: '#00A99D',
+		color: '#07B597',
 		'&$checked': {
-			color: '#00A99D'
+			color: '#07B597'
 		},
 		'&$checked + $track': {
-			backgroundColor: '#00A99D'
+			backgroundColor: '#07B597'
 		}
 	},
 	checked: {},

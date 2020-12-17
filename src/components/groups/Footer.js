@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 const Footer = () => {
 	return (
 		<Grid container>
-			<Grid xs={12}>
+			<Grid item xs={12}>
 				<Typography variant="body1">Footer</Typography>
 			</Grid>
 			<Grid item md={3}>

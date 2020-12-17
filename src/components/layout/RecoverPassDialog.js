@@ -4,14 +4,12 @@ import logo from '../../assets/dianurse-logo.png';
 import ButtonFilled from '../customUi/ButtonFilled';
 import TextInput from '../customUi/TextInput';
 //MATERIAL UI
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
