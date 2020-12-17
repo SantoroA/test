@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import TextInput from '../../components/customUi/TextInput';
 import ButtonIcon from '../../components/customUi/ButtonIcon'
 //MATERIAL UI
-//GRID ?
-import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+
 
 const useStyles = makeStyles({
 	formControl: {
@@ -20,14 +19,12 @@ const useStyles = makeStyles({
     },
 
 });
-const SearchDoctor = () => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [speciality, setSpeciality ] = useState('');
+const SearchDoctor = (props) => {
     const classes = useStyles();
 	
 	return (
 	<div >
-        <FormControl className={classes.formControl} onSubmit={() => {console.log(speciality, selectedDate)}}>
+        <form className={classes.formControl} onSubmit={props.search}>
             <TextInput
                 id="Speciality"
                 label="Speciality"
@@ -36,8 +33,8 @@ const SearchDoctor = () => {
                 style= {{ // eliminate when we have the right style
                     width: 300
                 }}
-                value={speciality}
-				onChange={(e) => setSpeciality(e.target.value)}
+                value={props.chooseSpeciality}
+				onChange={props.changeSpeciality}
                 InputLabelProps={{
                     shrink: true,
                 }}>   
@@ -50,16 +47,15 @@ const SearchDoctor = () => {
                 label="Date"
 		        type="date"
                 variant = 'outlined'
-                value={selectedDate}
-				onChange={(e) => setSelectedDate(e.target.value)}
-		        defaultValue= {selectedDate} // today day?
+                value={props.chooseDate}
+				onChange={props.changeDate}
                 InputLabelProps={{
                     shrink: true,
                 }} />
 		    <ButtonIcon type='submit'>
                 <SearchIcon/>
             </ButtonIcon>
-        </FormControl>
+        </form>
 	</div>
 	);
 };
