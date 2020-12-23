@@ -26,13 +26,15 @@ const useStyles = makeStyles({
 const DoctorSearch = () => {
 	const [doctors, setDoctors] = useState([]);
 	const [typeOfHCP, setTypeOfHCP ] = useState('Cardiologist');
-	const [date, setDate ] = useState('');
+	const [newDate, setDate ] = useState('');
 	const [formatDate, setformatDate ] = useState('');
 	const classes = useStyles();
 
 	const selectSpeciality = (e) => { setTypeOfHCP(e.target.value)}
 	const selectDate = (e) => { setDate(e.target.value)}
 	const handleSubmit = async(e) => {
+		let date = new Date(newDate)
+		console.log(newDate)
 		const search = {
 			typeOfHCP,
 			date
@@ -43,9 +45,10 @@ const DoctorSearch = () => {
 					params:search
 				})
 				setDoctors(response.data)
-				let dateChoose = new Date(date).toDateString().split(" ")
+				console.log(response)
+				let dateChoose = new Date(newDate).toDateString().split(" ")
 				setformatDate(`${dateChoose[0]}, ${dateChoose[2]} 
-					${new Date(date).toLocaleString('default', { month: 'long' })}`)				
+					${new Date(newDate).toLocaleString('default', { month: 'long' })}`)				
 			} catch (err) {
 				console.log(err.message);
 			}
@@ -76,7 +79,7 @@ const DoctorSearch = () => {
 				changeSpeciality={selectSpeciality}
 				chooseSpeciality={typeOfHCP}
 				changeDate={selectDate}
-				chooseDate={date}/>
+				chooseDate={newDate}/>
             <DoctorFilter/>
 			<Box className={classes.dateSearch} >
                 <Typography variant="h5" color="textSecondary" component="p">{formatDate}</Typography>
@@ -85,17 +88,17 @@ const DoctorSearch = () => {
 				<Box>
 			{doctors.map((el)=> {
 				return <DoctorCard 
-							key={el.time._id}
-							appointmentId={el.time._id}
-							start={convertTime(el.time.appointmentTimeStart)}
-							end= {convertTime(el.time.appointmentTimeEnd)}
-							image={el.doctor.picture}
-							description={el.doctor.description}		
-							fullName={el.doctor.fullName}
-							price = { el.doctor.price.value}
-							currency = {el.doctor.price.currency}
-							ratingStars ={el.doctor.rating.averageRating}
-							reviews = {el.doctor.rating.receivedRating}
+							key={el._id}
+							appointmentId={el._id}
+							start={convertTime(el.appointmentTimeStart)}
+							end= {convertTime(el.appointmentTimeEnd)}
+							image={el.accountHCPid.picture}
+							description={el.accountHCPid.description}		
+							fullName={el.accountHCPid.fullName}
+							price = { el.accountHCPid.price.value}
+							currency = {el.accountHCPid.price.currency}
+							ratingStars ={el.accountHCPid.rating.averageRating}
+							reviews = {el.accountHCPid.rating.receivedRating}
 							getAppointment ={
 								(e) => {
 									e.preventDefault();

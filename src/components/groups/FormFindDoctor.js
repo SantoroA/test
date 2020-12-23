@@ -39,7 +39,7 @@ const SearchDoctor = (props) => {
                 }}>   
                 <option value={'Cardiologist'} >Cardiologist</option> 
                 <option value={'Endocrinologist'}>Endocrinologist</option>
-                <option value={'Diestist'}>Dietist</option>
+                <option value={'Dietist'}>Dietist</option>
             </TextInput> 
             <TextInput
                 id="date"
