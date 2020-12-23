@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/groups/Navbar';
-import ChangePasswordForm from '../../components/groups/ChangePasswordForm';
+import FormChangePassword from '../../components/groups/FormChangePassword';
 import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
@@ -34,7 +34,7 @@ const ChangePasswordScreen = (props) => {
 		<div className={classes.root}>
 			<Grid container className={classes.container}>
 				<Grid item xs={10} sm={6} md={5} lg={4}>
-					<ChangePasswordForm recToken={recToken} />
+					<FormChangePassword recToken={recToken} />
 				</Grid>
 			</Grid>
 			<MessageDialog />

@@ -329,11 +329,11 @@ export const { Provider, Context } = createDataContext(
 		useName: '',
 		userId: '',
 		userToken: '',
-		userAmIHCP: false,
+		userAmIHCP: true,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US'
 	}

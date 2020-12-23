@@ -1,69 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import logo from '../../assets/dianurse-logo.png';
+import logo from '../../../assets/dianurse-logo.png';
+import useStyles from './style';
 //CUSTOM UI
-import ButtonFilled from '../customUi/ButtonFilled';
-import PaperCustomShadow from '../customUi/PaperCustomShadow';
-import TextInput from '../customUi/TextInput';
+import ButtonFilled from '../../customUi/ButtonFilled';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
-import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-	layout: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: '2rem',
-		textAlign: 'center',
-		width: '100%'
-	},
-	paper: {
-		padding: '2rem',
-		display: 'flex',
-		flexDirection: 'column',
-		marginBottom: '2rem',
-		marginTop: '2rem'
-		// width: '100%'
-	},
-	logo: {
-		width: '10rem',
-		marginBottom: '2rem'
-	},
-	divider: {
-		marginTop: '1rem',
-		marginBottom: '1rem'
-	},
-	form: {
-		width: '100%'
-	},
-	submit: {
-		width: '100%',
-		height: '48px'
-	},
-	passGenerate: {
-		textTransform: 'none',
-		fontWeight: 600,
-		width: '100%',
-		height: '48px',
-		borderWidth: '2px',
-		borderRadius: '10px'
-	},
-	textInput: {
-		marginBottom: '1rem'
-	},
-	buttons: {
-		justifyContent: 'space-around'
-	}
-}));
-
-const ChangePasswordForm = ({ recToken }) => {
+const FormChangePassword = ({ recToken }) => {
 	const classes = useStyles();
 	const { changePassword } = useContext(AuthContext);
 	const [ newPassword, setNewPassword ] = useState('');
@@ -135,4 +84,4 @@ const ChangePasswordForm = ({ recToken }) => {
 	);
 };
 
-export default ChangePasswordForm;
+export default FormChangePassword;
