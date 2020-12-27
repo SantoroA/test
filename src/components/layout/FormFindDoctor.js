@@ -86,7 +86,7 @@ const DoctorSearch = () => {
             </Box>
 			<Box className={classes.cardCalendar}>
 				<Box>
-			{doctors.map((el)=> {
+			 {doctors.map((el)=> {
 				return <DoctorCard 
 							key={el._id}
 							appointmentId={el._id}
@@ -95,16 +95,16 @@ const DoctorSearch = () => {
 							image={el.accountHCPid.picture}
 							description={el.accountHCPid.description}		
 							fullName={el.accountHCPid.fullName}
-							price = { el.accountHCPid.price.value}
-							currency = {el.accountHCPid.price.currency}
+							price = { el.amount}
+							// currency = {el.accountHCPid.price.currency}
 							ratingStars ={el.accountHCPid.rating.averageRating}
 							reviews = {el.accountHCPid.rating.receivedRating}
 							getAppointment ={
 								(e) => {
 									e.preventDefault();
-									reserve(el.time._id)}
+									reserve(el._id)}
 						}/>
-			})}
+			})} 
 			</Box>
 			<Calendar/>
             </Box>
