@@ -11,10 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
 	userInfo: {
 		justifyContent: 'center',
-		margin: '2rem'
+		padding: '2rem'
 	},
 	userOptions: {
-		marginLeft: '6rem'
+		paddingLeft: '2rem'
 	}
 });
 
@@ -23,10 +23,10 @@ const DocDashboardScreen = () => {
 	return (
 		<DocLayoutContainer>
 			<Grid container className={classes.userInfo}>
-				<Grid item md={4} xs={9}>
+				<Grid item lg={5} md={8} xs={12}>
 					<DocProfileCard />
 				</Grid>
-				<Grid item md={2} xs={2} className={classes.userOptions}>
+				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
 					<DocUserOptions />
 				</Grid>
 			</Grid>

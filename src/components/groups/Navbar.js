@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
 	navbar: {
 		flexGrow: 1,
 		backgroundColor: '#fff',
-		color: 'black'
+		color: 'black',
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
 	},
 	toolbar: {
 		justifyContent: 'space-between'

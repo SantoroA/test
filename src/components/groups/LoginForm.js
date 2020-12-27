@@ -5,6 +5,7 @@ import GoogleLogin from 'react-google-login';
 import AppleLogin from 'react-apple-login';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
+import PaperCustomShadow from '../customUi/PaperCustomShadow';
 import TextInput from '../customUi/TextInput';
 //MATERIAL UI
 import Paper from '@material-ui/core/Paper';
@@ -55,6 +56,23 @@ const useStyles = makeStyles((theme) => ({
 	divider: {
 		marginTop: '1rem',
 		marginBottom: '1rem'
+	},
+	socialMedia: {
+		borderRadius: '3px',
+		backgroundColor: '#1877f2',
+		color: 'white',
+		width: '179px',
+		height: '44px',
+		textTransform: 'none'
+	},
+	textButton: {
+		textTransform: 'none',
+		'&:hover': {
+			color: '#00A99D'
+		}
+	},
+	socialMediaButton: {
+		margin: '1rem'
 	}
 }));
 
@@ -88,7 +106,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 						handleSubmit();
 					}}
 				>
-					<Paper elevation={0} className={classes.paper}>
+					<PaperCustomShadow className={classes.paper}>
 						<div className={classes.inputs}>
 							<TextInput
 								fullWidth
@@ -111,11 +129,15 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 							label="Password"
 							variant="outlined"
 						/>
-					</Paper>
+					</PaperCustomShadow>
 					<Grid container>
 						<Grid item xs={6}>
-							<Button onClick={togglePasswordRecoveryOpen}>Forgot your password?</Button>
-							<Button onClick={toggleIsLogin}>Sign up now</Button>
+							<Button className={classes.textButton} onClick={togglePasswordRecoveryOpen}>
+								Forgot your password?
+							</Button>
+							<Button className={classes.textButton} onClick={toggleIsLogin}>
+								Sign up now
+							</Button>
 						</Grid>
 						<Grid item xs={6}>
 							<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
@@ -134,53 +156,34 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 							handleFacebookLogin(fbResponse);
 						}}
 						render={(renderProps) => (
-							<ButtonFilled
+							<Button
 								variant="contained"
 								onClick={renderProps.onClick}
 								color="primary"
 								className={classes.socialMedia}
 							>
 								<FacebookIcon />
-							</ButtonFilled>
+								<Typography variant="body2">Facebook</Typography>
+							</Button>
 						)}
 					/>
 					<GoogleLogin
 						clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
-						render={(renderProps) => (
-							<ButtonFilled
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								variant="contained"
-								color="primary"
-								className={classes.socialMedia}
-							>
-								<i className="fab fa-google" />
-							</ButtonFilled>
-						)}
 						onSuccess={(ggResponse) => handleGoogleLogin(ggResponse)}
 						onFailure={(ggResponse) => handleGoogleLogin(ggResponse)}
 						cookiePolicy={'single_host_origin'}
 					/>
-					<AppleLogin
-						clientId="com.react.apple.login"
-						redirectURI=""
-						responseType={'code'}
-						responseMode={'query'}
-						callback={(appleResponse) => {
-							handleAppleLogin({ appleResponse });
-						}}
-						render={(renderProps) => (
-							<ButtonFilled
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								variant="contained"
-								color="primary"
-								className={classes.socialMedia}
-							>
-								<AppleIcon />
-							</ButtonFilled>
-						)}
-					/>
+					<div className={classes.socialMediaButton}>
+						<AppleLogin
+							clientId="com.react.apple.login"
+							redirectURI=""
+							responseType={'code'}
+							responseMode={'query'}
+							callback={(appleResponse) => {
+								handleAppleLogin({ appleResponse });
+							}}
+						/>
+					</div>
 				</Grid>
 			</Grid>
 		</Grid>

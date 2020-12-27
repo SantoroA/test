@@ -8,7 +8,9 @@ import GoogleLogin from 'react-google-login';
 import AppleLogin from 'react-apple-login';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
+import RadioStyled from '../customUi/RadioStyled';
 import TextInput from '../customUi/TextInput';
+import PaperCustomShadow from '../customUi/PaperCustomShadow';
 //Material UI
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		marginBottom: '2rem',
-		marginTop: '2rem'
+		marginTop: '1.5rem'
 	},
 	formContainer: {
 		width: '100%',
@@ -65,6 +67,27 @@ const useStyles = makeStyles((theme) => ({
 	divider: {
 		marginTop: '1rem',
 		marginBottom: '1rem'
+	},
+	socialMedia: {
+		borderRadius: '3px',
+		backgroundColor: '#1877f2',
+		color: 'white',
+		width: '179px',
+		height: '44px',
+		textTransform: 'none'
+	},
+	radioGroup: {
+		marginTop: '1.5rem',
+		backgroundColor: '#D7FEF1'
+	},
+	textButton: {
+		textTransform: 'none',
+		'&:hover': {
+			color: '#00A99D'
+		}
+	},
+	socialMediaButton: {
+		margin: '1rem'
 	}
 }));
 
@@ -98,7 +121,21 @@ const RegisterForm = ({ toggleIsLogin }) => {
 						setEmail('');
 					}}
 				>
-					<Paper elevation={0} className={classes.paper}>
+					<PaperCustomShadow elevation={1} className={classes.radioGroup}>
+						<FormControl>
+							<RadioGroup
+								row
+								aria-label="is doctor"
+								name="isDoctor"
+								value={role}
+								onChange={handleRoleChange}
+							>
+								<FormControlLabel value="patient" control={<RadioStyled />} label="I am a Patient" />
+								<FormControlLabel value="doctor" control={<RadioStyled />} label="I am a Doctor" />
+							</RadioGroup>
+						</FormControl>
+					</PaperCustomShadow>
+					<PaperCustomShadow elevation={0} className={classes.paper}>
 						<div className={classes.inputs}>
 							<TextInput
 								fullWidth
@@ -110,20 +147,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								variant="outlined"
 							/>
 						</div>
-						<div>
-							<FormControl>
-								<Typography variant="subtitle1">Are you a patient or doctor?</Typography>
-								<RadioGroup
-									aria-label="is doctor"
-									name="isDoctor"
-									value={role}
-									onChange={handleRoleChange}
-								>
-									<FormControlLabel value="patient" control={<Radio />} label="Patient" />
-									<FormControlLabel value="doctor" control={<Radio />} label="Doctor" />
-								</RadioGroup>
-							</FormControl>
-						</div>
+
 						<div>
 							<FormControlLabel
 								control={
@@ -151,11 +175,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								}
 							/>
 						</div>
-					</Paper>
+					</PaperCustomShadow>
 					<Grid container>
 						<Grid item xs={6}>
 							<Typography>Already have an account?</Typography>
-							<Button onClick={toggleIsLogin}>Log In</Button>
+							<Button className={classes.textButton} onClick={toggleIsLogin}>
+								Log In
+							</Button>
 						</Grid>
 						<Grid item xs={6}>
 							<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
@@ -174,53 +200,33 @@ const RegisterForm = ({ toggleIsLogin }) => {
 							handleFacebookRegister({ fbResponse, language, subdomain });
 						}}
 						render={(renderProps) => (
-							<ButtonFilled
+							<Button
 								variant="contained"
 								onClick={renderProps.onClick}
 								color="primary"
 								className={classes.socialMedia}
 							>
-								<FacebookIcon />
-							</ButtonFilled>
+								<FacebookIcon /> <Typography variant="body2">Facebook</Typography>
+							</Button>
 						)}
 					/>
 					<GoogleLogin
 						clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
-						render={(renderProps) => (
-							<ButtonFilled
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								variant="contained"
-								color="primary"
-								className={classes.socialMedia}
-							>
-								<i className="fab fa-google" />
-							</ButtonFilled>
-						)}
 						onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 						onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 						cookiePolicy={'single_host_origin'}
 					/>
-					<AppleLogin
-						clientId="com.react.apple.login"
-						redirectURI=""
-						responseType={'code'}
-						responseMode={'query'}
-						callback={(appleResponse) => {
-							handleAppleRegister({ appleResponse, language, subdomain });
-						}}
-						render={(renderProps) => (
-							<ButtonFilled
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								variant="contained"
-								color="primary"
-								className={classes.socialMedia}
-							>
-								<AppleIcon />
-							</ButtonFilled>
-						)}
-					/>
+					<div className={classes.socialMediaButton}>
+						<AppleLogin
+							clientId="com.react.apple.login"
+							redirectURI=""
+							responseType={'code'}
+							responseMode={'query'}
+							callback={(appleResponse) => {
+								handleAppleRegister({ appleResponse, language, subdomain });
+							}}
+						/>
+					</div>
 				</Grid>
 			</Grid>
 		</Grid>

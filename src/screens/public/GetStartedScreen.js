@@ -4,8 +4,8 @@ import logo from '../../assets/dianurse-logo.png';
 import useToggle from '../../hooks/useToggle';
 import RegisterForm from '../../components/groups/RegisterForm';
 import LoginForm from '../../components/groups/LoginForm';
-import RecoverPassDialog from '../../components/layout/RecoverPassDialog';
-import MessageDialog from '../../components/layout/MessageDialog';
+import RecoverPassDialog from '../../components/groups/RecoverPassDialog';
+import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
