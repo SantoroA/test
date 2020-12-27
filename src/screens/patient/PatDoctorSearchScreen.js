@@ -117,20 +117,20 @@ const PatDoctorSearchScreen = () => {
 							{doctors.map((el) => {
 								return (
 									<DoctorCard
-										key={el.time._id}
-										appointmentId={el.time._id}
-										start={convertTime(el.time.appointmentTimeStart)}
-										end={convertTime(el.time.appointmentTimeEnd)}
-										image={el.doctor.picture}
-										description={el.doctor.description}
-										fullName={el.doctor.fullName}
-										price={el.doctor.price.value}
-										currency={el.doctor.price.currency}
-										ratingStars={el.doctor.rating.averageRating}
-										reviews={el.doctor.rating.receivedRating}
+										key={el._id}
+										appointmentId={el._id}
+										start={convertTime(el.appointmentTimeStart)}
+										end={convertTime(el.appointmentTimeEnd)}
+										image={el.accountHCPid.picture}
+										description={el.accountHCPid.description}
+										fullName={el.accountHCPid.fullName}
+										price={el.accountHCPid.amount}
+										// currency={el.accountHCPid.price.currency}
+										ratingStars={el.accountHCPid.rating.averageRating}
+										reviews={el.accountHCPid.rating.receivedRating}
 										getAppointment={(e) => {
 											e.preventDefault();
-											reserve(el.time._id);
+											reserve(el._id);
 										}}
 									/>
 								);

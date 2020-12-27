@@ -24,9 +24,9 @@ const TabAvailability = () => {
 				<Paper className={classes.section}>
 					<FormServiceAvailability />
 				</Paper>
-				<Paper className={classes.section}>
+				{/* <Paper className={classes.section}>
 					<FormTimeSlots />
-				</Paper>
+				</Paper> */}
 			</Grid>
 		</div>
 	);
