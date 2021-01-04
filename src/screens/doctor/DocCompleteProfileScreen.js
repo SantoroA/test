@@ -4,14 +4,14 @@ import Typography from '@material-ui/core/Typography';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
-import FormCompleteProfile from '../../components/groups/FormCompleteProfile';
+import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
+import FormContactInfo from '../../components/groups/FormContactInfo';
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import InfoIcon from '../../components/customIcons/InfoIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -37,6 +37,9 @@ const useStyles = makeStyles({
 	},
 	tabs: {
 		marginTop: '1rem'
+	},
+	section: {
+		marginBottom: '1rem'
 	}
 });
 
@@ -111,7 +114,12 @@ const DocCompleteProfileScreen = () => {
 					/>
 				</Tabs>
 				<TabPanel value={value} index={0}>
-					<FormCompleteProfile />
+					<div className={classes.section}>
+						<FormEmailAndPassword />
+					</div>
+					<div className={classes.section}>
+						<FormContactInfo />
+					</div>
 				</TabPanel>
 			</Container>
 		</DocLayoutContainer>

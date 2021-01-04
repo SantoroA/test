@@ -1,14 +1,14 @@
 import React from 'react';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 
-import FormCompleteProfile from '../../components/groups/FormCompleteProfile';
-import ContactInfoForm from '../../components/groups/ContactInfoForm';
+import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
+import FormContactInfo from '../../components/groups/FormContactInfo';
 
 const PatCompleteProfileScreen = () => {
 	return (
 		<PatLayoutContainer>
-			<FormCompleteProfile />
-			<ContactInfoForm />
+			<FormEmailAndPassword />
+			<FormContactInfo />
 		</PatLayoutContainer>
 	);
 };

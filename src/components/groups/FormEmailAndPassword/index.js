@@ -3,21 +3,23 @@ import useStyles from './style';
 // import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
+import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
-import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
-const FormCompleteProfile = () => {
+const FormEmailAndPassword = () => {
 	const [ email, setEmail ] = useState('');
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
+	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 	useEffect(
 		() => {
@@ -35,11 +37,22 @@ const FormCompleteProfile = () => {
 		<Container fullWidth className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
-					<ValidatorForm onSubmit={() => {}} className={classes.form}>
+					<Grid item className={classes.title}>
 						<Typography variant="h6">Email and Password</Typography>
+						<IconButton>
+							<EditIcon onClick={() => setIsDisabled(false)} />
+						</IconButton>
+					</Grid>
+					<ValidatorForm
+						onSubmit={() => {
+							setIsDisabled(true);
+						}}
+						className={classes.form}
+					>
 						<Grid className={classes.item}>
 							<TextField
 								fullWidth
+								disabled={isDisabled}
 								type="email"
 								required
 								value={email}
@@ -48,10 +61,11 @@ const FormCompleteProfile = () => {
 								variant="outlined"
 							/>
 						</Grid>
-						<Typography variant="h6">Change your password</Typography>
 						<Grid className={classes.item}>
+							<Typography variant="h6">Change your password</Typography>
 							<TextValidator
 								fullWidth
+								disabled={isDisabled}
 								type="password"
 								required
 								value={oldPassword}
@@ -65,6 +79,7 @@ const FormCompleteProfile = () => {
 							<TextValidator
 								fullWidth
 								type="password"
+								disabled={isDisabled}
 								required
 								value={newPassword}
 								onChange={(e) => setNewPassword(e.target.value)}
@@ -77,6 +92,7 @@ const FormCompleteProfile = () => {
 							<TextValidator
 								fullWidth
 								type="password"
+								disabled={isDisabled}
 								required
 								value={newPasswordMatch}
 								onChange={(e) => setNewPasswordMatch(e.target.value)}
@@ -86,10 +102,26 @@ const FormCompleteProfile = () => {
 								errorMessages={[ 'password mismatch', 'this field is required' ]}
 							/>
 						</Grid>
-
-						<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
-							Update
-						</ButtonFilled>
+						{isDisabled ? null : (
+							<Grid container className={classes.buttons}>
+								<Grid item xs={5}>
+									<ButtonOutlined onClick={() => setIsDisabled(true)} fullWidth variant="outlined">
+										Cancel
+									</ButtonOutlined>
+								</Grid>
+								<Grid item xs={5}>
+									<ButtonFilled
+										fullWidth
+										type="submit"
+										variant="contained"
+										color="primary"
+										className={classes.submit}
+									>
+										Update
+									</ButtonFilled>
+								</Grid>
+							</Grid>
+						)}
 					</ValidatorForm>
 				</Grid>
 			</PaperCustomShadow>
@@ -97,4 +129,4 @@ const FormCompleteProfile = () => {
 	);
 };
 
-export default FormCompleteProfile;
+export default FormEmailAndPassword;
