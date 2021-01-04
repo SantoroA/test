@@ -6,6 +6,11 @@ import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
 import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
 import FormContactInfo from '../../components/groups/FormContactInfo';
+import FormProfile from '../../components/groups/FormProfile';
+import FormExperience from '../../components/groups/FormExperience';
+import FormEducation from '../../components/groups/FormEducation';
+import FormLocation from '../../components/groups/FormLocation';
+
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import InfoIcon from '../../components/customIcons/InfoIcon';
@@ -119,6 +124,20 @@ const DocCompleteProfileScreen = () => {
 					</div>
 					<div className={classes.section}>
 						<FormContactInfo />
+					</div>
+				</TabPanel>
+				<TabPanel value={value} index={2}>
+					<div className={classes.section}>
+						<FormProfile />
+					</div>
+					<div className={classes.section}>
+						<FormExperience />
+					</div>
+					<div className={classes.section}>
+						<FormEducation />
+					</div>
+					<div className={classes.section}>
+						<FormLocation />
 					</div>
 				</TabPanel>
 			</Container>

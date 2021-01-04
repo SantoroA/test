@@ -7,27 +7,22 @@ const useStyles = makeStyles({
 	},
 	paper: {
 		width: '100%',
-		padding: '2rem',
+		padding: '1.5rem',
 		display: 'flex',
 		flexWrap: 'wrap',
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
-	gridContainer: {
-		justifyContent: 'center'
-	},
 	form: {
 		width: '100%',
 		justifyContent: 'center'
-	},
-	item: {
-		paddingTop: '1rem'
 	},
 
 	gridContainer: {
 		justifyContent: 'center'
 	},
 	title: {
+		padding: '0.5rem',
 		display: 'flex',
 		flexDirection: 'row',
 		width: '100%',
@@ -38,6 +33,13 @@ const useStyles = makeStyles({
 		marginTop: '1.5rem',
 		alignItems: 'center',
 		justifyContent: 'space-around'
+	},
+	button: {
+		padding: '0.5rem'
+	},
+
+	input: {
+		padding: '0.5rem'
 	}
 });
 

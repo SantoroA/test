@@ -14,17 +14,20 @@ const useStyles = makeStyles({
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
+	gridContainer: {
+		justifyContent: 'center'
+	},
 	form: {
 		width: '100%',
 		justifyContent: 'center'
 	},
-
-	gridContainer: {
-		justifyContent: 'center'
+	item: {
+		display: 'flex',
+		flexDirection: 'row'
 	},
 	title: {
-		padding: '0.5rem',
 		display: 'flex',
+		padding: '0.5rem',
 		flexDirection: 'row',
 		width: '100%',
 		justifyContent: 'space-between',

@@ -14,21 +14,21 @@ const useStyles = makeStyles({
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
+	gridContainer: {
+		justifyContent: 'center'
+	},
 	form: {
 		width: '100%',
 		justifyContent: 'center'
 	},
 
-	gridContainer: {
-		justifyContent: 'center'
-	},
 	title: {
-		padding: '0.5rem',
 		display: 'flex',
 		flexDirection: 'row',
 		width: '100%',
 		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: '0.5rem'
 	},
 	buttons: {
 		marginTop: '1.5rem',
@@ -43,5 +43,4 @@ const useStyles = makeStyles({
 		padding: '0.5rem'
 	}
 });
-
 export default useStyles;

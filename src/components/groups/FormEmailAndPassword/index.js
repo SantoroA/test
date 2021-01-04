@@ -49,7 +49,7 @@ const FormEmailAndPassword = () => {
 						}}
 						className={classes.form}
 					>
-						<Grid className={classes.item}>
+						<Grid className={classes.input}>
 							<TextField
 								fullWidth
 								disabled={isDisabled}
@@ -61,7 +61,7 @@ const FormEmailAndPassword = () => {
 								variant="outlined"
 							/>
 						</Grid>
-						<Grid className={classes.item}>
+						<Grid className={classes.input}>
 							<Typography variant="h6">Change your password</Typography>
 							<TextValidator
 								fullWidth
@@ -75,7 +75,7 @@ const FormEmailAndPassword = () => {
 								validators={[ 'required' ]}
 							/>
 						</Grid>
-						<Grid className={classes.item}>
+						<Grid className={classes.input}>
 							<TextValidator
 								fullWidth
 								type="password"
@@ -88,7 +88,7 @@ const FormEmailAndPassword = () => {
 								validators={[ 'required' ]}
 							/>
 						</Grid>
-						<Grid className={classes.item}>
+						<Grid className={classes.input}>
 							<TextValidator
 								fullWidth
 								type="password"
@@ -104,12 +104,12 @@ const FormEmailAndPassword = () => {
 						</Grid>
 						{isDisabled ? null : (
 							<Grid container className={classes.buttons}>
-								<Grid item xs={5}>
+								<Grid item xs={6} className={classes.button}>
 									<ButtonOutlined onClick={() => setIsDisabled(true)} fullWidth variant="outlined">
 										Cancel
 									</ButtonOutlined>
 								</Grid>
-								<Grid item xs={5}>
+								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled
 										fullWidth
 										type="submit"

@@ -7,7 +7,6 @@ import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -44,91 +43,93 @@ const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
 						}}
 						className={classes.form}
 					>
-						<Grid className={classes.item}>
-							<TextField
-								fullWidth
-								disabled={isDisabled}
-								type="text"
-								required
-								value={firstName}
-								onChange={(e) => setFirstName(e.target.value)}
-								label="First name"
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid className={classes.item}>
-							<TextField
-								fullWidth
-								required
-								disabled={isDisabled}
-								type="text"
-								value={lastName}
-								onChange={(e) => setLasttName(e.target.value)}
-								label="Last name"
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid className={classes.item}>
-							<FormControl variant="outlined" fullWidth>
-								<InputLabel id="gender-label">Gender</InputLabel>
-								<Select
-									labelId="gender-label"
-									value={gender}
+						<Grid container>
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<TextField
+									fullWidth
 									disabled={isDisabled}
-									onChange={(e) => setGender(e.target.value)}
-									label="Gender"
-								>
-									<MenuItem value={0}>Male</MenuItem>
-									<MenuItem value={1}>Female</MenuItem>
-									<MenuItem value={2}>Other</MenuItem>
-									<MenuItem value={3}>Prefer no to say</MenuItem>
-								</Select>
-							</FormControl>
-						</Grid>
-						<Grid className={classes.item}>
-							<MuiPhoneInput
-								fullWidth
-								required
-								disabled={isDisabled}
-								value={phoneNumber}
-								onChange={(e) => setPhoneNumber(e.value)}
-								label="Phone Number"
-								variant="outlined"
-							/>
-						</Grid>
-						<Grid className={classes.item}>
-							<TextField
-								fullWidth
-								type="date"
-								value={birthday}
-								disabled={isDisabled}
-								onChange={(e) => setBirthday(e.target.value)}
-								label="Birthday"
-								variant="outlined"
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						</Grid>
-						<Grid className={classes.item}>
-							<TextField
-								fullWidth
-								type="text"
-								disabled={isDisabled}
-								value={birthPlace}
-								onChange={(e) => setbirthPlace(e.target.value)}
-								label="Place of Birth"
-								variant="outlined"
-							/>
+									type="text"
+									required
+									value={firstName}
+									onChange={(e) => setFirstName(e.target.value)}
+									label="First name"
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<TextField
+									fullWidth
+									required
+									disabled={isDisabled}
+									type="text"
+									value={lastName}
+									onChange={(e) => setLasttName(e.target.value)}
+									label="Last name"
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<FormControl variant="outlined" fullWidth>
+									<InputLabel id="gender-label">Gender</InputLabel>
+									<Select
+										labelId="gender-label"
+										value={gender}
+										disabled={isDisabled}
+										onChange={(e) => setGender(e.target.value)}
+										label="Gender"
+									>
+										<MenuItem value={0}>Male</MenuItem>
+										<MenuItem value={1}>Female</MenuItem>
+										<MenuItem value={2}>Other</MenuItem>
+										<MenuItem value={3}>Prefer not to say</MenuItem>
+									</Select>
+								</FormControl>
+							</Grid>
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<MuiPhoneInput
+									fullWidth
+									required
+									disabled={isDisabled}
+									value={phoneNumber}
+									onChange={(e) => setPhoneNumber(e.value)}
+									label="Phone Number"
+									variant="outlined"
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<TextField
+									fullWidth
+									type="date"
+									value={birthday}
+									disabled={isDisabled}
+									onChange={(e) => setBirthday(e.target.value)}
+									label="Birthday"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<TextField
+									fullWidth
+									type="text"
+									disabled={isDisabled}
+									value={birthPlace}
+									onChange={(e) => setbirthPlace(e.target.value)}
+									label="Place of Birth"
+									variant="outlined"
+								/>
+							</Grid>
 						</Grid>
 						{isDisabled ? null : (
 							<Grid container className={classes.buttons}>
-								<Grid item xs={5}>
+								<Grid item xs={6} className={classes.button}>
 									<ButtonOutlined onClick={() => setIsDisabled(true)} fullWidth variant="outlined">
 										Cancel
 									</ButtonOutlined>
 								</Grid>
-								<Grid item xs={5}>
+								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
 										Update
 									</ButtonFilled>

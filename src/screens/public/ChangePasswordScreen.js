@@ -1,9 +1,7 @@
 import React from 'react';
-import Navbar from '../../components/groups/Navbar';
 import FormChangePassword from '../../components/groups/FormChangePassword';
 import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
