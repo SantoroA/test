@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { Context as LanguageContext } from '../../context/LanguageContext';
 import useToggle from '../../hooks/useToggle';
-import { ValidatorForm } from 'react-material-ui-form-validator';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 import AppleLogin from 'react-apple-login';
@@ -15,16 +14,13 @@ import PaperCustomShadow from '../customUi/PaperCustomShadow';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
-import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
-import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import AppleIcon from '@material-ui/icons/Apple';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

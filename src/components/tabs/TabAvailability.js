@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
 	root: {
 		flexGrow: 1,
 		flexDirection: 'column'
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	section: {
 		marginTop: '2em'
 	}
-}));
+});
 
 const TabAvailability = () => {
 	const classes = useStyles();
@@ -24,9 +24,9 @@ const TabAvailability = () => {
 				<Paper className={classes.section}>
 					<FormServiceAvailability />
 				</Paper>
-				<Paper className={classes.section}>
+				{/* <Paper className={classes.section}>
 					<FormTimeSlots />
-				</Paper>
+				</Paper> */}
 			</Grid>
 		</div>
 	);

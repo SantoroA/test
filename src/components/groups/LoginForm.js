@@ -8,14 +8,12 @@ import ButtonFilled from '../customUi/ButtonFilled';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
 import TextInput from '../customUi/TextInput';
 //MATERIAL UI
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import AppleIcon from '@material-ui/icons/Apple';
 
 const useStyles = makeStyles((theme) => ({
 	container: {

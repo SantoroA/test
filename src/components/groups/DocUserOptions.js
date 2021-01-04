@@ -18,7 +18,8 @@ const useStyles = makeStyles({
 		flexDirection: 'column',
 		height: '12rem',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
 	},
 	button: {
 		justifyContent: 'center',
