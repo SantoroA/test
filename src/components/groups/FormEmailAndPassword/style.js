@@ -41,6 +41,30 @@ const useStyles = makeStyles({
 
 	input: {
 		padding: '0.5rem'
+	},
+	emailField: {
+		width: '100%',
+		justifyContent: 'center',
+		padding: '0.5rem'
+	},
+
+	card: {
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
+		borderRadius: '10px',
+		display: 'flex',
+		flexDirection: 'row',
+		width: '35rem',
+		height: '12rem',
+		marginTop: '1rem',
+		marginBottom: '1rem'
+	},
+	media: {
+		width: '12rem',
+		backgroundColor: 'rgba(232, 232, 232, 1)',
+		color: 'rgba(160, 164, 168, 1)'
+	},
+	addButton: {
+		bottom: 0
 	}
 });
 

@@ -14,7 +14,6 @@ import EditIcon from '@material-ui/icons/Edit';
 
 const FormEducation = () => {
 	const [ education, setEducation ] = useState('');
-
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 

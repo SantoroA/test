@@ -10,6 +10,8 @@ import FormProfile from '../../components/groups/FormProfile';
 import FormExperience from '../../components/groups/FormExperience';
 import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
+import FormBillingTypes from '../../components/groups/FormBillingTypes';
+import FormServicesTreated from '../../components/groups/FormServicesTreated';
 
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
@@ -124,6 +126,14 @@ const DocCompleteProfileScreen = () => {
 					</div>
 					<div className={classes.section}>
 						<FormContactInfo />
+					</div>
+				</TabPanel>
+				<TabPanel value={value} index={1}>
+					<div className={classes.section}>
+						<FormBillingTypes />
+					</div>
+					<div className={classes.section}>
+						<FormServicesTreated />
 					</div>
 				</TabPanel>
 				<TabPanel value={value} index={2}>
