@@ -6,12 +6,17 @@ import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+// import CardMedia from '@material-ui/core/CardMedia';
+import Box from '@material-ui/core/Box';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const FormEmailAndPassword = () => {
@@ -19,7 +24,7 @@ const FormEmailAndPassword = () => {
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
-	const [ isDisabled, setIsDisabled ] = useState(true);
+	const [ showChangePass, setShowChangePass ] = useState(true);
 	const classes = useStyles();
 	useEffect(
 		() => {
@@ -37,75 +42,126 @@ const FormEmailAndPassword = () => {
 		<Container fullWidth className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
+					<form onSubmit={() => {}}>
+						<Card className={classes.card}>
+							{/* {media ?  <CardMedia/> : ( */}
+							<Box
+								borderRight={10}
+								borderColor="grey.200"
+								display="flex"
+								justifyContent="center"
+								flexDirection="column"
+								alignItems="center"
+								className={classes.media}
+								title="Doctor"
+							>
+								<Typography variant="body1">Upload your photo</Typography>
+								<Box alignSelf="flex-start" className={classes.addButton}>
+									<IconButton>
+										<AddCircleOutlineIcon color="primary" />
+									</IconButton>
+								</Box>
+							</Box>
+							{/* )} */}
+
+							<CardContent>
+								<Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
+									<Box alignSelf="flex-end">
+										<IconButton>
+											<EditIcon onClick={() => {}} />
+										</IconButton>
+									</Box>
+									<Typography variant="h4">Add your name here</Typography>
+									<Typography variant="subtitle" color="textSecondary">
+										Add your specialty here
+									</Typography>
+								</Box>
+							</CardContent>
+						</Card>
+					</form>
+
 					<Grid item className={classes.title}>
-						<Typography variant="h6">Email and Password</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
-						</IconButton>
+						<Typography variant="h5">Email and Password</Typography>
 					</Grid>
-					<ValidatorForm
-						onSubmit={() => {
-							setIsDisabled(true);
-						}}
-						className={classes.form}
-					>
-						<Grid className={classes.input}>
-							<TextField
-								fullWidth
-								disabled={isDisabled}
-								type="email"
-								required
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-								label="Email"
-								variant="outlined"
-							/>
+					<Grid item fullWidth className={classes.emailField}>
+						<TextField
+							fullWidth
+							disabled
+							type="email"
+							required
+							value={email}
+							placeholder="Your Email"
+							variant="outlined"
+						/>
+					</Grid>
+
+					{showChangePass ? (
+						<Grid container className={classes.buttons}>
+							<Grid item xs={12} className={classes.button}>
+								<ButtonFilled
+									fullWidth
+									onClick={() => setShowChangePass(false)}
+									variant="contained"
+									color="primary"
+									className={classes.submit}
+								>
+									Change my password
+								</ButtonFilled>
+							</Grid>
 						</Grid>
-						<Grid className={classes.input}>
-							<Typography variant="h6">Change your password</Typography>
-							<TextValidator
-								fullWidth
-								disabled={isDisabled}
-								type="password"
-								required
-								value={oldPassword}
-								onChange={(e) => setOldPassword(e.target.value)}
-								label="Old Password"
-								variant="outlined"
-								validators={[ 'required' ]}
-							/>
-						</Grid>
-						<Grid className={classes.input}>
-							<TextValidator
-								fullWidth
-								type="password"
-								disabled={isDisabled}
-								required
-								value={newPassword}
-								onChange={(e) => setNewPassword(e.target.value)}
-								label="New Password"
-								variant="outlined"
-								validators={[ 'required' ]}
-							/>
-						</Grid>
-						<Grid className={classes.input}>
-							<TextValidator
-								fullWidth
-								type="password"
-								disabled={isDisabled}
-								required
-								value={newPasswordMatch}
-								onChange={(e) => setNewPasswordMatch(e.target.value)}
-								label="Confirm Password"
-								variant="outlined"
-								validators={[ 'isPasswordMatch', 'required' ]}
-								errorMessages={[ 'password mismatch', 'this field is required' ]}
-							/>
-						</Grid>
-						{isDisabled ? null : (
+					) : (
+						<ValidatorForm
+							onSubmit={(e) => {
+								e.preventDefault();
+								setShowChangePass(true);
+							}}
+							className={classes.form}
+						>
+							<Grid className={classes.input}>
+								<Typography variant="h6">Change your password</Typography>
+								<TextValidator
+									fullWidth
+									type="password"
+									required
+									value={oldPassword}
+									onChange={(e) => setOldPassword(e.target.value)}
+									label="Old Password"
+									variant="outlined"
+									validators={[ 'required' ]}
+								/>
+							</Grid>
+							<Grid className={classes.input}>
+								<TextValidator
+									fullWidth
+									type="password"
+									required
+									value={newPassword}
+									onChange={(e) => setNewPassword(e.target.value)}
+									label="New Password"
+									variant="outlined"
+									validators={[ 'required' ]}
+								/>
+							</Grid>
+							<Grid className={classes.input}>
+								<TextValidator
+									fullWidth
+									type="password"
+									required
+									value={newPasswordMatch}
+									onChange={(e) => setNewPasswordMatch(e.target.value)}
+									label="Confirm Password"
+									variant="outlined"
+									validators={[ 'isPasswordMatch', 'required' ]}
+									errorMessages={[ 'password mismatch', 'this field is required' ]}
+								/>
+							</Grid>
 							<Grid container className={classes.buttons}>
 								<Grid item xs={6} className={classes.button}>
-									<ButtonOutlined onClick={() => setIsDisabled(true)} fullWidth variant="outlined">
+									<ButtonOutlined
+										onClick={() => setShowChangePass(true)}
+										fullWidth
+										variant="outlined"
+									>
 										Cancel
 									</ButtonOutlined>
 								</Grid>
@@ -121,8 +177,8 @@ const FormEmailAndPassword = () => {
 									</ButtonFilled>
 								</Grid>
 							</Grid>
-						)}
-					</ValidatorForm>
+						</ValidatorForm>
+					)}
 				</Grid>
 			</PaperCustomShadow>
 		</Container>
