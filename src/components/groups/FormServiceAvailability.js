@@ -62,7 +62,7 @@ const FormServiceAvailability = () => {
 			let slotArr = [];
 			let showArr = [];
 			let arr = [];
-
+			
 			for (i; i < response.data.length; i++) {
 				slotArr = slotArr.concat(response.data[i].slotCreated)
 			}
@@ -79,6 +79,7 @@ const FormServiceAvailability = () => {
 				let id = data.slice(0,1).map(el => {
 					return el.accountHCPid
 				})
+				// let weedDay, WeekDay vai ser usado pro update
 				let editStatus = availability < data ? true : false
 				let max = getFormattedDate(new Date(Math.max(...data.map(e => new Date(e.appointmentDate)))));
 				let min = getFormattedDate(new Date(Math.min(...data.map(e => new Date(e.appointmentDate)))));
@@ -244,7 +245,7 @@ const FormServiceAvailability = () => {
 			} 		
 		}
 		try {
-			const response = await dianurseApi.put(`/appointment/updateAvailability`, {
+			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
 				arr
 			})
 			console.log(response.data)	
