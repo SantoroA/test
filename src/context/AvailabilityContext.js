@@ -6,26 +6,39 @@ const availabilityReducer = (state, action) => {
 		case 'get_slots':
 			return action.payload;
 		case 'create_slot':
-			return [
+			return {
 				...state,
-				{
-					startDay: action.payload.startDay,
-					endDay: action.payload.endDay,
-					amount: action.payload.amount,
-					startTime: action.payload.startTime,
-					endTime: action.payload.endTime,
-					slot: action.payload.slot,
-					slotCreated: action.payload.slotCreated,
-					editStatus: action.payload.editStatus,
-					id: action.payload.id
-				}
-			];
+
+				slots: [
+					...state.slots,
+					{
+						startDay: action.payload.startDay,
+						endDay: action.payload.endDay,
+						amount: action.payload.amount,
+						startTime: action.payload.startTime,
+						endTime: action.payload.endTime,
+						slot: action.payload.slot,
+						slotCreated: action.payload.slotCreated,
+						editStatus: action.payload.editStatus,
+						id: action.payload.id,
+						weekDay: action.payload.weekDay
+					}
+				]
+			};
 		case 'delete_slot':
-			return state.filter((slot) => slot.slotCreated !== action.payload);
+			return { ...state, slots: state.slots.filter((slot) => slot.slotCreated !== action.payload) };
 		case 'update_slot':
-			return state.map((slot) => {
-				return slot.slotCreated === action.payload.key ? action.payload : slot;
-			});
+			return {
+				...state,
+				slots: [
+					state.slots.map((slot) => {
+						return slot.slotCreated === action.payload.key ? action.payload : slot;
+					})
+				]
+			};
+
+		case 'add_error':
+			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'set_dialog_message':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'open_dialog':
@@ -110,6 +123,7 @@ const getSlots = (dispatch) => {
 			console.log(showArr);
 			dispatch({ type: 'get_slots', payload: showArr });
 		} catch (err) {
+			dispatch({ type: 'add_error', payload: 'Failed to get saved slots from server' });
 			console.log(err.message);
 		}
 	};
@@ -160,10 +174,12 @@ const createSlot = (dispatch) => {
 					slot: duration,
 					slotCreated,
 					editStatus: false,
+					weekDay,
 					id: id
 				}
 			});
 		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
 		}
 	};
@@ -181,6 +197,7 @@ const deleteSlot = (dispatch) => {
 			// console.log(response.data);
 			dispatch({ type: 'delete_slot', payload: key });
 		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
 		}
 	};
@@ -233,13 +250,23 @@ const updateSlot = (dispatch) => {
 				}
 			});
 		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
 		}
 	};
 };
 
+//DIALOG
+const closeDialog = (dispatch) => () => {
+	dispatch({ type: 'close_dialog' });
+};
+
 export const { Context, Provider } = createDataContext(
 	availabilityReducer,
-	{ getSlots, createSlot, deleteSlot, updateSlot },
-	[]
+	{ getSlots, createSlot, deleteSlot, updateSlot, closeDialog },
+	{
+		slots: [],
+		dialogMessage: '',
+		dialogOpen: false
+	}
 );

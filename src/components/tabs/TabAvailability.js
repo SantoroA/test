@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context as AvailabilityContext } from '../../context/AvailabilityContext';
 import FormTimeSlots from '../groups/FormTimeSlots';
 import TimeSlotList from '../groups/TimeSlotList';
 import dianurseApi from '../../api/dianurseApi';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
+import MessageDialogAvailability from '../groups/MessageDialogAvailability';
 //CUSTOM UI
 import TextInput from '../customUi/TextInput';
 import ButtonFilled from '../customUi/ButtonFilled';
@@ -102,14 +103,20 @@ const TabAvailability = () => {
 	const [ availableEnd, setAvailableEnd ] = useState('');
 	const classes = useStyles();
 	const theme = useTheme();
+	const { state, getSlots, createSlot, deleteSlot, updateSlot } = useContext(AvailabilityContext);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 	const handleChangeIndex = (index) => {
 		setValue(index);
 	};
+	console.log(availableStart, availableEnd);
+	useEffect(() => {
+		getSlots();
+	}, []);
+
 	return (
-		<Grid container fullWidth className={classes.container}>
+		<Grid container className={classes.container}>
 			<Grid item md={8} xs={12}>
 				<PaperCustomShadow className={classes.paper}>
 					<Grid container className={classes.gridContainer}>
@@ -165,32 +172,66 @@ const TabAvailability = () => {
 								>
 									<TabPanel value={value} index={0}>
 										<Typography variant="h6">Time Slots for Sunday</Typography>
-										<FormTimeSlots weekDay={0} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={0}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
 										<TimeSlotList weekDay={0} />
 									</TabPanel>
 									<TabPanel value={value} index={1}>
 										<Typography variant="h6">Time Slots for Monday</Typography>
-										<FormTimeSlots weekDay={1} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={1}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
+										<TimeSlotList weekDay={1} />
 									</TabPanel>
 									<TabPanel value={value} index={2}>
 										<Typography variant="h6">Time Slots for Tuesday</Typography>
-										<FormTimeSlots weekDay={2} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={2}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
+										<TimeSlotList weekDay={2} />
 									</TabPanel>
 									<TabPanel value={value} index={3}>
 										<Typography variant="h6">Time Slots for Wednesday</Typography>
-										<FormTimeSlots weekDay={3} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={3}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
+										<TimeSlotList weekDay={3} />
 									</TabPanel>
 									<TabPanel value={value} index={4}>
 										<Typography variant="h6">Time Slots for Thursday</Typography>
-										<FormTimeSlots weekDay={4} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={4}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
+										<TimeSlotList weekDay={4} />
 									</TabPanel>
 									<TabPanel value={value} index={5}>
 										<Typography variant="h6">Time Slots for Friday</Typography>
-										<FormTimeSlots weekDay={5} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={5}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
+										<TimeSlotList weekDay={5} />
 									</TabPanel>
 									<TabPanel value={value} index={6}>
 										<Typography variant="h6">Time Slots for Saturday</Typography>
-										<FormTimeSlots weekDay={6} availableEnd availableStart />
+										<FormTimeSlots
+											weekDay={6}
+											availableEnd={availableEnd}
+											availableStart={availableStart}
+										/>
+										<TimeSlotList weekDay={6} />
 									</TabPanel>
 								</SwipeableViews>
 							</Grid>
@@ -198,6 +239,7 @@ const TabAvailability = () => {
 					</Grid>
 				</PaperCustomShadow>
 			</Grid>
+			<MessageDialogAvailability />
 		</Grid>
 	);
 };

@@ -35,7 +35,7 @@ const DocProfileCard = () => {
 	const { state: { userName } } = useContext(AuthContext);
 
 	return (
-		<Card elevation="0" className={classes.root}>
+		<Card elevation={0} className={classes.root}>
 			<CardMedia
 				className={classes.cover}
 				image="https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg"

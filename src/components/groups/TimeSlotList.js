@@ -28,16 +28,19 @@ const useStyles = makeStyles({
 	}
 });
 
-const TimeSlotList = () => {
+const TimeSlotList = ({ weekDay }) => {
 	const classes = useStyles();
 	const { state, getSlots, createSlot, deleteSlot, updateSlot } = useContext(AvailabilityContext);
-	console.log(state);
+	// const [weekDaySlots, setWeekDaySlots] = useState(state.slots.filter((slot) => slot.weekDay == weekDay))
+	const weekDaySlots = state.slots.filter((slot) => slot.weekDay == weekDay);
+	console.log(state.slots);
+	console.log(weekDaySlots);
 	return (
 		<div>
-			{state.length > 0 ? (
+			{weekDaySlots.length > 0 ? (
 				<div>
 					<Typography>Your saved slots</Typography>
-					{state.map((slot) => {
+					{weekDaySlots.map((slot) => {
 						return (
 							<Box key={slot.slotCreated} className={classes.box} borderRadius="10px" border={1}>
 								<Grid container className={classes.info}>
@@ -45,19 +48,19 @@ const TimeSlotList = () => {
 										<Typography variant="body1">From: {slot.startDay}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography>To: {slot.endDay}</Typography>
+										<Typography variant="body1">To: {slot.endDay}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography>From: {slot.startTime}</Typography>
+										<Typography variant="body1">From: {slot.startTime}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography>To: {slot.endTime}</Typography>
+										<Typography variant="body1">To: {slot.endTime}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography>Slot Duration: {slot.slot}</Typography>
+										<Typography variant="body1">Slot Duration: {slot.slot}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography>Price set: {slot.amount}</Typography>
+										<Typography variant="body1">Price set: {slot.amount}</Typography>
 									</Grid>
 									<button onClick={() => deleteSlot(slot.slotCreated, slot.id)}>Delete</button>
 									<button

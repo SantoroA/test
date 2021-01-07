@@ -42,7 +42,7 @@ const DocUserOptions = () => {
 	};
 
 	return (
-		<Paper elevation="0" className={classes.root}>
+		<Paper elevation={0} className={classes.root}>
 			{/* to be dynamic later, the doc should click on reviews */}
 
 			<Rating name="read-only" value={0} readOnly />

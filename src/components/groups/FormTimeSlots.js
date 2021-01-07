@@ -4,9 +4,11 @@ import { Context as AvailabilityContext } from '../../context/AvailabilityContex
 //CUSTOM UI
 import TextInput from '../customUi/TextInput';
 import ButtonFilled from '../customUi/ButtonFilled';
+import ButtonError from '../customUi/ButtonError';
 
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
+import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -43,11 +45,11 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ amount, setAmount ] = useState(75);
 	const [ duration, setDuration ] = useState('');
 	const classes = useStyles();
-	const { state, getSlots, createSlot, deleteSlot, updateSlot } = useContext(AvailabilityContext);
+	const { createSlot } = useContext(AvailabilityContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
+		// console.log(dayStart, dayEnd);
 		createSlot({
 			availableStart,
 			availableEnd,
@@ -67,6 +69,39 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 		<Box borderRadius="10px" border={1} className={classes.form}>
 			<form onSubmit={handleSubmit}>
 				<Grid container>
+					<Hidden xsUp>
+						<Grid container>
+							<Grid item xs={6} className={classes.input}>
+								<TextInput
+									fullWidth
+									required
+									type="date"
+									value={availableStart}
+									onChange={(e) => e.preventDefault()}
+									label="Availability from"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
+							</Grid>
+							<Grid item xs={6} className={classes.input}>
+								<TextInput
+									fullWidth
+									required
+									type="date"
+									value={availableEnd}
+									onChange={(e) => e.preventDefault}
+									label="Availability to"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
+							</Grid>
+						</Grid>
+					</Hidden>
+
 					<Grid item xs={6} className={classes.input}>
 						<TextInput
 							fullWidth
@@ -115,14 +150,28 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 						<CurrencyInput value={amount} prefix="$" onChange={handleChangePrice} />
 					</Grid>
 				</Grid>
-
-				<Grid container className={classes.buttons}>
-					<Grid item xs={12} className={classes.button}>
-						<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-							Apply
-						</ButtonFilled>
+				{availableStart && availableEnd ? (
+					<Grid container className={classes.buttons}>
+						<Grid item xs={12} className={classes.button}>
+							<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
+								Apply
+							</ButtonFilled>
+						</Grid>
 					</Grid>
-				</Grid>
+				) : (
+					<Grid container className={classes.buttons}>
+						<Grid item xs={12} className={classes.button}>
+							<ButtonError
+								onClick={() => console.log('please choose a date')}
+								variant="contained"
+								color="primary"
+								fullWidth
+							>
+								Apply
+							</ButtonError>
+						</Grid>
+					</Grid>
+				)}
 			</form>
 		</Box>
 	);
