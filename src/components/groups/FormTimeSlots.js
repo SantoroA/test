@@ -18,7 +18,9 @@ const useStyles = makeStyles({
 	form: {
 		padding: '1rem',
 		justifyContent: 'center',
-		borderColor: 'rgba(160, 164, 168, 1)'
+		borderColor: 'rgba(160, 164, 168, 1)',
+		marginTop: '1.5rem',
+		marginBottom: '1.5rem'
 	},
 
 	buttons: {
@@ -35,17 +37,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const FormTimeSlots = ({ weekDay }) => {
-	let now = new Date();
-	const getFormattedDate = (date) => {
-		const year = date.getFullYear(),
-			month = ('0' + (date.getMonth() + 1)).slice(-2),
-			day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
-
-		return [ year, month, day ].join('-');
-	};
-	const [ availableStart, setAvailableStart ] = useState(getFormattedDate(now));
-	const [ availableEnd, setAvailableEnd ] = useState(getFormattedDate(now));
+const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ timeStart, setTimeStart ] = useState('');
 	const [ timeEnd, setTimeEnd ] = useState('');
 	const [ amount, setAmount ] = useState(75);
@@ -75,34 +67,6 @@ const FormTimeSlots = ({ weekDay }) => {
 		<Box borderRadius="10px" border={1} className={classes.form}>
 			<form onSubmit={handleSubmit}>
 				<Grid container>
-					<Grid item xs={6} className={classes.input}>
-						<TextInput
-							fullWidth
-							required
-							type="date"
-							value={availableStart}
-							onChange={(e) => setAvailableStart(e.target.value)}
-							label="Availability from"
-							variant="outlined"
-							InputLabelProps={{
-								shrink: true
-							}}
-						/>
-					</Grid>
-					<Grid item xs={6} className={classes.input}>
-						<TextInput
-							fullWidth
-							required
-							type="date"
-							value={availableEnd}
-							onChange={(e) => setAvailableEnd(e.target.value)}
-							label="Availability to"
-							variant="outlined"
-							InputLabelProps={{
-								shrink: true
-							}}
-						/>
-					</Grid>
 					<Grid item xs={6} className={classes.input}>
 						<TextInput
 							fullWidth

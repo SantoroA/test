@@ -19,6 +19,12 @@ const useStyles = makeStyles({
 	info: {
 		display: 'flex',
 		padding: '1rem'
+	},
+	box: {
+		padding: '1rem',
+		justifyContent: 'center',
+		borderColor: 'rgba(160, 164, 168, 1)',
+		marginBottom: '1rem'
 	}
 });
 
@@ -33,7 +39,7 @@ const TimeSlotList = () => {
 					<Typography>Your saved slots</Typography>
 					{state.map((slot) => {
 						return (
-							<Box key={slot.slotCreated} borderRadius="10px" border={1}>
+							<Box key={slot.slotCreated} className={classes.box} borderRadius="10px" border={1}>
 								<Grid container className={classes.info}>
 									<Grid item xs={6}>
 										<Typography variant="body1">From: {slot.startDay}</Typography>
