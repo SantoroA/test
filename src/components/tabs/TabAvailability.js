@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context as AvailabilityContext } from '../../context/AvailabilityContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 import FormTimeSlots from '../groups/FormTimeSlots';
 import TimeSlotList from '../groups/TimeSlotList';
 import dianurseApi from '../../api/dianurseApi';
@@ -8,12 +9,8 @@ import SwipeableViews from 'react-swipeable-views';
 import MessageDialogAvailability from '../groups/MessageDialogAvailability';
 //CUSTOM UI
 import TextInput from '../customUi/TextInput';
-import ButtonFilled from '../customUi/ButtonFilled';
-import ButtonOutlined from '../customUi/ButtonOutlined';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
-import Dropdown from '../customUi/Dropdown';
 //MATERIAL UI
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -103,7 +100,10 @@ const TabAvailability = () => {
 	const [ availableEnd, setAvailableEnd ] = useState('');
 	const classes = useStyles();
 	const theme = useTheme();
-	const { state, getSlots, createSlot, deleteSlot, updateSlot } = useContext(AvailabilityContext);
+	const { getSlots } = useContext(AvailabilityContext);
+	// const { userId } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -111,8 +111,9 @@ const TabAvailability = () => {
 		setValue(index);
 	};
 	console.log(availableStart, availableEnd);
+
 	useEffect(() => {
-		getSlots();
+		getSlots(userId);
 	}, []);
 
 	return (

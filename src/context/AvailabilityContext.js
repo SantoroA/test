@@ -4,7 +4,10 @@ import dianurseApi from '../api/dianurseApi';
 const availabilityReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_slots':
-			return action.payload;
+			return {
+				...state,
+				slots: action.payload
+			};
 		case 'create_slot':
 			return {
 				...state,
@@ -21,22 +24,25 @@ const availabilityReducer = (state, action) => {
 						slotCreated: action.payload.slotCreated,
 						editStatus: action.payload.editStatus,
 						id: action.payload.id,
-						weekDay: action.payload.weekDay
+						weekDay: action.payload.weekDay,
+						isEditing: false
 					}
 				]
 			};
 		case 'delete_slot':
 			return { ...state, slots: state.slots.filter((slot) => slot.slotCreated !== action.payload) };
-		case 'update_slot':
+		case 'update_slots':
 			return {
 				...state,
-				slots: [
-					state.slots.map((slot) => {
-						return slot.slotCreated === action.payload.key ? action.payload : slot;
-					})
-				]
+				slots: state.slots.map((slot) => (slot.slotCreated === action.payload.key ? action.payload : slot))
 			};
-
+		case 'set_is_editing':
+			return {
+				...state,
+				slots: state.slots.map(
+					(slot) => (slot.slotCreated === action.payload ? { ...slot, isEditing: !slot.isEditing } : slot)
+				)
+			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'set_dialog_message':
@@ -116,7 +122,8 @@ const getSlots = (dispatch) => {
 					slot,
 					slotCreated: slotArr[l],
 					editStatus,
-					id
+					id,
+					idEditing: false
 				});
 			}
 			showArr = showArr.concat(arr);
@@ -163,21 +170,24 @@ const createSlot = (dispatch) => {
 			// 	arr
 			// });
 			// console.log(response);
-			dispatch({
-				type: 'create_slot',
-				payload: {
-					startDay: availableStart,
-					endDay: availableEnd,
-					amount: amount,
-					startTime: timeStart,
-					endTime: timeEnd,
-					slot: duration,
-					slotCreated,
-					editStatus: false,
-					weekDay,
-					id: id
-				}
-			});
+			let x = 200;
+			if (x === 200) {
+				return dispatch({
+					type: 'create_slot',
+					payload: {
+						startDay: availableStart,
+						endDay: availableEnd,
+						amount: amount,
+						startTime: timeStart,
+						endTime: timeEnd,
+						slot: duration,
+						slotCreated,
+						editStatus: false,
+						weekDay,
+						id: id
+					}
+				});
+			}
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
@@ -231,12 +241,13 @@ const updateSlot = (dispatch) => {
 			}
 		}
 		try {
+			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
 			// const response = await dianurseApi.post(`/appointment/updateAvailability`, {
 			// 	arr
 			// });
 			// console.log(response.data);
 			dispatch({
-				type: 'update_slot',
+				type: 'update_slots',
 				payload: {
 					startDay: availableStart,
 					endDay: availableEnd,
@@ -244,8 +255,10 @@ const updateSlot = (dispatch) => {
 					startTime: timeStart,
 					endTime: timeEnd,
 					slot: duration,
+					slotCreated: key,
 					editStatus: false,
-					key,
+					isEditing: false,
+					weekDay,
 					id
 				}
 			});
@@ -256,6 +269,12 @@ const updateSlot = (dispatch) => {
 	};
 };
 
+const setIsEditing = (dispatch) => {
+	return (key) => {
+		dispatch({ type: 'set_is_editing', payload: key });
+	};
+};
+
 //DIALOG
 const closeDialog = (dispatch) => () => {
 	dispatch({ type: 'close_dialog' });
@@ -263,7 +282,7 @@ const closeDialog = (dispatch) => () => {
 
 export const { Context, Provider } = createDataContext(
 	availabilityReducer,
-	{ getSlots, createSlot, deleteSlot, updateSlot, closeDialog },
+	{ getSlots, createSlot, deleteSlot, updateSlot, closeDialog, setIsEditing },
 	{
 		slots: [],
 		dialogMessage: '',
