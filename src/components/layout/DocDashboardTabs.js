@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import TabMyPatients from '../tabs/TabMyPatients';
+import TabMyAppointments from '../tabs/TabMyAppointments';
+import TabMyEarnings from '../tabs/TabMyEarnings';
 import TabAvailability from '../tabs/TabAvailability';
 import PropTypes from 'prop-types';
 import TabCustom from '../customUi/TabCustom';
@@ -12,7 +15,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 const useStyles = makeStyles({
 	wrapperTab: {
@@ -97,6 +99,15 @@ const DocDashboardTabs = () => {
 					{...a11yProps(3)}
 				/>
 			</Tabs>
+			<TabPanel value={value} index={0}>
+				<TabMyAppointments />
+			</TabPanel>
+			<TabPanel value={value} index={1}>
+				<TabMyPatients />
+			</TabPanel>
+			<TabPanel value={value} index={2}>
+				<TabMyEarnings />
+			</TabPanel>
 			<TabPanel value={value} index={3}>
 				<TabAvailability />
 			</TabPanel>

@@ -57,7 +57,7 @@ const GetStartedScreen = (props) => {
 							toggleIsLogin={toggleIsLogin}
 						/>
 					) : (
-						<RegisterForm toggleIsLogin={toggleIsLogin} amIHCP={false} toggleIsLogin={toggleIsLogin} />
+						<RegisterForm toggleIsLogin={toggleIsLogin} amIHCP={false} />
 					)}
 				</Grid>
 			</Grid>

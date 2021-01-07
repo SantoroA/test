@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme) => ({
 	navbar: {
 		flexGrow: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#EFF8FF',
 		color: 'black',
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
 	},
