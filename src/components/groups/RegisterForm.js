@@ -93,10 +93,10 @@ const RegisterForm = ({ toggleIsLogin }) => {
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
-	const [ role, setRole ] = useState('patient');
+	const [ isHCP, setIsHCP ] = useState(false);
 
 	const handleRoleChange = (event) => {
-		setRole(event.target.value);
+		setIsHCP(event.target.value);
 	};
 
 	// console.log(amIHCP);
@@ -113,7 +113,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 				<Typography variant="body1">Register here and create an account</Typography>
 				<form
 					onSubmit={(e) => {
-						register({ email, preferredLanguage: language, subdomain });
+						register({ email, preferredLanguage: language, subdomain, isHCP });
 						setEmail('');
 					}}
 				>
@@ -123,11 +123,11 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								row
 								aria-label="is doctor"
 								name="isDoctor"
-								value={role}
+								value={isHCP}
 								onChange={handleRoleChange}
 							>
-								<FormControlLabel value="patient" control={<RadioStyled />} label="I am a Patient" />
-								<FormControlLabel value="doctor" control={<RadioStyled />} label="I am a Doctor" />
+								<FormControlLabel value={isHCP} control={<RadioStyled />} label="I am a Patient" />
+								<FormControlLabel value={isHCP} control={<RadioStyled />} label="I am a Doctor" />
 							</RadioGroup>
 						</FormControl>
 					</PaperCustomShadow>

@@ -112,9 +112,9 @@ const TabAvailability = () => {
 	};
 	console.log(availableStart, availableEnd);
 
-	useEffect(() => {
-		getSlots(userId);
-	}, []);
+	// useEffect(() => {
+	// 	getSlots(userId);
+	// }, []);
 
 	return (
 		<Grid container className={classes.container}>
