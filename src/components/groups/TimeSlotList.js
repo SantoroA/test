@@ -55,7 +55,9 @@ const TimeSlotList = ({ weekDay }) => {
 											<Grid item xs={6}>
 												<Typography variant="body1">Price set: {slot.amount}</Typography>
 											</Grid>
-											<button onClick={() => deleteSlot(slot.slotCreated, slot.id)}>
+											<button onClick={(e) => {
+												e.preventDefault();
+												deleteSlot(slot.slotCreated, slot.id)}}>
 												Delete
 											</button>
 											<button

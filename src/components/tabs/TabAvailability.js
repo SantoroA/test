@@ -100,7 +100,7 @@ const TabAvailability = () => {
 	const [ availableEnd, setAvailableEnd ] = useState('');
 	const classes = useStyles();
 	const theme = useTheme();
-	const { getSlots } = useContext(AvailabilityContext);
+	const { getSlots, state } = useContext(AvailabilityContext);
 	// const { userId } = useContext(AuthContext);
 	const userId = '5fe8b0c48bef090026e253b7';
 
@@ -111,6 +111,7 @@ const TabAvailability = () => {
 		setValue(index);
 	};
 	console.log(availableStart, availableEnd);
+	console.log(state)
 
 	useEffect(() => {
 		getSlots(userId);

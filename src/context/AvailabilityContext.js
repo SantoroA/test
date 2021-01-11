@@ -117,13 +117,14 @@ const getSlots = (dispatch) => {
 					startDay: min,
 					endDay: max,
 					amount: amount,
-					startTime: `${startHours} :${startMin}`,
+					startTime: `${startHours}:${startMin}`,
 					endTime: `${endHours}:${endMin}`,
 					slot,
+					weekDay: data[l].appointmentWeek,
 					slotCreated: slotArr[l],
 					editStatus,
 					id,
-					idEditing: false
+					isEditing: false
 				});
 			}
 			showArr = showArr.concat(arr);
@@ -166,12 +167,12 @@ const createSlot = (dispatch) => {
 			}
 		}
 		try {
-			// const response = await dianurseApi.post('/appointment/createAvailability', {
-			// 	arr
-			// });
-			// console.log(response);
+			const response = await dianurseApi.post('/appointment/createAvailability', {
+				arr
+			});
+			console.log(response);
 			let x = 200;
-			if (x === 200) {
+			if (response.status === 200) {
 				return dispatch({
 					type: 'create_slot',
 					payload: {
@@ -201,10 +202,10 @@ const deleteSlot = (dispatch) => {
 			id
 		};
 		try {
-			// const response = await dianurseApi.delete(`/appointment/deleteAvailability/`, {
-			// 	data: slotData
-			// });
-			// console.log(response.data);
+			const response = await dianurseApi.delete(`/appointment/deleteAvailability/`, {
+				data: slotData
+			});
+			console.log(response.data);
 			dispatch({ type: 'delete_slot', payload: key });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
@@ -242,10 +243,10 @@ const updateSlot = (dispatch) => {
 		}
 		try {
 			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
-			// const response = await dianurseApi.post(`/appointment/updateAvailability`, {
-			// 	arr
-			// });
-			// console.log(response.data);
+			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
+				arr
+			});
+			console.log(response.data);
 			dispatch({
 				type: 'update_slots',
 				payload: {

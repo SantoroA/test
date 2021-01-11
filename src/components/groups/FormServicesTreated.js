@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useToggle from '../../hooks/useToggle';
+import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ToggleButtonCustom from '../customUi/ToggleButtonCustom';
@@ -78,7 +79,24 @@ const FormServicesTreated = () => {
 	const [ isDiabetes, setIsDiabetes ] = useState(false);
 	const [ isOrthopedist, setIsOrthopedist ] = useState(false);
 	const [ isDisabled, setIsDisabled ] = useState(true);
+	const [ services, setServices ] = useState([]);
 	const classes = useStyles();
+
+	const handleSubmit = async() => {
+	    let userInfo = {
+			 id : '5fe8b0c48bef090026e253b7',
+			 services,
+			 form: 5
+		 }
+		try {
+		 	const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+		 		userInfo
+		 	})
+
+		 } catch (err){
+		 	console.log(err.message);
+		 }
+	}
 
 	return (
 		<Container fullWidth className={classes.container}>
@@ -96,6 +114,7 @@ const FormServicesTreated = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
+							handleSubmit()
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -110,7 +129,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isEndocrinology}
-									onChange={() => setIsEndocrinology(!isEndocrinology)}
+									onChange={() => {setIsEndocrinology(!isEndocrinology)
+									!isEndocrinology ? setServices([...services, 'Endocrinologist']) : 
+									setServices(services.filter(el => { return el !== 'Endocrinologist'}))} }
 								>
 									Endocrinology
 								</ToggleButtonCustom>
@@ -119,7 +140,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isGeriatry}
-									onChange={() => setIsGeriatry(!isGeriatry)}
+									onChange={() => {setIsGeriatry(!isGeriatry)
+										!isGeriatry ? setServices([...services, 'Geriatry']) : 
+										setServices(services.filter(el => { return el !== 'Geriatry'}))}}
 								>
 									Geriatry
 								</ToggleButtonCustom>
@@ -128,7 +151,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isEighteenPlus}
-									onChange={() => setIsEighteenPlus(!isEighteenPlus)}
+									onChange={() => {setIsEighteenPlus(!isEighteenPlus)
+										!isEighteenPlus ? setServices([...services, 'EighteenPlus']) : 
+										setServices(services.filter(el => { return el !== 'EighteenPlus'}))}}
 								>
 									+18 years
 								</ToggleButtonCustom>
@@ -137,7 +162,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isCardiacCathe}
-									onChange={() => setIsCardiacCathe(!isCardiacCathe)}
+									onChange={() => {setIsCardiacCathe(!isCardiacCathe)
+										!isCardiacCathe ? setServices([...services, 'Cardiac Catherization']) : 
+										setServices(services.filter(el => { return el !== 'Cardiac Catherization'}))}}
 								>
 									Cardiac catherization
 								</ToggleButtonCustom>
@@ -146,7 +173,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isGeneral}
-									onChange={() => setIsGeneral(!isGeneral)}
+									onChange={() => {setIsGeneral(!isGeneral) 
+										!isGeneral ? setServices([...services, 'General']) : 
+										setServices(services.filter(el => { return el !== 'General'}))}}
 								>
 									General Medicine
 								</ToggleButtonCustom>
@@ -155,7 +184,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isCardiology}
-									onChange={() => setIsCardiology(!isCardiology)}
+									onChange={() => {setIsCardiology(!isCardiology)
+										!isCardiology ? setServices([...services, 'Cardiology']) : 
+										setServices(services.filter(el => { return el !== 'Cardiology'}))}}
 								>
 									Cardiology
 								</ToggleButtonCustom>
@@ -164,7 +195,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isDiabetes}
-									onChange={() => setIsDiabetes(!isDiabetes)}
+									onChange={() => {setIsDiabetes(!isDiabetes)
+										!isDiabetes ? setServices([...services, 'Diabetes']) : 
+										setServices(services.filter(el => { return el !== 'Diabetes'}))}}
 								>
 									Diabetes
 								</ToggleButtonCustom>
@@ -173,7 +206,9 @@ const FormServicesTreated = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isOrthopedist}
-									onChange={() => setIsOrthopedist(!isOrthopedist)}
+									onChange={() => {setIsOrthopedist(!isOrthopedist)
+										!isOrthopedist ? setServices([...services, 'Orthopedist']) : 
+										setServices(services.filter(el => { return el !== 'Orthopedist'}))}}
 								>
 									Orthopedist
 								</ToggleButtonCustom>

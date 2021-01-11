@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useStyles from './style';
+import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -21,6 +22,23 @@ const FormExperience = () => {
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
+	const handleSubmit = async() => {
+	    let userInfo = {
+			 id : '5fe8af188bef090026e25397',
+			 yearsExperience,
+			 yearsSpecialist,
+			 form: 7
+		 }
+		try {
+		 	const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+		 		userInfo
+		 	})
+
+		 } catch (err){
+		 	console.log(err.message);
+		 }
+	}
+
 	return (
 		<Container fullWidth className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
@@ -32,7 +50,9 @@ const FormExperience = () => {
 						</IconButton>
 					</Grid>
 					<form
-						onSubmit={() => {
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}

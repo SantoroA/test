@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useToggle from '../../hooks/useToggle';
+import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ToggleButtonCustom from '../customUi/ToggleButtonCustom';
@@ -68,11 +69,28 @@ const useStyles = makeStyles({
 });
 
 const FormBillingTypes = () => {
-	const [ isInsurance, toggleIsInsurance ] = useToggle(false);
-	const [ isPrivate, toggleIsPrivate ] = useToggle(false);
-	const [ isSelfPayer, toggleIsSelfPayer ] = useToggle(false);
+	const [ isInsurance, toggleIsInsurance ] = useState(false);
+	const [ isPrivate, toggleIsPrivate ] = useState(false);
+	const [ isSelfPayer, toggleIsSelfPayer ] = useState(false);
+	const [ isBillingType, setBillingType] = useState([]);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
+
+	const handleSubmit = async() => {
+	    let userInfo = {
+			 id : '5fe8b0c48bef090026e253b7',
+			 isBillingType,
+			 form: 4
+		 }
+		try {
+		 	const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+		 		userInfo
+		 	})
+
+		 } catch (err){
+		 	console.log(err.message);
+		 }
+	}
 
 	return (
 		<Container fullWidth className={classes.container}>
@@ -90,6 +108,7 @@ const FormBillingTypes = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -104,7 +123,9 @@ const FormBillingTypes = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isInsurance}
-									onChange={toggleIsInsurance}
+									onChange={ () => { toggleIsInsurance(!isInsurance);
+									!isInsurance ? setBillingType([...isBillingType, 'Insurance']) : 
+									setBillingType(isBillingType.filter(el => { return el !== 'Insurance'}))}}
 								>
 									Statutory health insurance patients
 								</ToggleButtonCustom>
@@ -113,7 +134,9 @@ const FormBillingTypes = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isPrivate}
-									onChange={toggleIsPrivate}
+									onChange={() => {toggleIsPrivate(!isPrivate);
+										!isPrivate ? setBillingType([...isBillingType, 'Private']) : 
+										setBillingType(isBillingType.filter(el => { return el !== 'Private'}))}}
 								>
 									Private patients
 								</ToggleButtonCustom>
@@ -122,7 +145,10 @@ const FormBillingTypes = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isSelfPayer}
-									onChange={toggleIsSelfPayer}
+									onChange={() => {toggleIsSelfPayer(!isSelfPayer)
+										!isSelfPayer ? setBillingType([...isBillingType, 'Payer']) : 
+										setBillingType(isBillingType.filter(el => { return el !== 'Payer'}))
+									}}
 								>
 									Self-payers
 								</ToggleButtonCustom>

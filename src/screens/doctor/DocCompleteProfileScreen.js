@@ -12,11 +12,13 @@ import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
 import FormBillingTypes from '../../components/groups/FormBillingTypes';
 import FormServicesTreated from '../../components/groups/FormServicesTreated';
+import dianurseApi from '../../api/dianurseApi';
 
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import InfoIcon from '../../components/customIcons/InfoIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
+
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
@@ -53,6 +55,19 @@ const useStyles = makeStyles({
 //TAB PANEL
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
+	const getProfile = async() => {
+		let id = "5fe8af188bef090026e25397"
+	
+		try {
+			const response = await dianurseApi.get('/profile/doctor/getprofile', {
+				params: { id }
+			});
+			console.log(response)
+		} catch (err){
+			console.log(err.message)
+		}
+	
+	}
 
 	return (
 		<div
@@ -62,6 +77,7 @@ function TabPanel(props) {
 			aria-labelledby={`wrapped-tab-${index}`}
 			{...other}
 		>
+			<button onClick={() => getProfile()}>Get from back</button>
 			{value === index && <Box p={3}>{children}</Box>}
 		</div>
 	);
