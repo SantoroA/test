@@ -93,7 +93,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
-	const [ isHCP, setIsHCP ] = useState(false);
+	const [ isHCP, setIsHCP ] = useState('patient');
 
 	const handleRoleChange = (event) => {
 		setIsHCP(event.target.value);
@@ -113,7 +113,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 				<Typography variant="body1">Register here and create an account</Typography>
 				<form
 					onSubmit={(e) => {
-						register({ email, preferredLanguage: language, subdomain, isHCP });
+						register({ email, preferredLanguage: language, subdomain, isHCP: 'patient' ? false : true });
 						setEmail('');
 					}}
 				>
@@ -126,8 +126,8 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								value={isHCP}
 								onChange={handleRoleChange}
 							>
-								<FormControlLabel value={isHCP} control={<RadioStyled />} label="I am a Patient" />
-								<FormControlLabel value={isHCP} control={<RadioStyled />} label="I am a Doctor" />
+								<FormControlLabel value="patient" control={<RadioStyled />} label="I am a Patient" />
+								<FormControlLabel value="doctor" control={<RadioStyled />} label="I am a Doctor" />
 							</RadioGroup>
 						</FormControl>
 					</PaperCustomShadow>

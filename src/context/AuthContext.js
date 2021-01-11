@@ -333,8 +333,8 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
-		isFirstTimeUser: false,
+		isLoggedIn: false,
+		isFirstTimeUser: true,
 		preferredLanguage: 'en-US'
 	}
 );
