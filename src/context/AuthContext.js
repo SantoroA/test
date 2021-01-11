@@ -59,12 +59,12 @@ const getCookie = (dispatch) => {
 };
 
 const register = (dispatch) => {
-	return async ({ email, amIHCP, preferredLanguage, subdomain }) => {
+	return async ({ email, preferredLanguage, subdomain, isHCP }) => {
 		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/register', {
 				email,
-				amIHCP,
+				amIHCP: isHCP,
 				password: 'Teste1234_',
 				preferredLanguage,
 				subdomain
