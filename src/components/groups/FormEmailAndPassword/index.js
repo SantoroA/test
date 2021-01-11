@@ -39,7 +39,7 @@ const FormEmailAndPassword = () => {
 	);
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<form onSubmit={() => {}}>
@@ -67,12 +67,12 @@ const FormEmailAndPassword = () => {
 							<CardContent>
 								<Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
 									<Box alignSelf="flex-end">
-										<IconButton>
-											<EditIcon onClick={() => {}} />
+										<IconButton onClick={() => {}}>
+											<EditIcon />
 										</IconButton>
 									</Box>
 									<Typography variant="h4">Add your name here</Typography>
-									<Typography variant="subtitle" color="textSecondary">
+									<Typography variant="subtitle1" color="textSecondary">
 										Add your specialty here
 									</Typography>
 								</Box>
@@ -83,7 +83,7 @@ const FormEmailAndPassword = () => {
 					<Grid item className={classes.title}>
 						<Typography variant="h5">Email and Password</Typography>
 					</Grid>
-					<Grid item fullWidth className={classes.emailField}>
+					<Grid item className={classes.emailField}>
 						<TextField
 							fullWidth
 							disabled

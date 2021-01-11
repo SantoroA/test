@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import MuiPhoneInput from 'material-ui-phone-number';
 import useStyles from './style';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
+import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -18,27 +21,55 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 
 const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
-	const [ firstName, setFirstName ] = useState('');
-	const [ lastName, setLasttName ] = useState('');
-	const [ gender, setGender ] = useState('');
-	const [ phoneNumber, setPhoneNumber ] = useState('');
-	const [ birthday, setBirthday ] = useState('');
-	const [ birthPlace, setbirthPlace ] = useState('');
+	const { updateContactInfo, state } = useContext(DocProfileContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	// const { state: {userId} } = useContext(AuthContext);
+	const [ firstName, setFirstName ] = useState(state.firstName);
+	const [ lastName, setLasttName ] = useState(state.lastName);
+	const [ gender, setGender ] = useState(state.gender);
+	const [ phoneNumber, setPhoneNumber ] = useState(state.phoneNumber);
+	const [ birthday, setBirthday ] = useState(state.birthday);
+	const [ birthPlace, setbirthPlace ] = useState(state.birthPlace);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
+	// console.log(state);
+
+	const resetState = () => {
+		setFirstName(state.firstName);
+		setLasttName(state.lastName);
+		setGender(state.gender);
+		setPhoneNumber(state.phoneNumber);
+		setBirthday(state.birthday);
+		setbirthPlace(state.birthPlace);
+	};
+
+	const handleSubmit = () => {
+		updateContactInfo({
+			id: userId,
+			firstName,
+			lastName,
+			gender,
+			phoneNumber,
+			birthday,
+			birthPlace
+		});
+	};
+
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Contact Information</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<form
-						onSubmit={() => {
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -125,7 +156,19 @@ const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
 						{isDisabled ? null : (
 							<Grid container className={classes.buttons}>
 								<Grid item xs={6} className={classes.button}>
-									<ButtonOutlined onClick={() => setIsDisabled(true)} fullWidth variant="outlined">
+									<ButtonOutlined
+										onClick={() => {
+											setIsDisabled(true);
+											setFirstName(state.firstName);
+											setLasttName(state.lastName);
+											setGender(state.gender);
+											setPhoneNumber(state.phoneNumber);
+											setBirthday(state.birthday);
+											setbirthPlace(state.birthPlace);
+										}}
+										fullWidth
+										variant="outlined"
+									>
 										Cancel
 									</ButtonOutlined>
 								</Grid>

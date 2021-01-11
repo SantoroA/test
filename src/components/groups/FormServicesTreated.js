@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useToggle from '../../hooks/useToggle';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
+import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ToggleButtonCustom from '../customUi/ToggleButtonCustom';
@@ -69,25 +72,78 @@ const useStyles = makeStyles({
 });
 
 const FormServicesTreated = () => {
-	const [ isEndocrinology, setIsEndocrinology ] = useState(false);
-	const [ isGeriatry, setIsGeriatry ] = useState(false);
-	const [ isEighteenPlus, setIsEighteenPlus ] = useState(false);
-	const [ isCardiacCathe, setIsCardiacCathe ] = useState(false);
-	const [ isGeneral, setIsGeneral ] = useState(false);
-	const [ isCardiology, setIsCardiology ] = useState(false);
-	const [ isDiabetes, setIsDiabetes ] = useState(false);
-	const [ isOrthopedist, setIsOrthopedist ] = useState(false);
+	const { updateServices, state: { services } } = useContext(DocProfileContext);
+	const [ isEndocrinology, setIsEndocrinology ] = useState(services.includes('Endocrinologist') ? true : false);
+	const [ isGeriatry, setIsGeriatry ] = useState(services.includes('Geriatry') ? true : false);
+	const [ isEighteenPlus, setIsEighteenPlus ] = useState(services.includes('EighteenPlus') ? true : false);
+	const [ isCardiacCathe, setIsCardiacCathe ] = useState(services.includes('Cardiac Catherization') ? true : false);
+	const [ isGeneral, setIsGeneral ] = useState(services.includes('General') ? true : false);
+	const [ isCardiology, setIsCardiology ] = useState(services.includes('Cardiology') ? true : false);
+	const [ isDiabetes, setIsDiabetes ] = useState(services.includes('Diabetes') ? true : false);
+	const [ isOrthopedist, setIsOrthopedist ] = useState(services.includes('Orthopedist') ? true : false);
 	const [ isDisabled, setIsDisabled ] = useState(true);
+	const [ tempServices, setTempServices ] = useState([]);
+	// const { userId } = useContext(AuthContext);
 	const classes = useStyles();
+	const userId = '5fe8b0c48bef090026e253b7';
+	// console.log(services);
+	console.log(tempServices);
+	const resetServices = () => {
+		return (
+			setIsEndocrinology(services.includes('Endocrinologist') ? true : false),
+			setIsGeriatry(services.includes('Geriatry') ? true : false),
+			setIsEighteenPlus(services.includes('EighteenPlus') ? true : false),
+			setIsCardiacCathe(services.includes('Cardiac Catherization') ? true : false),
+			setIsGeneral(services.includes('General') ? true : false),
+			setIsCardiology(services.includes('Cardiology') ? true : false),
+			setIsDiabetes(services.includes('Diabetes') ? true : false),
+			setIsOrthopedist(services.includes('Orthopedist') ? true : false)
+		);
+	};
+	const saveServices = () => {
+		isEndocrinology
+			? setTempServices(tempServices.push('Endocrinologist'))
+			: setTempServices(tempServices.filter((service) => service !== 'Endocrinologist'));
+		isGeriatry
+			? setTempServices(tempServices.push('Geriatry'))
+			: setTempServices(tempServices.filter((service) => service !== 'Geriatry'));
+		isEighteenPlus
+			? setTempServices(tempServices.push('EighteenPlus'))
+			: setTempServices(tempServices.filter((service) => service !== 'EighteenPlus'));
+		isCardiacCathe
+			? setTempServices(tempServices.push('Cardiac Catherization'))
+			: setTempServices(tempServices.filter((service) => service !== 'Cardiac Catherization'));
+		isGeneral
+			? setTempServices(tempServices.push('General'))
+			: setTempServices(tempServices.filter((service) => service !== 'General'));
+		isCardiology
+			? setTempServices(tempServices.push('Cardiology'))
+			: setTempServices(tempServices.filter((service) => service !== 'Cardiology'));
+		isDiabetes
+			? setTempServices(tempServices.push('Diabetes'))
+			: setTempServices(tempServices.filter((service) => service !== 'Diabetes'));
+		isOrthopedist
+			? setTempServices(tempServices.push('Orthopedits'))
+			: setTempServices(tempServices.filter((service) => service !== 'Orthopedist'));
+	};
+
+	const handleSubmit = async () => {
+		updateServices({ services: tempServices, id: userId });
+	};
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Services Treated</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton
+							onClick={() => {
+								resetServices();
+								setIsDisabled(false);
+							}}
+						>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<Grid item xs={12}>
@@ -96,6 +152,8 @@ const FormServicesTreated = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
+							handleSubmit();
+							saveServices();
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -107,73 +165,89 @@ const FormServicesTreated = () => {
 							<Grid item xs={12} className={classes.selects}>
 								<ToggleButtonCustom
 									disabled={isDisabled}
+									value="Endocrinology"
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isEndocrinology}
-									onChange={() => setIsEndocrinology(!isEndocrinology)}
+									onChange={() => {
+										setIsEndocrinology(!isEndocrinology);
+									}}
 								>
 									Endocrinology
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
+									value="Geriatry"
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isGeriatry}
-									onChange={() => setIsGeriatry(!isGeriatry)}
+									onChange={() => {
+										setIsGeriatry(!isGeriatry);
+									}}
 								>
 									Geriatry
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isEighteenPlus}
-									onChange={() => setIsEighteenPlus(!isEighteenPlus)}
+									value="Eighteen Plus"
+									onChange={() => {
+										setIsEighteenPlus(!isEighteenPlus);
+									}}
 								>
 									+18 years
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isCardiacCathe}
-									onChange={() => setIsCardiacCathe(!isCardiacCathe)}
+									value="CardioCathe"
+									onChange={() => {
+										setIsCardiacCathe(!isCardiacCathe);
+									}}
 								>
 									Cardiac catherization
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isGeneral}
-									onChange={() => setIsGeneral(!isGeneral)}
+									value="General"
+									onChange={() => {
+										setIsGeneral(!isGeneral);
+									}}
 								>
 									General Medicine
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isCardiology}
-									onChange={() => setIsCardiology(!isCardiology)}
+									value="Cardiology"
+									onChange={() => {
+										setIsCardiology(!isCardiology);
+									}}
 								>
 									Cardiology
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isDiabetes}
-									onChange={() => setIsDiabetes(!isDiabetes)}
+									value="Diabetes"
+									onChange={() => {
+										setIsDiabetes(!isDiabetes);
+									}}
 								>
 									Diabetes
 								</ToggleButtonCustom>
 								<ToggleButtonCustom
 									disabled={isDisabled}
 									className={classes.toggleButton}
-									value="insurance"
 									selected={isOrthopedist}
-									onChange={() => setIsOrthopedist(!isOrthopedist)}
+									value="Orthopedist"
+									onChange={() => {
+										setIsOrthopedist(!isOrthopedist);
+									}}
 								>
 									Orthopedist
 								</ToggleButtonCustom>
@@ -186,6 +260,7 @@ const FormServicesTreated = () => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
+											resetServices();
 										}}
 										fullWidth
 										variant="outlined"

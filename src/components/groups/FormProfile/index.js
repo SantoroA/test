@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
+import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -13,24 +16,33 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 
 const FormProfile = () => {
-	const [ profileInfo, setProfileInfo ] = useState('');
-	const [ websiteUrl, setWebsiteUrl ] = useState('');
+	const { updateProfileInfo, state } = useContext(DocProfileContext);
+	const [ profileInfo, setProfileInfo ] = useState(state.profileInfo);
+	const [ websiteUrl, setWebsiteUrl ] = useState(state.websiteUrl);
 
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
+	// const { state: {userId} } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	console.log(state);
+	const handleSubmit = () => {
+		updateProfileInfo({ profileInfo, websiteUrl });
+	};
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Profile</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<form
-						onSubmit={() => {
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -66,8 +78,8 @@ const FormProfile = () => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
-											setWebsiteUrl('');
-											setProfileInfo('');
+											setWebsiteUrl(state.websiteUrl);
+											setProfileInfo(state.profileInfo);
 										}}
 										fullWidth
 										variant="outlined"
