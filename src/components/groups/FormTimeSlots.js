@@ -6,9 +6,12 @@ import { Context as AuthContext } from '../../context/AuthContext';
 import TextInput from '../customUi/TextInput';
 import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonError from '../customUi/ButtonError';
-
+//CUSTOM ICONS
+import SleepIcon from '../customIcons/SleepIcon';
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -37,6 +40,17 @@ const useStyles = makeStyles({
 
 	input: {
 		padding: '0.5rem'
+	},
+	checkbox: {
+		padding: '0.5rem'
+	},
+	icons: {
+		fontSize: '5rem'
+	},
+	iconWrapper: {
+		display: 'flex',
+		padding: '2rem',
+		justifyContent: 'center'
 	}
 });
 
@@ -45,6 +59,8 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ timeEnd, setTimeEnd ] = useState('');
 	const [ amount, setAmount ] = useState(75);
 	const [ duration, setDuration ] = useState('');
+
+	const [ isOffDay, setIsOffDay ] = useState(false);
 	const classes = useStyles();
 	const { createSlot } = useContext(AvailabilityContext);
 	// const { userId } = useContext(AuthContext);
@@ -69,6 +85,19 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 
 	return (
 		<Box borderRadius="10px" border={1} className={classes.form}>
+			<FormControlLabel
+				control={
+					<Checkbox
+						checked={isOffDay}
+						onChange={() => setIsOffDay(!isOffDay)}
+						name="isOffDay"
+						color="primary"
+					/>
+				}
+				label="Weekly off day"
+				className={classes.checkbox}
+			/>
+
 			<form onSubmit={handleSubmit}>
 				<Grid container>
 					<Hidden xsUp>

@@ -20,17 +20,17 @@ const useStyles = makeStyles({
 	}
 });
 
-const TimeSlotList = ({ weekDay }) => {
+const TimeSlotList = ({ weekDay, weekDayName }) => {
 	const classes = useStyles();
-	const { state, deleteSlot, updateSlot, setIsEditing } = useContext(AvailabilityContext);
+	const { state, deleteSlot, setIsEditing } = useContext(AvailabilityContext);
 	const weekDaySlots = state.slots.filter((slot) => slot.weekDay == weekDay);
-	console.log(state.slots);
-	console.log(weekDaySlots);
+	// console.log(state.slots);
+	// console.log(weekDaySlots);
 	return (
 		<div>
 			{weekDaySlots.length > 0 ? (
 				<div>
-					<Typography>Your saved slots</Typography>
+					<Typography variant="subtitle1">Your saved slots for {weekDayName}</Typography>
 					{weekDaySlots.map((slot) => {
 						return (
 							<div key={slot.slotCreated}>

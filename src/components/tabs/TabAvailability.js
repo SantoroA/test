@@ -125,119 +125,120 @@ const TabAvailability = () => {
 						<Grid item className={classes.title}>
 							<Typography variant="h5">Service Availability</Typography>
 						</Grid>
-						<Box borderRadius="10px" border={1} className={classes.box}>
-							<Grid container className={classes.dateContainer}>
-								<Grid item xs={6} className={classes.input}>
-									<TextInput
-										fullWidth
-										required
-										type="date"
-										value={availableStart}
-										onChange={(e) => setAvailableStart(e.target.value)}
-										label="Availability from"
-										variant="outlined"
-										InputLabelProps={{
-											shrink: true
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6} className={classes.input}>
-									<TextInput
-										fullWidth
-										required
-										type="date"
-										value={availableEnd}
-										onChange={(e) => setAvailableEnd(e.target.value)}
-										label="Availability to"
-										variant="outlined"
-										InputLabelProps={{
-											shrink: true
-										}}
-									/>
-								</Grid>
+
+						<Grid container className={classes.dateContainer}>
+							<Grid item xs={6} className={classes.input}>
+								<TextInput
+									fullWidth
+									required
+									type="date"
+									value={availableStart}
+									onChange={(e) => setAvailableStart(e.target.value)}
+									label="Availability from"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
 							</Grid>
+							<Grid item xs={6} className={classes.input}>
+								<TextInput
+									fullWidth
+									required
+									type="date"
+									value={availableEnd}
+									onChange={(e) => setAvailableEnd(e.target.value)}
+									label="Availability to"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
+							</Grid>
+						</Grid>
+						<Grid item xs={12}>
 							<Divider />
-							<Grid item xs={12}>
-								<Tabs value={value} onChange={handleChange} indicatorColor="primary">
-									<Tab className={classes.tab} label="Sun" {...a11yProps(0)} />
-									<Tab className={classes.tab} label="Mon" {...a11yProps(1)} />
-									<Tab className={classes.tab} label="Tue" {...a11yProps(2)} />
-									<Tab className={classes.tab} label="Wed" {...a11yProps(3)} />
-									<Tab className={classes.tab} label="Thu" {...a11yProps(4)} />
-									<Tab className={classes.tab} label="Fri" {...a11yProps(5)} />
-									<Tab className={classes.tab} label="Sat" {...a11yProps(6)} />
-								</Tabs>
-								<SwipeableViews
-									axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-									index={value}
-									onChangeIndex={handleChangeIndex}
-								>
-									<TabPanel value={value} index={0}>
-										<Typography variant="h6">Time Slots for Sunday</Typography>
-										<FormTimeSlots
-											weekDay={0}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={0} />
-									</TabPanel>
-									<TabPanel value={value} index={1}>
-										<Typography variant="h6">Time Slots for Monday</Typography>
-										<FormTimeSlots
-											weekDay={1}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={1} />
-									</TabPanel>
-									<TabPanel value={value} index={2}>
-										<Typography variant="h6">Time Slots for Tuesday</Typography>
-										<FormTimeSlots
-											weekDay={2}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={2} />
-									</TabPanel>
-									<TabPanel value={value} index={3}>
-										<Typography variant="h6">Time Slots for Wednesday</Typography>
-										<FormTimeSlots
-											weekDay={3}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={3} />
-									</TabPanel>
-									<TabPanel value={value} index={4}>
-										<Typography variant="h6">Time Slots for Thursday</Typography>
-										<FormTimeSlots
-											weekDay={4}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={4} />
-									</TabPanel>
-									<TabPanel value={value} index={5}>
-										<Typography variant="h6">Time Slots for Friday</Typography>
-										<FormTimeSlots
-											weekDay={5}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={5} />
-									</TabPanel>
-									<TabPanel value={value} index={6}>
-										<Typography variant="h6">Time Slots for Saturday</Typography>
-										<FormTimeSlots
-											weekDay={6}
-											availableEnd={availableEnd}
-											availableStart={availableStart}
-										/>
-										<TimeSlotList weekDay={6} />
-									</TabPanel>
-								</SwipeableViews>
-							</Grid>
-						</Box>
+						</Grid>
+						<Grid item xs={12}>
+							<Tabs value={value} onChange={handleChange} indicatorColor="primary">
+								<Tab className={classes.tab} label="Sun" {...a11yProps(0)} />
+								<Tab className={classes.tab} label="Mon" {...a11yProps(1)} />
+								<Tab className={classes.tab} label="Tue" {...a11yProps(2)} />
+								<Tab className={classes.tab} label="Wed" {...a11yProps(3)} />
+								<Tab className={classes.tab} label="Thu" {...a11yProps(4)} />
+								<Tab className={classes.tab} label="Fri" {...a11yProps(5)} />
+								<Tab className={classes.tab} label="Sat" {...a11yProps(6)} />
+							</Tabs>
+							<SwipeableViews
+								axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+								index={value}
+								onChangeIndex={handleChangeIndex}
+							>
+								<TabPanel value={value} index={0}>
+									<Typography variant="h6">Time Slots for Sunday</Typography>
+									<FormTimeSlots
+										weekDay={0}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={0} weekDayName="Sunday" />
+								</TabPanel>
+								<TabPanel value={value} index={1}>
+									<Typography variant="h6">Time Slots for Monday</Typography>
+									<FormTimeSlots
+										weekDay={1}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={1} weekDayName="Monday" />
+								</TabPanel>
+								<TabPanel value={value} index={2}>
+									<Typography variant="h6">Time Slots for Tuesday</Typography>
+									<FormTimeSlots
+										weekDay={2}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={2} weekDayName="Tuesday" />
+								</TabPanel>
+								<TabPanel value={value} index={3}>
+									<Typography variant="h6">Time Slots for Wednesday</Typography>
+									<FormTimeSlots
+										weekDay={3}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={3} weekDayName="Wednesday" />
+								</TabPanel>
+								<TabPanel value={value} index={4}>
+									<Typography variant="h6">Time Slots for Thursday</Typography>
+									<FormTimeSlots
+										weekDay={4}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={4} weekDayName="Thursday" />
+								</TabPanel>
+								<TabPanel value={value} index={5}>
+									<Typography variant="h6">Time Slots for Friday</Typography>
+									<FormTimeSlots
+										weekDay={5}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={5} weekDayName="Friday" />
+								</TabPanel>
+								<TabPanel value={value} index={6}>
+									<Typography variant="h6">Time Slots for Saturday</Typography>
+									<FormTimeSlots
+										weekDay={6}
+										availableEnd={availableEnd}
+										availableStart={availableStart}
+									/>
+									<TimeSlotList weekDay={6} weekDayName="Saturday" />
+								</TabPanel>
+							</SwipeableViews>
+						</Grid>
 					</Grid>
 				</PaperCustomShadow>
 			</Grid>

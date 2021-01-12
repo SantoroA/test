@@ -247,11 +247,11 @@ const updateSlot = (dispatch) => {
 			}
 		}
 		try {
-			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
-			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
-				arr
-			});
-			console.log(response.data);
+			// console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
+			// const response = await dianurseApi.post(`/appointment/updateAvailability`, {
+			// 	arr
+			// });
+			// console.log(response.data);
 			dispatch({
 				type: 'update_slots',
 				payload: {
