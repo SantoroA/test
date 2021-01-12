@@ -47,8 +47,8 @@ const GetStartedScreen = (props) => {
 	return (
 		<div className={classes.root}>
 			<Grid container>
-				<Grid className={classes.bgimage} xs={0} md={6} />
-				<Grid xs={12} md={6} className={classes.forms}>
+				<Grid item className={classes.bgimage} xs={false} md={6} />
+				<Grid item xs={12} md={6} className={classes.forms}>
 					<img src={logo} alt="Logo" className={classes.logo} />
 					{isLogin ? (
 						<LoginForm

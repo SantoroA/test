@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
 import useStyles from './style';
 import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
@@ -16,26 +18,21 @@ import EditIcon from '@material-ui/icons/Edit';
 import CardTravelIcon from '@material-ui/icons/CardTravel';
 
 const FormExperience = () => {
-	const [ yearsExperience, setYearsExperience ] = useState('');
-	const [ yearsSpecialist, setYearsSpecialist ] = useState('');
+	const { updateExperience, state } = useContext(DocProfileContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	// const { state: {userId} } = useContext(AuthContext);
+	const [ yearsExperience, setYearsExperience ] = useState(state.yearsExperience);
+	const [ yearsSpecialist, setYearsSpecialist ] = useState(state.yearsSpecialist);
 
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
-
-	const handleSubmit = async () => {
-		let userInfo = {
-			id: '5fe8af188bef090026e25397',
+	console.log(yearsExperience);
+	const handleSubmit = () => {
+		updateExperience({
+			id: userId,
 			yearsExperience,
-			yearsSpecialist,
-			form: 7
-		};
-		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-				userInfo
-			});
-		} catch (err) {
-			console.log(err.message);
-		}
+			yearsSpecialist
+		});
 	};
 
 	return (
@@ -101,8 +98,8 @@ const FormExperience = () => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
-											setYearsExperience('');
-											setYearsSpecialist('');
+											setYearsExperience(state.yearsExperience);
+											setYearsSpecialist(state.yearsSpecialist);
 										}}
 										fullWidth
 										variant="outlined"

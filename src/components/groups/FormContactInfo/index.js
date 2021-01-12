@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
-import MuiPhoneInput from 'material-ui-phone-number';
-import useStyles from './style';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 // import { Context as AuthContext } from '../../context/AuthContext';
-import dianurseApi from '../../../api/dianurseApi';
+import MuiPhoneInput from 'material-ui-phone-number';
+import useStyles from './style';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -20,7 +19,7 @@ import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 
-const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
+const FormContactInfo = () => {
 	const { updateContactInfo, state } = useContext(DocProfileContext);
 	const userId = '5fe8b0c48bef090026e253b7';
 	// const { state: {userId} } = useContext(AuthContext);
@@ -159,12 +158,7 @@ const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
-											setFirstName(state.firstName);
-											setLasttName(state.lastName);
-											setGender(state.gender);
-											setPhoneNumber(state.phoneNumber);
-											setBirthday(state.birthday);
-											setbirthPlace(state.birthPlace);
+											resetState();
 										}}
 										fullWidth
 										variant="outlined"

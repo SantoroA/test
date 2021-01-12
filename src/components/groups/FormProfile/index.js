@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import useStyles from './style';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 // import { Context as AuthContext } from '../../context/AuthContext';
-import dianurseApi from '../../../api/dianurseApi';
+import useStyles from './style';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -19,14 +18,13 @@ const FormProfile = () => {
 	const { updateProfileInfo, state } = useContext(DocProfileContext);
 	const [ profileInfo, setProfileInfo ] = useState(state.profileInfo);
 	const [ websiteUrl, setWebsiteUrl ] = useState(state.websiteUrl);
-
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 	// const { state: {userId} } = useContext(AuthContext);
 	const userId = '5fe8b0c48bef090026e253b7';
 	console.log(state);
 	const handleSubmit = () => {
-		updateProfileInfo({ profileInfo, websiteUrl });
+		updateProfileInfo({ profileInfo, websiteUrl, id: userId });
 	};
 
 	return (

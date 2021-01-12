@@ -113,7 +113,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 				<Typography variant="body1">Register here and create an account</Typography>
 				<form
 					onSubmit={(e) => {
-						register({ email, preferredLanguage: language, subdomain, isHCP: 'patient' ? false : true });
+						e.preventDefault();
+						register({
+							email,
+							preferredLanguage: language,
+							subdomain,
+							isHCP: 'patient' ? false : true
+						});
 						setEmail('');
 					}}
 				>

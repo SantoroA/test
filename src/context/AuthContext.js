@@ -109,10 +109,10 @@ const login = (dispatch) => {
 const logout = (dispatch) => {
 	return async () => {
 		try {
-			const response = await dianurseApi.get('/account/logout', {
-				withCredentials: true
-			});
-			console.log(response);
+			// const response = await dianurseApi.get('/account/logout', {
+			// 	withCredentials: true
+			// });
+			// console.log(response);
 
 			dispatch({ type: 'logout' });
 		} catch (err) {

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
 import useStyles from './style';
 import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
@@ -14,23 +16,18 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 
 const FormEducation = () => {
-	const [ education, setEducation ] = useState('');
+	const { updateEducation, state } = useContext(DocProfileContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	// const { state: {userId} } = useContext(AuthContext);
+	const [ education, setEducation ] = useState(state.education);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
-	const handleSubmit = async () => {
-		let userInfo = {
-			id: '5fe8b0c48bef090026e253b7',
-			education,
-			form: 8
-		};
-		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-				userInfo
-			});
-		} catch (err) {
-			console.log(err.message);
-		}
+	const handleSubmit = () => {
+		updateEducation({
+			id: userId,
+			education
+		});
 	};
 
 	return (
@@ -71,7 +68,7 @@ const FormEducation = () => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
-											setEducation('');
+											setEducation(state.education);
 										}}
 										fullWidth
 										variant="outlined"
