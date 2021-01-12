@@ -16,6 +16,7 @@ const docProfileReducer = (state, action) => {
 		case 'update_contact_info':
 			return {
 				...state,
+				specialty: action.payload.specialty,
 				firstName: action.payload.firstName,
 				lastName: action.payload.lastName,
 				gender: action.payload.gender,
@@ -104,12 +105,13 @@ const updateServices = (dispatch) => {
 	};
 };
 const updateContactInfo = (dispatch) => {
-	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday }) => {
+	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday, specialty }) => {
 		console.log('inside context', firstName, lastName);
 		let userInfo = {
 			id,
 			firstName,
 			lastName,
+			specialty,
 			gender,
 			phoneNumber,
 			birthPlace,
@@ -125,6 +127,7 @@ const updateContactInfo = (dispatch) => {
 			dispatch({
 				type: 'update_contact_info',
 				payload: {
+					specialty,
 					firstName,
 					lastName,
 					gender,
@@ -271,6 +274,7 @@ export const { Context, Provider } = createDataContext(
 	},
 	{
 		services: [],
+		specialty: '',
 		dialogMessage: '',
 		dialogOpen: false,
 		firstName: '',

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+// import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
-// import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -42,43 +42,23 @@ const FormEmailAndPassword = () => {
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
-					<form onSubmit={() => {}}>
-						<Card className={classes.card}>
-							{/* {media ?  <CardMedia/> : ( */}
-							<Box
-								borderRight={10}
-								borderColor="grey.200"
-								display="flex"
-								justifyContent="center"
-								flexDirection="column"
-								alignItems="center"
-								className={classes.media}
-								title="Doctor"
-							>
-								<Typography variant="body1">Upload your photo</Typography>
-								<Box alignSelf="flex-start" className={classes.addButton}>
-									<IconButton>
-										<AddCircleOutlineIcon color="primary" />
-									</IconButton>
-								</Box>
-							</Box>
-							{/* )} */}
-
-							<CardContent>
-								<Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
-									<Box alignSelf="flex-end">
-										<IconButton onClick={() => {}}>
-											<EditIcon />
-										</IconButton>
-									</Box>
-									<Typography variant="h4">Add your name here</Typography>
-									<Typography variant="subtitle1" color="textSecondary">
-										Add your specialty here
-									</Typography>
-								</Box>
-							</CardContent>
-						</Card>
-					</form>
+					{/* {media ?  <CardMedia/> : ( */}
+					<Box
+						display="flex"
+						justifyContent="center"
+						flexDirection="column"
+						alignItems="center"
+						className={classes.media}
+						title="Doctor"
+					>
+						<Typography variant="body1">Upload your photo</Typography>
+						<Box className={classes.addButton}>
+							<IconButton>
+								<AddCircleOutlineIcon color="primary" />
+							</IconButton>
+						</Box>
+					</Box>
+					{/* )} */}
 
 					<Grid item className={classes.title}>
 						<Typography variant="h5">Email and Password</Typography>

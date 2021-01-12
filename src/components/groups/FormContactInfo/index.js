@@ -1,7 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
-// import { Context as AuthContext } from '../../context/AuthContext';
-import MuiPhoneInput from 'material-ui-phone-number';
+// import { Context as AuthContext } from '../../../context/AuthContext';
+
+// import MuiPhoneInput from 'material-ui-phone-number';
+import PhoneInput from 'react-phone-input-2';
+
+import 'react-phone-input-2/lib/material.css';
 import useStyles from './style';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
@@ -25,6 +29,7 @@ const FormContactInfo = () => {
 	// const { state: {userId} } = useContext(AuthContext);
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
+	const [ specialty, setSpecialty ] = useState(state.specialty);
 	const [ gender, setGender ] = useState(state.gender);
 	const [ phoneNumber, setPhoneNumber ] = useState(state.phoneNumber);
 	const [ birthday, setBirthday ] = useState(state.birthday);
@@ -37,6 +42,7 @@ const FormContactInfo = () => {
 	const resetState = () => {
 		setFirstName(state.firstName);
 		setLasttName(state.lastName);
+		setSpecialty(state.specialty);
 		setGender(state.gender);
 		setPhoneNumber(state.phoneNumber);
 		setBirthday(state.birthday);
@@ -48,6 +54,7 @@ const FormContactInfo = () => {
 			id: userId,
 			firstName,
 			lastName,
+			specialty,
 			gender,
 			phoneNumber,
 			birthday,
@@ -98,6 +105,32 @@ const FormContactInfo = () => {
 									variant="outlined"
 								/>
 							</Grid>
+							<Grid item xs={12} sm={12} className={classes.input}>
+								<FormControl variant="outlined" fullWidth>
+									<InputLabel id="specialty-label">Specialty</InputLabel>
+									<Select
+										required
+										labelId="specialty-label"
+										value={specialty}
+										disabled={isDisabled}
+										onChange={(e) => setSpecialty(e.target.value)}
+										label="Specialty"
+									>
+										<MenuItem value="General care physician">General care physician</MenuItem>
+										<MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
+										<MenuItem value="Dietitian">Dietitian</MenuItem>
+										<MenuItem value="Certified diabetes educator">
+											Certified diabetes educator
+										</MenuItem>
+										<MenuItem value="Podiatrist">Podiatrist</MenuItem>
+										<MenuItem value="Nephrologist">Nephrologist</MenuItem>
+										<MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
+										<MenuItem value="Physical trainer">Physical trainer</MenuItem>
+										<MenuItem value="Dentist">Dentist</MenuItem>
+										<MenuItem value="Any">Any</MenuItem>
+									</Select>
+								</FormControl>
+							</Grid>
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<FormControl variant="outlined" fullWidth>
 									<InputLabel id="gender-label">Gender</InputLabel>
@@ -115,15 +148,21 @@ const FormContactInfo = () => {
 									</Select>
 								</FormControl>
 							</Grid>
+
 							<Grid item xs={12} sm={6} className={classes.input}>
-								<MuiPhoneInput
+								<PhoneInput
 									fullWidth
 									required
+									className={classes.phoneInputStyle}
 									disabled={isDisabled}
 									value={phoneNumber}
-									onChange={(e) => setPhoneNumber(e.value)}
-									label="Phone Number"
-									variant="outlined"
+									onChange={(e) => setPhoneNumber(e)}
+									inputProps={{
+										name: 'phone',
+										required: true,
+										autoFocus: true
+									}}
+									// variant="outlined"
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6} className={classes.input}>
