@@ -83,7 +83,7 @@ const FormServicesTreated = () => {
 	const [ isOrthopedist, setIsOrthopedist ] = useState(services.includes('Orthopedist') ? true : false);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const [ tempServices, setTempServices ] = useState([]);
-	// const { userId } = useContext(AuthContext);
+	// const { state: {userId} } = useContext(AuthContext);
 	const classes = useStyles();
 	const userId = '5fe8b0c48bef090026e253b7';
 	// console.log(services);
@@ -100,30 +100,33 @@ const FormServicesTreated = () => {
 			setIsOrthopedist(services.includes('Orthopedist') ? true : false)
 		);
 	};
+
 	const saveServices = () => {
 		isEndocrinology
-			? setTempServices(tempServices.push('Endocrinologist'))
+			? setTempServices(!tempServices.includes('Endocrinologist') && tempServices.push('Endocrinologist'))
 			: setTempServices(tempServices.filter((service) => service !== 'Endocrinologist'));
 		isGeriatry
-			? setTempServices(tempServices.push('Geriatry'))
+			? setTempServices(!tempServices.includes('Geriatry') && tempServices.push('Geriatry'))
 			: setTempServices(tempServices.filter((service) => service !== 'Geriatry'));
 		isEighteenPlus
-			? setTempServices(tempServices.push('EighteenPlus'))
+			? setTempServices(!tempServices.includes('EighteenPlus') && tempServices.push('EighteenPlus'))
 			: setTempServices(tempServices.filter((service) => service !== 'EighteenPlus'));
 		isCardiacCathe
-			? setTempServices(tempServices.push('Cardiac Catherization'))
+			? setTempServices(
+					!tempServices.includes('Cardiac Catherization') && tempServices.push('Cardiac Catherization')
+				)
 			: setTempServices(tempServices.filter((service) => service !== 'Cardiac Catherization'));
 		isGeneral
-			? setTempServices(tempServices.push('General'))
+			? setTempServices(!tempServices.includes('General') && tempServices.push('General'))
 			: setTempServices(tempServices.filter((service) => service !== 'General'));
 		isCardiology
-			? setTempServices(tempServices.push('Cardiology'))
+			? setTempServices(!tempServices.includes('Cardiology') && tempServices.push('Cardiology'))
 			: setTempServices(tempServices.filter((service) => service !== 'Cardiology'));
 		isDiabetes
-			? setTempServices(tempServices.push('Diabetes'))
+			? setTempServices(!tempServices.includes('Diabetes') && tempServices.push('Diabetes'))
 			: setTempServices(tempServices.filter((service) => service !== 'Diabetes'));
 		isOrthopedist
-			? setTempServices(tempServices.push('Orthopedits'))
+			? setTempServices(!tempServices.includes('Orthopedist') && tempServices.push('Orthopedist'))
 			: setTempServices(tempServices.filter((service) => service !== 'Orthopedist'));
 	};
 

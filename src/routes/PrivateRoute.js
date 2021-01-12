@@ -70,11 +70,7 @@ const PrivateRoutePatient = () => {
 			<Route path="/in/patient/videocall" exact component={PatVideoCallScreen} />
 			<Route path="/in/patient/videoprecall" exact component={PatVideoPrecallScreen} />
 			<Route path="/" component={LoadingScreen}>
-				{isFirstTimeUser ? (
-					<Redirect to="/in/patient/completeprofile" />
-				) : (
-					<Redirect to="/in/patient/dashboard" />
-				)}
+				{isFirstTimeUser ? <Redirect to="/in/patient/coachmark" /> : <Redirect to="/in/patient/dashboard" />}
 			</Route>
 			{/* <Route render={() => <h1>ERROR NOT FOUND</h1>} /> */}
 		</Switch>

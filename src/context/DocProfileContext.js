@@ -16,6 +16,7 @@ const docProfileReducer = (state, action) => {
 		case 'update_contact_info':
 			return {
 				...state,
+				specialty: action.payload.specialty,
 				firstName: action.payload.firstName,
 				lastName: action.payload.lastName,
 				gender: action.payload.gender,
@@ -28,6 +29,26 @@ const docProfileReducer = (state, action) => {
 				...state,
 				profileInfo: action.payload.profileInfo,
 				websiteUrl: action.payload.websiteUrl
+			};
+		case 'update_location_info':
+			return {
+				...state,
+				country: action.payload.country,
+				city: action.payload.city,
+				zipcode: action.payload.zipcode,
+				street: action.payload.street,
+				num: action.payload.num
+			};
+		case 'update_education':
+			return {
+				...state,
+				education: action.payload.education
+			};
+		case 'update_experience':
+			return {
+				...state,
+				yearsExperience: action.payload.yearsExperience,
+				yearsSpecialist: action.payload.yearsSpecialist
 			};
 		case 'set_is_editing':
 			return {
@@ -84,12 +105,13 @@ const updateServices = (dispatch) => {
 	};
 };
 const updateContactInfo = (dispatch) => {
-	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday }) => {
+	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday, specialty }) => {
 		console.log('inside context', firstName, lastName);
 		let userInfo = {
 			id,
 			firstName,
 			lastName,
+			specialty,
 			gender,
 			phoneNumber,
 			birthPlace,
@@ -105,6 +127,7 @@ const updateContactInfo = (dispatch) => {
 			dispatch({
 				type: 'update_contact_info',
 				payload: {
+					specialty,
 					firstName,
 					lastName,
 					gender,
@@ -120,9 +143,9 @@ const updateContactInfo = (dispatch) => {
 	};
 };
 const updateProfileInfo = (dispatch) => {
-	return async ({ profileInfo, websiteUrl }) => {
+	return async ({ profileInfo, websiteUrl, id }) => {
 		let userInfo = {
-			id: '5fe8b0c48bef090026e253b7',
+			id,
 			profileInfo,
 			websiteUrl,
 			form: 6
@@ -146,6 +169,91 @@ const updateProfileInfo = (dispatch) => {
 		}
 	};
 };
+const updateLocationInfo = (dispatch) => {
+	return async ({ id, country, city, zipcode, street, num }) => {
+		let userInfo = {
+			id,
+			country,
+			city,
+			zipcode,
+			street,
+			num,
+			form: 9
+		};
+		console.log('inside location info context', country);
+		try {
+			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			// 	userInfo
+			// });
+			// console.log(response);
+			dispatch({
+				type: 'update_location_info',
+				payload: {
+					country,
+					city,
+					zipcode,
+					street,
+					num
+				}
+			});
+		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
+			console.log(err.message);
+		}
+	};
+};
+const updateEducation = (dispatch) => {
+	return async ({ id, education }) => {
+		let userInfo = {
+			id,
+			education,
+			form: 8
+		};
+		console.log('inside education context', education);
+		try {
+			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			// 	userInfo
+			// });
+			// console.log(response);
+			dispatch({
+				type: 'update_education',
+				payload: {
+					education
+				}
+			});
+		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
+			console.log(err.message);
+		}
+	};
+};
+const updateExperience = (dispatch) => {
+	return async ({ id, yearsExperience, yearsSpecialist }) => {
+		let userInfo = {
+			id,
+			yearsExperience,
+			yearsSpecialist,
+			form: 7
+		};
+		console.log('inside experience context', yearsExperience);
+		try {
+			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			// 	userInfo
+			// });
+			// console.log(response);
+			dispatch({
+				type: 'update_experience',
+				payload: {
+					yearsExperience,
+					yearsSpecialist
+				}
+			});
+		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
+			console.log(err.message);
+		}
+	};
+};
 
 //DIALOG
 const closeDialog = (dispatch) => () => {
@@ -154,9 +262,19 @@ const closeDialog = (dispatch) => () => {
 
 export const { Context, Provider } = createDataContext(
 	docProfileReducer,
-	{ getProfile, updateServices, updateContactInfo, updateProfileInfo, closeDialog },
+	{
+		getProfile,
+		updateServices,
+		updateContactInfo,
+		updateProfileInfo,
+		updateEducation,
+		updateLocationInfo,
+		updateExperience,
+		closeDialog
+	},
 	{
 		services: [],
+		specialty: '',
 		dialogMessage: '',
 		dialogOpen: false,
 		firstName: '',
@@ -166,6 +284,14 @@ export const { Context, Provider } = createDataContext(
 		birthPlace: '',
 		birthday: '',
 		profileInfo: '',
-		websiteUrl: ''
+		websiteUrl: '',
+		country: '',
+		city: '',
+		zipcode: '',
+		street: '',
+		num: '',
+		education: '',
+		yearsExperience: '',
+		yearsSpecialist: ''
 	}
 );
