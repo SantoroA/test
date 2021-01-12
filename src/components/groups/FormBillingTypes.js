@@ -72,34 +72,33 @@ const FormBillingTypes = () => {
 	const [ isInsurance, toggleIsInsurance ] = useState(false);
 	const [ isPrivate, toggleIsPrivate ] = useState(false);
 	const [ isSelfPayer, toggleIsSelfPayer ] = useState(false);
-	const [ isBillingType, setBillingType] = useState([]);
+	const [ isBillingType, setBillingType ] = useState([]);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
-	const handleSubmit = async() => {
-	    let userInfo = {
-			 id : '5fe8b0c48bef090026e253b7',
-			 isBillingType,
-			 form: 4
-		 }
+	const handleSubmit = async () => {
+		let userInfo = {
+			id: '5fe8b0c48bef090026e253b7',
+			isBillingType,
+			form: 4
+		};
 		try {
-		 	const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-		 		userInfo
-		 	})
-
-		 } catch (err){
-		 	console.log(err.message);
-		 }
-	}
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Billing Types</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<Grid item xs={12}>
@@ -123,9 +122,16 @@ const FormBillingTypes = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isInsurance}
-									onChange={ () => { toggleIsInsurance(!isInsurance);
-									!isInsurance ? setBillingType([...isBillingType, 'Insurance']) : 
-									setBillingType(isBillingType.filter(el => { return el !== 'Insurance'}))}}
+									onChange={() => {
+										toggleIsInsurance(!isInsurance);
+										!isInsurance
+											? setBillingType([ ...isBillingType, 'Insurance' ])
+											: setBillingType(
+													isBillingType.filter((el) => {
+														return el !== 'Insurance';
+													})
+												);
+									}}
 								>
 									Statutory health insurance patients
 								</ToggleButtonCustom>
@@ -134,9 +140,16 @@ const FormBillingTypes = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isPrivate}
-									onChange={() => {toggleIsPrivate(!isPrivate);
-										!isPrivate ? setBillingType([...isBillingType, 'Private']) : 
-										setBillingType(isBillingType.filter(el => { return el !== 'Private'}))}}
+									onChange={() => {
+										toggleIsPrivate(!isPrivate);
+										!isPrivate
+											? setBillingType([ ...isBillingType, 'Private' ])
+											: setBillingType(
+													isBillingType.filter((el) => {
+														return el !== 'Private';
+													})
+												);
+									}}
 								>
 									Private patients
 								</ToggleButtonCustom>
@@ -145,9 +158,15 @@ const FormBillingTypes = () => {
 									className={classes.toggleButton}
 									value="insurance"
 									selected={isSelfPayer}
-									onChange={() => {toggleIsSelfPayer(!isSelfPayer)
-										!isSelfPayer ? setBillingType([...isBillingType, 'Payer']) : 
-										setBillingType(isBillingType.filter(el => { return el !== 'Payer'}))
+									onChange={() => {
+										toggleIsSelfPayer(!isSelfPayer);
+										!isSelfPayer
+											? setBillingType([ ...isBillingType, 'Payer' ])
+											: setBillingType(
+													isBillingType.filter((el) => {
+														return el !== 'Payer';
+													})
+												);
 									}}
 								>
 									Self-payers

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import Typography from '@material-ui/core/Typography';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -55,20 +56,6 @@ const useStyles = makeStyles({
 //TAB PANEL
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
-	const getProfile = async() => {
-		let id = "5fe8af188bef090026e25397"
-	
-		try {
-			const response = await dianurseApi.get('/profile/doctor/getprofile', {
-				params: { id }
-			});
-			console.log(response)
-		} catch (err){
-			console.log(err.message)
-		}
-	
-	}
-
 	return (
 		<div
 			role="tabpanel"
@@ -77,7 +64,6 @@ function TabPanel(props) {
 			aria-labelledby={`wrapped-tab-${index}`}
 			{...other}
 		>
-			<button onClick={() => getProfile()}>Get from back</button>
 			{value === index && <Box p={3}>{children}</Box>}
 		</div>
 	);
@@ -98,9 +84,16 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
+	const { getProfile } = useContext(DocProfileContext);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	const userId = '5fe8b0c48bef090026e253b7';
+
+	// useEffect(() => {
+	// 	getProfile(userId);
+	// }, []);
+
 	return (
 		<DocLayoutContainer>
 			<Container maxWidth="md">

@@ -111,7 +111,7 @@ const TabAvailability = () => {
 		setValue(index);
 	};
 	console.log(availableStart, availableEnd);
-	console.log(state)
+	console.log(state);
 
 	useEffect(() => {
 		getSlots(context.state.userId);

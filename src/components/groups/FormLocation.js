@@ -70,40 +70,39 @@ const FormLocation = () => {
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
-	const handleSubmit = async() => {
-	    let userInfo = {
-			 id : '5fe8b0c48bef090026e253b7',
-			 country,
-			 city,
-			 zipCode,
-			 street,
-			 num,
-			 form: 9
-		 }
+	const handleSubmit = async () => {
+		let userInfo = {
+			id: '5fe8b0c48bef090026e253b7',
+			country,
+			city,
+			zipCode,
+			street,
+			num,
+			form: 9
+		};
 		try {
-		 	const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-		 		userInfo
-		 	})
-
-		 } catch (err){
-		 	console.log(err.message);
-		 }
-	}
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Location</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							handleSubmit()
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}

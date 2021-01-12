@@ -22,31 +22,30 @@ const FormExperience = () => {
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
-	const handleSubmit = async() => {
-	    let userInfo = {
-			 id : '5fe8af188bef090026e25397',
-			 yearsExperience,
-			 yearsSpecialist,
-			 form: 7
-		 }
+	const handleSubmit = async () => {
+		let userInfo = {
+			id: '5fe8af188bef090026e25397',
+			yearsExperience,
+			yearsSpecialist,
+			form: 7
+		};
 		try {
-		 	const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-		 		userInfo
-		 	})
-
-		 } catch (err){
-		 	console.log(err.message);
-		 }
-	}
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Experience</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<form
