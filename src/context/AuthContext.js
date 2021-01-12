@@ -1,14 +1,15 @@
 import createDataContext from './createDataContext';
 import dianurseApi from '../api/dianurseApi';
+import jwt from 'jwt-decode' 
 
 const authReducer = (state, action) => {
 	switch (action.type) {
 		case 'login':
 			return {
 				...state,
-				userName: action.payload.user,
-				userId: action.payload.userId,
-				userToken: action.payload.token,
+				userName: action.payload.user, // não vem no cookie nem login
+				userId: jwt(action.payload.token).id,
+				userToken: action.payload.token, 
 				userAmIHCP: action.payload.amIHCP,
 				isFirstTimeUser: action.payload.isFirstTimeUser,
 				preferredLanguage: action.payload.preferredLanguage,
@@ -60,6 +61,7 @@ const getCookie = (dispatch) => {
 
 const register = (dispatch) => {
 	return async ({ email, preferredLanguage, subdomain, isHCP }) => {
+		console.log('HCP',isHCP)
 		dispatch({ type: 'open_dialog' });
 		try {
 			const response = await dianurseApi.post('/account/register', {
@@ -151,7 +153,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 	}
 };
 
-const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subdomain }) => {
+const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subdomain, isHCP }) => {
 	console.log(fbResponse, language);
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
@@ -162,6 +164,7 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 			picture: fbResponse.picture.data.url,
 			preferredLanguage: language,
 			subdomain,
+			amIHCP: isHCP,
 			type: 'facebook'
 		});
 		console.log(response);
@@ -200,7 +203,7 @@ const handleAppleLogin = (dispatch) => async (appleResponse) => {
 	}
 };
 
-const handleAppleRegister = (dispatch) => async ({ appleResponse, language, subdomain }) => {
+const handleAppleRegister = (dispatch) => async ({ appleResponse, language, subdomain, isHCP }) => {
 	console.log(appleResponse, language);
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
@@ -211,6 +214,7 @@ const handleAppleRegister = (dispatch) => async ({ appleResponse, language, subd
 			// picture: appleResponse.picture.data.url,
 			preferredLanguage: language,
 			subdomain,
+			amIHCP: isHCP,
 			type: 'apple'
 		});
 		console.log(response);
@@ -249,7 +253,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 	}
 };
 
-const handleGoogleRegister = (dispatch) => async ({ ggResponse, language, subdomain }) => {
+const handleGoogleRegister = (dispatch) => async ({ ggResponse, language, subdomain, isHCP }) => {
 	console.log(ggResponse, language);
 	try {
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
@@ -259,6 +263,7 @@ const handleGoogleRegister = (dispatch) => async ({ ggResponse, language, subdom
 			picture: ggResponse.profileObj.imageUrl,
 			preferredLanguage: language,
 			subdomain,
+			amIHCP: isHCP,
 			type: 'google'
 		});
 		console.log(response);

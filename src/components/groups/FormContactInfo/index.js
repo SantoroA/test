@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import MuiPhoneInput from 'material-ui-phone-number';
 import useStyles from './style';
 import dianurseApi from '../../../api/dianurseApi';
+import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -26,11 +27,12 @@ const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
 	const [ birthday, setBirthday ] = useState('');
 	const [ birthPlace, setbirthPlace ] = useState('');
 	const [ isDisabled, setIsDisabled ] = useState(true);
+	const context  = useContext(AuthContext);
 	const classes = useStyles();
 
 	const handleSubmit = async() => {
 		let userInfo = {
-			id : '5fe8b0c48bef090026e253b7',
+			id : context.state.userId,
 			firstName,
 			lastName,
 			gender,
@@ -39,6 +41,7 @@ const FormContactInfo = ({ togglePasswordRecoveryOpen }) => {
 			birthPlace,
 			form: 3
 		}
+		console.log(userInfo)
 		try {
 			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
 				userInfo
