@@ -28,7 +28,8 @@ const docProfileReducer = (state, action) => {
 			return {
 				...state,
 				profileInfo: action.payload.profileInfo,
-				websiteUrl: action.payload.websiteUrl
+				websiteUrl: action.payload.websiteUrl,
+				insurance: action.payload.insurance
 			};
 		case 'update_location_info':
 			return {
@@ -143,11 +144,12 @@ const updateContactInfo = (dispatch) => {
 	};
 };
 const updateProfileInfo = (dispatch) => {
-	return async ({ profileInfo, websiteUrl, id }) => {
+	return async ({ profileInfo, websiteUrl, id, insurance }) => {
 		let userInfo = {
 			id,
 			profileInfo,
 			websiteUrl,
+			insurance,
 			form: 6
 		};
 		console.log('inside profile info context', profileInfo);
@@ -160,6 +162,7 @@ const updateProfileInfo = (dispatch) => {
 				type: 'update_profile_info',
 				payload: {
 					profileInfo,
+					insurance,
 					websiteUrl
 				}
 			});
@@ -275,6 +278,7 @@ export const { Context, Provider } = createDataContext(
 	{
 		services: [],
 		specialty: '',
+		insurance: '',
 		dialogMessage: '',
 		dialogOpen: false,
 		firstName: '',
