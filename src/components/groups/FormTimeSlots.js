@@ -47,11 +47,12 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ duration, setDuration ] = useState('');
 	const classes = useStyles();
 	const { createSlot } = useContext(AvailabilityContext);
-	// const { userId } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const  context  = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		console.log(context.state.userId)
 		createSlot({
 			availableStart,
 			availableEnd,
@@ -60,7 +61,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 			amount,
 			duration,
 			weekDay,
-			id: userId
+			id: context.state.userId
 		});
 	};
 	const handleChangePrice = (maskedValue) => {

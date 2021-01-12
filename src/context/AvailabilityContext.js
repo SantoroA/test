@@ -149,6 +149,7 @@ const createSlot = (dispatch) => {
 		let arr = [];
 		let i = 0;
 		let slotCreated = new Date();
+		console.log(id)
 
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
@@ -201,6 +202,7 @@ const createSlot = (dispatch) => {
 };
 const deleteSlot = (dispatch) => {
 	return async (key, id) => {
+		console.log(id)
 		let slotData = {
 			slotCreated: key,
 			id
@@ -217,66 +219,6 @@ const deleteSlot = (dispatch) => {
 		}
 	};
 };
-<<<<<<< HEAD
-const updateSlot = (dispatch) => {
-	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key }) => {
-		let day_1 = new Date(availableStart);
-		let day_2 = new Date(availableEnd);
-		let difference = Math.ceil(day_2 - day_1);
-		let arr = [];
-		let i = 0;
-
-		for (i; difference >= i; i += 86400000) {
-			if (new Date(day_2 - i).getDay() === weekDay) {
-				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
-				let newLastDate = new Date(`${availableEnd}, ${timeEnd}`);
-				let timeDuration = duration * 60000;
-				let slot = (newLastDate - newStartDate) / timeDuration;
-				let t = 1;
-				for (t; t <= slot; t++) {
-					arr = arr.concat({
-						id: id.toString(),
-						date: new Date(day_2 - i),
-						week: new Date(day_2 - i).getDay(),
-						start: new Date(newStartDate - i + timeDuration * t - timeDuration),
-						end: new Date(newStartDate - i + timeDuration * t),
-						amount: amount, // check amount estpa sendo salvo com o valor certo
-						slotCreated: key
-					});
-				}
-			}
-		}
-		try {
-			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
-			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
-				arr
-			});
-			console.log(response.data);
-			dispatch({
-				type: 'update_slots',
-				payload: {
-					startDay: availableStart,
-					endDay: availableEnd,
-					amount: amount,
-					startTime: timeStart,
-					endTime: timeEnd,
-					slot: duration,
-					slotCreated: key,
-					editStatus: false,
-					isEditing: false,
-					weekDay,
-					id
-				}
-			});
-		} catch (err) {
-			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
-		}
-	};
-};
-
-=======
->>>>>>> fb2916d9a31230952626cc95489392cefb67aaaa
 const setIsEditing = (dispatch) => {
 	return (key) => {
 		dispatch({ type: 'set_is_editing', payload: key });
@@ -284,88 +226,63 @@ const setIsEditing = (dispatch) => {
 };
 const updateSlot = (dispatch) => {
 	return ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key }) => {
-		console.log('inside updateSlot context', availableStart, availableEnd);
-		dispatch({
-			type: 'update_slots',
-			payload: {
-				startDay: availableStart,
-				endDay: availableEnd,
-				amount: amount,
-				startTime: timeStart,
-				endTime: timeEnd,
-				slot: duration,
-				slotCreated: key,
-				editStatus: false,
-				id,
-				weekDay,
-				isEditing: false
-			}
-		});
-	};
-};
-// let day_1 = new Date(availableStart);
-// let day_2 = new Date(availableEnd);
-// let difference = Math.ceil(day_2 - day_1);
-// let arr = [];
-// let i = 0;
+		console.log('inside updateSlot context', id);
 
-// for (i; difference >= i; i += 86400000) {
-// 	if (new Date(day_2 - i).getDay() === weekDay) {
-// 		let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
-// 		let newLastDate = new Date(`${availableEnd}, ${timeEnd}`);
-// 		let timeDuration = duration * 60000;
-// 		let slot = (newLastDate - newStartDate) / timeDuration;
-// 		let t = 1;
-// 		for (t; t <= slot; t++) {
-// 			arr = arr.concat({
-// 				id: id.toString(),
-// 				date: new Date(day_2 - i),
-// 				week: new Date(day_2 - i).getDay(),
-// 				start: new Date(newStartDate - i + timeDuration * t - timeDuration),
-// 				end: new Date(newStartDate - i + timeDuration * t),
-// 				amount: amount, // check amount estpa sendo salvo com o valor certo
-// 				slotCreated: key
-// 			});
-// 		}
-// 	}
-// }
-// try {
-// 	console.log(
-// 		'inside context',
-// 		availableStart,
-// 		availableEnd,
-// 		timeStart,
-// 		timeEnd,
-// 		amount,
-// 		duration,
-// 		weekDay,
-// 		id,
-// 		key
-// 	);
-// const response = await dianurseApi.post(`/appointment/updateAvailability`, {
-// 	arr
-// });
-// console.log(response.data);
-// 	dispatch({
-// 		type: 'update_slots',
-// 		payload: {
-// 			startDay: availableStart,
-// 			endDay: availableEnd,
-// 			amount: amount,
-// 			startTime: timeStart,
-// 			endTime: timeEnd,
-// 			slot: duration,
-// 			slotCreated: key,
-// 			editStatus: false,
-// 			id,
-// 			weekDay,
-// 			isEditing: false
-// 		}
-// 	});
-// } catch (err) {
-// 	dispatch({ type: 'add_error', payload: err.message });
-// 	console.log(err.message);
-// }
+let day_1 = new Date(availableStart);
+let day_2 = new Date(availableEnd);
+let difference = Math.ceil(day_2 - day_1);
+let arr = [];
+let i = 0;
+
+for (i; difference >= i; i += 86400000) {
+	if (new Date(day_2 - i).getDay() === weekDay) {
+		let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
+		let newLastDate = new Date(`${availableEnd}, ${timeEnd}`);
+		let timeDuration = duration * 60000;
+		let slot = (newLastDate - newStartDate) / timeDuration;
+		let t = 1;
+		for (t; t <= slot; t++) {
+			arr = arr.concat({
+				id: id.toString(),
+				date: new Date(day_2 - i),
+				week: new Date(day_2 - i).getDay(),
+				start: new Date(newStartDate - i + timeDuration * t - timeDuration),
+				end: new Date(newStartDate - i + timeDuration * t),
+				amount: amount, //check amount estpa sendo salvo com o valor certo
+				slotCreated: key
+			});
+		}
+	}
+}
+try {
+const response =  dianurseApi.post(`/appointment/updateAvailability`, {
+	arr
+});
+console.log(response.data);
+if(response.status === 200) {
+	dispatch({
+		type: 'update_slots',
+		payload: {
+			startDay: availableStart,
+			endDay: availableEnd,
+			amount: amount,
+			startTime: timeStart,
+			endTime: timeEnd,
+			slot: duration,
+			slotCreated: key,
+			editStatus: false,
+			id,
+			weekDay,
+			isEditing: false
+		}
+	});
+}
+} catch (err) {
+	dispatch({ type: 'add_error', payload: err.message });
+	console.log(err.message);
+}
+	}
+}
 
 //DIALOG
 const closeDialog = (dispatch) => () => {

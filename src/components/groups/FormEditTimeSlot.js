@@ -49,8 +49,8 @@ const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot
 	const [ duration, setDuration ] = useState(slot);
 	const classes = useStyles();
 	const { state, updateSlot, setIsEditing } = useContext(AvailabilityContext);
-	// const { userId } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const context = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 	// console.log(state);
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -63,7 +63,7 @@ const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot
 			amount,
 			duration,
 			weekDay,
-			id: userId,
+			id: context.state.userId,
 			key: slotCreated
 		});
 	};

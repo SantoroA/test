@@ -101,8 +101,8 @@ const TabAvailability = () => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const { getSlots, state } = useContext(AvailabilityContext);
-	// const { userId } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const context = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -113,9 +113,9 @@ const TabAvailability = () => {
 	console.log(availableStart, availableEnd);
 	console.log(state)
 
-	// useEffect(() => {
-	// 	getSlots(userId);
-	// }, []);
+	useEffect(() => {
+		getSlots(context.state.userId);
+	}, []);
 
 	return (
 		<Grid container className={classes.container}>
