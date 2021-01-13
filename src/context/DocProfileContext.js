@@ -8,6 +8,11 @@ const docProfileReducer = (state, action) => {
 				...state,
 				slots: action.payload
 			};
+		case 'get_speciality':
+			return {
+				...state,
+				allSpecialty: action.payload
+			}
 		case 'update_services':
 			return {
 				...state,
@@ -28,7 +33,8 @@ const docProfileReducer = (state, action) => {
 			return {
 				...state,
 				profileInfo: action.payload.profileInfo,
-				websiteUrl: action.payload.websiteUrl
+				websiteUrl: action.payload.websiteUrl,
+				insurance: action.payload.insurance
 			};
 		case 'update_location_info':
 			return {
@@ -69,6 +75,19 @@ const docProfileReducer = (state, action) => {
 			return state;
 	}
 };
+
+const getSpeciality = (dispatch) => {
+	return async () => {
+		try {
+			const response = await dianurseApi.get('/profile/doctor/getspeciality');
+			console.log(response);
+			dispatch({ type: 'get_speciality', payload: response.data });
+		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
+			console.log(err.message);
+		}
+	};
+}
 
 const getProfile = (dispatch) => {
 	return async (id) => {
@@ -143,11 +162,12 @@ const updateContactInfo = (dispatch) => {
 	};
 };
 const updateProfileInfo = (dispatch) => {
-	return async ({ profileInfo, websiteUrl, id }) => {
+	return async ({ profileInfo, websiteUrl, id, insurance }) => {
 		let userInfo = {
 			id,
 			profileInfo,
 			websiteUrl,
+			insurance,
 			form: 6
 		};
 		console.log('inside profile info context', profileInfo);
@@ -160,6 +180,7 @@ const updateProfileInfo = (dispatch) => {
 				type: 'update_profile_info',
 				payload: {
 					profileInfo,
+					insurance,
 					websiteUrl
 				}
 			});
@@ -263,6 +284,7 @@ const closeDialog = (dispatch) => () => {
 export const { Context, Provider } = createDataContext(
 	docProfileReducer,
 	{
+		getSpeciality,
 		getProfile,
 		updateServices,
 		updateContactInfo,
@@ -270,11 +292,12 @@ export const { Context, Provider } = createDataContext(
 		updateEducation,
 		updateLocationInfo,
 		updateExperience,
-		closeDialog
+		closeDialog,
 	},
 	{
 		services: [],
 		specialty: '',
+		insurance: '',
 		dialogMessage: '',
 		dialogOpen: false,
 		firstName: '',

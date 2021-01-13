@@ -11,9 +11,6 @@ import FormProfile from '../../components/groups/FormProfile';
 import FormExperience from '../../components/groups/FormExperience';
 import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
-import FormBillingTypes from '../../components/groups/FormBillingTypes';
-import FormServicesTreated from '../../components/groups/FormServicesTreated';
-import dianurseApi from '../../api/dianurseApi';
 
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
@@ -116,17 +113,12 @@ const DocCompleteProfileScreen = () => {
 						label="My Profile"
 						{...a11yProps(0)}
 					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<InfoIcon className={classes.icons} />}
-						label="General Information"
-						{...a11yProps(1)}
-					/>
+
 					<TabCustom
 						className={classes.wrapperTab}
 						icon={<AboutIcon className={classes.icons} />}
 						label="About me"
-						{...a11yProps(2)}
+						{...a11yProps(1)}
 					/>
 				</Tabs>
 				<TabPanel value={value} index={0}>
@@ -138,14 +130,6 @@ const DocCompleteProfileScreen = () => {
 					</div>
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<div className={classes.section}>
-						<FormBillingTypes />
-					</div>
-					<div className={classes.section}>
-						<FormServicesTreated />
-					</div>
-				</TabPanel>
-				<TabPanel value={value} index={2}>
 					<div className={classes.section}>
 						<FormProfile />
 					</div>

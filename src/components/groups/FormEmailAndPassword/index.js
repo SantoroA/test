@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createRef } from 'react';
 // import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
 //CUSTOM UI
@@ -15,17 +15,26 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
+import {TextField, Button, Fab} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {Context as AuthContext} from '../../../context/AuthContext'
+
 
 const FormEmailAndPassword = () => {
+	const { updatePassword, updateImage, state } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
 	const [ showChangePass, setShowChangePass ] = useState(true);
+	const [ image, setImage ] = useState(null);
+  	const inputFileRef = createRef(null);
+	const { state: {userId} } = useContext(AuthContext);
 	const classes = useStyles();
+
+	
 	useEffect(
 		() => {
 			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -37,6 +46,15 @@ const FormEmailAndPassword = () => {
 		},
 		[ newPassword ]
 	);
+
+	const handleSubmit = (e) => {
+		updatePassword({
+			id: userId,
+			oldPassword,
+			newPassword,
+			// image
+		});
+	};
 
 	return (
 		<Container className={classes.container}>
@@ -51,12 +69,45 @@ const FormEmailAndPassword = () => {
 						className={classes.media}
 						title="Doctor"
 					>
+						{/* 
+						https://localhost:3000/38038f6a-6a8e-4b36-a2d1-aa13eccca9d7
+						*/}
+						{image !== null ? <img src={image} alt="teste" className={classes.image}></img> : null}
+						
 						<Typography variant="body1">Upload your photo</Typography>
 						<Box className={classes.addButton}>
-							<IconButton>
-								<AddCircleOutlineIcon color="primary" />
-							</IconButton>
-						</Box>
+							<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								console.log('submit')
+								updateImage({
+									id: userId,
+									image
+								});
+							}}>
+						<label htmlFor="upload-photo">
+							<TextField
+								fullWidth
+								type="file"
+								id="upload-photo"
+								name="upload-photo"
+								style={{ display: 'none' }}
+								ref={inputFileRef}
+								onChange={(e) => {
+									let newImage = e.target?.files?.[0];
+									newImage = newImage ? setImage(URL.createObjectURL(newImage)) : null
+									console.log(image)
+								}}
+								/>
+							<IconButton component="span">
+									<AddCircleOutlineIcon color="primary" />
+							</IconButton> 
+							<button type='submit'>Send image</button>
+						</label>
+						
+						</form>
+						
+						</Box> 
 					</Box>
 					{/* )} */}
 
@@ -94,6 +145,7 @@ const FormEmailAndPassword = () => {
 							onSubmit={(e) => {
 								e.preventDefault();
 								setShowChangePass(true);
+								handleSubmit();
 							}}
 							className={classes.form}
 						>

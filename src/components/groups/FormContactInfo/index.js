@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 // import { Context as AuthContext } from '../../../context/AuthContext';
 
@@ -28,6 +28,7 @@ const FormContactInfo = () => {
 	const { updateContactInfo, state } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const { state: {userId} } = useContext(AuthContext);
+	const { state: {allSpecialty} } = useContext(DocProfileContext)
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
 	const [ specialty, setSpecialty ] = useState(state.specialty);
@@ -36,10 +37,15 @@ const FormContactInfo = () => {
 	const [ birthday, setBirthday ] = useState(state.birthday);
 	const [ birthPlace, setbirthPlace ] = useState(state.birthPlace);
 	const [ isDisabled, setIsDisabled ] = useState(true);
+	const { getSpeciality } = useContext(DocProfileContext);
 	// const context  = useContext(AuthContext);
 	const classes = useStyles();
 
 	// console.log(state);
+
+		useEffect(() => {
+			getSpeciality();
+	 }, []);
 
 	const resetState = () => {
 		setFirstName(state.firstName);
@@ -118,7 +124,10 @@ const FormContactInfo = () => {
 										onChange={(e) => setSpecialty(e.target.value)}
 										label="Specialty"
 									>
-										<MenuItem value="General care physician">General care physician</MenuItem>
+										{/* {allSpecialty !== 'undefined' ? allSpecialty.map(el => {
+											return <MenuItem value={el}>{el}</MenuItem>
+										}): null} */}
+										{/* <MenuItem value="General care physician">General care physician</MenuItem>
 										<MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
 										<MenuItem value="Dietitian">Dietitian</MenuItem>
 										<MenuItem value="Certified diabetes educator">
@@ -129,7 +138,7 @@ const FormContactInfo = () => {
 										<MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
 										<MenuItem value="Physical trainer">Physical trainer</MenuItem>
 										<MenuItem value="Dentist">Dentist</MenuItem>
-										<MenuItem value="Any">Any</MenuItem>
+										<MenuItem value="Any">Any</MenuItem> */}
 									</Select>
 								</FormControl>
 							</Grid>

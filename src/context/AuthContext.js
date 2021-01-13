@@ -111,10 +111,10 @@ const login = (dispatch) => {
 const logout = (dispatch) => {
 	return async () => {
 		try {
-			// const response = await dianurseApi.get('/account/logout', {
-			// 	withCredentials: true
-			// });
-			// console.log(response);
+			const response = await dianurseApi.get('/account/logout', {
+				withCredentials: true
+			});
+			console.log(response);
 
 			dispatch({ type: 'logout' });
 		} catch (err) {
@@ -290,6 +290,35 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 	}
 };
 
+// complete profile update image
+const updateImage = (dispatch) => async({id, image}) => {
+	console.log(id, image)
+}
+
+// complete profile change password
+const updatePassword = (dispatch) => async({newPassword, oldPassword, id, image}) => {
+	console.log(newPassword, oldPassword, id)
+	const userInfo = {
+		id,
+		oldPassword,
+		newPassword,
+		// image,
+		form: 2
+	}
+	try {
+		const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			userInfo
+		});
+		dispatch({ type: 'set_dialog_message', payload: response.data.message });
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: 'Ops, something went wrong. Please try again later.'
+			//error of type 502 ex
+		});
+	}
+}
+
 const changePassword = (dispatch) => async ({ newPassword, newPasswordMatch, recToken }) => {
 	console.log(newPassword, newPasswordMatch, recToken);
 	try {
@@ -328,7 +357,9 @@ export const { Provider, Context } = createDataContext(
 		handleAppleRegister,
 		recoverPassword,
 		closeDialog,
-		changePassword
+		changePassword,
+		updatePassword,
+		updateImage
 	},
 	{
 		useName: '',
@@ -338,7 +369,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US'
 	}
