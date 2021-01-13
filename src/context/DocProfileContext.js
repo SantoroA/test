@@ -339,6 +339,6 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: []
+		allSpecialty: [ 'Endocrinologist', 'Geriatry' ]
 	}
 );

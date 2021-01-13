@@ -14,10 +14,10 @@ import FormLocation from '../../components/groups/FormLocation';
 import MessageDialog from '../../components/groups/MessageDialog';
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
-import InfoIcon from '../../components/customIcons/InfoIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
 
 //MATERIAL UI
+import Alert from '@material-ui/lab/Alert';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,6 +47,9 @@ const useStyles = makeStyles({
 	},
 	section: {
 		marginBottom: '1rem'
+	},
+	warning: {
+		marginTop: '1rem'
 	}
 });
 
@@ -81,7 +84,9 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
-	const { state: { dialogMessage, dialogOpen }, closeDialog } = useContext(DocProfileContext);
+	const { state: { dialogMessage, dialogOpen, firstName, lastName, specialty }, closeDialog } = useContext(
+		DocProfileContext
+	);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -100,6 +105,11 @@ const DocCompleteProfileScreen = () => {
 					<Typography>Back to my profile</Typography>
 				</NavLink>
 				<Divider />
+				{firstName === '' || lastName === '' || specialty === '' ? (
+					<Alert className={classes.warning} severity="warning">
+						Name and specialty must be filled to appear in searches
+					</Alert>
+				) : null}
 				<Tabs
 					value={value}
 					className={classes.tabs}
