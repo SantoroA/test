@@ -12,6 +12,7 @@ import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
+
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import FormControl from '@material-ui/core/FormControl';
@@ -25,7 +26,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Context as AuthContext } from '../../../context/AuthContext';
 
 const FormContactInfo = () => {
-	const { updateContactInfo, state } = useContext(DocProfileContext);
+	const { updateContactInfo, getSpeciality, state } = useContext(DocProfileContext);
 	const userId = '5fe8b0c48bef090026e253b7';
 	// const { state: {userId} } = useContext(AuthContext);
 	const [ firstName, setFirstName ] = useState(state.firstName);
@@ -36,7 +37,6 @@ const FormContactInfo = () => {
 	const [ birthday, setBirthday ] = useState(state.birthday);
 	const [ birthPlace, setbirthPlace ] = useState(state.birthPlace);
 	const [ isDisabled, setIsDisabled ] = useState(true);
-	const { getSpeciality, state: { allSpecialty } } = useContext(DocProfileContext);
 	const classes = useStyles();
 
 	// console.log(state);
@@ -122,23 +122,11 @@ const FormContactInfo = () => {
 										onChange={(e) => setSpecialty(e.target.value)}
 										label="Specialty"
 									>
-										{allSpecialty !== 'undefined' ? (
-											allSpecialty.map((el) => {
+										{state.allSpecialty !== 'undefined' ? (
+											state.allSpecialty.map((el) => {
 												return <MenuItem value={el}>{el}</MenuItem>;
 											})
 										) : null}
-										{/* <MenuItem value="General care physician">General care physician</MenuItem>
-										<MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
-										<MenuItem value="Dietitian">Dietitian</MenuItem>
-										<MenuItem value="Certified diabetes educator">
-											Certified diabetes educator
-										</MenuItem>
-										<MenuItem value="Podiatrist">Podiatrist</MenuItem>
-										<MenuItem value="Nephrologist">Nephrologist</MenuItem>
-										<MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
-										<MenuItem value="Physical trainer">Physical trainer</MenuItem>
-										<MenuItem value="Dentist">Dentist</MenuItem>
-										<MenuItem value="Any">Any</MenuItem> */}
 									</Select>
 								</FormControl>
 							</Grid>
@@ -163,7 +151,6 @@ const FormContactInfo = () => {
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<PhoneInput
 									fullWidth
-									required
 									className={classes.phoneInputStyle}
 									disabled={isDisabled}
 									value={phoneNumber}

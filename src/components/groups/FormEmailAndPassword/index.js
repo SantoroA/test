@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
 import DialogPicture from '../DialogPicture';
@@ -21,8 +22,8 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const FormEmailAndPassword = () => {
-	const { updatePassword, updateImage, state: { userId, image } } = useContext(AuthContext);
-	const [ email, setEmail ] = useState('');
+	const { updatePassword, state: { userId, image } } = useContext(AuthContext);
+	const { state: { email } } = useContext(DocProfileContext);
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');

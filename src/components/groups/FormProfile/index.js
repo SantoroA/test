@@ -86,10 +86,9 @@ const FormProfile = () => {
 										onChange={(e) => setInsurance(e.target.value)}
 										label="Insurance"
 									>
-										<MenuItem value={0}>Male</MenuItem>
-										<MenuItem value={1}>Female</MenuItem>
-										<MenuItem value={2}>Other</MenuItem>
-										<MenuItem value={3}>Prefer not to say</MenuItem>
+										<MenuItem value={0}>Private Insurance</MenuItem>
+										<MenuItem value={1}>Public Insurance</MenuItem>
+										<MenuItem value={2}>Both</MenuItem>
 									</Select>
 								</FormControl>
 							</Grid>

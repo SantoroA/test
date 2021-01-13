@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import logo from '../../assets/dianurse-logo.png';
-import { Context as AuthContext } from '../../context/AuthContext';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 //MATERIAL UI
@@ -36,25 +35,24 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function MessageDialog() {
-	const { state: { dialogMessage, dialogOpen }, closeDialog } = useContext(AuthContext);
+export default function MessageDialog({ open, close, message }) {
 	const classes = useStyles();
 	return (
 		<Dialog
-			open={dialogOpen}
-			onClose={closeDialog}
+			open={open}
+			onClose={close}
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
 		>
 			<Grid className={classes.layout}>
-				<IconButton className={classes.closeButton} onClick={closeDialog} color="primary">
+				<IconButton className={classes.closeButton} onClick={close} color="primary">
 					<CloseIcon />
 				</IconButton>
 				<img src={logo} alt="Logo" className={classes.logo} />
 				<Divider className={classes.divider} />
 				<DialogContent>
-					{dialogMessage ? (
-						<DialogContentText id="alert-dialog-description">{dialogMessage}</DialogContentText>
+					{message ? (
+						<DialogContentText id="alert-dialog-description">{message}</DialogContentText>
 					) : (
 						<Loader type="TailSpin" color="black" height={50} width={50} />
 					)}
