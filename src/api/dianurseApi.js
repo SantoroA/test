@@ -1,20 +1,8 @@
 import axios from 'axios';
 
+const BASE_API_URL = `${process.env.REACT_APP_HOST_API_URL}/dianurse/v1`;
 const instance = axios.create({
-	baseURL: 'https://api.thepowow.tech/dianurse/v1'
+	baseURL: `https://cors-anywhere.herokuapp.com/${BASE_API_URL}`
 });
-
-// instance.interceptors.request.use(
-// 	async (config) => {
-// 		const token = await localStorage.getItem('token');
-// 		if (token) {
-// 			config.headers.Authorization = `Bearer ${token}`;
-// 		}
-// 		return config;
-// 	},
-// 	(err) => {
-// 		return Promise.reject(err);
-// 	}
-// );
 
 export default instance;
