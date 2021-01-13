@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import FormEmailAndPassword from './index';
 
 const useStyles = makeStyles({
 	container: {
@@ -48,23 +49,36 @@ const useStyles = makeStyles({
 		padding: '0.5rem'
 	},
 
-	card: {
-		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
-		borderRadius: '10px',
-		display: 'flex',
-		flexDirection: 'row',
-		width: '35rem',
-		height: '12rem',
-		marginTop: '1rem',
-		marginBottom: '1rem'
-	},
 	media: {
-		width: '12rem',
+		borderRadius: '50%',
+		width: '14rem',
+		height: '14rem',
+		marginTop: '1rem',
+		marginBottom: '1rem',
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
 		backgroundColor: 'rgba(232, 232, 232, 1)',
 		color: 'rgba(160, 164, 168, 1)'
 	},
+	image: {
+		borderRadius: '50%',
+		width: '14rem',
+		height: '14rem',
+		marginTop: '4rem',
+		// marginBottom: '2rem',
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
+		// backgroundColor: 'rgba(232, 232, 232, 1)',
+		// color: 'rgba(160, 164, 168, 1)'
+	},
+	picUpload: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'flex-end'
+	},
 	addButton: {
-		bottom: 0
+		left: '-40px'
+	},
+	addIcon: {
+		fontSize: '2rem'
 	}
 });
 

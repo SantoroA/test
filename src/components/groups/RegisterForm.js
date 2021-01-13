@@ -93,10 +93,10 @@ const RegisterForm = ({ toggleIsLogin }) => {
 	const { state: { language } } = useContext(LanguageContext);
 	const [ checked, toggleChecked ] = useToggle(false);
 	const classes = useStyles();
-	const [ role, setRole ] = useState('patient');
+	const [ isHCP, setIsHCP ] = useState('patient');
 
 	const handleRoleChange = (event) => {
-		setRole(event.target.value);
+		setIsHCP(event.target.value);
 	};
 
 	// console.log(amIHCP);
@@ -113,7 +113,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 				<Typography variant="body1">Register here and create an account</Typography>
 				<form
 					onSubmit={(e) => {
-						register({ email, preferredLanguage: language, subdomain });
+						e.preventDefault();
+						register({
+							email,
+							preferredLanguage: language,
+							subdomain,
+							isHCP: isHCP === 'patient' ? false : true
+						});
 						setEmail('');
 					}}
 				>
@@ -123,7 +129,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								row
 								aria-label="is doctor"
 								name="isDoctor"
-								value={role}
+								value={isHCP}
 								onChange={handleRoleChange}
 							>
 								<FormControlLabel value="patient" control={<RadioStyled />} label="I am a Patient" />
@@ -193,7 +199,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 						appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 						fields="name,email,picture"
 						callback={(fbResponse) => {
-							handleFacebookRegister({ fbResponse, language, subdomain });
+							let role;
+							if (isHCP === 'patient') {
+								role = false;
+							} else {
+								role = true;
+							}
+							handleFacebookRegister({ fbResponse, language, subdomain, isHCP: role });
 						}}
 						render={(renderProps) => (
 							<Button
@@ -208,7 +220,15 @@ const RegisterForm = ({ toggleIsLogin }) => {
 					/>
 					<GoogleLogin
 						clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
-						onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
+						onSuccess={(ggResponse) => {
+							let role;
+							if (isHCP === 'patient') {
+								role = false;
+							} else {
+								role = true;
+							}
+							handleGoogleRegister({ ggResponse, language, subdomain, isHCP: role });
+						}}
 						onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 						cookiePolicy={'single_host_origin'}
 					/>
@@ -219,7 +239,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 							responseType={'code'}
 							responseMode={'query'}
 							callback={(appleResponse) => {
-								handleAppleRegister({ appleResponse, language, subdomain });
+								let role;
+								if (isHCP === 'patient') {
+									role = false;
+								} else {
+									role = true;
+								}
+								handleAppleRegister({ appleResponse, language, subdomain, isHCP: role });
 							}}
 						/>
 					</div>

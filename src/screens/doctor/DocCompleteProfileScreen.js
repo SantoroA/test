@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import Typography from '@material-ui/core/Typography';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -10,13 +11,12 @@ import FormProfile from '../../components/groups/FormProfile';
 import FormExperience from '../../components/groups/FormExperience';
 import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
-import FormBillingTypes from '../../components/groups/FormBillingTypes';
-import FormServicesTreated from '../../components/groups/FormServicesTreated';
 
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import InfoIcon from '../../components/customIcons/InfoIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
+
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
@@ -53,7 +53,6 @@ const useStyles = makeStyles({
 //TAB PANEL
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
-
 	return (
 		<div
 			role="tabpanel"
@@ -82,9 +81,16 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
+	const { getProfile } = useContext(DocProfileContext);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	const userId = '5fe8b0c48bef090026e253b7';
+
+	// useEffect(() => {
+	// 	getProfile(userId);
+	// }, []);
+
 	return (
 		<DocLayoutContainer>
 			<Container maxWidth="md">
@@ -107,17 +113,12 @@ const DocCompleteProfileScreen = () => {
 						label="My Profile"
 						{...a11yProps(0)}
 					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<InfoIcon className={classes.icons} />}
-						label="General Information"
-						{...a11yProps(1)}
-					/>
+
 					<TabCustom
 						className={classes.wrapperTab}
 						icon={<AboutIcon className={classes.icons} />}
 						label="About me"
-						{...a11yProps(2)}
+						{...a11yProps(1)}
 					/>
 				</Tabs>
 				<TabPanel value={value} index={0}>
@@ -129,14 +130,6 @@ const DocCompleteProfileScreen = () => {
 					</div>
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<div className={classes.section}>
-						<FormBillingTypes />
-					</div>
-					<div className={classes.section}>
-						<FormServicesTreated />
-					</div>
-				</TabPanel>
-				<TabPanel value={value} index={2}>
 					<div className={classes.section}>
 						<FormProfile />
 					</div>

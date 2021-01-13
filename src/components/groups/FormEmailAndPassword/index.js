@@ -1,31 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createRef } from 'react';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
-// import { Context as AuthContext } from '../../context/AuthContext';
+import DialogPicture from '../DialogPicture';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
-import EditIcon from '@material-ui/icons/Edit';
+import Paper from '@material-ui/core/Paper';
+
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+// import {TextField, Button, Fab} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const FormEmailAndPassword = () => {
+	const { updatePassword, updateImage, state: { userId, image } } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
 	const [ showChangePass, setShowChangePass ] = useState(true);
+
+	const [ isDialogOpen, setIsDialogOpen ] = useState(false);
+	const inputFileRef = createRef(null);
 	const classes = useStyles();
+
 	useEffect(
 		() => {
 			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -38,52 +44,43 @@ const FormEmailAndPassword = () => {
 		[ newPassword ]
 	);
 
+	const handleSubmit = (e) => {
+		updatePassword({
+			id: userId,
+			oldPassword,
+			newPassword
+			// image
+		});
+	};
+
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
-					<form onSubmit={() => {}}>
-						<Card className={classes.card}>
-							{/* {media ?  <CardMedia/> : ( */}
-							<Box
-								borderRight={10}
-								borderColor="grey.200"
-								display="flex"
-								justifyContent="center"
-								flexDirection="column"
-								alignItems="center"
+					<Box className={classes.picUpload}>
+						{image !== null ? (
+							<Paper
+								style={{
+									backgroundImage: `url(${image})`,
+									backgroundSize: 'contain',
+									backgroundRepeat: 'no-repeat',
+									backgroundPosition: 'center'
+								}}
 								className={classes.media}
-								title="Doctor"
-							>
-								<Typography variant="body1">Upload your photo</Typography>
-								<Box alignSelf="flex-start" className={classes.addButton}>
-									<IconButton>
-										<AddCircleOutlineIcon color="primary" />
-									</IconButton>
-								</Box>
-							</Box>
-							{/* )} */}
+							/>
+						) : (
+							<Paper className={classes.media} />
+						)}
 
-							<CardContent>
-								<Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
-									<Box alignSelf="flex-end">
-										<IconButton>
-											<EditIcon onClick={() => {}} />
-										</IconButton>
-									</Box>
-									<Typography variant="h4">Add your name here</Typography>
-									<Typography variant="subtitle" color="textSecondary">
-										Add your specialty here
-									</Typography>
-								</Box>
-							</CardContent>
-						</Card>
-					</form>
+						<IconButton onClick={() => setIsDialogOpen(true)} className={classes.addButton}>
+							<AddCircleOutlineIcon color="primary" className={classes.addIcon} />
+						</IconButton>
+					</Box>
 
 					<Grid item className={classes.title}>
 						<Typography variant="h5">Email and Password</Typography>
 					</Grid>
-					<Grid item fullWidth className={classes.emailField}>
+					<Grid item className={classes.emailField}>
 						<TextField
 							fullWidth
 							disabled
@@ -114,6 +111,7 @@ const FormEmailAndPassword = () => {
 							onSubmit={(e) => {
 								e.preventDefault();
 								setShowChangePass(true);
+								handleSubmit();
 							}}
 							className={classes.form}
 						>
@@ -181,6 +179,7 @@ const FormEmailAndPassword = () => {
 					)}
 				</Grid>
 			</PaperCustomShadow>
+			<DialogPicture isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
 		</Container>
 	);
 };

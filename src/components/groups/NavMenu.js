@@ -66,7 +66,7 @@ const NavMenu = () => {
 						Past Appointments
 					</MenuItem>
 					<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
-						Payment Method
+						Membership
 					</MenuItem>
 					<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
 						Help

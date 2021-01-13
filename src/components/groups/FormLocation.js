@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext } from 'react';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonOutlined from '../customUi/ButtonOutlined';
@@ -61,26 +62,50 @@ const useStyles = makeStyles({
 });
 
 const FormLocation = () => {
-	const [ country, setCountry ] = useState('');
-	const [ city, setCity ] = useState('');
-	const [ zipCode, setZipCode ] = useState('');
-	const [ street, setStreet ] = useState('');
-	const [ num, setNum ] = useState('');
+	const { updateLocationInfo, state } = useContext(DocProfileContext);
+	// const { state: {userId} } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	const [ country, setCountry ] = useState(state.country);
+	const [ city, setCity ] = useState(state.city);
+	const [ zipcode, setZipcode ] = useState(state.zipcode);
+	const [ street, setStreet ] = useState(state.street);
+	const [ num, setNum ] = useState(state.num);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
+	const handleSubmit = () => {
+		updateLocationInfo({
+			id: userId,
+			country,
+			city,
+			zipcode,
+			street,
+			num
+		});
+	};
+
+	const resetState = () => {
+		setCountry(state.country);
+		setCity(state.city);
+		setZipcode(state.zipcode);
+		setStreet(state.street);
+		setNum(state.num);
+	};
+
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Location</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<form
-						onSubmit={() => {
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -120,8 +145,8 @@ const FormLocation = () => {
 									fullWidth
 									disabled={isDisabled}
 									type="number"
-									value={zipCode}
-									onChange={(e) => setZipCode(e.target.value)}
+									value={zipcode}
+									onChange={(e) => setZipcode(e.target.value)}
 									label="Zip Code"
 									variant="outlined"
 								/>
@@ -156,8 +181,7 @@ const FormLocation = () => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
-											setCountry('');
-											setCity('');
+											resetState();
 										}}
 										fullWidth
 										variant="outlined"

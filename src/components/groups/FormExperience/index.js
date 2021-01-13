@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
 import useStyles from './style';
+import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -15,24 +18,37 @@ import EditIcon from '@material-ui/icons/Edit';
 import CardTravelIcon from '@material-ui/icons/CardTravel';
 
 const FormExperience = () => {
-	const [ yearsExperience, setYearsExperience ] = useState('');
-	const [ yearsSpecialist, setYearsSpecialist ] = useState('');
+	const { updateExperience, state } = useContext(DocProfileContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	// const { state: {userId} } = useContext(AuthContext);
+	const [ yearsExperience, setYearsExperience ] = useState(state.yearsExperience);
+	const [ yearsSpecialist, setYearsSpecialist ] = useState(state.yearsSpecialist);
 
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
+	console.log(yearsExperience);
+	const handleSubmit = () => {
+		updateExperience({
+			id: userId,
+			yearsExperience,
+			yearsSpecialist
+		});
+	};
 
 	return (
-		<Container fullWidth className={classes.container}>
+		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
 						<Typography variant="h6">Experience</Typography>
-						<IconButton>
-							<EditIcon onClick={() => setIsDisabled(false)} />
+						<IconButton onClick={() => setIsDisabled(false)}>
+							<EditIcon />
 						</IconButton>
 					</Grid>
 					<form
-						onSubmit={() => {
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleSubmit();
 							setIsDisabled(true);
 						}}
 						className={classes.form}
@@ -82,8 +98,8 @@ const FormExperience = () => {
 									<ButtonOutlined
 										onClick={() => {
 											setIsDisabled(true);
-											setYearsExperience('');
-											setYearsSpecialist('');
+											setYearsExperience(state.yearsExperience);
+											setYearsSpecialist(state.yearsSpecialist);
 										}}
 										fullWidth
 										variant="outlined"

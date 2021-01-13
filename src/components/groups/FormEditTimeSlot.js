@@ -6,12 +6,9 @@ import { Context as AuthContext } from '../../context/AuthContext';
 import TextInput from '../customUi/TextInput';
 import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonError from '../customUi/ButtonError';
-//CUSTOM ICONS
-import SleepIcon from '../customIcons/SleepIcon';
+
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -40,36 +37,25 @@ const useStyles = makeStyles({
 
 	input: {
 		padding: '0.5rem'
-	},
-	checkbox: {
-		padding: '0.5rem'
-	},
-	icons: {
-		fontSize: '5rem'
-	},
-	iconWrapper: {
-		display: 'flex',
-		padding: '2rem',
-		justifyContent: 'center'
 	}
 });
 
-const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
-	const [ timeStart, setTimeStart ] = useState('');
-	const [ timeEnd, setTimeEnd ] = useState('');
-	const [ amount, setAmount ] = useState(75);
-	const [ duration, setDuration ] = useState('');
-
-	const [ isOffDay, setIsOffDay ] = useState(false);
+const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot, amount, slotCreated }) => {
+	const [ timeStart, setTimeStart ] = useState(startTime);
+	const [ availableStart, setAvailableStart ] = useState(startDay);
+	const [ availableEnd, setAvailableEnd ] = useState(endDay);
+	const [ timeEnd, setTimeEnd ] = useState(endTime);
+	const [ price, setPrice ] = useState(amount);
+	const [ duration, setDuration ] = useState(slot);
 	const classes = useStyles();
-	const { createSlot } = useContext(AvailabilityContext);
-	// const { state:{userId} } = useContext(AuthContext);
+	const { state, updateSlot, setIsEditing } = useContext(AvailabilityContext);
+	// const { state: {userId} } = useContext(AuthContext);
 	const userId = '5fe8b0c48bef090026e253b7';
 
+	// console.log(state);
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		createSlot({
+		updateSlot({
 			availableStart,
 			availableEnd,
 			timeStart,
@@ -77,62 +63,48 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 			amount,
 			duration,
 			weekDay,
-			id: userId
+			id: userId,
+			key: slotCreated
 		});
 	};
 	const handleChangePrice = (maskedValue) => {
-		setAmount(maskedValue);
+		setPrice(maskedValue);
 	};
 
 	return (
 		<Box borderRadius="10px" border={1} className={classes.form}>
-			<FormControlLabel
-				control={
-					<Checkbox
-						checked={isOffDay}
-						onChange={() => setIsOffDay(!isOffDay)}
-						name="isOffDay"
-						color="primary"
-					/>
-				}
-				label="Weekly off day"
-				className={classes.checkbox}
-			/>
-
 			<form onSubmit={handleSubmit}>
 				<Grid container>
-					<Hidden xsUp>
-						<Grid container>
-							<Grid item xs={6} className={classes.input}>
-								<TextInput
-									fullWidth
-									required
-									type="date"
-									value={availableStart}
-									onChange={(e) => e.preventDefault()}
-									label="Availability from"
-									variant="outlined"
-									InputLabelProps={{
-										shrink: true
-									}}
-								/>
-							</Grid>
-							<Grid item xs={6} className={classes.input}>
-								<TextInput
-									fullWidth
-									required
-									type="date"
-									value={availableEnd}
-									onChange={(e) => e.preventDefault}
-									label="Availability to"
-									variant="outlined"
-									InputLabelProps={{
-										shrink: true
-									}}
-								/>
-							</Grid>
+					<Grid container>
+						<Grid item xs={6} className={classes.input}>
+							<TextInput
+								fullWidth
+								required
+								type="date"
+								value={availableStart}
+								onChange={(e) => setAvailableStart(e.target.value)}
+								label="Availability from"
+								variant="outlined"
+								InputLabelProps={{
+									shrink: true
+								}}
+							/>
 						</Grid>
-					</Hidden>
+						<Grid item xs={6} className={classes.input}>
+							<TextInput
+								fullWidth
+								required
+								type="date"
+								value={availableEnd}
+								onChange={(e) => setAvailableEnd(e.target.value)}
+								label="Availability to"
+								variant="outlined"
+								InputLabelProps={{
+									shrink: true
+								}}
+							/>
+						</Grid>
+					</Grid>
 
 					<Grid item xs={6} className={classes.input}>
 						<TextInput
@@ -179,34 +151,30 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 						</FormControl>
 					</Grid>
 					<Grid item xs={6} className={classes.input}>
-						<CurrencyInput value={amount} prefix="$" onChange={handleChangePrice} />
+						<CurrencyInput value={price} prefix="$" onChange={handleChangePrice} />
 					</Grid>
 				</Grid>
-				{availableStart && availableEnd ? (
-					<Grid container className={classes.buttons}>
-						<Grid item xs={12} className={classes.button}>
-							<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-								Apply
-							</ButtonFilled>
-						</Grid>
+
+				<Grid container className={classes.buttons}>
+					<Grid item xs={6} className={classes.button}>
+						<ButtonFilled
+							onClick={() => setIsEditing(slotCreated)}
+							variant="contained"
+							color="primary"
+							fullWidth
+						>
+							Cancel
+						</ButtonFilled>
 					</Grid>
-				) : (
-					<Grid container className={classes.buttons}>
-						<Grid item xs={12} className={classes.button}>
-							<ButtonError
-								onClick={() => console.log('please choose a date')}
-								variant="contained"
-								color="primary"
-								fullWidth
-							>
-								Apply
-							</ButtonError>
-						</Grid>
+					<Grid item xs={6} className={classes.button}>
+						<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
+							Update
+						</ButtonFilled>
 					</Grid>
-				)}
+				</Grid>
 			</form>
 		</Box>
 	);
 };
 
-export default FormTimeSlots;
+export default FormEditTimeSlots;
