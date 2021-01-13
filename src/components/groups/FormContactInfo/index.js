@@ -127,18 +127,6 @@ const FormContactInfo = () => {
 												return <MenuItem value={el}>{el}</MenuItem>;
 											})
 										) : null}
-										{/* <MenuItem value="General care physician">General care physician</MenuItem>
-										<MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
-										<MenuItem value="Dietitian">Dietitian</MenuItem>
-										<MenuItem value="Certified diabetes educator">
-											Certified diabetes educator
-										</MenuItem>
-										<MenuItem value="Podiatrist">Podiatrist</MenuItem>
-										<MenuItem value="Nephrologist">Nephrologist</MenuItem>
-										<MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
-										<MenuItem value="Physical trainer">Physical trainer</MenuItem>
-										<MenuItem value="Dentist">Dentist</MenuItem>
-										<MenuItem value="Any">Any</MenuItem> */}
 									</Select>
 								</FormControl>
 							</Grid>

@@ -7,7 +7,6 @@ const authReducer = (state, action) => {
 		case 'login':
 			return {
 				...state,
-
 				userId: jwt(action.payload.token).id,
 				userToken: action.payload.token,
 				userAmIHCP: action.payload.amIHCP,
@@ -161,7 +160,7 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 		const response = await dianurseApi.post('/account/auth/socialmedia/register', {
 			username: fbResponse.name,
 			id: fbResponse.id,
-			//get element zero
+
 			email: fbResponse.email,
 			picture: fbResponse.picture.data.url,
 			preferredLanguage: language,

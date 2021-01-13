@@ -5,8 +5,28 @@ const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
 			return {
-				...state,
-				slots: action.payload
+				specialty: action.payload.Specialty,
+				insurance: action.payload.billingType,
+				dialogMessage: '',
+				dialogOpen: false,
+				firstName: action.payload.name,
+				lastName: action.payload.lastname,
+				gender: action.payload.genter,
+				phoneNumber: action.payload.phone,
+				birthPlace: action.payload.place,
+				birthday: action.payload.birthday,
+				profileInfo: action.payload.profileInfo,
+				websiteUrl: action.payload.webSite,
+				country: action.payload.country,
+				city: action.payload.city,
+				zipcode: action.payload.zipCode,
+				street: action.payload.street,
+				num: action.payload.numero,
+				education: action.payload.education,
+				yearsExperience: action.payload.yearsExperience,
+				yearsSpecialist: action.payload.yearsSpecialist,
+				email: action.payload.email,
+				image: action.payload.image
 			};
 		case 'get_speciality':
 			return {
@@ -95,6 +115,7 @@ const getProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
+			dispatch({ type: 'get_profile', payload: response.data });
 			console.log(response);
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
@@ -296,6 +317,8 @@ export const { Context, Provider } = createDataContext(
 	},
 	{
 		services: [],
+		email: '',
+		image: '',
 		specialty: '',
 		insurance: '',
 		dialogMessage: '',
