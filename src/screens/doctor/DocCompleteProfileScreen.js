@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import Typography from '@material-ui/core/Typography';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Prompt } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
 import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
@@ -11,7 +11,7 @@ import FormProfile from '../../components/groups/FormProfile';
 import FormExperience from '../../components/groups/FormExperience';
 import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
-
+import MessageDialog from '../../components/groups/MessageDialog';
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import InfoIcon from '../../components/customIcons/InfoIcon';
@@ -81,7 +81,8 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
-	const { getProfile } = useContext(DocProfileContext);
+	const { state: { dialogMessage, dialogOpen }, closeDialog } = useContext(DocProfileContext);
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -144,6 +145,7 @@ const DocCompleteProfileScreen = () => {
 					</div>
 				</TabPanel>
 			</Container>
+			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</DocLayoutContainer>
 	);
 };
