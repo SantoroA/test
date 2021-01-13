@@ -54,7 +54,11 @@ const useStyles = makeStyles({
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
 		backgroundColor: 'rgba(232, 232, 232, 1)',
 		color: 'rgba(160, 164, 168, 1)'
-	}
+    },
+    imageContainer: {
+        display: 'flex',
+        justifyContent: 'center'
+    }
 });
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
@@ -62,37 +66,46 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	const [ imageChange, setImageChange ] = useState(image);
 	const inputFileRef = createRef(null);
 	const classes = useStyles();
-
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log('submit');
+		updateImage({
+			id: userId,
+			image: imageChange
+		});
+		setIsDialogOpen(false);
+	};
+	const handleClose = () => {
+		setIsDialogOpen(false);
+		setImageChange(image);
+	};
+	console.log(imageChange);
 	return (
 		<Dialog
 			open={isDialogOpen}
-			onClose={() => setIsDialogOpen(false)}
+			onClose={handleClose}
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
 		>
 			<Grid className={classes.layout}>
-				<IconButton className={classes.closeButton} onClick={() => setIsDialogOpen(false)} color="primary">
+				<IconButton className={classes.closeButton} onClick={handleClose} color="primary">
 					<CloseIcon />
 				</IconButton>
 				<img src={logo} alt="Logo" className={classes.logo} />
 				<Divider className={classes.divider} />
 				<DialogContent>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							console.log('submit');
-							updateImage({
-								id: userId,
-								image
-							});
-						}}
-					>
+					<form onSubmit={handleSubmit}>
 						<Typography>Edit your picture</Typography>
 						<Grid container>
-							<Grid item xs={12}>
-								{image !== null ? (
+							<Grid item xs={12} justifyContent="center" className={classes.imageContainer}>
+								{imageChange !== null ? (
 									<Paper
-										style={{ backgroundImage: `url(${imageChange})` }}
+										style={{
+											backgroundImage: `url(${imageChange})`,
+                                            backgroundSize: 'contain',
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundPosition: 'center'
+										}}
 										className={classes.media}
 									/>
 								) : (
@@ -108,23 +121,26 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 										name="upload-photo"
 										style={{ display: 'none' }}
 										ref={inputFileRef}
-										onChange={async (e) => {
+										onChange={(e) => {
 											let newImage = e.target?.files?.[0];
 											newImage = newImage ? setImageChange(URL.createObjectURL(newImage)) : null;
-											console.log(newImage);
 										}}
 									/>
 									<IconButton component="span">
 										<EditIcon color="primary" />
 									</IconButton>
-                                    <Typography variant='body1' color='primary'>Upload</Typography>
+									<Typography variant="body1" color="primary">
+										Upload
+									</Typography>
 								</label>
 							</Grid>
 							<Grid item xs={6}>
 								<IconButton type="submit">
 									<SaveAltIcon color="primary" />
 								</IconButton>
-                                    <Typography variant='body1' color='primary'>Save</Typography>
+								<Typography variant="body1" color="primary">
+									Save
+								</Typography>
 							</Grid>
 						</Grid>
 					</form>

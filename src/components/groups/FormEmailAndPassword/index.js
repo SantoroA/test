@@ -9,6 +9,7 @@ import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -56,32 +57,19 @@ const FormEmailAndPassword = () => {
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
-					{/* {media ?  <CardMedia/> : ( */}
-					{/* 
-						https://localhost:3000/38038f6a-6a8e-4b36-a2d1-aa13eccca9d7
-					*/}
-					{/* {image !== null ? <img src={image} alt="teste" className={classes.image} /> : null} */}
-					{/* <Typography variant="body1">Upload your photo</Typography> */}
 					<Box className={classes.picUpload}>
 						{image !== null ? (
-							<Box
-								display="flex"
-								justifyContent="center"
-								flexDirection="column"
-								alignItems="center"
-								style={{ backgroundImage: `url(${image})` }}
+							<Paper
+								style={{
+									backgroundImage: `url(${image})`,
+									backgroundSize: 'contain',
+									backgroundRepeat: 'no-repeat',
+									backgroundPosition: 'center'
+								}}
 								className={classes.media}
-								title="Doctor"
 							/>
 						) : (
-							<Box
-								display="flex"
-								justifyContent="center"
-								flexDirection="column"
-								alignItems="center"
-								className={classes.media}
-								title="Doctor"
-							/>
+							<Paper className={classes.media} />
 						)}
 
 						<IconButton onClick={() => setIsDialogOpen(true)} className={classes.addButton}>
