@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 // import { Context as AuthContext } from '../../../context/AuthContext';
 
@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
+import { Context as AuthContext } from '../../../context/AuthContext';
 
 const FormContactInfo = () => {
 	const { updateContactInfo, state } = useContext(DocProfileContext);
@@ -35,9 +36,14 @@ const FormContactInfo = () => {
 	const [ birthday, setBirthday ] = useState(state.birthday);
 	const [ birthPlace, setbirthPlace ] = useState(state.birthPlace);
 	const [ isDisabled, setIsDisabled ] = useState(true);
+	const { getSpeciality, state: { allSpecialty } } = useContext(DocProfileContext);
 	const classes = useStyles();
 
 	// console.log(state);
+
+	useEffect(() => {
+		getSpeciality();
+	}, []);
 
 	const resetState = () => {
 		setFirstName(state.firstName);
@@ -116,7 +122,12 @@ const FormContactInfo = () => {
 										onChange={(e) => setSpecialty(e.target.value)}
 										label="Specialty"
 									>
-										<MenuItem value="General care physician">General care physician</MenuItem>
+										{allSpecialty !== 'undefined' ? (
+											allSpecialty.map((el) => {
+												return <MenuItem value={el}>{el}</MenuItem>;
+											})
+										) : null}
+										{/* <MenuItem value="General care physician">General care physician</MenuItem>
 										<MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
 										<MenuItem value="Dietitian">Dietitian</MenuItem>
 										<MenuItem value="Certified diabetes educator">
@@ -127,7 +138,7 @@ const FormContactInfo = () => {
 										<MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
 										<MenuItem value="Physical trainer">Physical trainer</MenuItem>
 										<MenuItem value="Dentist">Dentist</MenuItem>
-										<MenuItem value="Any">Any</MenuItem>
+										<MenuItem value="Any">Any</MenuItem> */}
 									</Select>
 								</FormControl>
 							</Grid>

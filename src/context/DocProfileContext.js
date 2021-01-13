@@ -8,6 +8,11 @@ const docProfileReducer = (state, action) => {
 				...state,
 				slots: action.payload
 			};
+		case 'get_speciality':
+			return {
+				...state,
+				allSpecialty: action.payload
+			};
 		case 'update_services':
 			return {
 				...state,
@@ -69,6 +74,19 @@ const docProfileReducer = (state, action) => {
 		default:
 			return state;
 	}
+};
+
+const getSpeciality = (dispatch) => {
+	return async () => {
+		try {
+			const response = await dianurseApi.get('/profile/doctor/getspeciality');
+			console.log(response);
+			dispatch({ type: 'get_speciality', payload: response.data });
+		} catch (err) {
+			dispatch({ type: 'add_error', payload: err.message });
+			console.log(err.message);
+		}
+	};
 };
 
 const getProfile = (dispatch) => {
@@ -266,6 +284,7 @@ const closeDialog = (dispatch) => () => {
 export const { Context, Provider } = createDataContext(
 	docProfileReducer,
 	{
+		getSpeciality,
 		getProfile,
 		updateServices,
 		updateContactInfo,
@@ -296,6 +315,7 @@ export const { Context, Provider } = createDataContext(
 		num: '',
 		education: '',
 		yearsExperience: '',
-		yearsSpecialist: ''
+		yearsSpecialist: '',
+		allSpecialty: []
 	}
 );

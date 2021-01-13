@@ -149,6 +149,7 @@ const createSlot = (dispatch) => {
 		let arr = [];
 		let i = 0;
 		let slotCreated = new Date();
+		console.log(id);
 
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
@@ -202,6 +203,7 @@ const createSlot = (dispatch) => {
 };
 const deleteSlot = (dispatch) => {
 	return async (key, id) => {
+		console.log(id);
 		let slotData = {
 			slotCreated: key,
 			id
@@ -247,27 +249,29 @@ const updateSlot = (dispatch) => {
 			}
 		}
 		try {
-			// console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
-			// const response = await dianurseApi.post(`/appointment/updateAvailability`, {
-			// 	arr
-			// });
-			// console.log(response.data);
-			dispatch({
-				type: 'update_slots',
-				payload: {
-					startDay: availableStart,
-					endDay: availableEnd,
-					amount: amount,
-					startTime: timeStart,
-					endTime: timeEnd,
-					slot: duration,
-					slotCreated: key,
-					editStatus: false,
-					isEditing: false,
-					weekDay,
-					id
-				}
+			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
+			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
+				arr
 			});
+			console.log(response.data);
+			if (response.status === 200) {
+				dispatch({
+					type: 'update_slots',
+					payload: {
+						startDay: availableStart,
+						endDay: availableEnd,
+						amount: amount,
+						startTime: timeStart,
+						endTime: timeEnd,
+						slot: duration,
+						slotCreated: key,
+						editStatus: false,
+						isEditing: false,
+						weekDay,
+						id
+					}
+				});
+			}
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
@@ -321,29 +325,18 @@ const setIsEditing = (dispatch) => {
 // 				week: new Date(day_2 - i).getDay(),
 // 				start: new Date(newStartDate - i + timeDuration * t - timeDuration),
 // 				end: new Date(newStartDate - i + timeDuration * t),
-// 				amount: amount, // check amount estpa sendo salvo com o valor certo
+// 				amount: amount, //check amount estpa sendo salvo com o valor certo
 // 				slotCreated: key
 // 			});
 // 		}
 // 	}
 // }
 // try {
-// 	console.log(
-// 		'inside context',
-// 		availableStart,
-// 		availableEnd,
-// 		timeStart,
-// 		timeEnd,
-// 		amount,
-// 		duration,
-// 		weekDay,
-// 		id,
-// 		key
-// 	);
-// const response = await dianurseApi.post(`/appointment/updateAvailability`, {
+// const response =  dianurseApi.post(`/appointment/updateAvailability`, {
 // 	arr
 // });
 // console.log(response.data);
+// if(response.status === 200) {
 // 	dispatch({
 // 		type: 'update_slots',
 // 		payload: {
@@ -360,9 +353,12 @@ const setIsEditing = (dispatch) => {
 // 			isEditing: false
 // 		}
 // 	});
+// }
 // } catch (err) {
 // 	dispatch({ type: 'add_error', payload: err.message });
 // 	console.log(err.message);
+// }
+// 	}
 // }
 
 //DIALOG

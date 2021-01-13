@@ -118,7 +118,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 							email,
 							preferredLanguage: language,
 							subdomain,
-							isHCP: 'patient' ? false : true
+							isHCP: isHCP === 'patient' ? false : true
 						});
 						setEmail('');
 					}}
@@ -199,7 +199,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 						appId={process.env.REACT_APP_FACEBOOK_APP_ID}
 						fields="name,email,picture"
 						callback={(fbResponse) => {
-							handleFacebookRegister({ fbResponse, language, subdomain });
+							let role;
+							if (isHCP === 'patient') {
+								role = false;
+							} else {
+								role = true;
+							}
+							handleFacebookRegister({ fbResponse, language, subdomain, isHCP: role });
 						}}
 						render={(renderProps) => (
 							<Button
@@ -214,7 +220,15 @@ const RegisterForm = ({ toggleIsLogin }) => {
 					/>
 					<GoogleLogin
 						clientId="297099850421-9034me3t8n59qcm3fhkn7ek17pnbf3fl.apps.googleusercontent.com"
-						onSuccess={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
+						onSuccess={(ggResponse) => {
+							let role;
+							if (isHCP === 'patient') {
+								role = false;
+							} else {
+								role = true;
+							}
+							handleGoogleRegister({ ggResponse, language, subdomain, isHCP: role });
+						}}
 						onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
 						cookiePolicy={'single_host_origin'}
 					/>
@@ -225,7 +239,13 @@ const RegisterForm = ({ toggleIsLogin }) => {
 							responseType={'code'}
 							responseMode={'query'}
 							callback={(appleResponse) => {
-								handleAppleRegister({ appleResponse, language, subdomain });
+								let role;
+								if (isHCP === 'patient') {
+									role = false;
+								} else {
+									role = true;
+								}
+								handleAppleRegister({ appleResponse, language, subdomain, isHCP: role });
 							}}
 						/>
 					</div>
