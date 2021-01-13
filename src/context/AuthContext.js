@@ -32,6 +32,8 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
+		case 'update_image':
+			return { ...state, image: action.payload };
 		case 'set_dialog_message':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
 		case 'open_dialog':
@@ -293,6 +295,10 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 // complete profile update image
 const updateImage = (dispatch) => async ({ id, image }) => {
 	console.log(id, image);
+	dispatch({
+		type: 'update_image',
+		payload: image
+	});
 };
 
 // complete profile change password
@@ -370,6 +376,7 @@ export const { Provider, Context } = createDataContext(
 		dialogOpen: false,
 		isLoggedIn: true,
 		isFirstTimeUser: false,
-		preferredLanguage: 'en-US'
+		preferredLanguage: 'en-US',
+		image: null
 	}
 );

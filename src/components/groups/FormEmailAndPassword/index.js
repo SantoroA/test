@@ -1,17 +1,15 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
-// import { Context as AuthContext } from '../../../context/AuthContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
+import DialogPicture from '../DialogPicture';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
-import EditIcon from '@material-ui/icons/Edit';
+
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -20,18 +18,17 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { Context as AuthContext } from '../../../context/AuthContext';
 
 const FormEmailAndPassword = () => {
-	const { updatePassword, updateImage, state } = useContext(AuthContext);
+	const { updatePassword, updateImage, state: { userId, image } } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
 	const [ showChangePass, setShowChangePass ] = useState(true);
-	const [ image, setImage ] = useState(null);
+
+	const [ isDialogOpen, setIsDialogOpen ] = useState(false);
 	const inputFileRef = createRef(null);
-	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
 
 	useEffect(
@@ -60,58 +57,37 @@ const FormEmailAndPassword = () => {
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					{/* {media ?  <CardMedia/> : ( */}
-					<Box
-						display="flex"
-						justifyContent="center"
-						flexDirection="column"
-						alignItems="center"
-						className={classes.media}
-						title="Doctor"
-					>
-						{/* 
+					{/* 
 						https://localhost:3000/38038f6a-6a8e-4b36-a2d1-aa13eccca9d7
-						*/}
-						{image !== null ? <img src={image} alt="teste" className={classes.image} /> : null}
+					*/}
+					{/* {image !== null ? <img src={image} alt="teste" className={classes.image} /> : null} */}
+					{/* <Typography variant="body1">Upload your photo</Typography> */}
+					<Box className={classes.picUpload}>
+						{image !== null ? (
+							<Box
+								display="flex"
+								justifyContent="center"
+								flexDirection="column"
+								alignItems="center"
+								style={{ backgroundImage: `url(${image})` }}
+								className={classes.media}
+								title="Doctor"
+							/>
+						) : (
+							<Box
+								display="flex"
+								justifyContent="center"
+								flexDirection="column"
+								alignItems="center"
+								className={classes.media}
+								title="Doctor"
+							/>
+						)}
 
-						<Typography variant="body1">Upload your photo</Typography>
-						<Box className={classes.addButton}>
-							<form
-								onSubmit={(e) => {
-									e.preventDefault();
-									console.log('submit');
-									updateImage({
-										id: userId,
-										image
-									});
-								}}
-							>
-								<label htmlFor="upload-photo">
-									<TextField
-										fullWidth
-										type="file"
-										id="upload-photo"
-										name="upload-photo"
-										style={{ display: 'none' }}
-										ref={inputFileRef}
-										onChange={async (e) => {
-											let newImage = e.target?.files?.[0];
-											newImage = newImage ? setImage(URL.createObjectURL(newImage)) : null;
-											console.log(image);
-											updateImage({
-												id: userId,
-												image
-											});
-										}}
-									/>
-									<IconButton component="span">
-										<AddCircleOutlineIcon color="primary" />
-									</IconButton>
-									<button type="submit">Send image</button>
-								</label>
-							</form>
-						</Box>
+						<IconButton onClick={() => setIsDialogOpen(true)} className={classes.addButton}>
+							<AddCircleOutlineIcon color="primary" className={classes.addIcon} />
+						</IconButton>
 					</Box>
-					{/* )} */}
 
 					<Grid item className={classes.title}>
 						<Typography variant="h5">Email and Password</Typography>
@@ -215,6 +191,7 @@ const FormEmailAndPassword = () => {
 					)}
 				</Grid>
 			</PaperCustomShadow>
+			<DialogPicture isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
 		</Container>
 	);
 };
