@@ -6,7 +6,7 @@ const docProfileReducer = (state, action) => {
 		case 'get_profile':
 			return {
 				...state,
-				slots: action.payload
+				profile: action.payload
 			};
 		case 'get_speciality':
 			return {
@@ -316,6 +316,7 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: []
+		allSpecialty: [],
+		profile:''
 	}
 );

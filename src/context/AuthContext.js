@@ -294,21 +294,37 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 
 // complete profile update image
 const updateImage = (dispatch) => async ({ id, image }) => {
-	console.log(id, image);
-	dispatch({
-		type: 'update_image',
-		payload: image
-	});
+	console.log('id',id, image);
+	let userInfo ={
+		id,
+		image
+	}
+	console.log(userInfo)
+	try {
+		const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			userInfo
+		});
+		dispatch({
+			type: 'update_image',
+			payload: image
+		});
+		console.log(response.data)
+	} catch (err) {
+		dispatch({
+			type: 'add_error',
+			payload: 'Ops, something went wrong. Please try again later.'
+			//error of type 502 ex
+		});
+	}
 };
 
 // complete profile change password
-const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id, image }) => {
+const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id }) => {
 	console.log(newPassword, oldPassword, id);
 	const userInfo = {
 		id,
 		oldPassword,
 		newPassword,
-		// image,
 		form: 2
 	};
 	try {
