@@ -90,7 +90,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 
 	return (
 		<Box borderRadius="10px" border={1} className={classes.form}>
-			<FormControlLabel
+			{/* <FormControlLabel
 				control={
 					<Checkbox
 						checked={isOffDay}
@@ -101,120 +101,120 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 				}
 				label="Weekly off day"
 				className={classes.checkbox}
-			/>
-			{isOffDay ? (
+			/> */}
+			{/* {isOffDay ? (
 				<Grid container className={classes.iconWrapper}>
 					<SleepIcon className={classes.icons} />
 					<Typography>No time slots for off days</Typography>
 				</Grid>
-			) : (
-				<form onSubmit={handleSubmit}>
-					<Grid container>
-						<Hidden xsUp>
-							<Grid container>
-								<Grid item xs={6} className={classes.input}>
-									<TextInput
-										fullWidth
-										required
-										type="date"
-										value={availableStart}
-										onChange={(e) => e.preventDefault()}
-										label="Availability from"
-										variant="outlined"
-										InputLabelProps={{
-											shrink: true
-										}}
-									/>
-								</Grid>
-								<Grid item xs={6} className={classes.input}>
-									<TextInput
-										fullWidth
-										required
-										type="date"
-										value={availableEnd}
-										onChange={(e) => e.preventDefault}
-										label="Availability to"
-										variant="outlined"
-										InputLabelProps={{
-											shrink: true
-										}}
-									/>
-								</Grid>
+			) : ( */}
+			<form onSubmit={handleSubmit}>
+				<Grid container>
+					<Hidden xsUp>
+						<Grid container>
+							<Grid item xs={6} className={classes.input}>
+								<TextInput
+									fullWidth
+									required
+									type="date"
+									value={availableStart}
+									onChange={(e) => e.preventDefault()}
+									label="Availability from"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
 							</Grid>
-						</Hidden>
+							<Grid item xs={6} className={classes.input}>
+								<TextInput
+									fullWidth
+									required
+									type="date"
+									value={availableEnd}
+									onChange={(e) => e.preventDefault}
+									label="Availability to"
+									variant="outlined"
+									InputLabelProps={{
+										shrink: true
+									}}
+								/>
+							</Grid>
+						</Grid>
+					</Hidden>
 
-						<Grid item xs={6} className={classes.input}>
-							<TextInput
-								fullWidth
-								required
-								type="time"
-								value={timeStart}
-								onChange={(e) => setTimeStart(e.target.value)}
-								label="Time from"
-								variant="outlined"
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						</Grid>
-						<Grid item xs={6} className={classes.input}>
-							<TextInput
-								fullWidth
-								required
-								type="time"
-								value={timeEnd}
-								onChange={(e) => setTimeEnd(e.target.value)}
-								label="Time to"
-								variant="outlined"
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						</Grid>
-						<Grid item xs={6} className={classes.input}>
-							<FormControl required fullWidth variant="outlined">
-								<InputLabel id="slot-durantion-label">Slot Duration</InputLabel>
-								<Select
-									labelId="slot-durantion-label"
-									value={duration}
-									onChange={(e) => setDuration(e.target.value)}
-									label="Slot Duration"
-								>
-									<MenuItem value={15}>15 min</MenuItem>
-									<MenuItem value={30}>30 min</MenuItem>
-									<MenuItem value={45}>45 min</MenuItem>
-									<MenuItem value={60}>1 hour</MenuItem>
-								</Select>
-							</FormControl>
-						</Grid>
-						<Grid item xs={6} className={classes.input}>
-							<CurrencyInput value={amount} prefix="$" onChange={handleChangePrice} />
+					<Grid item xs={6} className={classes.input}>
+						<TextInput
+							fullWidth
+							required
+							type="time"
+							value={timeStart}
+							onChange={(e) => setTimeStart(e.target.value)}
+							label="Time from"
+							variant="outlined"
+							InputLabelProps={{
+								shrink: true
+							}}
+						/>
+					</Grid>
+					<Grid item xs={6} className={classes.input}>
+						<TextInput
+							fullWidth
+							required
+							type="time"
+							value={timeEnd}
+							onChange={(e) => setTimeEnd(e.target.value)}
+							label="Time to"
+							variant="outlined"
+							InputLabelProps={{
+								shrink: true
+							}}
+						/>
+					</Grid>
+					<Grid item xs={6} className={classes.input}>
+						<FormControl required fullWidth variant="outlined">
+							<InputLabel id="slot-durantion-label">Slot Duration</InputLabel>
+							<Select
+								labelId="slot-durantion-label"
+								value={duration}
+								onChange={(e) => setDuration(e.target.value)}
+								label="Slot Duration"
+							>
+								<MenuItem value={15}>15 min</MenuItem>
+								<MenuItem value={30}>30 min</MenuItem>
+								<MenuItem value={45}>45 min</MenuItem>
+								<MenuItem value={60}>1 hour</MenuItem>
+							</Select>
+						</FormControl>
+					</Grid>
+					<Grid item xs={6} className={classes.input}>
+						<CurrencyInput value={amount} prefix="$" onChange={handleChangePrice} />
+					</Grid>
+				</Grid>
+				{availableStart && availableEnd ? (
+					<Grid container className={classes.buttons}>
+						<Grid item xs={12} className={classes.button}>
+							<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
+								Apply
+							</ButtonFilled>
 						</Grid>
 					</Grid>
-					{availableStart && availableEnd ? (
-						<Grid container className={classes.buttons}>
-							<Grid item xs={12} className={classes.button}>
-								<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-									Apply
-								</ButtonFilled>
-							</Grid>
+				) : (
+					<Grid container className={classes.buttons}>
+						<Grid item xs={12} className={classes.button}>
+							<ButtonError
+								onClick={() => console.log('please choose a date')}
+								variant="contained"
+								color="primary"
+								fullWidth
+							>
+								Apply
+							</ButtonError>
 						</Grid>
-					) : (
-						<Grid container className={classes.buttons}>
-							<Grid item xs={12} className={classes.button}>
-								<ButtonError
-									onClick={() => console.log('please choose a date')}
-									variant="contained"
-									color="primary"
-									fullWidth
-								>
-									Apply
-								</ButtonError>
-							</Grid>
-						</Grid>
-					)}
-				</form>
-			)}
+					</Grid>
+				)}
+			</form>
+			{/* )} */}
 		</Box>
 	);
 };
