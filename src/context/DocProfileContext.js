@@ -4,8 +4,9 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log('state',action.payload)
+			console.log('state', action.payload);
 			return {
+				...state,
 				specialty: action.payload.Specialty,
 				insurance: action.payload.insurance,
 				dialogMessage: '',
@@ -116,7 +117,7 @@ const getProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
-			console.log(response);
+			console.log(response.data.accountId);
 			// dispatch({ type: 'get_profile', payload: response.data });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
@@ -185,7 +186,7 @@ const updateContactInfo = (dispatch) => {
 };
 const updateProfileInfo = (dispatch) => {
 	return async ({ profileInfo, websiteUrl, id, insurance }) => {
-		console.log(insurance)
+		console.log(insurance);
 		let userInfo = {
 			id,
 			profileInfo,
@@ -215,7 +216,7 @@ const updateProfileInfo = (dispatch) => {
 };
 const updateLocationInfo = (dispatch) => {
 	return async ({ id, country, city, zipcode, street, num }) => {
-		console.log(zipcode)
+		console.log(zipcode);
 		let userInfo = {
 			id,
 			country,
@@ -229,7 +230,7 @@ const updateLocationInfo = (dispatch) => {
 		try {
 			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
 				userInfo
-			 });
+			});
 			console.log(response);
 			dispatch({
 				type: 'update_location_info',
@@ -257,9 +258,9 @@ const updateEducation = (dispatch) => {
 		console.log('inside education context', education);
 		try {
 			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			 	userInfo
-			 });
-			 console.log(response);
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_education',
 				payload: {
@@ -342,6 +343,6 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: [ ]
+		allSpecialty: []
 	}
 );

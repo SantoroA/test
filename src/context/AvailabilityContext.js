@@ -172,13 +172,13 @@ const createSlot = (dispatch) => {
 			}
 		}
 		try {
-			const response = await dianurseApi.post('/appointment/createAvailability', {
-				arr
-			});
-			console.log(response);
+			// const response = await dianurseApi.post('/appointment/createAvailability', {
+			// 	arr
+			// });
+			// console.log(response);
 			let x = 200;
-			if (response.status === 200) {
-			// if (x === 200) {
+			// if (response.status === 200) {
+			if (x === 200) {
 				return dispatch({
 					type: 'create_slot',
 					payload: {
