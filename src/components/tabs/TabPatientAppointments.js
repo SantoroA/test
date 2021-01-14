@@ -15,17 +15,17 @@ const useStyles = makeStyles({
 	}
 });
 
-const TabLabTests = () => {
+const TabPatientAppointments = () => {
 	const classes = useStyles();
 	return (
 		<div>
 			<Grid className={classes.root} container>
 				<Paper className={classes.section}>
-					<Typography>My Lab Tests</Typography>
+					<Typography>My Appointemtns</Typography>
 				</Paper>
 			</Grid>
 		</div>
 	);
 };
 
-export default TabLabTests;
+export default TabPatientAppointments;

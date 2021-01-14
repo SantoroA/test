@@ -3,10 +3,11 @@ import { Context as AuthContext } from '../../context/AuthContext';
 
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 
-import TabMyPatients from '../../components/tabs/TabMyPatients';
-import TabMyAppointments from '../../components/tabs/TabMyAppointments';
-import TabMyEarnings from '../../components/tabs/TabMyEarnings';
-import TabAvailability from '../../components/tabs/TabAvailability';
+import TabDocuments from '../../components/tabs/TabDocuments';
+import TabQuestionnaries from '../../components/tabs/TabQuestionnaries';
+import TabPatientAppointments from '../../components/tabs/TabPatientAppointments';
+import TabPrescriptions from '../../components/tabs/TabPrescriptions';
+import TabLabTests from '../../components/tabs/TabLabTests';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
 import { NavLink } from 'react-router-dom';
@@ -168,24 +169,24 @@ const PatDashboardScreen = () => {
 					<TabCustom
 						className={classes.wrapperTab}
 						icon={<QuestionnaireIcon className={classes.icons} />}
-						label="Sureys"
+						label="Surveys"
 						{...a11yProps(4)}
 					/>
 				</Tabs>
 				<TabPanel value={value} index={0}>
-					<TabMyAppointments />
+					<TabPatientAppointments />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<TabMyPatients />
+					<TabDocuments />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					<TabMyEarnings />
+					<TabPrescriptions />
 				</TabPanel>
 				<TabPanel value={value} index={3}>
-					<TabAvailability />
+					<TabLabTests />
 				</TabPanel>
 				<TabPanel value={value} index={4}>
-					<TabAvailability />
+					<TabQuestionnaries />
 				</TabPanel>
 			</Container>
 		</PatLayoutContainer>

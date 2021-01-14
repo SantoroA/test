@@ -343,6 +343,17 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: []
+		allSpecialty: [
+			'General care physician',
+			'Endocrinologist',
+			'Dietitian',
+			'Certified diabetes educator',
+			'Podiatrist',
+			'Nephrologist',
+			'Ophthalmologist',
+			'Physical trainer',
+			'Dentist',
+			'Any'
+		]
 	}
 );

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
 import ButtonIcon from '../customUi/ButtonIcon';
@@ -55,10 +57,22 @@ const useStyles = makeStyles({
 		justifyContent: 'center'
 	}
 });
-const SearchDoctorGroup = (props) => {
+const FormSearchDoctor = () => {
 	const [ timezone, setTimezone ] = useState('Eastern Time');
 	const [ nameZone, setNameZone ] = useState('New York, United States');
+	const [ typeOfHCP, setTypeOfHCP ] = useState('Cardiologist');
+	const [ date, setDate ] = useState('');
+	// const { state: {userId} } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
+	const { getDoctorList, state: { doctors, allSpecialty } } = useContext(SearchDoctorContext);
 	const classes = useStyles();
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log('submit', typeOfHCP);
+		getDoctorList({ typeOfHCP, date });
+	};
+
 	useEffect(() => {
 		const date = new Date();
 		const dateAsString = date.toString();
@@ -70,7 +84,7 @@ const SearchDoctorGroup = (props) => {
 	return (
 		<div>
 			<Grid className={classes.root} container>
-				<form className={classes.formControl} onSubmit={props.search}>
+				<form className={classes.formControl} onSubmit={handleSubmit}>
 					<Grid item xs={4} className={classes.input}>
 						<TextInputRounder
 							fullWidth
@@ -78,15 +92,17 @@ const SearchDoctorGroup = (props) => {
 							label="Speciality"
 							select
 							variant="outlined"
-							value={props.chooseSpeciality}
-							onChange={props.changeSpeciality}
+							value={typeOfHCP}
+							onChange={(e) => setTypeOfHCP(e.target.value)}
 							InputLabelProps={{
 								shrink: true
 							}}
 						>
-							<MenuItem value={'Cardiologist'}>Cardiologist</MenuItem>
-							<MenuItem value={'Endocrinologist'}>Endocrinologist</MenuItem>
-							<MenuItem value={'Dietitian'}>Dietitian</MenuItem>
+							{allSpecialty !== 'undefined' ? (
+								allSpecialty.map((el) => {
+									return <MenuItem value={el}>{el}</MenuItem>;
+								})
+							) : null}
 						</TextInputRounder>
 					</Grid>
 					<Grid item xs={2} className={classes.input}>
@@ -96,8 +112,8 @@ const SearchDoctorGroup = (props) => {
 							label="Date"
 							type="date"
 							variant="outlined"
-							value={props.chooseDate}
-							onChange={props.changeDate}
+							value={date}
+							onChange={(e) => setDate(e.target.value)}
 							InputLabelProps={{
 								shrink: true
 							}}
@@ -181,4 +197,4 @@ const SearchDoctorGroup = (props) => {
 	);
 };
 
-export default SearchDoctorGroup;
+export default FormSearchDoctor;

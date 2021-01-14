@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import dianurseApi from '../../api/dianurseApi';
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
-import SearchDoctorGroup from '../../components/groups/SearchDoctorGroup';
-
-import DoctorCard from '../../components/groups/DoctorCard';
+import FormSearchDoctor from '../../components/groups/FormSearchDoctor';
+import dianurseApi from '../../api/dianurseApi';
+import DoctorList from '../../components/groups/DoctorList';
 import Calendar from '../../components/customUi/Calendar';
+import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+//icons
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles({
 	title: {
@@ -25,122 +31,61 @@ const useStyles = makeStyles({
 		marginBottom: '2rem'
 	},
 	content: {
-		marginTop: 80
+		marginTop: '2rem'
 	},
 	dateSearch: {
 		padding: '15px',
 		width: '43.5rem',
 		marginLeft: '12%'
 	},
-	cardCalendar: {
+
+	backButton: {
+		textDecoration: 'none',
 		display: 'flex',
 		flexDirection: 'row',
-		width: '75%',
-		margin: 'auto'
+		color: '#07B597',
+		marginTop: '2rem',
+		marginBottom: '1rem'
 	}
 });
 
 const PatDoctorSearchScreen = () => {
-	const [ doctors, setDoctors ] = useState([]);
-	const [ typeOfHCP, setTypeOfHCP ] = useState('Cardiologist');
-	const [ date, setDate ] = useState('');
-	const [ formatDate, setformatDate ] = useState('');
+	const { state: { dialogMessage, dialogOpen, formatDate }, closeDialog } = useContext(SearchDoctorContext);
 	const classes = useStyles();
-
-	const selectSpeciality = (e) => {
-		setTypeOfHCP(e.target.value);
-	};
-	const selectDate = (e) => {
-		setDate(e.target.value);
-	};
-	const handleSubmit = async (e) => {
-		console.log('submit',typeOfHCP)
-		const search = {
-			typeOfHCP,
-			date
-		};
-		e.preventDefault();
-		try {
-			const response = await dianurseApi.get('/appointment/searchAppointment', {
-				params: search
-			});
-			setDoctors(response.data);
-			let dateChoose = new Date(date).toDateString().split(' ');
-			setformatDate(`${dateChoose[0]}, ${dateChoose[2]} 
-					${new Date(date).toLocaleString('default', { month: 'long' })}`);
-		} catch (err) {
-			console.log(err.message);
-		}
-	};
-
-	const reserve = async (appointmentId) => {
-		let patientId = '5fd0ccfb428d89002a2b5687'; // pegar do context
-		try {
-			const response = await dianurseApi.post(`/appointment/addAppointment/${patientId}`, {
-				appointmentId
-			});
-			console.log(response.data);
-		} catch (err) {
-			console.log(err.message);
-		}
-	};
-	const convertTime = (start) => {
-		let hours = new Date(start).getHours();
-		let min = new Date(start).getMinutes();
-		let realMin = min < 10 ? '00' : min;
-		return `${hours}:${realMin}`;
-	};
 
 	return (
 		<PatLayoutContainer>
-			<Typography variant="h4" className={classes.title}>
-				Find your health professional now.
-			</Typography>
-			<Typography variant="h6" className={classes.subtitle}>
-				Without any Location Barrier
-			</Typography>
-			<Container>
-				<SearchDoctorGroup
-					search={handleSubmit}
-					changeSpeciality={selectSpeciality}
-					chooseSpeciality={typeOfHCP}
-					changeDate={selectDate}
-					chooseDate={date}
-				/>
-				<div className={classes.content}>
-					<Box className={classes.dateSearch}>
-						<Typography variant="h5" color="textSecondary" component="p">
-							{formatDate}
-						</Typography>
-					</Box>
-					<Box className={classes.cardCalendar}>
-						<Box>
-							{console.log(doctors)}
-							{doctors.map((el) => {
-								return (
-									<DoctorCard
-										key={el._id}
-										appointmentId={el._id}
-										start={convertTime(el.appointmentTimeStart)}
-										end={convertTime(el.appointmentTimeEnd)}
-										image={el.accountHCPid.profilePicture}
-										description={el.profileHCPid.description}
-										fullName={`${el.profileHCPid.firstName} ${el.profileHCPid.lastName}`}
-										price={el.amount}
-										// currency={el.accountHCPid.price.currency}
-										ratingStars={el.profileHCPid.rating.averageRating}
-										reviews={el.profileHCPid.rating.receivedRating}
-										getAppointment={(e) => {
-											e.preventDefault();
-											reserve(el._id);
-										}}
-									/>
-								);
-							})}
+			<Container maxWidth="lg">
+				<NavLink to="/in/doctor/dashboard" className={classes.backButton}>
+					<ArrowBackIcon />
+					<Typography>Back to my profile</Typography>
+				</NavLink>
+				<Divider />
+				<Typography variant="h4" className={classes.title}>
+					Find your health professional now.
+				</Typography>
+				<Typography variant="h6" className={classes.subtitle}>
+					Without any Location Barrier
+				</Typography>
+				<Container>
+					<FormSearchDoctor />
+					<div className={classes.content}>
+						<Box className={classes.dateSearch}>
+							<Typography variant="h5" color="textSecondary" component="p">
+								{formatDate}
+							</Typography>
 						</Box>
-						<Calendar />
-					</Box>
-				</div>
+						<Grid container>
+							<Grid item md={9}>
+								<DoctorList />
+							</Grid>
+							<Grid item md={3}>
+								<Calendar />
+							</Grid>
+						</Grid>
+					</div>
+				</Container>
+				<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
 			</Container>
 		</PatLayoutContainer>
 	);
