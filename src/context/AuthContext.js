@@ -293,12 +293,12 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 
 // complete profile update image
 const updateImage = (dispatch) => async ({ id, image }) => {
-	console.log('id',id, image);
-	let userInfo ={
+	console.log('id', id, image);
+	let userInfo = {
 		id,
 		image
-	}
-	console.log(userInfo)
+	};
+	console.log(userInfo);
 	try {
 		const response = await dianurseApi.put('/profile/doctor/completeprofile', {
 			userInfo
@@ -307,7 +307,7 @@ const updateImage = (dispatch) => async ({ id, image }) => {
 			type: 'update_image',
 			payload: image
 		});
-		console.log(response.data)
+		console.log(response.data);
 	} catch (err) {
 		dispatch({
 			type: 'add_error',

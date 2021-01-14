@@ -19,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
 	form: {
@@ -45,12 +46,15 @@ const useStyles = makeStyles({
 		padding: '0.5rem'
 	},
 	icons: {
-		fontSize: '5rem'
+		fontSize: '5rem',
+		marginBottom: '1rem'
 	},
 	iconWrapper: {
 		display: 'flex',
+		flexDirection: 'column',
 		padding: '2rem',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });
 
@@ -63,7 +67,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ isOffDay, setIsOffDay ] = useState(false);
 	const classes = useStyles();
 	const { createSlot } = useContext(AvailabilityContext);
-	const { state:{userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleSubmit = (e) => {
@@ -98,113 +102,119 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 				label="Weekly off day"
 				className={classes.checkbox}
 			/>
-
-			<form onSubmit={handleSubmit}>
-				<Grid container>
-					<Hidden xsUp>
-						<Grid container>
-							<Grid item xs={6} className={classes.input}>
-								<TextInput
-									fullWidth
-									required
-									type="date"
-									value={availableStart}
-									onChange={(e) => e.preventDefault()}
-									label="Availability from"
-									variant="outlined"
-									InputLabelProps={{
-										shrink: true
-									}}
-								/>
-							</Grid>
-							<Grid item xs={6} className={classes.input}>
-								<TextInput
-									fullWidth
-									required
-									type="date"
-									value={availableEnd}
-									onChange={(e) => e.preventDefault}
-									label="Availability to"
-									variant="outlined"
-									InputLabelProps={{
-										shrink: true
-									}}
-								/>
-							</Grid>
-						</Grid>
-					</Hidden>
-
-					<Grid item xs={6} className={classes.input}>
-						<TextInput
-							fullWidth
-							required
-							type="time"
-							value={timeStart}
-							onChange={(e) => setTimeStart(e.target.value)}
-							label="Time from"
-							variant="outlined"
-							InputLabelProps={{
-								shrink: true
-							}}
-						/>
-					</Grid>
-					<Grid item xs={6} className={classes.input}>
-						<TextInput
-							fullWidth
-							required
-							type="time"
-							value={timeEnd}
-							onChange={(e) => setTimeEnd(e.target.value)}
-							label="Time to"
-							variant="outlined"
-							InputLabelProps={{
-								shrink: true
-							}}
-						/>
-					</Grid>
-					<Grid item xs={6} className={classes.input}>
-						<FormControl required fullWidth variant="outlined">
-							<InputLabel id="slot-durantion-label">Slot Duration</InputLabel>
-							<Select
-								labelId="slot-durantion-label"
-								value={duration}
-								onChange={(e) => setDuration(e.target.value)}
-								label="Slot Duration"
-							>
-								<MenuItem value={15}>15 min</MenuItem>
-								<MenuItem value={30}>30 min</MenuItem>
-								<MenuItem value={45}>45 min</MenuItem>
-								<MenuItem value={60}>1 hour</MenuItem>
-							</Select>
-						</FormControl>
-					</Grid>
-					<Grid item xs={6} className={classes.input}>
-						<CurrencyInput value={amount} prefix="$" onChange={handleChangePrice} />
-					</Grid>
+			{isOffDay ? (
+				<Grid container className={classes.iconWrapper}>
+					<SleepIcon className={classes.icons} />
+					<Typography>No time slots for off days</Typography>
 				</Grid>
-				{availableStart && availableEnd ? (
-					<Grid container className={classes.buttons}>
-						<Grid item xs={12} className={classes.button}>
-							<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-								Apply
-							</ButtonFilled>
-						</Grid>
-					</Grid>
-				) : (
-					<Grid container className={classes.buttons}>
-						<Grid item xs={12} className={classes.button}>
-							<ButtonError
-								onClick={() => console.log('please choose a date')}
-								variant="contained"
-								color="primary"
+			) : (
+				<form onSubmit={handleSubmit}>
+					<Grid container>
+						<Hidden xsUp>
+							<Grid container>
+								<Grid item xs={6} className={classes.input}>
+									<TextInput
+										fullWidth
+										required
+										type="date"
+										value={availableStart}
+										onChange={(e) => e.preventDefault()}
+										label="Availability from"
+										variant="outlined"
+										InputLabelProps={{
+											shrink: true
+										}}
+									/>
+								</Grid>
+								<Grid item xs={6} className={classes.input}>
+									<TextInput
+										fullWidth
+										required
+										type="date"
+										value={availableEnd}
+										onChange={(e) => e.preventDefault}
+										label="Availability to"
+										variant="outlined"
+										InputLabelProps={{
+											shrink: true
+										}}
+									/>
+								</Grid>
+							</Grid>
+						</Hidden>
+
+						<Grid item xs={6} className={classes.input}>
+							<TextInput
 								fullWidth
-							>
-								Apply
-							</ButtonError>
+								required
+								type="time"
+								value={timeStart}
+								onChange={(e) => setTimeStart(e.target.value)}
+								label="Time from"
+								variant="outlined"
+								InputLabelProps={{
+									shrink: true
+								}}
+							/>
+						</Grid>
+						<Grid item xs={6} className={classes.input}>
+							<TextInput
+								fullWidth
+								required
+								type="time"
+								value={timeEnd}
+								onChange={(e) => setTimeEnd(e.target.value)}
+								label="Time to"
+								variant="outlined"
+								InputLabelProps={{
+									shrink: true
+								}}
+							/>
+						</Grid>
+						<Grid item xs={6} className={classes.input}>
+							<FormControl required fullWidth variant="outlined">
+								<InputLabel id="slot-durantion-label">Slot Duration</InputLabel>
+								<Select
+									labelId="slot-durantion-label"
+									value={duration}
+									onChange={(e) => setDuration(e.target.value)}
+									label="Slot Duration"
+								>
+									<MenuItem value={15}>15 min</MenuItem>
+									<MenuItem value={30}>30 min</MenuItem>
+									<MenuItem value={45}>45 min</MenuItem>
+									<MenuItem value={60}>1 hour</MenuItem>
+								</Select>
+							</FormControl>
+						</Grid>
+						<Grid item xs={6} className={classes.input}>
+							<CurrencyInput value={amount} prefix="$" onChange={handleChangePrice} />
 						</Grid>
 					</Grid>
-				)}
-			</form>
+					{availableStart && availableEnd ? (
+						<Grid container className={classes.buttons}>
+							<Grid item xs={12} className={classes.button}>
+								<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
+									Apply
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					) : (
+						<Grid container className={classes.buttons}>
+							<Grid item xs={12} className={classes.button}>
+								<ButtonError
+									onClick={() => console.log('please choose a date')}
+									variant="contained"
+									color="primary"
+									fullWidth
+								>
+									Apply
+								</ButtonError>
+							</Grid>
+						</Grid>
+					)}
+				</form>
+			)}
 		</Box>
 	);
 };
