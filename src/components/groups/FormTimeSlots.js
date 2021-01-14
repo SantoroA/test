@@ -19,7 +19,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
 	form: {
