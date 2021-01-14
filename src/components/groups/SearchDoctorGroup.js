@@ -86,7 +86,7 @@ const SearchDoctorGroup = (props) => {
 						>
 							<MenuItem value={'Cardiologist'}>Cardiologist</MenuItem>
 							<MenuItem value={'Endocrinologist'}>Endocrinologist</MenuItem>
-							<MenuItem value={'Diestist'}>Dietist</MenuItem>
+							<MenuItem value={'Dietitian'}>Dietitian</MenuItem>
 						</TextInputRounder>
 					</Grid>
 					<Grid item xs={2} className={classes.input}>

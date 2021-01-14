@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
+import MessageDialog from '../../components/groups/MessageDialog';
 import logo from '../../assets/dianurse-logo.png';
 import useToggle from '../../hooks/useToggle';
 import RegisterForm from '../../components/groups/RegisterForm';
 import LoginForm from '../../components/groups/LoginForm';
 import RecoverPassDialog from '../../components/groups/RecoverPassDialog';
-import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,7 +42,7 @@ const GetStartedScreen = (props) => {
 	//STATE
 	const [ isLogin, toggleIsLogin ] = useToggle(true);
 	const [ passwordRecoveryOpen, togglePasswordRecoveryOpen ] = useToggle(false);
-	const { recoverPassword } = useContext(AuthContext);
+	const { state: { dialogMessage, dialogOpen }, closeDialog, recoverPassword } = useContext(AuthContext);
 
 	return (
 		<div className={classes.root}>
@@ -66,7 +66,7 @@ const GetStartedScreen = (props) => {
 				togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 				passwordRecoveryOpen={passwordRecoveryOpen}
 			/>
-			<MessageDialog />
+			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</div>
 	);
 };

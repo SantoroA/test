@@ -54,6 +54,7 @@ const PatDoctorSearchScreen = () => {
 		setDate(e.target.value);
 	};
 	const handleSubmit = async (e) => {
+		console.log('submit',typeOfHCP)
 		const search = {
 			typeOfHCP,
 			date
@@ -114,6 +115,7 @@ const PatDoctorSearchScreen = () => {
 					</Box>
 					<Box className={classes.cardCalendar}>
 						<Box>
+							{console.log(doctors)}
 							{doctors.map((el) => {
 								return (
 									<DoctorCard
@@ -121,13 +123,13 @@ const PatDoctorSearchScreen = () => {
 										appointmentId={el._id}
 										start={convertTime(el.appointmentTimeStart)}
 										end={convertTime(el.appointmentTimeEnd)}
-										image={el.accountHCPid.picture}
-										description={el.accountHCPid.description}
-										fullName={el.accountHCPid.fullName}
-										price={el.accountHCPid.amount}
+										image={el.accountHCPid.profilePicture}
+										description={el.profileHCPid.description}
+										fullName={`${el.profileHCPid.firstName} ${el.profileHCPid.lastName}`}
+										price={el.amount}
 										// currency={el.accountHCPid.price.currency}
-										ratingStars={el.accountHCPid.rating.averageRating}
-										reviews={el.accountHCPid.rating.receivedRating}
+										ratingStars={el.profileHCPid.rating.averageRating}
+										reviews={el.profileHCPid.rating.receivedRating}
 										getAppointment={(e) => {
 											e.preventDefault();
 											reserve(el._id);

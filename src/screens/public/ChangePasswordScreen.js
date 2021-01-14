@@ -1,6 +1,7 @@
-import React from 'react';
-import FormChangePassword from '../../components/groups/FormChangePassword';
+import React, { useContext } from 'react';
+import { Context as AuthContext } from '../../context/AuthContext';
 import MessageDialog from '../../components/groups/MessageDialog';
+import FormChangePassword from '../../components/groups/FormChangePassword';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const ChangePasswordScreen = (props) => {
 	const classes = useStyles();
 	const { recToken } = props.match.params;
-
+	const { state: { dialogMessage, dialogOpen }, closeDialog } = useContext(AuthContext);
 	return (
 		<div className={classes.root}>
 			<Grid container className={classes.container}>
@@ -35,7 +36,7 @@ const ChangePasswordScreen = (props) => {
 					<FormChangePassword recToken={recToken} />
 				</Grid>
 			</Grid>
-			<MessageDialog />
+			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</div>
 	);
 };

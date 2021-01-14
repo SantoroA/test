@@ -63,8 +63,8 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ isOffDay, setIsOffDay ] = useState(false);
 	const classes = useStyles();
 	const { createSlot } = useContext(AvailabilityContext);
-	// const { state:{userId} } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const { state:{userId} } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

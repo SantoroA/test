@@ -6,7 +6,7 @@ import TimeSlotList from '../groups/TimeSlotList';
 import dianurseApi from '../../api/dianurseApi';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-import MessageDialogAvailability from '../groups/MessageDialogAvailability';
+import MessageDialog from '../../components/groups/MessageDialog';
 //CUSTOM UI
 import TextInput from '../customUi/TextInput';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
@@ -100,9 +100,9 @@ const TabAvailability = () => {
 	const [ availableEnd, setAvailableEnd ] = useState('');
 	const classes = useStyles();
 	const theme = useTheme();
-	const { getSlots, state } = useContext(AvailabilityContext);
-	// const { state: {userId} } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const { getSlots, closeDialog, state } = useContext(AvailabilityContext);
+	const { state: {userId} } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -113,9 +113,9 @@ const TabAvailability = () => {
 	console.log(availableStart, availableEnd);
 	console.log(state);
 
-	// useEffect(() => {
-	// 	getSlots(userId);
-	// }, []);
+	useEffect(() => {
+		getSlots(userId);
+	}, []);
 
 	return (
 		<Grid container className={classes.container}>
@@ -242,7 +242,7 @@ const TabAvailability = () => {
 					</Grid>
 				</PaperCustomShadow>
 			</Grid>
-			<MessageDialogAvailability />
+			<MessageDialog open={state.dialogOpen} message={state.dialogMessage} close={closeDialog} />
 		</Grid>
 	);
 };

@@ -3,7 +3,7 @@ import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import { Context as AuthContext } from '../../context/AuthContext';
 import Typography from '@material-ui/core/Typography';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Prompt } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
 import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
@@ -12,13 +12,13 @@ import FormProfile from '../../components/groups/FormProfile';
 import FormExperience from '../../components/groups/FormExperience';
 import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
-
+import MessageDialog from '../../components/groups/MessageDialog';
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
-import InfoIcon from '../../components/customIcons/InfoIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
 
 //MATERIAL UI
+import Alert from '@material-ui/lab/Alert';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,6 +48,9 @@ const useStyles = makeStyles({
 	},
 	section: {
 		marginBottom: '1rem'
+	},
+	warning: {
+		marginTop: '1rem'
 	}
 });
 
@@ -84,6 +87,10 @@ const DocCompleteProfileScreen = () => {
 	const [ value, setValue ] = useState(0);
 	const { getProfile } = useContext(DocProfileContext);
 	const {state: {userId}} = useContext(AuthContext)
+	const { state: { dialogMessage, dialogOpen, firstName, lastName, specialty }, closeDialog } = useContext(
+		DocProfileContext
+	);
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -101,6 +108,11 @@ const DocCompleteProfileScreen = () => {
 					<Typography>Back to my profile</Typography>
 				</NavLink>
 				<Divider />
+				{firstName === '' || lastName === '' || specialty === '' ? (
+					<Alert className={classes.warning} severity="warning">
+						Name and specialty must be filled to appear in searches
+					</Alert>
+				) : null}
 				<Tabs
 					value={value}
 					className={classes.tabs}
@@ -146,6 +158,7 @@ const DocCompleteProfileScreen = () => {
 					</div>
 				</TabPanel>
 			</Container>
+			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</DocLayoutContainer>
 	);
 };
