@@ -118,7 +118,7 @@ const FormContactInfo = () => {
 										required
 										labelId="specialty-label"
 										value={specialty}
-										disabled={isDisabled}
+										
 										onChange={(e) => setSpecialty(e.target.value)}
 										label="Specialty"
 									>
