@@ -136,7 +136,6 @@ const FormContactInfo = () => {
 									<Select
 										labelId="gender-label"
 										value={gender}
-										disabled={isDisabled}
 										onChange={(e) => setGender(e.target.value)}
 										label="Gender"
 									>
