@@ -119,7 +119,7 @@ const FormContactInfo = () => {
 										required
 										labelId="specialty-label"
 										value={specialty}
-										disabled={isDisabled}
+										
 										onChange={(e) => setSpecialty(e.target.value)}
 										label="Specialty"
 									>
@@ -138,7 +138,6 @@ const FormContactInfo = () => {
 									<Select
 										labelId="gender-label"
 										value={gender}
-										disabled={isDisabled}
 										onChange={(e) => setGender(e.target.value)}
 										label="Gender"
 									>
@@ -153,6 +152,7 @@ const FormContactInfo = () => {
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<PhoneInput
 									fullWidth
+									inputStyle={{width: '100%'}}
 									className={classes.phoneInputStyle}
 									disabled={isDisabled}
 									value={phoneNumber}
