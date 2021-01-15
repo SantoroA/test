@@ -151,6 +151,7 @@ const FormContactInfo = () => {
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<PhoneInput
 									fullWidth
+									inputStyle={{width: '100%'}}
 									className={classes.phoneInputStyle}
 									disabled={isDisabled}
 									value={phoneNumber}
