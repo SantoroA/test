@@ -11,7 +11,7 @@ import ButtonError from '../customUi/ButtonError';
 import SleepIcon from '../customIcons/SleepIcon';
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Hidden from '@material-ui/core/Hidden';
@@ -190,16 +190,15 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 						</FormControl>
 					</Grid>
 					<Grid item xs={6} className={classes.input}>
-						
 						<CurrencyTextField
-								fullWidth
-        						label="Amount"
-        						variant="outlined"
-								value={amount}
-								currencySymbol="$"
-								outputFormat="string"
-								onChange={(event, amount) => setAmount(amount)}
-    					/>
+							fullWidth
+							label="Amount"
+							variant="outlined"
+							value={amount}
+							currencySymbol="$"
+							outputFormat="string"
+							onChange={(event, amount) => setAmount(amount)}
+						/>
 					</Grid>
 				</Grid>
 				{availableStart && availableEnd ? (
