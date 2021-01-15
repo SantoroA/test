@@ -116,6 +116,7 @@ const FormContactInfo = () => {
 								<FormControl variant="outlined" fullWidth>
 									<InputLabel id="specialty-label">Specialty</InputLabel>
 									<Select
+										disabled={isDisabled}
 										required
 										labelId="specialty-label"
 										value={specialty}
@@ -134,6 +135,7 @@ const FormContactInfo = () => {
 								<FormControl variant="outlined" fullWidth>
 									<InputLabel id="gender-label">Gender</InputLabel>
 									<Select
+										disabled={isDisabled}
 										labelId="gender-label"
 										value={gender}
 										onChange={(e) => setGender(e.target.value)}

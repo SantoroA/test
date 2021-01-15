@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
+import BoxTime from '../../components/customUi/BoxTime';
+
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -21,7 +23,7 @@ const useStyles = makeStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)',
-		height: '12rem',
+		// height: '12rem',
 		marginTop: '1rem',
 		marginBottom: '1rem',
 		borderRadius: '8px',
@@ -31,11 +33,15 @@ const useStyles = makeStyles({
 		width: '15rem'
 	},
 	rating: {
+		paddingLeft: 0
+	},
+	ratingContainer: {
 		display: 'flex',
 		flexDirection: 'row',
-		width: '230px',
 		alignItems: 'center',
-		paddingLeft: 0
+		'& fieldset': {
+			padding: 0
+		}
 	},
 	name: {
 		fontWeight: 700,
@@ -61,10 +67,17 @@ const useStyles = makeStyles({
 		textAlign: 'center',
 		minWidth: '8rem'
 	},
-
+	content: {
+		padding: '0.5rem',
+		paddingLeft: '1rem'
+	},
 	docInfo: {
 		display: 'flex',
 		flexDirection: 'column'
+	},
+	times: {
+		display: 'flex',
+		flexDirection: 'row'
 	}
 });
 
@@ -87,18 +100,19 @@ const DoctorCard = () => {
 						<Box borderLeft={10} borderColor="grey.300" />
 						<CardContent className={classes.content}>
 							<Grid container className={classes.docInfo}>
-								<Grid item>
+								<Grid item className={classes.ratingContainer}>
 									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
 										<Rating
 											readOnly
+											precision={0.5}
 											name="rating"
 											value={doc.profileHCPid.rating.averageRating}
 											emptyIcon={<StarBorderIcon fontSize="inherit" />}
 										/>
-										<Typography component="legend" variant="body2">
-											({doc.profileHCPid.rating.receivedRating} Reviews)
-										</Typography>
 									</Box>
+									<Typography component="legend" variant="body2">
+										({doc.profileHCPid.rating.receivedRating} Reviews)
+									</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="h5" className={classes.name}>
@@ -108,18 +122,11 @@ const DoctorCard = () => {
 								<Grid item>
 									<Typography variant="body2">{doc.profileHCPid.description}</Typography>
 								</Grid>
+								<Grid item className={classes.times}>
+									<BoxTime>{convertTime(doc.appointmentTimeStart)}</BoxTime>
+								</Grid>
 							</Grid>
-							<Box className={classes.contentInfo}>
-								<Typography
-									variant="body2"
-									color="textSecondary"
-									className={classes.hours}
-									component="p"
-								>
-									{convertTime(doc.appointmentTimeStart)} - {convertTime(doc.appointmentTimeEnd)}
-								</Typography>
-								<Button className={classes.btn}>More</Button>
-							</Box>
+							<Button className={classes.btn}>More</Button>
 						</CardContent>
 						<Divider orientation="vertical" className={classes.dividor} />
 						<CardActions className={classes.reserve}>

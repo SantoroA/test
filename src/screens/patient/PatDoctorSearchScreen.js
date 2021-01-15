@@ -46,6 +46,9 @@ const useStyles = makeStyles({
 		color: '#07B597',
 		marginTop: '2rem',
 		marginBottom: '1rem'
+	},
+	listContainer: {
+		paddingRight: '2rem'
 	}
 });
 
@@ -76,7 +79,7 @@ const PatDoctorSearchScreen = () => {
 							</Typography>
 						</Box>
 						<Grid container>
-							<Grid item md={9}>
+							<Grid item md={9} className={classes.listContainer}>
 								<DoctorList />
 							</Grid>
 							<Grid item md={3}>
