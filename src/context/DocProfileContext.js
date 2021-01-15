@@ -4,8 +4,8 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log('state',action.payload)
 			return {
+				...state,
 				specialty: action.payload.Specialty,
 				insurance: action.payload.insurance,
 				dialogMessage: '',
@@ -26,8 +26,8 @@ const docProfileReducer = (state, action) => {
 				education: action.payload.education,
 				yearsExperience: action.payload.yearsExperience,
 				yearsSpecialist: action.payload.yearsSpecialist,
-				email: action.payload.accountId.username,
-				image: action.payload.accountId.profilePicture
+				email: action.payload[0].accountId.username,
+				image: action.payload[0].accountId.profilePicture
 			};
 		case 'get_speciality':
 			return {
@@ -116,8 +116,8 @@ const getProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
-			console.log(response);
-			// dispatch({ type: 'get_profile', payload: response.data });
+			console.log(response.data)
+			dispatch({ type: 'get_profile', payload: response.data });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);

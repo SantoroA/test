@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import logo from '../../assets/dianurse-logo.png';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
 	layout: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
+		justifycontent: 'center',
 		alignItems: 'center',
 		padding: '2rem',
 
@@ -46,7 +47,7 @@ const useStyles = makeStyles({
 	},
 	media: {
 		borderRadius: '50%',
-		justifyContent: 'center',
+		justifycontent: 'center',
 		width: '14rem',
 		height: '14rem',
 		marginTop: '1rem',
@@ -57,15 +58,18 @@ const useStyles = makeStyles({
     },
     imageContainer: {
         display: 'flex',
-        justifyContent: 'center'
+        justifycontent: 'center'
     }
 });
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
-	const { updateImage, state: { image, userId } } = useContext(AuthContext);
+	const { updateImage, state: { userId } } = useContext(AuthContext);
+	const { state: { image } } = useContext(DocProfileContext);
 	const [ imageChange, setImageChange ] = useState(image);
 	const inputFileRef = createRef(null);
 	const classes = useStyles();
+
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log('submit');
@@ -75,11 +79,13 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 		});
 		setIsDialogOpen(false);
 	};
+
 	const handleClose = () => {
 		setIsDialogOpen(false);
 		setImageChange(image);
 	};
 	console.log(imageChange);
+	console.log(image);
 	return (
 		<Dialog
 			open={isDialogOpen}
@@ -97,7 +103,7 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 					<form onSubmit={handleSubmit}>
 						<Typography>Edit your picture</Typography>
 						<Grid container>
-							<Grid item xs={12} justifyContent="center" className={classes.imageContainer}>
+							<Grid item xs={12} justifycontent="center" className={classes.imageContainer}>
 								{imageChange !== null ? (
 									<Paper
 										style={{
@@ -113,18 +119,22 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 								)}
 							</Grid>
 							<Grid item xs={6}>
-								<label htmlFor="upload-photo">
+								<label htmlFor="uploadphoto">
 									<TextField
 										fullWidth
 										type="file"
-										id="upload-photo"
-										name="upload-photo"
+										id="uploadphoto"
+										name="uploadphoto"
 										style={{ display: 'none' }}
 										ref={inputFileRef}
-										onChange={(e) => {
+										onChange={ (e) =>
+											 // (e) => 
+										 {
 											let newImage = e.target?.files?.[0];
 											newImage = newImage ? setImageChange(URL.createObjectURL(newImage)) : null;
-										}}
+										}
+										// setImageChange(e.target.files[0])
+									}
 									/>
 									<IconButton component="span">
 										<EditIcon color="primary" />
