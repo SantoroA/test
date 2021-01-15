@@ -21,6 +21,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
 	form: {
@@ -47,12 +48,15 @@ const useStyles = makeStyles({
 		padding: '0.5rem'
 	},
 	icons: {
-		fontSize: '5rem'
+		fontSize: '5rem',
+		marginBottom: '1rem'
 	},
 	iconWrapper: {
 		display: 'flex',
+		flexDirection: 'column',
 		padding: '2rem',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });
 
@@ -65,8 +69,8 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ isOffDay, setIsOffDay ] = useState(false);
 	const classes = useStyles();
 	const { createSlot } = useContext(AvailabilityContext);
-	// const { state:{userId} } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const { state: { userId } } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -88,7 +92,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 
 	return (
 		<Box borderRadius="10px" border={1} className={classes.form}>
-			<FormControlLabel
+			{/* <FormControlLabel
 				control={
 					<Checkbox
 						checked={isOffDay}
@@ -99,8 +103,13 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 				}
 				label="Weekly off day"
 				className={classes.checkbox}
-			/>
-
+			/> */}
+			{/* {isOffDay ? (
+				<Grid container className={classes.iconWrapper}>
+					<SleepIcon className={classes.icons} />
+					<Typography>No time slots for off days</Typography>
+				</Grid>
+			) : ( */}
 			<form onSubmit={handleSubmit}>
 				<Grid container>
 					<Hidden xsUp>
@@ -216,6 +225,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 					</Grid>
 				)}
 			</form>
+			{/* )} */}
 		</Box>
 	);
 };

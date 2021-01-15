@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-// import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonOutlined from '../customUi/ButtonOutlined';
@@ -63,8 +63,8 @@ const useStyles = makeStyles({
 
 const FormLocation = () => {
 	const { updateLocationInfo, state } = useContext(DocProfileContext);
-	// const { state: {userId} } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const { state: {userId} } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 	const [ country, setCountry ] = useState(state.country);
 	const [ city, setCity ] = useState(state.city);
 	const [ zipcode, setZipcode ] = useState(state.zipcode);
@@ -144,7 +144,7 @@ const FormLocation = () => {
 								<TextField
 									fullWidth
 									disabled={isDisabled}
-									type="number"
+									type="text"
 									value={zipcode}
 									onChange={(e) => setZipcode(e.target.value)}
 									label="Zip Code"

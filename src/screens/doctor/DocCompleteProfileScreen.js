@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 import Typography from '@material-ui/core/Typography';
 import { NavLink, Prompt } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -84,6 +85,8 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
+	const { getProfile } = useContext(DocProfileContext);
+	const {state: {userId}} = useContext(AuthContext)
 	const { state: { dialogMessage, dialogOpen, firstName, lastName, specialty }, closeDialog } = useContext(
 		DocProfileContext
 	);
@@ -91,11 +94,11 @@ const DocCompleteProfileScreen = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-	const userId = '5fe8b0c48bef090026e253b7';
+	// const userId = '5fe8b0c48bef090026e253b7';
 
-	// useEffect(() => {
-	// 	getProfile(userId);
-	// }, []);
+	useEffect(() => {
+		getProfile(userId);
+	}, []);
 
 	return (
 		<DocLayoutContainer>

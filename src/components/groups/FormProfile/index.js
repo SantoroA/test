@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
-// import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
@@ -26,8 +26,8 @@ const FormProfile = () => {
 	const [ insurance, setInsurance ] = useState(state.insurance);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
-	// const { state: {userId} } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const { state: {userId} } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 	console.log(state);
 	const handleSubmit = () => {
 		updateProfileInfo({ profileInfo, websiteUrl, id: userId, insurance });

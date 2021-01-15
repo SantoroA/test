@@ -1,11 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { Context as AvailabilityContext } from '../../context/AvailabilityContext';
 import FormEditTimeSlots from './FormEditTimeSlot';
+//CUSTOM UI
+import PaperCustomShadow from '../customUi/PaperCustomShadow';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const useStyles = makeStyles({
 	info: {
@@ -15,8 +19,8 @@ const useStyles = makeStyles({
 	box: {
 		padding: '1rem',
 		justifyContent: 'center',
-		borderColor: 'rgba(160, 164, 168, 1)',
-		marginBottom: '1rem'
+		marginBottom: '1rem',
+		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)'
 	}
 });
 
@@ -30,49 +34,68 @@ const TimeSlotList = ({ weekDay, weekDayName }) => {
 		<div>
 			{weekDaySlots.length > 0 ? (
 				<div>
-					<Typography variant="subtitle1">Your saved slots for {weekDayName}</Typography>
+					<Typography variant="h6">Your saved slots for {weekDayName}</Typography>
 					{weekDaySlots.map((slot) => {
 						return (
 							<div key={slot.slotCreated}>
 								{slot.isEditing === false ? (
-									<Box className={classes.box} borderRadius="10px" border={1}>
+									<PaperCustomShadow className={classes.box} borderRadius="10px" border={1}>
 										<Grid container className={classes.info}>
-											<Grid item xs={6}>
-												<Typography variant="body1">From: {slot.startDay}</Typography>
+											<Grid item md={9} sm={8} xs={12}>
+												<Grid container>
+													<Grid item md={6} xs={12}>
+														<Typography variant="body1">
+															Availability from: {slot.startDay}
+														</Typography>
+													</Grid>
+													<Grid item md={6} xs={12}>
+														<Typography variant="body1">
+															Availability to: {slot.endDay}
+														</Typography>
+													</Grid>
+													<Grid item md={6} xs={12}>
+														<Typography variant="body1">
+															Time from: {slot.startTime}
+														</Typography>
+													</Grid>
+													<Grid item md={6} xs={12}>
+														<Typography variant="body1">Time to: {slot.endTime}</Typography>
+													</Grid>
+													<Grid item md={6} xs={12}>
+														<Typography variant="body1">
+															Slot Duration: {slot.slot}
+														</Typography>
+													</Grid>
+													<Grid item md={6} xs={12}>
+														<Typography variant="body1">
+															Slot Price: {slot.amount}
+														</Typography>
+													</Grid>
+												</Grid>
 											</Grid>
-											<Grid item xs={6}>
-												<Typography variant="body1">To: {slot.endDay}</Typography>
+											<Grid item md={3} sm={4} xs={12}>
+												<IconButton
+													disabled={slot.editStatus}
+													onClick={() => {
+														setIsEditing(slot.slotCreated);
+													}}
+													aria-label="edit"
+												>
+													<EditIcon />
+												</IconButton>
+												<IconButton
+													onClick={(e) => {
+														e.preventDefault();
+														deleteSlot(slot.slotCreated, slot.id);
+													}}
+													aria-label="delete"
+													color="secondary"
+												>
+													<DeleteOutlineIcon />
+												</IconButton>
 											</Grid>
-											<Grid item xs={6}>
-												<Typography variant="body1">From: {slot.startTime}</Typography>
-											</Grid>
-											<Grid item xs={6}>
-												<Typography variant="body1">To: {slot.endTime}</Typography>
-											</Grid>
-											<Grid item xs={6}>
-												<Typography variant="body1">Slot Duration: {slot.slot}</Typography>
-											</Grid>
-											<Grid item xs={6}>
-												<Typography variant="body1">Price set: {slot.amount}</Typography>
-											</Grid>
-											<button
-												onClick={(e) => {
-													e.preventDefault();
-													deleteSlot(slot.slotCreated, slot.id);
-												}}
-											>
-												Delete
-											</button>
-											<button
-												disabled={slot.editStatus}
-												onClick={() => {
-													setIsEditing(slot.slotCreated);
-												}}
-											>
-												Edit
-											</button>
 										</Grid>
-									</Box>
+									</PaperCustomShadow>
 								) : (
 									<Grid container>
 										<FormEditTimeSlots

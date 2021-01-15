@@ -4,29 +4,31 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
+			console.log('state', action.payload);
 			return {
+				...state,
 				specialty: action.payload.Specialty,
-				insurance: action.payload.billingType,
+				insurance: action.payload.insurance,
 				dialogMessage: '',
 				dialogOpen: false,
-				firstName: action.payload.name,
-				lastName: action.payload.lastname,
-				gender: action.payload.genter,
-				phoneNumber: action.payload.phone,
-				birthPlace: action.payload.place,
+				firstName: action.payload.firstName,
+				lastName: action.payload.lastName,
+				gender: action.payload.gender,
+				phoneNumber: action.payload.phoneNumber,
+				birthPlace: action.payload.birthPlace,
 				birthday: action.payload.birthday,
 				profileInfo: action.payload.profileInfo,
-				websiteUrl: action.payload.webSite,
+				websiteUrl: action.payload.websiteUrl,
 				country: action.payload.country,
 				city: action.payload.city,
-				zipcode: action.payload.zipCode,
+				zipcode: action.payload.zipcode,
 				street: action.payload.street,
-				num: action.payload.numero,
+				num: action.payload.number,
 				education: action.payload.education,
 				yearsExperience: action.payload.yearsExperience,
 				yearsSpecialist: action.payload.yearsSpecialist,
-				email: action.payload.email,
-				image: action.payload.image
+				email: action.payload.accountId.username,
+				image: action.payload.accountId.profilePicture
 			};
 		case 'get_speciality':
 			return {
@@ -115,8 +117,8 @@ const getProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
-			dispatch({ type: 'get_profile', payload: response.data });
-			console.log(response);
+			console.log(response.data.accountId);
+			// dispatch({ type: 'get_profile', payload: response.data });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
@@ -146,7 +148,7 @@ const updateServices = (dispatch) => {
 };
 const updateContactInfo = (dispatch) => {
 	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday, specialty }) => {
-		console.log('inside context', firstName, lastName);
+		console.log('inside context', firstName, lastName, specialty);
 		let userInfo = {
 			id,
 			firstName,
@@ -160,10 +162,10 @@ const updateContactInfo = (dispatch) => {
 		};
 
 		try {
-			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			// 	userInfo
-			// });
-			// console.log(response);
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_contact_info',
 				payload: {
@@ -184,6 +186,7 @@ const updateContactInfo = (dispatch) => {
 };
 const updateProfileInfo = (dispatch) => {
 	return async ({ profileInfo, websiteUrl, id, insurance }) => {
+		console.log(insurance);
 		let userInfo = {
 			id,
 			profileInfo,
@@ -193,10 +196,10 @@ const updateProfileInfo = (dispatch) => {
 		};
 		console.log('inside profile info context', profileInfo);
 		try {
-			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			// 	userInfo
-			// });
-			// console.log(response);
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_profile_info',
 				payload: {
@@ -213,6 +216,7 @@ const updateProfileInfo = (dispatch) => {
 };
 const updateLocationInfo = (dispatch) => {
 	return async ({ id, country, city, zipcode, street, num }) => {
+		console.log(zipcode);
 		let userInfo = {
 			id,
 			country,
@@ -224,10 +228,10 @@ const updateLocationInfo = (dispatch) => {
 		};
 		console.log('inside location info context', country);
 		try {
-			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			// 	userInfo
-			// });
-			// console.log(response);
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_location_info',
 				payload: {
@@ -253,10 +257,10 @@ const updateEducation = (dispatch) => {
 		};
 		console.log('inside education context', education);
 		try {
-			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			// 	userInfo
-			// });
-			// console.log(response);
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_education',
 				payload: {
@@ -279,10 +283,10 @@ const updateExperience = (dispatch) => {
 		};
 		console.log('inside experience context', yearsExperience);
 		try {
-			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			// 	userInfo
-			// });
-			// console.log(response);
+			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_experience',
 				payload: {
@@ -339,6 +343,17 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: [ 'Endocrinologist', 'Geriatry' ]
+		allSpecialty: [
+			'General care physician',
+			'Endocrinologist',
+			'Dietitian',
+			'Certified diabetes educator',
+			'Podiatrist',
+			'Nephrologist',
+			'Ophthalmologist',
+			'Physical trainer',
+			'Dentist',
+			'Any'
+		]
 	}
 );
