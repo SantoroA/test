@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import { Context as AuthContext } from '../../context/AuthContext';
+import DialogFilter from './DialogFilter';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
 import ButtonIcon from '../customUi/ButtonIcon';
+import ButtonFilterOption from '../customUi/ButtonFilterOption';
 import FilterIcon from '../customIcons/FilterIcon';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -15,20 +17,26 @@ import FormControl from '@material-ui/core/FormControl';
 
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles({
-	formControl: {
+	root: {
 		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'center',
-		width: '100%'
+		flexDirection: 'column'
 	},
+
 	input: {
 		padding: '1rem'
 	},
 	submit: {
 		width: '100%',
-		height: '100%'
+		height: '100%',
+		borderRadius: '25px'
+	},
+	formContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center'
 	},
 	timeZone: {
 		padding: '0.4rem',
@@ -48,20 +56,24 @@ const useStyles = makeStyles({
 		padding: '1rem',
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'space-between'
 	},
 	filterContainer: {
 		display: 'flex',
-		flexDirection: 'row',
 		justifyContent: 'center'
+	},
+	filterInput: {
+		padding: '0.3rem'
 	}
 });
 const FormSearchDoctor = () => {
 	const [ timezone, setTimezone ] = useState('Eastern Time');
 	const [ nameZone, setNameZone ] = useState('New York, United States');
-	const [ typeOfHCP, setTypeOfHCP ] = useState('Cardiologist');
+	const [ typeOfHCP, setTypeOfHCP ] = useState('');
 	const [ date, setDate ] = useState('');
+	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
+	const [ filterType, setFilterType ] = useState('');
 	// const { state: {userId} } = useContext(AuthContext);
 	const userId = '5fe8b0c48bef090026e253b7';
 	const { getDoctorList, state: { doctors, allSpecialty } } = useContext(SearchDoctorContext);
@@ -82,10 +94,10 @@ const FormSearchDoctor = () => {
 		setNameZone(nameTimeZone);
 	});
 	return (
-		<div>
-			<Grid className={classes.root} container>
-				<form className={classes.formControl} onSubmit={handleSubmit}>
-					<Grid item xs={4} className={classes.input}>
+		<div className={classes.root}>
+			<form onSubmit={handleSubmit}>
+				<Grid container className={classes.formContainer}>
+					<Grid item xs={12} sm={7} md={5} lg={4} className={classes.input}>
 						<TextInputRounder
 							fullWidth
 							id="Speciality"
@@ -105,7 +117,7 @@ const FormSearchDoctor = () => {
 							) : null}
 						</TextInputRounder>
 					</Grid>
-					<Grid item xs={2} className={classes.input}>
+					<Grid item xs={9} sm={3} className={classes.input}>
 						<TextInputRounder
 							fullWidth
 							id="date"
@@ -119,13 +131,13 @@ const FormSearchDoctor = () => {
 							}}
 						/>
 					</Grid>
-					<Grid item xs={1} className={classes.input}>
+					<Grid item xs={3} sm={2} md={1} className={classes.input}>
 						<ButtonIcon className={classes.submit} type="submit">
 							<SearchIcon />
 						</ButtonIcon>
 					</Grid>
-				</form>
-			</Grid>
+				</Grid>
+			</form>
 			<Divider orientation="horizontal" />
 
 			<PaperCustomShadow className={classes.timeZone}>
@@ -146,53 +158,63 @@ const FormSearchDoctor = () => {
 			</PaperCustomShadow>
 			<Divider orientation="horizontal" />
 			<Grid container className={classes.filterContainer}>
-				<Grid item xs={9}>
-					<PaperCustomShadow className={classes.filter}>
-						<FilterIcon style={{ fontSize: '3rem', color: 'gray' }} />
-						<FormControl>
-							<TextInputRounder
-								id="time"
-								type="time"
-								placeholder="Desired time"
-								variant="outlined"
-								style={{
-									width: 200
-								}}
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						</FormControl>
-						<FormControl>
-							<TextInputRounder
-								variant="outlined"
-								label="Price"
-								style={{
-									width: 90
-								}}
-							/>
-						</FormControl>
-						<FormControl>
-							<TextInputRounder
-								variant="outlined"
-								label="More filters"
-								style={{
-									width: 130
-								}}
-							/>
-						</FormControl>
-						<FormControl>
-							<TextInputRounder
-								variant="outlined"
-								label="Rating"
-								style={{
-									width: 90
-								}}
-							/>
-						</FormControl>
+				<Grid item xs={12} md={9}>
+					<PaperCustomShadow>
+						<Grid container className={classes.filter}>
+							<Grid className={classes.filterInput} item>
+								<FilterIcon style={{ fontSize: '3rem', color: 'gray' }} />
+							</Grid>
+							<Grid className={classes.filterInput} item>
+								<ButtonFilterOption
+									onClick={() => {
+										setFilterType('time');
+										setFilterDialogOpen(true);
+									}}
+								>
+									Desired time
+								</ButtonFilterOption>
+							</Grid>
+							<Grid className={classes.filterInput} item>
+								<FormControl>
+									<ButtonFilterOption
+										onClick={() => {
+											setFilterType('price');
+											setFilterDialogOpen(true);
+										}}
+									>
+										Price
+									</ButtonFilterOption>
+								</FormControl>
+							</Grid>
+							<Grid className={classes.filterInput} item>
+								<FormControl>
+									<ButtonFilterOption
+										onClick={() => {
+											setFilterType('rating');
+											setFilterDialogOpen(true);
+										}}
+									>
+										Rating
+									</ButtonFilterOption>
+								</FormControl>
+							</Grid>
+							<Grid className={classes.filterInput} item>
+								<FormControl>
+									<ButtonFilterOption
+										onClick={() => {
+											setFilterType('more');
+											setFilterDialogOpen(true);
+										}}
+									>
+										More filters
+									</ButtonFilterOption>
+								</FormControl>
+							</Grid>
+						</Grid>
 					</PaperCustomShadow>
 				</Grid>
 			</Grid>
+			<DialogFilter isOpen={filterDialogOpen} close={() => setFilterDialogOpen(false)} type={filterType} />
 		</div>
 	);
 };

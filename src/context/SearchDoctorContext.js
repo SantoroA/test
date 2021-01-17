@@ -90,12 +90,13 @@ export const { Context, Provider } = createDataContext(
 					},
 					firstName: 'Princess Consuela',
 					lastName: 'Banana Hammock',
-					description: 'Phoebe Buffet'
+					description: 'Phoebe Buffet',
+					typeOfHCP: 'Dietitian'
 				},
 				amount: '76.25',
 				_id: '6532654236543',
-				appointmentTimeStart: '',
-				appointmentTimeEnd: ''
+				appointmentTimeStart: '2021-01-17T07:00:00.000Z',
+				appointmentTimeEnd: '2021-01-17T07:30:00.000Z'
 			}
 		],
 		dialogMessage: '',

@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+import { NavLink } from 'react-router-dom';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
+import BoxTime from '../../components/customUi/BoxTime';
+import ButtonOutlined from '../customUi/ButtonOutlined';
+
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -15,27 +19,35 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const useStyles = makeStyles({
 	card: {
 		display: 'flex',
 		flexDirection: 'row',
 		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)',
-		height: '12rem',
 		marginTop: '1rem',
 		marginBottom: '1rem',
 		borderRadius: '8px',
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
 	},
 	media: {
-		width: '15rem'
+		minWidth: '12rem',
+		display: 'flex',
+		alignItems: 'flex-end',
+		justifyContent: 'center',
+		paddingBottom: '0.5rem'
 	},
 	rating: {
+		paddingLeft: 0
+	},
+	ratingContainer: {
 		display: 'flex',
 		flexDirection: 'row',
-		width: '230px',
 		alignItems: 'center',
-		paddingLeft: 0
+		'& fieldset': {
+			padding: 0
+		}
 	},
 	name: {
 		fontWeight: 700,
@@ -58,13 +70,40 @@ const useStyles = makeStyles({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		textAlign: 'center',
 		minWidth: '8rem'
 	},
-
+	priceText: {
+		color: 'rgba(82, 87, 92, 1)',
+		fontWeight: 'bold'
+	},
+	content: {
+		padding: '0.5rem',
+		paddingLeft: '1rem'
+	},
 	docInfo: {
 		display: 'flex',
 		flexDirection: 'column'
+	},
+	times: {
+		display: 'flex',
+		flexDirection: 'row',
+		paddingTop: '0.5rem',
+		paddingBottom: '0.5rem',
+		justifyContent: 'space-between'
+	},
+	viewProfileButton: {
+		backgroundColor: 'rgba(255, 255, 255, 0.8)',
+		textTransform: 'none',
+		fontWeight: 'bold',
+		borderRadius: '10px'
+	},
+	viewAvailButton: {
+		textTransform: 'none',
+		fontWeight: 'bold',
+		borderRadius: '10px'
+	},
+	icon: {
+		marginRight: '0.5rem'
 	}
 });
 
@@ -83,22 +122,27 @@ const DoctorCard = () => {
 			{doctors.map((doc) => {
 				return (
 					<Card className={classes.card} key={doc._id}>
-						<CardMedia className={classes.media} image={doc.accountHCPid.profilePicture} title="Doctor" />
+						<CardMedia className={classes.media} image={doc.accountHCPid.profilePicture} title="Doctor">
+							<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
+								View Profile
+							</Button>
+						</CardMedia>
 						<Box borderLeft={10} borderColor="grey.300" />
 						<CardContent className={classes.content}>
 							<Grid container className={classes.docInfo}>
-								<Grid item>
+								<Grid item className={classes.ratingContainer}>
 									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
 										<Rating
 											readOnly
+											precision={0.5}
 											name="rating"
 											value={doc.profileHCPid.rating.averageRating}
 											emptyIcon={<StarBorderIcon fontSize="inherit" />}
 										/>
-										<Typography component="legend" variant="body2">
-											({doc.profileHCPid.rating.receivedRating} Reviews)
-										</Typography>
 									</Box>
+									<Typography component="legend" variant="body2">
+										({doc.profileHCPid.rating.receivedRating} Reviews)
+									</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="h5" className={classes.name}>
@@ -108,23 +152,20 @@ const DoctorCard = () => {
 								<Grid item>
 									<Typography variant="body2">{doc.profileHCPid.description}</Typography>
 								</Grid>
+								<Grid item className={classes.times}>
+									<BoxTime>{convertTime(doc.appointmentTimeStart)}</BoxTime>
+									<Button color="primary" className={classes.viewAvailButton}>
+										<CalendarTodayIcon className={classes.icon} /> View all Availability
+									</Button>
+								</Grid>
 							</Grid>
-							<Box className={classes.contentInfo}>
-								<Typography
-									variant="body2"
-									color="textSecondary"
-									className={classes.hours}
-									component="p"
-								>
-									{convertTime(doc.appointmentTimeStart)} - {convertTime(doc.appointmentTimeEnd)}
-								</Typography>
-								<Button className={classes.btn}>More</Button>
-							</Box>
 						</CardContent>
 						<Divider orientation="vertical" className={classes.dividor} />
 						<CardActions className={classes.reserve}>
-							<Typography variant="body1">From</Typography>
-							<Typography variant="body1">
+							<Typography className={classes.priceText} variant="body1">
+								From
+							</Typography>
+							<Typography className={classes.priceText} variant="body1">
 								{doc.accountHCPid.price.currency} {doc.amount}
 							</Typography>
 							<ButtonFilled onClick={() => reserve(doc._id)}>Reserve</ButtonFilled>
