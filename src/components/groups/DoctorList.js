@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState} from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import { NavLink } from 'react-router-dom';
+import Pagination from './Pagination';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import BoxTime from '../../components/customUi/BoxTime';
@@ -29,7 +30,8 @@ const useStyles = makeStyles({
 		marginTop: '1rem',
 		marginBottom: '1rem',
 		borderRadius: '8px',
-		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
+		position: 'relative'
 	},
 	media: {
 		minWidth: '12rem',
@@ -66,6 +68,9 @@ const useStyles = makeStyles({
 		color: '#E8E8E8'
 	},
 	reserve: {
+		position: 'absolute',
+		top: '1.5rem',
+		right: '1rem',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -78,7 +83,8 @@ const useStyles = makeStyles({
 	},
 	content: {
 		padding: '0.5rem',
-		paddingLeft: '1rem'
+		paddingLeft: '1rem',
+		width: '55%'
 	},
 	docInfo: {
 		display: 'flex',
@@ -110,6 +116,11 @@ const useStyles = makeStyles({
 const DoctorCard = () => {
 	const classes = useStyles();
 	const { state: { doctors }, reserve } = useContext(SearchDoctorContext);
+	const [showPerPage, setShowPerPage] = useState(2);
+	const [pagination, setPagination] = useState({
+		start: 0,
+		end: showPerPage,
+	});
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
 		let min = new Date(start).getMinutes();
@@ -117,9 +128,13 @@ const DoctorCard = () => {
 		return `${hours}:${realMin}`;
 	};
 	console.log(doctors);
+	
+	const onPaginationChange =(start, end) =>{
+		setPagination({start:start, end:end})
+	}
 	return (
 		<div className={classes.mainContent}>
-			{doctors.map((doc) => {
+			{doctors.slice(pagination.start, pagination.end).map((doc) => {
 				return (
 					<Card className={classes.card} key={doc._id}>
 						<CardMedia className={classes.media} image={doc.accountHCPid.profilePicture} title="Doctor">
@@ -173,6 +188,11 @@ const DoctorCard = () => {
 					</Card>
 				);
 			})}
+			<Pagination 
+			showPerPage={showPerPage}
+			onPaginationChange={onPaginationChange}
+			total={doctors.length}
+			 />
 		</div>
 	);
 };
