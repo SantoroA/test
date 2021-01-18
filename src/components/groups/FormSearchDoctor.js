@@ -74,7 +74,7 @@ const FormSearchDoctor = () => {
 	const [ date, setDate ] = useState('');
 	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
 	const [ filterType, setFilterType ] = useState('');
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const { getDoctorList, state: { doctors, allSpecialty } } = useContext(SearchDoctorContext);
 	const classes = useStyles();
@@ -93,7 +93,7 @@ const FormSearchDoctor = () => {
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);
 	});
-	console.log(doctors)
+	console.log(doctors);
 	return (
 		<div className={classes.root}>
 			<form onSubmit={handleSubmit}>
@@ -112,8 +112,12 @@ const FormSearchDoctor = () => {
 							}}
 						>
 							{allSpecialty !== 'undefined' ? (
-								allSpecialty.map((el) => {
-									return <MenuItem value={el}>{el}</MenuItem>;
+								allSpecialty.map((el, i) => {
+									return (
+										<MenuItem key={i} value={el}>
+											{el}
+										</MenuItem>
+									);
 								})
 							) : null}
 						</TextInputRounder>

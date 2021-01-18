@@ -293,18 +293,18 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 
 // complete profile update image
 const updateImage = (dispatch) => async ({ id, image }) => {
-	console.log('id',id, image);
+	console.log('id', id, image);
 
-	let userInfo ={
+	let userInfo = {
 		id,
 		image: image,
 		form: 1
-	}
-	console.log(userInfo)
+	};
+	console.log(userInfo);
 	try {
 		const response = await dianurseApi.put('/profile/doctor/completeprofile', {
 			userInfo
-		}, );
+		});
 		dispatch({
 			type: 'update_image',
 			payload: image
@@ -391,7 +391,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null

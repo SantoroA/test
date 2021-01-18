@@ -17,7 +17,6 @@ import Divider from '@material-ui/core/Divider';
 //icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-
 const useStyles = makeStyles({
 	title: {
 		marginTop: '3rem',
@@ -81,9 +80,7 @@ const PatDoctorSearchScreen = () => {
 						</Box>
 						<Grid container>
 							<Grid item md={9} className={classes.listContainer}>
-								
 								<DoctorList />
-								
 							</Grid>
 							<Grid item md={3}>
 								<Calendar />
