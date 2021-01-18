@@ -2,12 +2,10 @@ import React, { useContext, useState } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import { NavLink } from 'react-router-dom';
 import Pagination from './Pagination';
-import Image from 'material-ui-image';
+import DialogReserve from './DialogReserve';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import BoxTime from '../../components/customUi/BoxTime';
-import ButtonOutlined from '../customUi/ButtonOutlined';
-
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -21,7 +19,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+// import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const useStyles = makeStyles({
 	card: {
@@ -116,7 +114,9 @@ const useStyles = makeStyles({
 
 const DoctorList = () => {
 	const classes = useStyles();
-	const { state: { doctors, docList }, reserve } = useContext(SearchDoctorContext);
+	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
+	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
+	const [ docId, setDocId ] = useState('');
 	const [ showPerPage, setShowPerPage ] = useState(2);
 	const [ pagination, setPagination ] = useState({
 		start: 0,
@@ -169,9 +169,14 @@ const DoctorList = () => {
 										<Typography variant="body2">{doc.description}</Typography>
 									</Grid>
 									<Grid item className={classes.times}>
-										{doctors.filter((el) => el._id === doc.id).slice(0, 3).map((elem, i) => {
-											return <BoxTime key={i}>{convertTime(elem.appointmentTimeStart)}</BoxTime>;
-										})}
+										{doctors
+											.filter((el) => el.profileHCPid._id === doc.id)
+											.slice(0, 3)
+											.map((elem, i) => {
+												return (
+													<BoxTime key={i}>{convertTime(elem.appointmentTimeStart)}</BoxTime>
+												);
+											})}
 										{/* <Button color="primary" className={classes.viewAvailButton}>
 											<CalendarTodayIcon className={classes.icon} /> View all Availability
 										</Button> */}
@@ -187,16 +192,25 @@ const DoctorList = () => {
 								</Typography>
 
 								<Typography className={classes.priceText} variant="body1">
-									{Math.min(...doctors.filter((el) => el._id === doc.id).map((e) => e.amount))}
+									{Math.min(
+										...doctors.filter((el) => el.profileHCPid._id === doc.id).map((e) => e.amount)
+									)}
 									{/* $ {doc.amount} */}
 								</Typography>
-								<ButtonFilled onClick={() => reserve(doc._id)}>View All</ButtonFilled>
+								<ButtonFilled
+									onClick={() => {
+										setDocId(doc.id);
+										setDialogReserveOpen(true);
+									}}
+								>
+									View Times
+								</ButtonFilled>
 							</CardActions>
 						</Card>
 					);
 				})
 			) : null}
-
+			<DialogReserve open={dialogReserveOpen} id={docId} close={() => setDialogReserveOpen(false)} />
 			<Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={docList.length} />
 		</div>
 	);
