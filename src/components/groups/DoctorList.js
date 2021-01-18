@@ -115,8 +115,8 @@ const useStyles = makeStyles({
 
 const DoctorCard = () => {
 	const classes = useStyles();
-	const { state: { doctors }, reserve } = useContext(SearchDoctorContext);
-	const [showPerPage, setShowPerPage] = useState(3);
+	const { state: { doctors, doc }, reserve } = useContext(SearchDoctorContext);
+	const [showPerPage, setShowPerPage] = useState(2);
 	const [pagination, setPagination] = useState({
 		start: 0,
 		end: showPerPage,
@@ -127,17 +127,17 @@ const DoctorCard = () => {
 		let realMin = min < 10 ? '00' : min;
 		return `${hours}:${realMin}`;
 	};
-	console.log(doctors);
+	console.log(doc);
 	
 	const onPaginationChange =(start, end) =>{
 		setPagination({start:start, end:end})
 	}
 	return (
 		<div className={classes.mainContent}>
-			{doctors.slice(pagination.start, pagination.end).map((doc) => {
+			{doctors !== null ? doc.slice(pagination.start, pagination.end).map((docs) => {
 				return (
-					<Card className={classes.card} key={doc._id}>
-						<CardMedia className={classes.media} image={doc.accountHCPid.profilePicture} title="Doctor">
+					<Card className={classes.card} key={docs.id}>
+						<CardMedia className={classes.media} image={docs.image} title="Doctor">
 							<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
 								View Profile
 							</Button>
@@ -151,24 +151,26 @@ const DoctorCard = () => {
 											readOnly
 											precision={0.5}
 											name="rating"
-											value={doc.profileHCPid.rating.averageRating}
+											value={docs.averageRating}
 											emptyIcon={<StarBorderIcon fontSize="inherit" />}
 										/>
 									</Box>
 									<Typography component="legend" variant="body2">
-										({doc.profileHCPid.rating.receivedRating} Reviews)
+										({docs.receivedRating} Reviews)
 									</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="h5" className={classes.name}>
-										Dr. {`${doc.profileHCPid.firstName} ${doc.profileHCPid.lastName}`}
+										Dr. {`${docs.firstname} ${docs.lastname}`}
 									</Typography>
 								</Grid>
 								<Grid item>
-									<Typography variant="body2">{doc.profileHCPid.description}</Typography>
+									<Typography variant="body2">{doc.description}</Typography>
 								</Grid>
 								<Grid item className={classes.times}>
-									<BoxTime>{convertTime(doc.appointmentTimeStart)}</BoxTime>
+								{doctors.filter(el => el.profileHCPid._id === docs.id).slice(0, 3).map(elem => {
+										return <BoxTime >{convertTime(elem.appointmentTimeStart)}</BoxTime>
+									})}
 									<Button color="primary" className={classes.viewAvailButton}>
 										<CalendarTodayIcon className={classes.icon} /> View all Availability
 									</Button>
@@ -181,13 +183,15 @@ const DoctorCard = () => {
 								From
 							</Typography>
 							<Typography className={classes.priceText} variant="body1">
-								{doc.accountHCPid.price.currency} {doc.amount}
+								{Math.min(...doctors.map(e => e.amount))}
+								{/* $ {doc.amount} */}
 							</Typography>
 							<ButtonFilled onClick={() => reserve(doc._id)}>Reserve</ButtonFilled>
 						</CardActions>
 					</Card>
 				);
-			})}
+			}): null}
+			{console.log(doctors.length)}
 			<Pagination 
 			showPerPage={showPerPage}
 			onPaginationChange={onPaginationChange}
