@@ -171,6 +171,7 @@ const DoctorCard = () => {
 								{doctors.filter(el => el.profileHCPid._id === docs.id).slice(0, 3).map(elem => {
 										return <BoxTime >{convertTime(elem.appointmentTimeStart)}</BoxTime>
 									})}
+									
 									<Button color="primary" className={classes.viewAvailButton}>
 										<CalendarTodayIcon className={classes.icon} /> View all Availability
 									</Button>
