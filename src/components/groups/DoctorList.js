@@ -128,7 +128,6 @@ const DoctorList = () => {
 		let realMin = min < 10 ? '00' : min;
 		return `${hours}:${realMin}`;
 	};
-	console.log(docList);
 
 	const onPaginationChange = (start, end) => {
 		setPagination({ start: start, end: end });
@@ -136,10 +135,10 @@ const DoctorList = () => {
 	return (
 		<div className={classes.mainContent}>
 			{docList !== null ? (
-				docList.slice(pagination.start, pagination.end).map((docs) => {
+				docList.slice(pagination.start, pagination.end).map((doc) => {
 					return (
-						<Card className={classes.card} key={docs.id}>
-							<CardMedia className={classes.media} image={docs.image} title="Doctor">
+						<Card className={classes.card} key={doc.id}>
+							<CardMedia className={classes.media} image={doc.image} title="Doctor">
 								<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
 									View Profile
 								</Button>
@@ -153,32 +152,26 @@ const DoctorList = () => {
 												readOnly
 												precision={0.5}
 												name="rating"
-												value={docs.averageRating}
+												value={doc.averageRating}
 												emptyIcon={<StarBorderIcon fontSize="inherit" />}
 											/>
 										</Box>
 										<Typography component="legend" variant="body2">
-											({docs.receivedRating} Reviews)
+											({doc.receivedRating} Reviews)
 										</Typography>
 									</Grid>
 									<Grid item>
 										<Typography variant="h5" className={classes.name}>
-											Dr. {`${docs.firstname} ${docs.lastname}`}
+											Dr. {`${doc.firstname} ${doc.lastname}`}
 										</Typography>
 									</Grid>
 									<Grid item>
-										<Typography variant="body2">{docs.description}</Typography>
+										<Typography variant="body2">{doc.description}</Typography>
 									</Grid>
 									<Grid item className={classes.times}>
-										{doctors
-											.filter((el) => el.profileHCPid._id === docs.id)
-											.slice(0, 3)
-											.map((elem, i) => {
-												return (
-													<BoxTime key={i}>{convertTime(elem.appointmentTimeStart)}</BoxTime>
-												);
-											})}
-
+										{doctors.filter((el) => el._id === doc.id).slice(0, 3).map((elem, i) => {
+											return <BoxTime key={i}>{convertTime(elem.appointmentTimeStart)}</BoxTime>;
+										})}
 										{/* <Button color="primary" className={classes.viewAvailButton}>
 											<CalendarTodayIcon className={classes.icon} /> View all Availability
 										</Button> */}
@@ -192,11 +185,12 @@ const DoctorList = () => {
 								<Typography className={classes.priceText} variant="body1">
 									From
 								</Typography>
+
 								<Typography className={classes.priceText} variant="body1">
-									{Math.min(...doctors.map((e) => e.amount))}
+									{Math.min(...doctors.filter((el) => el._id === doc.id).map((e) => e.amount))}
 									{/* $ {doc.amount} */}
 								</Typography>
-								<ButtonFilled onClick={() => reserve(docs._id)}>View All</ButtonFilled>
+								<ButtonFilled onClick={() => reserve(doc._id)}>View All</ButtonFilled>
 							</CardActions>
 						</Card>
 					);
