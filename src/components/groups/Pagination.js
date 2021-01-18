@@ -28,6 +28,24 @@ const useStyles = makeStyles({
         display: 'inline-block',
 
 
+
+    },
+    btnFilled: {
+        float: 'left'
+    },
+    btnWrapper: {
+        display: 'inline-block',
+        float: 'left'
+        
+    },
+    active: {
+        background: '#0BC7E0',
+            color: 'white',
+            border: '1px solid #0BC7E0',
+            padding: '6px 12px',
+            borderRadius: '10px',
+            fontWeight: 'bold',
+            margin: '0 5px',
     },
     btn: {
         color: '#05B240',
@@ -90,10 +108,10 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
                     {
                         new Array(numberOfButtons).fill("").map((el, index) => (
                         
-                            <button className={classes.btn} onClick={() => setConuter(index + 1)}>
+                            <button className={`${index+1 === counter ? classes.active : classes.btn }` } onClick={() => setConuter(index + 1)} >
                                 {index + 1}
                             </button>
-                        
+                            
 
                         ))
                     }

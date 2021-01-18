@@ -116,7 +116,7 @@ const useStyles = makeStyles({
 const DoctorCard = () => {
 	const classes = useStyles();
 	const { state: { doctors }, reserve } = useContext(SearchDoctorContext);
-	const [showPerPage, setShowPerPage] = useState(2);
+	const [showPerPage, setShowPerPage] = useState(3);
 	const [pagination, setPagination] = useState({
 		start: 0,
 		end: showPerPage,
