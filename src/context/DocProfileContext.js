@@ -185,7 +185,7 @@ const updateContactInfo = (dispatch) => {
 };
 const updateProfileInfo = (dispatch) => {
 	return async ({ profileInfo, websiteUrl, id, insurance }) => {
-		console.log(insurance)
+		console.log(insurance);
 		let userInfo = {
 			id,
 			profileInfo,
@@ -215,7 +215,7 @@ const updateProfileInfo = (dispatch) => {
 };
 const updateLocationInfo = (dispatch) => {
 	return async ({ id, country, city, zipcode, street, num }) => {
-		console.log(zipcode)
+		console.log(zipcode);
 		let userInfo = {
 			id,
 			country,
@@ -229,7 +229,7 @@ const updateLocationInfo = (dispatch) => {
 		try {
 			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
 				userInfo
-			 });
+			});
 			console.log(response);
 			dispatch({
 				type: 'update_location_info',
@@ -257,9 +257,9 @@ const updateEducation = (dispatch) => {
 		console.log('inside education context', education);
 		try {
 			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			 	userInfo
-			 });
-			 console.log(response);
+				userInfo
+			});
+			console.log(response);
 			dispatch({
 				type: 'update_education',
 				payload: {
@@ -342,6 +342,17 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: [ ]
+		allSpecialty: [
+			'General care physician',
+			'Endocrinologist',
+			'Dietitian',
+			'Certified diabetes educator',
+			'Podiatrist',
+			'Nephrologist',
+			'Ophthalmologist',
+			'Physical trainer',
+			'Dentist',
+			'Any'
+		]
 	}
 );

@@ -4,6 +4,7 @@ import { Provider as AuthProvider, Context as AuthContext } from './context/Auth
 import { Provider as LanguageProvider } from './context/LanguageContext';
 import { Provider as AvailabilityProvider } from './context/AvailabilityContext';
 import { Provider as DocProfileProvider } from './context/DocProfileContext';
+import { Provider as SearchDoctorProvider } from './context/SearchDoctorContext';
 import LoadingScreen from './screens/public/LoadingScreen';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import PublicRoute from './routes/PublicRoute';
@@ -25,14 +26,14 @@ const theme = createMuiTheme({
 const Routes = () => {
 	const [ isLoading, setIsLoading ] = useState(false);
 	const { getCookie, state: { isLoggedIn } } = useContext(AuthContext);
-	 useEffect(() => {
-	 	const loadPage = async () => {
-	 		await getCookie();
-	 		setIsLoading(false);
-	 	};
-	 	loadPage();
-	//  eslint-disable-next-line react-hooks/exhaustive-deps
-	 }, []);
+	useEffect(() => {
+		const loadPage = async () => {
+			await getCookie();
+			setIsLoading(false);
+		};
+		loadPage();
+		//  eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };
 
@@ -40,13 +41,15 @@ const App = () => {
 	return (
 		<AuthProvider>
 			<AvailabilityProvider>
-				<DocProfileProvider>
-					<LanguageProvider>
-						<ThemeProvider theme={theme}>
-							<Routes />
-						</ThemeProvider>
-					</LanguageProvider>
-				</DocProfileProvider>
+				<SearchDoctorProvider>
+					<DocProfileProvider>
+						<LanguageProvider>
+							<ThemeProvider theme={theme}>
+								<Routes />
+							</ThemeProvider>
+						</LanguageProvider>
+					</DocProfileProvider>
+				</SearchDoctorProvider>
 			</AvailabilityProvider>
 		</AuthProvider>
 	);

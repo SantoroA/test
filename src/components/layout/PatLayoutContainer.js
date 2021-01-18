@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 	root: {
-		backgroundColor: '#F4FAFF',
-		background: 'cover',
+		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 50%)',
+		backgroundPosition: 'cover',
 		minHeight: '100vh',
 		display: 'flex',
 		flexDirection: 'column'
@@ -21,9 +21,7 @@ const PatLayoutContainer = ({ children }) => {
 		<div className={classes.root}>
 			<Navbar />
 			{children}
-			<div className={classes.footer}>
-				<Footer />
-			</div>
+			<div className={classes.footer}>{/* <Footer /> */}</div>
 		</div>
 	);
 };

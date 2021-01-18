@@ -59,6 +59,9 @@ const useStyles = makeStyles({
 	dateContainer: {
 		marginTop: '2rem',
 		marginBottom: '3rem'
+	},
+	subtitle: {
+		fontWeight: 600
 	}
 });
 
@@ -101,7 +104,7 @@ const TabAvailability = () => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const { getSlots, closeDialog, state } = useContext(AvailabilityContext);
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 
 	const handleChange = (event, newValue) => {
@@ -175,7 +178,9 @@ const TabAvailability = () => {
 								onChangeIndex={handleChangeIndex}
 							>
 								<TabPanel value={value} index={0}>
-									<Typography variant="h6">Time Slots for Sunday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Sunday
+									</Typography>
 									<FormTimeSlots
 										weekDay={0}
 										availableEnd={availableEnd}
@@ -184,7 +189,9 @@ const TabAvailability = () => {
 									<TimeSlotList weekDay={0} weekDayName="Sunday" />
 								</TabPanel>
 								<TabPanel value={value} index={1}>
-									<Typography variant="h6">Time Slots for Monday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Monday
+									</Typography>
 									<FormTimeSlots
 										weekDay={1}
 										availableEnd={availableEnd}
@@ -193,7 +200,9 @@ const TabAvailability = () => {
 									<TimeSlotList weekDay={1} weekDayName="Monday" />
 								</TabPanel>
 								<TabPanel value={value} index={2}>
-									<Typography variant="h6">Time Slots for Tuesday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Tuesday
+									</Typography>
 									<FormTimeSlots
 										weekDay={2}
 										availableEnd={availableEnd}
@@ -202,7 +211,9 @@ const TabAvailability = () => {
 									<TimeSlotList weekDay={2} weekDayName="Tuesday" />
 								</TabPanel>
 								<TabPanel value={value} index={3}>
-									<Typography variant="h6">Time Slots for Wednesday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Wednesday
+									</Typography>
 									<FormTimeSlots
 										weekDay={3}
 										availableEnd={availableEnd}
@@ -211,7 +222,9 @@ const TabAvailability = () => {
 									<TimeSlotList weekDay={3} weekDayName="Wednesday" />
 								</TabPanel>
 								<TabPanel value={value} index={4}>
-									<Typography variant="h6">Time Slots for Thursday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Thursday
+									</Typography>
 									<FormTimeSlots
 										weekDay={4}
 										availableEnd={availableEnd}
@@ -220,7 +233,9 @@ const TabAvailability = () => {
 									<TimeSlotList weekDay={4} weekDayName="Thursday" />
 								</TabPanel>
 								<TabPanel value={value} index={5}>
-									<Typography variant="h6">Time Slots for Friday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Friday
+									</Typography>
 									<FormTimeSlots
 										weekDay={5}
 										availableEnd={availableEnd}
@@ -229,7 +244,9 @@ const TabAvailability = () => {
 									<TimeSlotList weekDay={5} weekDayName="Friday" />
 								</TabPanel>
 								<TabPanel value={value} index={6}>
-									<Typography variant="h6">Time Slots for Saturday</Typography>
+									<Typography className={classes.subtitle} variant="h6">
+										Time Slots for Saturday
+									</Typography>
 									<FormTimeSlots
 										weekDay={6}
 										availableEnd={availableEnd}

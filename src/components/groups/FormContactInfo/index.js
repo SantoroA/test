@@ -28,7 +28,7 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 const FormContactInfo = () => {
 	const { updateContactInfo, getSpeciality, state } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
 	const [ specialty, setSpecialty ] = useState(state.specialty);
@@ -56,7 +56,7 @@ const FormContactInfo = () => {
 	};
 
 	const handleSubmit = () => {
-		console.log('submit',specialty)
+		console.log('submit', specialty);
 		updateContactInfo({
 			id: userId,
 			firstName,
@@ -116,14 +116,13 @@ const FormContactInfo = () => {
 								<FormControl variant="outlined" fullWidth>
 									<InputLabel id="specialty-label">Specialty</InputLabel>
 									<Select
+										disabled={isDisabled}
 										required
 										labelId="specialty-label"
 										value={specialty}
-										disabled={isDisabled}
 										onChange={(e) => setSpecialty(e.target.value)}
 										label="Specialty"
 									>
-										
 										{state.allSpecialty !== 'undefined' ? (
 											state.allSpecialty.map((el) => {
 												return <MenuItem value={el}>{el}</MenuItem>;
@@ -136,9 +135,9 @@ const FormContactInfo = () => {
 								<FormControl variant="outlined" fullWidth>
 									<InputLabel id="gender-label">Gender</InputLabel>
 									<Select
+										disabled={isDisabled}
 										labelId="gender-label"
 										value={gender}
-										disabled={isDisabled}
 										onChange={(e) => setGender(e.target.value)}
 										label="Gender"
 									>
@@ -153,6 +152,7 @@ const FormContactInfo = () => {
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<PhoneInput
 									fullWidth
+									inputStyle={{ width: '100%' }}
 									className={classes.phoneInputStyle}
 									disabled={isDisabled}
 									value={phoneNumber}

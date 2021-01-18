@@ -309,7 +309,7 @@ const updateImage = (dispatch) => async ({ id, image }) => {
 			type: 'update_image',
 			payload: image
 		});
-		console.log(response.data)
+		console.log(response.data);
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -387,7 +387,7 @@ export const { Provider, Context } = createDataContext(
 	{
 		userId: '',
 		userToken: '',
-		userAmIHCP: true,
+		userAmIHCP: false,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,

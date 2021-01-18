@@ -172,13 +172,13 @@ const createSlot = (dispatch) => {
 			}
 		}
 		try {
-			const response = await dianurseApi.post('/appointment/createAvailability', {
-				arr
-			});
-			console.log(response);
+			// const response = await dianurseApi.post('/appointment/createAvailability', {
+			// 	arr
+			// });
+			// console.log(response);
 			let x = 200;
-			if (response.status === 200) {
-			// if (x === 200) {
+			// if (response.status === 200) {
+			if (x === 200) {
 				return dispatch({
 					type: 'create_slot',
 					payload: {
@@ -284,82 +284,6 @@ const setIsEditing = (dispatch) => {
 		dispatch({ type: 'set_is_editing', payload: key });
 	};
 };
-// const updateSlot = (dispatch) => {
-// 	return ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key }) => {
-// 		console.log('inside updateSlot context', availableStart, availableEnd);
-// 		dispatch({
-// 			type: 'update_slots',
-// 			payload: {
-// 				startDay: availableStart,
-// 				endDay: availableEnd,
-// 				amount: amount,
-// 				startTime: timeStart,
-// 				endTime: timeEnd,
-// 				slot: duration,
-// 				slotCreated: key,
-// 				editStatus: false,
-// 				id,
-// 				weekDay,
-// 				isEditing: false
-// 			}
-// 		});
-// 	};
-// };
-// let day_1 = new Date(availableStart);
-// let day_2 = new Date(availableEnd);
-// let difference = Math.ceil(day_2 - day_1);
-// let arr = [];
-// let i = 0;
-
-// for (i; difference >= i; i += 86400000) {
-// 	if (new Date(day_2 - i).getDay() === weekDay) {
-// 		let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
-// 		let newLastDate = new Date(`${availableEnd}, ${timeEnd}`);
-// 		let timeDuration = duration * 60000;
-// 		let slot = (newLastDate - newStartDate) / timeDuration;
-// 		let t = 1;
-// 		for (t; t <= slot; t++) {
-// 			arr = arr.concat({
-// 				id: id.toString(),
-// 				date: new Date(day_2 - i),
-// 				week: new Date(day_2 - i).getDay(),
-// 				start: new Date(newStartDate - i + timeDuration * t - timeDuration),
-// 				end: new Date(newStartDate - i + timeDuration * t),
-// 				amount: amount, //check amount estpa sendo salvo com o valor certo
-// 				slotCreated: key
-// 			});
-// 		}
-// 	}
-// }
-// try {
-// const response =  dianurseApi.post(`/appointment/updateAvailability`, {
-// 	arr
-// });
-// console.log(response.data);
-// if(response.status === 200) {
-// 	dispatch({
-// 		type: 'update_slots',
-// 		payload: {
-// 			startDay: availableStart,
-// 			endDay: availableEnd,
-// 			amount: amount,
-// 			startTime: timeStart,
-// 			endTime: timeEnd,
-// 			slot: duration,
-// 			slotCreated: key,
-// 			editStatus: false,
-// 			id,
-// 			weekDay,
-// 			isEditing: false
-// 		}
-// 	});
-// }
-// } catch (err) {
-// 	dispatch({ type: 'add_error', payload: err.message });
-// 	console.log(err.message);
-// }
-// 	}
-// }
 
 //DIALOG
 const closeDialog = (dispatch) => () => {

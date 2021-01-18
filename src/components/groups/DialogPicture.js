@@ -127,14 +127,12 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 										name="uploadphoto"
 										style={{ display: 'none' }}
 										ref={inputFileRef}
-										onChange={ (e) =>
-											 // (e) => 
-										 {
-											let newImage = e.target?.files?.[0];
+										onChange={(e) => {
+											let newImage = e.target?.files?.[0]; // this is for the DATABASE 
+											console.log("this is The NEwIMAGE", newImage);
 											newImage = newImage ? setImageChange(URL.createObjectURL(newImage)) : null;
-										}
-										// setImageChange(e.target.files[0])
-									}
+											console.log("this is The SECOND NEwIMAGE", newImage);
+										}}
 									/>
 									<IconButton component="span">
 										<EditIcon color="primary" />
