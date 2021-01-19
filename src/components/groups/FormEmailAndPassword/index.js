@@ -22,8 +22,8 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const FormEmailAndPassword = () => {
-	const { updatePassword, state: { userId, image } } = useContext(AuthContext);
-	const { state: { email } } = useContext(DocProfileContext);
+	const { updatePassword, state: { userId } } = useContext(AuthContext);
+	const { state: { email, image } } = useContext(DocProfileContext);
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');

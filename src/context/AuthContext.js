@@ -294,9 +294,11 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 // complete profile update image
 const updateImage = (dispatch) => async ({ id, image }) => {
 	console.log('id', id, image);
+
 	let userInfo = {
 		id,
-		image
+		image: image,
+		form: 1
 	};
 	console.log(userInfo);
 	try {

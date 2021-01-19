@@ -1,12 +1,11 @@
-import React, { useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import { NavLink } from 'react-router-dom';
 import Pagination from './Pagination';
+import DialogReserve from './DialogReserve';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import BoxTime from '../../components/customUi/BoxTime';
-import ButtonOutlined from '../customUi/ButtonOutlined';
-
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -20,7 +19,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+// import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const useStyles = makeStyles({
 	card: {
@@ -31,7 +30,7 @@ const useStyles = makeStyles({
 		marginBottom: '1rem',
 		borderRadius: '8px',
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
-		position: 'relative'
+		justifyContent: 'space-between'
 	},
 	media: {
 		minWidth: '12rem',
@@ -62,15 +61,7 @@ const useStyles = makeStyles({
 		color: '#52575C'
 	},
 
-	dividor: {
-		height: 102,
-		marginTop: '5%',
-		color: '#E8E8E8'
-	},
 	reserve: {
-		position: 'absolute',
-		top: '1.5rem',
-		right: '1rem',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -82,13 +73,17 @@ const useStyles = makeStyles({
 		fontWeight: 'bold'
 	},
 	content: {
-		padding: '0.5rem',
-		paddingLeft: '1rem',
-		width: '55%'
+		padding: '0',
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	},
 	docInfo: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		padding: '1rem',
+		paddingTop: '0.5rem'
 	},
 	times: {
 		display: 'flex',
@@ -110,16 +105,22 @@ const useStyles = makeStyles({
 	},
 	icon: {
 		marginRight: '0.5rem'
+	},
+	divider: {
+		paddingTop: '1rem',
+		paddingBottom: '1rem'
 	}
 });
 
-const DoctorCard = () => {
+const DoctorList = () => {
 	const classes = useStyles();
-	const { state: { doctors }, reserve } = useContext(SearchDoctorContext);
-	const [showPerPage, setShowPerPage] = useState(3);
-	const [pagination, setPagination] = useState({
+	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
+	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
+	const [ docId, setDocId ] = useState('');
+	const [ showPerPage, setShowPerPage ] = useState(2);
+	const [ pagination, setPagination ] = useState({
 		start: 0,
-		end: showPerPage,
+		end: showPerPage
 	});
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
@@ -134,67 +135,86 @@ const DoctorCard = () => {
 	}
 	return (
 		<div className={classes.mainContent}>
-			{doctors.slice(pagination.start, pagination.end).map((doc) => {
-				return (
-					<Card className={classes.card} key={doc._id}>
-						<CardMedia className={classes.media} image={doc.accountHCPid.profilePicture} title="Doctor">
-							<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
-								View Profile
-							</Button>
-						</CardMedia>
-						<Box borderLeft={10} borderColor="grey.300" />
-						<CardContent className={classes.content}>
-							<Grid container className={classes.docInfo}>
-								<Grid item className={classes.ratingContainer}>
-									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
-										<Rating
-											readOnly
-											precision={0.5}
-											name="rating"
-											value={doc.profileHCPid.rating.averageRating}
-											emptyIcon={<StarBorderIcon fontSize="inherit" />}
-										/>
-									</Box>
-									<Typography component="legend" variant="body2">
-										({doc.profileHCPid.rating.receivedRating} Reviews)
-									</Typography>
+			{docList !== null ? (
+				docList.slice(pagination.start, pagination.end).map((doc) => {
+					return (
+						<Card className={classes.card} key={doc.id}>
+							<CardMedia className={classes.media} image={doc.image} title="Doctor">
+								<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
+									View Profile
+								</Button>
+							</CardMedia>
+							<CardContent className={classes.content}>
+								<Box borderLeft={10} borderColor="grey.300" />
+								<Grid container className={classes.docInfo}>
+									<Grid item className={classes.ratingContainer}>
+										<Box component="fieldset" borderColor="transparent" className={classes.rating}>
+											<Rating
+												readOnly
+												precision={0.5}
+												name="rating"
+												value={doc.averageRating}
+												emptyIcon={<StarBorderIcon fontSize="inherit" />}
+											/>
+										</Box>
+										<Typography component="legend" variant="body2">
+											({doc.receivedRating} Reviews)
+										</Typography>
+									</Grid>
+									<Grid item>
+										<Typography variant="h5" className={classes.name}>
+											Dr. {`${doc.firstname} ${doc.lastname}`}
+										</Typography>
+									</Grid>
+									<Grid item>
+										<Typography variant="body2">{doc.description}</Typography>
+									</Grid>
+									<Grid item className={classes.times}>
+										{doctors
+											.filter((el) => el.profileHCPid._id === doc.id)
+											.slice(0, 3)
+											.map((elem, i) => {
+												return (
+													<BoxTime key={i}>{convertTime(elem.appointmentTimeStart)}</BoxTime>
+												);
+											})}
+										{/* <Button color="primary" className={classes.viewAvailButton}>
+											<CalendarTodayIcon className={classes.icon} /> View all Availability
+										</Button> */}
+									</Grid>
 								</Grid>
-								<Grid item>
-									<Typography variant="h5" className={classes.name}>
-										Dr. {`${doc.profileHCPid.firstName} ${doc.profileHCPid.lastName}`}
-									</Typography>
+								<Grid className={classes.divider}>
+									<Divider orientation="vertical" />
 								</Grid>
-								<Grid item>
-									<Typography variant="body2">{doc.profileHCPid.description}</Typography>
-								</Grid>
-								<Grid item className={classes.times}>
-									<BoxTime>{convertTime(doc.appointmentTimeStart)}</BoxTime>
-									<Button color="primary" className={classes.viewAvailButton}>
-										<CalendarTodayIcon className={classes.icon} /> View all Availability
-									</Button>
-								</Grid>
-							</Grid>
-						</CardContent>
-						<Divider orientation="vertical" className={classes.dividor} />
-						<CardActions className={classes.reserve}>
-							<Typography className={classes.priceText} variant="body1">
-								From
-							</Typography>
-							<Typography className={classes.priceText} variant="body1">
-								{doc.accountHCPid.price.currency} {doc.amount}
-							</Typography>
-							<ButtonFilled onClick={() => reserve(doc._id)}>Reserve</ButtonFilled>
-						</CardActions>
-					</Card>
-				);
-			})}
-			<Pagination 
-			showPerPage={showPerPage}
-			onPaginationChange={onPaginationChange}
-			total={doctors.length}
-			 />
+							</CardContent>
+							<CardActions className={classes.reserve}>
+								<Typography className={classes.priceText} variant="body1">
+									From
+								</Typography>
+
+								<Typography className={classes.priceText} variant="body1">
+									$ {Math.min(
+										...doctors.filter((el) => el.profileHCPid._id === doc.id).map((e) => e.amount)
+									)}
+									{/* $ {doc.amount} */}
+								</Typography>
+								<ButtonFilled
+									onClick={() => {
+										setDocId(doc.id);
+										setDialogReserveOpen(true);
+									}}
+								>
+									View Times
+								</ButtonFilled>
+							</CardActions>
+						</Card>
+					);
+				})
+			) : null}
+			<DialogReserve open={dialogReserveOpen} id={docId} close={() => setDialogReserveOpen(false)} />
+			<Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={docList.length} />
 		</div>
 	);
 };
 
-export default DoctorCard;
+export default DoctorList;
