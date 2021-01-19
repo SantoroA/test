@@ -81,7 +81,7 @@ const FormSearchDoctor = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log('submit', typeOfHCP);
+		console.log('submit ----------->', typeOfHCP);
 		getDoctorList({ typeOfHCP, date });
 	};
 

@@ -8,7 +8,6 @@ const ButtonFilled = styled(Button)({
 	color: 'white',
 	fontWeight: 'bold',
 	textTransform: 'none',
-	margin: '0 5px',
 	'&:hover': {
 		background: '#0BC7E0'
 	}

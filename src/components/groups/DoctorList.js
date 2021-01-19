@@ -127,7 +127,7 @@ const DoctorCard = () => {
 		let realMin = min < 10 ? '00' : min;
 		return `${hours}:${realMin}`;
 	};
-	console.log(doctors);
+	console.log("LIST OF DOCTORS", doctors);
 	
 	const onPaginationChange =(start, end) =>{
 		setPagination({start:start, end:end})
