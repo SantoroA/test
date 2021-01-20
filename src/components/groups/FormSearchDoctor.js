@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+import React, { useEffect, useState } from 'react';
 import DialogFilter from './DialogFilter';
 import DoctorList from './DoctorList';
 import dianurseApi from '../../api/dianurseApi';
@@ -18,7 +17,6 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles({
 	root: {
@@ -76,25 +74,35 @@ const FormSearchDoctor = () => {
 	//STATE
 	const [ timezone, setTimezone ] = useState('Eastern Time');
 	const [ nameZone, setNameZone ] = useState('New York, United States');
-	const [ typeOfHCP, setTypeOfHCP ] = useState('');
+	const [ typeOfHCP, setTypeOfHCP ] = useState('Certified diabetes educator');
 	const [ date, setDate ] = useState('');
 	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
 	const [ filterType, setFilterType ] = useState('');
-
 	const classes = useStyles();
-	//CONTEXT
-	const { getDoctorList, state: { doctors, allSpecialty } } = useContext(SearchDoctorContext);
 
 	let dateChoose = new Date(date).toDateString().split(' ');
 	let formatDate = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(date).toLocaleString('default', {
 		month: 'long'
 	})}`;
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log('submit', typeOfHCP);
-		getDoctorList({ typeOfHCP, date });
-	};
+	// const handleSubmit = (e) => {
+	// 	e.preventDefault();
+	// 	console.log('submit', typeOfHCP);
+	// 	getDoctorList({ typeOfHCP, date });
+	// };
+
+	const allSpecialty = [
+		'General care physician',
+		'Endocrinologist',
+		'Dietitian',
+		'Certified diabetes educator',
+		'Podiatrist',
+		'Nephrologist',
+		'Ophthalmologist',
+		'Physical trainer',
+		'Dentist',
+		'Any'
+	];
 
 	useEffect(() => {
 		const today = new Date();
@@ -106,10 +114,9 @@ const FormSearchDoctor = () => {
 		setDate(today);
 	}, []);
 
-	console.log(doctors);
 	return (
 		<div className={classes.root}>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={() => {}}>
 				<Grid container className={classes.formContainer}>
 					<Grid item xs={12} sm={7} md={5} lg={4} className={classes.input}>
 						<TextInputRounder

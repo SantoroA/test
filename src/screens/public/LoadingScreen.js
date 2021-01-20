@@ -7,7 +7,7 @@ const LoadingScreen = () => {
 	return (
 		<Container>
 			<Grid style={{ height: '100vh' }} direction="row" justify="center" alignItems="center" container>
-				<Loader type="TailSpin" color="black" height={80} width={80} />
+				<Loader type="TailSpin" color="primary" height={80} width={80} />
 			</Grid>
 		</Container>
 	);

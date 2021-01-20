@@ -10,7 +10,12 @@ const ButtonFilterOption = styled(Button)({
 	paddingTop: '0.5rem',
 	paddingBottom: '0.5rem',
 	paddingRight: '1rem',
-	paddingLeft: '1rem'
+	paddingLeft: '1rem',
+	'&:hover': {
+		backgroundColor: '#07B597',
+		color: '#fff',
+		borderColor: '#fff'
+	}
 });
 
 export default ButtonFilterOption;

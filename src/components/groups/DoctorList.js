@@ -118,14 +118,26 @@ const useStyles = makeStyles({
 });
 
 const APPOINTMENTS_QUERY = gql`
-	query GetAppointments($appointmentDate: String!) {
-		appointments(appointmentDate: $appointmentDate) {
+	query GetAppointments(
+		$date: String!
+		$typeOfHCP: String!
+		$timeStart: String!
+		$timeEnd: String!
+		$minPrice: Float!
+		$maxPrice: Float!
+		$rating: Float!
+		$gender: String!
+		$insurance: String!
+	) {
+		appointments(appointmentDate: $date, typeOfHCP: $typeOfHCP, gender: $gender, insurance: $insurance) {
 			doctor {
 				firstName
 				lastName
 				gender
 				accoutId
 				profileInfo
+				typeOfHCP
+				insurance
 				image
 				rating {
 					averageRating
@@ -141,7 +153,7 @@ const APPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const DoctorList = ({ date, typeOfHCP }) => {
+const DoctorList = ({ date, typeOfHCP, timeStart, timeEnd, minPrice, maxPrice, rating, gender, insurance }) => {
 	const classes = useStyles();
 	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
@@ -151,11 +163,14 @@ const DoctorList = ({ date, typeOfHCP }) => {
 		start: 0,
 		end: showPerPage
 	});
-	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY, { variables: { date, typeOfHCP } });
+	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY, {
+		variables: { date, typeOfHCP, timeStart, timeEnd, minPrice, maxPrice, rating, gender, insurance }
+	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	//USER ID
 	// const { state: { userId } } = useContext(AuthContext);
 	const userId = '5fe8b0c48bef090026e253b7';
+
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
 		let min = new Date(start).getMinutes();
@@ -173,6 +188,7 @@ const DoctorList = ({ date, typeOfHCP }) => {
 				<Loader type="TailSpin" color="primary" height={80} width={80} />;
 			</Container>
 		);
+
 	return (
 		<div className={classes.mainContent}>
 			{docList !== null ? (
