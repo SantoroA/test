@@ -76,6 +76,7 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
 
 			{new Array(numberOfButtons).fill('').map((el, index) => (
 				<button
+					key={index}
 					className={`${index + 1 === counter ? classes.active : classes.btn}`}
 					onClick={() => setConuter(index + 1)}
 				>

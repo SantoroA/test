@@ -1,20 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
-import { Context as AuthContext } from '../../context/AuthContext';
 import DialogFilter from './DialogFilter';
+import DoctorList from './DoctorList';
+import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
 import ButtonIcon from '../customUi/ButtonIcon';
 import ButtonFilterOption from '../customUi/ButtonFilterOption';
 import FilterIcon from '../customIcons/FilterIcon';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
+import Calendar from '../../components/customUi/Calendar';
 //MATERIAL UI
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
-
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Container from '@material-ui/core/Container';
@@ -65,19 +66,29 @@ const useStyles = makeStyles({
 	},
 	filterInput: {
 		padding: '0.3rem'
+	},
+	content: {
+		marginTop: '2rem'
 	}
 });
+
 const FormSearchDoctor = () => {
+	//STATE
 	const [ timezone, setTimezone ] = useState('Eastern Time');
 	const [ nameZone, setNameZone ] = useState('New York, United States');
 	const [ typeOfHCP, setTypeOfHCP ] = useState('');
 	const [ date, setDate ] = useState('');
 	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
 	const [ filterType, setFilterType ] = useState('');
-	const { state: { userId } } = useContext(AuthContext);
-	// const userId = '5fe8b0c48bef090026e253b7';
-	const { getDoctorList, state: { doctors, allSpecialty } } = useContext(SearchDoctorContext);
+
 	const classes = useStyles();
+	//CONTEXT
+	const { getDoctorList, state: { doctors, allSpecialty } } = useContext(SearchDoctorContext);
+
+	let dateChoose = new Date(date).toDateString().split(' ');
+	let formatDate = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(date).toLocaleString('default', {
+		month: 'long'
+	})}`;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -86,13 +97,15 @@ const FormSearchDoctor = () => {
 	};
 
 	useEffect(() => {
-		const date = new Date();
-		const dateAsString = date.toString();
+		const today = new Date();
+		const dateAsString = today.toString();
 		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);
-	});
+		setDate(today);
+	}, []);
+
 	console.log(doctors);
 	return (
 		<div className={classes.root}>
@@ -217,6 +230,15 @@ const FormSearchDoctor = () => {
 							</Grid>
 						</Grid>
 					</PaperCustomShadow>
+				</Grid>
+			</Grid>
+			<Typography variant="h5">{formatDate}</Typography>
+			<Grid container className={classes.content}>
+				<Grid item md={9} className={classes.listContainer}>
+					<DoctorList date={date} typeOfHCP={typeOfHCP} />
+				</Grid>
+				<Grid item md={3}>
+					<Calendar />
 				</Grid>
 			</Grid>
 			<DialogFilter isOpen={filterDialogOpen} close={() => setFilterDialogOpen(false)} type={filterType} />

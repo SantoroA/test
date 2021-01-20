@@ -2,24 +2,19 @@ import React, { useState, useContext, useEffect, createRef } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import logo from '../../assets/dianurse-logo.png';
-import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-//CUSTOM UI
-import ButtonFilled from '../customUi/ButtonFilled';
-import ButtonOutlined from '../customUi/ButtonOutlined';
+
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
@@ -55,11 +50,11 @@ const useStyles = makeStyles({
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
 		backgroundColor: 'rgba(232, 232, 232, 1)',
 		color: 'rgba(160, 164, 168, 1)'
-    },
-    imageContainer: {
-        display: 'flex',
-        justifycontent: 'center'
-    }
+	},
+	imageContainer: {
+		display: 'flex',
+		justifycontent: 'center'
+	}
 });
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
@@ -68,7 +63,6 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	const [ imageChange, setImageChange ] = useState(image);
 	const inputFileRef = createRef(null);
 	const classes = useStyles();
-
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -108,9 +102,9 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 									<Paper
 										style={{
 											backgroundImage: `url(${imageChange})`,
-                                            backgroundSize: 'contain',
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundPosition: 'center'
+											backgroundSize: 'contain',
+											backgroundRepeat: 'no-repeat',
+											backgroundPosition: 'center'
 										}}
 										className={classes.media}
 									/>
@@ -128,10 +122,10 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 										style={{ display: 'none' }}
 										ref={inputFileRef}
 										onChange={(e) => {
-											let newImage = e.target?.files?.[0]; // this is for the DATABASE 
-											console.log("this is The NEwIMAGE", newImage);
+											let newImage = e.target?.files?.[0]; // this is for the DATABASE
+											console.log('this is The NEwIMAGE', newImage);
 											newImage = newImage ? setImageChange(URL.createObjectURL(newImage)) : null;
-											console.log("this is The SECOND NEwIMAGE", newImage);
+											console.log('this is The SECOND NEwIMAGE', newImage);
 										}}
 									/>
 									<IconButton component="span">

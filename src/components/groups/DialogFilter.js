@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logo from '../../assets/dianurse-logo.png';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonOutlined from '../customUi/ButtonOutlined';
@@ -13,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 

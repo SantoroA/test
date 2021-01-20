@@ -1,8 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import Pagination from './Pagination';
 import DialogReserve from './DialogReserve';
+import Loader from 'react-loader-spinner';
+import { useQuery, gql } from '@apollo/client';
+import MessageDialog from './MessageDialog';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import BoxTime from '../../components/customUi/BoxTime';
@@ -15,6 +19,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
@@ -112,7 +117,31 @@ const useStyles = makeStyles({
 	}
 });
 
-const DoctorList = () => {
+const APPOINTMENTS_QUERY = gql`
+	query GetAppointments($appointmentDate: String!) {
+		appointments(appointmentDate: $appointmentDate) {
+			doctor {
+				firstName
+				lastName
+				gender
+				accoutId
+				profileInfo
+				image
+				rating {
+					averageRating
+					receivedRating
+				}
+			}
+			appointmentDate
+			appointmentTimeStart
+			appointmentTimeEnd
+			appointmentStatus
+			amount
+		}
+	}
+`;
+
+const DoctorList = ({ date, typeOfHCP }) => {
 	const classes = useStyles();
 	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
@@ -122,6 +151,11 @@ const DoctorList = () => {
 		start: 0,
 		end: showPerPage
 	});
+	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY, { variables: { date, typeOfHCP } });
+	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
+	//USER ID
+	// const { state: { userId } } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
 		let min = new Date(start).getMinutes();
@@ -132,6 +166,13 @@ const DoctorList = () => {
 	const onPaginationChange = (start, end) => {
 		setPagination({ start: start, end: end });
 	};
+
+	if (loading)
+		return (
+			<Container>
+				<Loader type="TailSpin" color="primary" height={80} width={80} />;
+			</Container>
+		);
 	return (
 		<div className={classes.mainContent}>
 			{docList !== null ? (
@@ -211,6 +252,7 @@ const DoctorList = () => {
 				})
 			) : null}
 			<DialogReserve open={dialogReserveOpen} id={docId} close={() => setDialogReserveOpen(false)} />
+			<MessageDialog open={dialogOpen} message={error} close={() => setDialogOpen(false)} />
 			<Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={docList.length} />
 		</div>
 	);

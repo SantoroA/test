@@ -11,6 +11,14 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'fontsource-roboto';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+
+// PROVIDE URL OF RUNNING GRAPHQL SERVER
+
+const client = new ApolloClient({
+	uri: 'http://localhost:10101/dianurse/v1/graphql',
+	cache: new InMemoryCache()
+});
 
 const theme = createMuiTheme({
 	typography: {
@@ -39,19 +47,21 @@ const Routes = () => {
 
 const App = () => {
 	return (
-		<AuthProvider>
-			<AvailabilityProvider>
-				<SearchDoctorProvider>
-					<DocProfileProvider>
-						<LanguageProvider>
-							<ThemeProvider theme={theme}>
-								<Routes />
-							</ThemeProvider>
-						</LanguageProvider>
-					</DocProfileProvider>
-				</SearchDoctorProvider>
-			</AvailabilityProvider>
-		</AuthProvider>
+		<ApolloProvider client={client}>
+			<AuthProvider>
+				<AvailabilityProvider>
+					<SearchDoctorProvider>
+						<DocProfileProvider>
+							<LanguageProvider>
+								<ThemeProvider theme={theme}>
+									<Routes />
+								</ThemeProvider>
+							</LanguageProvider>
+						</DocProfileProvider>
+					</SearchDoctorProvider>
+				</AvailabilityProvider>
+			</AuthProvider>
+		</ApolloProvider>
 	);
 };
 

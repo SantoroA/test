@@ -1,16 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import FormSearchDoctor from '../../components/groups/FormSearchDoctor';
-import dianurseApi from '../../api/dianurseApi';
-import DoctorList from '../../components/groups/DoctorList';
-import Calendar from '../../components/customUi/Calendar';
-import MessageDialog from '../../components/groups/MessageDialog';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
@@ -30,9 +23,7 @@ const useStyles = makeStyles({
 		color: '#52575C',
 		marginBottom: '2rem'
 	},
-	content: {
-		marginTop: '2rem'
-	},
+
 	dateSearch: {
 		padding: '15px',
 		width: '43.5rem',
@@ -53,9 +44,7 @@ const useStyles = makeStyles({
 });
 
 const PatDoctorSearchScreen = () => {
-	const { state: { dialogMessage, dialogOpen, formatDate }, closeDialog } = useContext(SearchDoctorContext);
 	const classes = useStyles();
-
 	return (
 		<PatLayoutContainer>
 			<Container maxWidth="lg">
@@ -72,23 +61,7 @@ const PatDoctorSearchScreen = () => {
 				</Typography>
 				<Container>
 					<FormSearchDoctor />
-					<div className={classes.content}>
-						<Box className={classes.dateSearch}>
-							<Typography variant="h5" color="textSecondary" component="p">
-								{formatDate}
-							</Typography>
-						</Box>
-						<Grid container>
-							<Grid item md={9} className={classes.listContainer}>
-								<DoctorList />
-							</Grid>
-							<Grid item md={3}>
-								<Calendar />
-							</Grid>
-						</Grid>
-					</div>
 				</Container>
-				<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
 			</Container>
 		</PatLayoutContainer>
 	);
