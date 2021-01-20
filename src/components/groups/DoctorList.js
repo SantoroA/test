@@ -153,7 +153,8 @@ const APPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const DoctorList = ({ date, typeOfHCP, timeStart, timeEnd, minPrice, maxPrice, rating, gender, insurance }) => {
+const DoctorList = ({ filterState }) => {
+	const { gender, timeFrame, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 	const classes = useStyles();
 	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
@@ -164,7 +165,7 @@ const DoctorList = ({ date, typeOfHCP, timeStart, timeEnd, minPrice, maxPrice, r
 		end: showPerPage
 	});
 	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, timeStart, timeEnd, minPrice, maxPrice, rating, gender, insurance }
+		variables: { date, typeOfHCP, timeFrame, minPrice, maxPrice, rating, gender, insurance }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	//USER ID

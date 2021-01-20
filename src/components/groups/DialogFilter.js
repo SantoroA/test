@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import logo from '../../assets/dianurse-logo.png';
+import React, { useState, Fragment } from 'react';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
-import ButtonOutlined from '../customUi/ButtonOutlined';
-import ButtonNoBorder from '../customUi/ButtonNoBorder';
-
+import TextInput from '../customUi/TextInput';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import Box from '@material-ui/core/Box';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
 import Divider from '@material-ui/core/Divider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Slider from '@material-ui/core/Slider';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import TextField from '@material-ui/core/TextField';
+import FormLabel from '@material-ui/core/FormLabel';
 import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
 	layout: {
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		padding: '2rem',
 		textAlign: 'center'
+	},
+	input: {
+		padding: '0.5rem'
 	},
 	textField: {
 		marginLeft: theme.spacing(1),
@@ -68,196 +71,258 @@ const useStyles = makeStyles((theme) => ({
 	},
 	filter: {
 		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'flex-start'
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+	rates: {
+		alignItems: 'center'
 	}
 }));
 
-const TimeFilter = () => {
+const TimeFilter = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	const [ state, setState ] = useState({
-		checkedA: true,
-		checkedB: true,
-		checkedC: false
-	});
 
-	const handleChange = (event) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
+	const handleChange = (e) => {
+		setFilterState({ ...filterState, timeFrame: e.target.value });
 	};
 	return (
 		<Grid className={classes.time}>
-			<FormControlLabel
-				control={<Checkbox checked={state.checkedA} color="primary" onChange={handleChange} name="checkedA" />}
-				label="Morning - From 6AM to 12AM"
-			/>
-			<FormControlLabel
-				control={<Checkbox checked={state.checkedB} color="primary" onChange={handleChange} name="checkedB" />}
-				label="Afternoon - From 1PM to 6PM"
-			/>
-			<FormControlLabel
-				control={<Checkbox checked={state.checkedC} color="primary" onChange={handleChange} name="checkedC" />}
-				label="Night - From 7PM to 10PM"
-			/>
+			<FormControl component="fieldset">
+				<FormLabel component="legend">Time Frame</FormLabel>
+				<RadioGroup
+					aria-label="time-frame"
+					name="time-frame"
+					value={filterState.timeFrame}
+					onChange={handleChange}
+				>
+					<FormControlLabel
+						value="morning"
+						control={<Radio color="primary" />}
+						label="Morning - From 6:00 to 11:59"
+					/>
+					<FormControlLabel
+						value="afternoon"
+						control={<Radio color="primary" />}
+						label="Afternoon - From 12:00 to 17:59"
+					/>
+					<FormControlLabel
+						value="evening"
+						control={<Radio color="primary" />}
+						label="Night - From 18:00 to 22:00"
+					/>
+				</RadioGroup>
+			</FormControl>
 		</Grid>
 	);
 };
 
-const PriceFilter = () => {
+const PriceFilter = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	const [ slider, setSlider ] = useState(70);
-	const [ values, setValues ] = useState({
-		priceMin: '',
-		priceMax: ''
-	});
+	const [ sliderValue, setSliderValue ] = useState([ filterState.minPrice, filterState.maxPrice ]);
 	const handleSlider = (event, newValue) => {
-		setSlider(newValue);
+		setSliderValue(newValue);
+		setFilterState({ ...filterState, minPrice: newValue[0], maxPrice: newValue[1] });
 	};
-	const handleChange = (prop) => (event) => {
-		setValues({ ...values, [prop]: event.target.value });
-	};
-
+	function valuetext(value) {
+		return `$${value}`;
+	}
 	return (
-		<Grid>
-			<Typography>The average consultation price is $70</Typography>
-			<Slider value={slider} aria-labelledby="continuous-slider" onChange={handleSlider} />
-			<Grid>
-				<TextField
-					id="outlined1"
+		<Grid container>
+			<Grid item xs={12}>
+				<Typography id="range-slider" gutterBottom>
+					Consultation Price
+				</Typography>
+				<Slider
+					value={sliderValue}
+					onChange={handleSlider}
+					valueLabelDisplay="auto"
+					aria-labelledby="range-slider"
+					getAriaValueText={valuetext}
+					max={200}
+				/>
+			</Grid>
+
+			<Grid item xs={6} className={classes.input}>
+				<TextInput
 					label="Min Price"
-					style={{ margin: 8 }}
-					placeholder="$ 30.00"
-					value={values.priceMin}
-					onChange={handleChange('priceMin')}
+					value={filterState.minPrice}
+					onChange={(e) => setFilterState({ ...filterState, minPrice: e.target.value })}
 					margin="dense"
-					InputLabelProps={{
-						shrink: true
-					}}
 					variant="outlined"
 				/>
-				<TextField
-					id="outlined"
-					style={{ margin: 8 }}
-					value={values.priceMax}
-					onChange={handleChange('priceMax')}
+			</Grid>
+			<Grid item xs={6} className={classes.input}>
+				<TextInput
+					label="Max Price"
+					value={filterState.maxPrice}
+					onChange={(e) => setFilterState({ ...filterState, maxPrice: e.target.value })}
 					placeholder="Max Price"
 					margin="dense"
-					InputLabelProps={{
-						shrink: true
-					}}
 					variant="outlined"
 				/>
 			</Grid>
 		</Grid>
 	);
 };
-const RatingFilter = () => {
+
+const RatingFilter = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	const [ rate, setRate ] = useState(4.55);
-	const handleChange = (event, value) => {
-		setRate(value);
-	};
+	console.log(filterState.rating);
 	return (
 		<Grid className={classes.rating}>
-			<Rating
-				name="half-rating"
-				defaultValue={rate}
-				precision={0.5}
-				onChange={handleChange}
-				className={classes.star}
-			/>
-			{rate}+
+			<FormControl component="fieldset">
+				<FormLabel component="legend">Rating</FormLabel>
+				<RadioGroup
+					aria-label="rating"
+					name="rating"
+					value={filterState.rating}
+					onChange={(e) => setFilterState({ ...filterState, rating: e.target.value })}
+				>
+					<FormControlLabel
+						value={3}
+						control={<Radio color="primary" />}
+						label={
+							<Fragment>
+								<Grid container className={classes.rates}>
+									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
+										<Rating
+											readOnly
+											precision={0.5}
+											name="rating"
+											value={3}
+											emptyIcon={<StarBorderIcon fontSize="inherit" />}
+										/>
+									</Box>
+									<Typography component="legend" variant="body2">
+										3+
+									</Typography>
+								</Grid>
+							</Fragment>
+						}
+					/>
+					<FormControlLabel
+						value={3.5}
+						control={<Radio color="primary" />}
+						label={
+							<Fragment>
+								<Grid container className={classes.rates}>
+									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
+										<Rating
+											readOnly
+											precision={0.5}
+											name="rating"
+											value={3.5}
+											emptyIcon={<StarBorderIcon fontSize="inherit" />}
+										/>
+									</Box>
+									<Typography component="legend" variant="body2">
+										3.5+
+									</Typography>
+								</Grid>
+							</Fragment>
+						}
+					/>
+					<FormControlLabel
+						value={4}
+						control={<Radio color="primary" />}
+						label={
+							<Fragment>
+								<Grid container className={classes.rates}>
+									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
+										<Rating
+											readOnly
+											precision={0.5}
+											name="rating"
+											value={4}
+											emptyIcon={<StarBorderIcon fontSize="inherit" />}
+										/>
+									</Box>
+									<Typography component="legend" variant="body2">
+										4+
+									</Typography>
+								</Grid>
+							</Fragment>
+						}
+					/>
+					<FormControlLabel
+						value={4.5}
+						control={<Radio color="primary" />}
+						label={
+							<Fragment>
+								<Grid container className={classes.rates}>
+									<Box component="fieldset" borderColor="transparent" className={classes.rating}>
+										<Rating
+											readOnly
+											precision={0.5}
+											name="rating"
+											value={4.5}
+											emptyIcon={<StarBorderIcon fontSize="inherit" />}
+										/>
+									</Box>
+									<Typography component="legend" variant="body2">
+										4.5+
+									</Typography>
+								</Grid>
+							</Fragment>
+						}
+					/>
+				</RadioGroup>
+			</FormControl>
 		</Grid>
 	);
 };
-const MoreFilters = () => {
+const MoreFilters = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	const [ state, setState ] = useState({
-		checkedFemale: true,
-		checkedMale: false,
-		checkedAll: false,
-		checkedPrivate: true,
-		checkedPublic: false
-	});
 
-	const handleChange = (event) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
-	};
 	return (
-		<Grid className={classes.moreFilters}>
-			<Grid className={classes.filter}>
-				<Typography>Gender</Typography>
-
-				<Grid>
-					<FormControlLabel
-						control={
-							<Checkbox
-								checked={state.checkedFemale}
-								color="primary"
-								onChange={handleChange}
-								name="checkedFemale"
-							/>
-						}
-						label="Female"
-					/>
-					<FormControlLabel
-						control={
-							<Checkbox
-								checked={state.checkedMale}
-								color="primary"
-								onChange={handleChange}
-								name="checkedMale"
-							/>
-						}
-						label="Male"
-					/>
-					<FormControlLabel
-						control={
-							<Checkbox
-								checked={state.checkedAll}
-								color="primary"
-								onChange={handleChange}
-								name="checkedAll"
-							/>
-						}
-						label="All"
-					/>
-				</Grid>
-			</Grid>
+		<Grid container className={classes.moreFilters}>
+			<FormControl component="fieldset">
+				<FormLabel component="legend">Gender</FormLabel>
+				<RadioGroup
+					aria-label="gender"
+					name="gender"
+					value={filterState.gender}
+					onChange={(e) => setFilterState({ ...filterState, gender: e.target.value })}
+				>
+					<Grid container className={classes.filter}>
+						<FormControlLabel value="female" control={<Radio color="primary" />} label="Female" />
+						<FormControlLabel value="male" control={<Radio color="primary" />} label="Male" />
+						<FormControlLabel value="all" control={<Radio color="primary" />} label="All" />
+					</Grid>
+				</RadioGroup>
+			</FormControl>
 
 			<Divider className={classes.divider} light />
 			<Grid className={classes.filter}>
-				<Typography>Insurance Type</Typography>
-
-				<Grid>
-					<FormControlLabel
-						control={
-							<Checkbox
-								checked={state.checkedPrivate}
-								color="primary"
-								onChange={handleChange}
-								name="checkedPrivate"
+				<FormControl component="fieldset">
+					<FormLabel component="legend">Insurance Type</FormLabel>
+					<RadioGroup
+						aria-label="insurance"
+						name="insurance"
+						value={filterState.insurance}
+						onChange={(e) => setFilterState({ ...filterState, insurance: e.target.value })}
+					>
+						<Grid container className={classes.filter}>
+							<FormControlLabel
+								value="public"
+								control={<Radio color="primary" />}
+								label="Public Insurance"
 							/>
-						}
-						label="Private Insurance"
-					/>
-					<FormControlLabel
-						control={
-							<Checkbox
-								checked={state.checkedPublic}
-								color="primary"
-								onChange={handleChange}
-								name="checkedPublic"
+							<FormControlLabel
+								value="private"
+								control={<Radio color="primary" />}
+								label="Private Insurance"
 							/>
-						}
-						label="Public Insurance"
-					/>
-				</Grid>
+							<FormControlLabel value="all" control={<Radio color="primary" />} label="All" />
+						</Grid>
+					</RadioGroup>
+				</FormControl>
 			</Grid>
 		</Grid>
 	);
 };
 
-const DialogFilter = ({ isOpen, close, type }) => {
+const DialogFilter = ({ isOpen, close, type, filterState, setFilterState }) => {
 	const classes = useStyles();
 	return (
 		<Dialog
@@ -272,19 +337,16 @@ const DialogFilter = ({ isOpen, close, type }) => {
 				</IconButton>
 
 				<DialogContent>
-					{type === 'time' && <TimeFilter />}
-					{type === 'price' && <PriceFilter />}
-					{type === 'rating' && <RatingFilter />}
-					{type === 'more' && <MoreFilters />}
+					{type === 'time' && <TimeFilter filterState={filterState} setFilterState={setFilterState} />}
+					{type === 'price' && <PriceFilter filterState={filterState} setFilterState={setFilterState} />}
+					{type === 'rating' && <RatingFilter filterState={filterState} setFilterState={setFilterState} />}
+					{type === 'more' && <MoreFilters filterState={filterState} setFilterState={setFilterState} />}
 					<Divider className={classes.divider} />
 				</DialogContent>
 
 				<DialogActions className={classes.dialogActions}>
-					<ButtonNoBorder onClick={close} color="primary" style={{ width: '100%' }}>
-						Clear
-					</ButtonNoBorder>
-					<ButtonFilled onClick={close} color="primary" style={{ width: '100%' }}>
-						Save
+					<ButtonFilled onClick={close} color="primary">
+						Ok
 					</ButtonFilled>
 				</DialogActions>
 			</Grid>

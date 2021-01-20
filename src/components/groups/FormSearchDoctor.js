@@ -74,14 +74,24 @@ const FormSearchDoctor = () => {
 	//STATE
 	const [ timezone, setTimezone ] = useState('Eastern Time');
 	const [ nameZone, setNameZone ] = useState('New York, United States');
-	const [ typeOfHCP, setTypeOfHCP ] = useState('Certified diabetes educator');
-	const [ date, setDate ] = useState('');
+	// const [ typeOfHCP, setTypeOfHCP ] = useState('Certified diabetes educator');
+	// const [ date, setDate ] = useState('');
 	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
 	const [ filterType, setFilterType ] = useState('');
+	const [ filterState, setFilterState ] = useState({
+		gender: 'all',
+		timeFrame: 'morning',
+		insurance: 'public',
+		minPrice: 70,
+		maxPrice: 150,
+		rating: 3,
+		date: '',
+		typeOfHCP: 'Certified diabetes educator'
+	});
 	const classes = useStyles();
 
-	let dateChoose = new Date(date).toDateString().split(' ');
-	let formatDate = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(date).toLocaleString('default', {
+	let dateChoose = new Date(filterState.date).toDateString().split(' ');
+	let formatDate = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
 		month: 'long'
 	})}`;
 
@@ -111,7 +121,7 @@ const FormSearchDoctor = () => {
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);
-		setDate(today);
+		setFilterState({ ...filterState, date: today });
 	}, []);
 
 	return (
@@ -125,8 +135,8 @@ const FormSearchDoctor = () => {
 							label="Speciality"
 							select
 							variant="outlined"
-							value={typeOfHCP}
-							onChange={(e) => setTypeOfHCP(e.target.value)}
+							value={filterState.typeOfHCP}
+							onChange={(e) => setFilterState({ ...filterState, typeOfHCP: e.target.value })}
 							InputLabelProps={{
 								shrink: true
 							}}
@@ -149,8 +159,8 @@ const FormSearchDoctor = () => {
 							label="Date"
 							type="date"
 							variant="outlined"
-							value={date}
-							onChange={(e) => setDate(e.target.value)}
+							value={filterState.date}
+							onChange={(e) => setFilterState({ ...filterState, date: e.target.value })}
 							InputLabelProps={{
 								shrink: true
 							}}
@@ -242,13 +252,19 @@ const FormSearchDoctor = () => {
 			<Typography variant="h5">{formatDate}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList date={date} typeOfHCP={typeOfHCP} />
+					<DoctorList filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
 					<Calendar />
 				</Grid>
 			</Grid>
-			<DialogFilter isOpen={filterDialogOpen} close={() => setFilterDialogOpen(false)} type={filterType} />
+			<DialogFilter
+				filterState={filterState}
+				setFilterState={setFilterState}
+				isOpen={filterDialogOpen}
+				close={() => setFilterDialogOpen(false)}
+				type={filterType}
+			/>
 		</div>
 	);
 };
