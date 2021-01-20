@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import logo from '../../assets/dianurse-logo.png';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonOutlined from '../customUi/ButtonOutlined';
+import ButtonNoBorder from '../customUi/ButtonNoBorder';
+
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
@@ -13,11 +17,23 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Slider from '@material-ui/core/Slider';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import TextField from '@material-ui/core/TextField';
+import Rating from '@material-ui/lab/Rating';
 
-const useStyles = makeStyles({
+
+const theme = createMuiTheme({
+	typography: {
+	  body1: {
+		fontWeight: 600 // or 'bold'
+	  }
+	}
+   })
+
+const useStyles = makeStyles((theme) =>({
 	layout: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -26,52 +42,192 @@ const useStyles = makeStyles({
 		padding: '2rem',
 		textAlign: 'center'
 	},
+	textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+		width: '25ch',
+	  },
+	time: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'flex-start'
+	},
 	logo: {
 		width: '8rem',
 		marginBottom: '2rem'
 	},
 	divider: {
 		marginTop: '1rem',
-		marginBottom: '1rem'
+		marginBottom: '1rem',
 	},
 	closeButton: {
 		alignSelf: 'flex-end'
+	},
+	dialogActions: {
+		width: '90%'
+
+	},
+	rating: {
+		
+		display: 'flex',
+		alignItems: 'center'
+	},
+	star: {
+		marginRight: '0.5rem'
+	},
+	moreFilters: {
+		display: 'flex',
+		flexDirection: 'column'
+	},
+	filter: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'flex-start'
 	}
-});
+}));
 
 const TimeFilter = () => {
+	const classes = useStyles();
 	const [ state, setState ] = useState({
 		checkedA: true,
 		checkedB: true,
-		checkedF: true,
-		checkedG: true
+		checkedC: false
 	});
 
 	const handleChange = (event) => {
 		setState({ ...state, [event.target.name]: event.target.checked });
 	};
 	return (
-		<div>
+		<Grid className={classes.time}>
 			<FormControlLabel
 				control={<Checkbox checked={state.checkedA} color="primary" onChange={handleChange} name="checkedA" />}
-				label="Morning"
+				label="Morning - From 6AM to 12AM"
 			/>
 			<FormControlLabel
 				control={<Checkbox checked={state.checkedB} color="primary" onChange={handleChange} name="checkedB" />}
-				label="Afternoon"
+				label="Afternoon - From 1PM to 6PM"
 			/>
-		</div>
+			<FormControlLabel
+				control={<Checkbox checked={state.checkedC} color="primary" onChange={handleChange} name="checkedC" />}
+				label="Night - From 7PM to 10PM"
+			/>		
+			
+		</Grid>
 	);
 };
 
 const PriceFilter = () => {
-	return <Typography>Place price filter here</Typography>;
+	const classes = useStyles();
+	const [slider, setSlider] =useState(70)
+	const [values, setValues] = useState({
+		priceMin: '',
+		priceMax: ''
+	});
+const handleSlider = (event, newValue) => {
+	setSlider(newValue);
+}
+	const handleChange = (prop) => (event) => {
+		setValues({ ...values, [prop]: event.target.value });
+	};
+
+	
+	return <Grid>
+		<Typography>The average consultation price is $70</Typography>
+		<Slider value={slider} aria-labelledby="continuous-slider" onChange={handleSlider} />
+<Grid>
+<TextField
+          id="outlined1"
+          label="Min Price"
+          style={{ margin: 8 }}
+          placeholder="$ 30.00"
+          
+		  value={values.priceMin}
+		  onChange={handleChange('priceMin')}
+          margin="dense"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+        />
+		<TextField
+          id="outlined"
+          
+		  style={{ margin: 8 }}
+		  value={values.priceMax}
+		  onChange={handleChange('priceMax')}
+          placeholder="Max Price"
+          
+          
+          margin="dense"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+        />
+</Grid>
+	</Grid>
+
 };
 const RatingFilter = () => {
-	return <Typography>Place rating filter here</Typography>;
+	const classes = useStyles();
+	const [rate, setRate] = useState(4.55);
+	const handleChange = (event, value) =>{
+		setRate(value);
+	}
+	return <Grid className={classes.rating}>
+		<Rating name="half-rating" defaultValue={rate} precision={0.05} onChange={handleChange} className={classes.star}/>
+		{rate}+
+	</Grid>
 };
 const MoreFilters = () => {
-	return <Typography>Place more filters here</Typography>;
+	const classes = useStyles();
+	const [ state, setState ] = useState({
+		checkedFemale: true,
+		checkedMale: false,
+		checkedAll: false,
+		checkedPrivate: true,
+		checkedPublic: false
+	});
+
+	const handleChange = (event) => {
+		setState({ ...state, [event.target.name]: event.target.checked });
+	};
+	return <Grid className={classes.moreFilters}>
+		<Grid className={classes.filter}>
+		<ThemeProvider theme={theme}><Typography>Gender</Typography></ThemeProvider>
+		<Grid>
+			<FormControlLabel
+				control={<Checkbox checked={state.checkedFemale} color="primary" onChange={handleChange} name="checkedFemale" />}
+				label="Female"
+			/>
+			<FormControlLabel
+				control={<Checkbox checked={state.checkedMale} color="primary" onChange={handleChange} name="checkedMale" />}
+				label="Male"
+			/>
+			<FormControlLabel
+				control={<Checkbox checked={state.checkedAll} color="primary" onChange={handleChange} name="checkedAll" />}
+				label="All"
+			/>		
+			 </Grid>
+		</Grid>
+		
+		<Divider className={classes.divider} light />
+		<Grid className={classes.filter}>
+		<ThemeProvider theme={theme}><Typography >Insurance Type</Typography></ThemeProvider>	
+			<Grid>
+			<FormControlLabel
+				control={<Checkbox checked={state.checkedPrivate} color="primary" onChange={handleChange} name="checkedPrivate" />}
+				label="Private Insurance"
+			/>
+			<FormControlLabel
+				control={<Checkbox checked={state.checkedPublic} color="primary" onChange={handleChange} name="checkedPublic" />}
+				label="Public Insurance"
+			/>	
+			</Grid>
+			</Grid>
+		
+	</Grid> 
+	
 };
 
 const DialogFilter = ({ isOpen, close, type }) => {
@@ -93,13 +249,14 @@ const DialogFilter = ({ isOpen, close, type }) => {
 					{type === 'price' && <PriceFilter />}
 					{type === 'rating' && <RatingFilter />}
 					{type === 'more' && <MoreFilters />}
-				</DialogContent>
-				<Divider className={classes.divider} />
-				<DialogActions>
-					<ButtonOutlined onClick={close} color="primary">
+					<Divider className={classes.divider} />
+				</DialogContent>				
+				
+				<DialogActions className={classes.dialogActions}>
+					<ButtonNoBorder onClick={close} color="primary" style={{width: '100%'}}>
 						Clear
-					</ButtonOutlined>
-					<ButtonFilled onClick={close} color="primary">
+					</ButtonNoBorder>
+					<ButtonFilled onClick={close} color="primary" style={{width: '100%'}}>
 						Save
 					</ButtonFilled>
 				</DialogActions>
