@@ -77,7 +77,7 @@ const DialogReserve = ({ open, close, id }) => {
 								<BoxTime>
 									{convertTime(ap.appointmentTimeStart)} - {convertTime(ap.appointmentTimeEnd)}
 								</BoxTime>
-								<Typography className={classes.price}>{ap.amount}</Typography>
+								<Typography className={classes.price}>$ {ap.amount}</Typography>
 								<ButtonFilled
 									onClick={() => {
 										reserve({

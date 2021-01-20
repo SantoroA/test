@@ -249,6 +249,7 @@ const DoctorList = ({ date, typeOfHCP, timeStart, timeEnd, minPrice, maxPrice, r
 								</Typography>
 
 								<Typography className={classes.priceText} variant="body1">
+									${' '}
 									{Math.min(
 										...doctors.filter((el) => el.profileHCPid._id === doc.id).map((e) => e.amount)
 									)}
