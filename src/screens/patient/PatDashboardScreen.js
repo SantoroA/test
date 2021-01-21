@@ -21,15 +21,15 @@ import PrescriptionIcon from '../../components/customIcons/PrescriptionIcon';
 import LabTestsIcon from '../../components/customIcons/LabTestsIcon';
 import QuestionnaireIcon from '../../components/customIcons/QuestionnaireIcon';
 //MATERIAL UI
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
+import SearchIcon from '@material-ui/icons/Search';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 const useStyles = makeStyles({
 	userInfo: {
@@ -66,9 +66,18 @@ const useStyles = makeStyles({
 		marginRight: '1em',
 		marginTop: '3.5em'
 	},
-	button: {
+	buttonNav: {
 		textDecoration: 'none',
 		marginBottom: '1rem'
+	},
+	button: {
+		paddingBottom: '0.7rem',
+		paddingTop: '0.7rem',
+		paddingLeft: '1.5em',
+		paddingRight: '1.5rem'
+	},
+	buttonIcon: {
+		marginRight: '0.3rem'
 	}
 });
 
@@ -119,12 +128,14 @@ const PatDashboardScreen = () => {
 				</Grid>
 
 				<Grid item lg={3} sm={4} xs={12} className={classes.userOptions}>
-					<NavLink className={classes.button} to="/in/patient/doctorsearch">
-						<ButtonFilled variant="contained">Search for a Doctor</ButtonFilled>
+					<NavLink className={classes.buttonNav} to="/in/patient/doctorsearch">
+						<ButtonFilled className={classes.button} variant="contained">
+							<SearchIcon className={classes.buttonIcon} /> Search for a Doctor
+						</ButtonFilled>
 					</NavLink>
 
-					<ButtonOutlined variant="outlined" color="primary">
-						Meet the assistant
+					<ButtonOutlined className={classes.button} variant="outlined" color="primary">
+						<ChatBubbleOutlineIcon className={classes.buttonIcon} /> Meet the assistant
 					</ButtonOutlined>
 				</Grid>
 			</Grid>
