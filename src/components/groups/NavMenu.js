@@ -1,32 +1,35 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
+import { Context as PatProfileContext } from '../../context/PatProfileContext';
 //MaterialUI
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import Avatar from '@material-ui/core/Avatar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 const useStyles = makeStyles({
-	iconButton: {
-		display: 'flex',
-		color: '#808080'
-	},
 	loginName: {
-		color: '#000',
-		marginLeft: '0.5em'
+		color: 'rgba(82, 87, 92, 1)',
+		marginLeft: '0.2rem',
+		marginRight: '0.5rem',
+		fontWeight: 700
 	},
-	menuStyle: {
-		marginTop: '3em'
+	menu: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center'
 	}
 });
 
 const NavMenu = () => {
 	const classes = useStyles();
 	const [ menuItem, setMenuItem ] = useState(null);
-	const { logout, state: { userName, userAmIHCP } } = useContext(AuthContext);
+	const { logout, state: { userAmIHCP } } = useContext(AuthContext);
+	const { state: { firstName, image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
 
 	const handleChange = (event) => {
 		setMenuItem(event.currentTarget);
@@ -37,7 +40,7 @@ const NavMenu = () => {
 	};
 
 	return (
-		<div>
+		<div className={classes.menu}>
 			<IconButton
 				aria-controls="menu-appbar"
 				aria-haspopup="true"
@@ -45,11 +48,11 @@ const NavMenu = () => {
 				color="inherit"
 				className={classes.iconButton}
 			>
-				<AccountCircle fontSize="large" />
-				<Typography variant="h6" className={classes.loginName}>
-					{userName}
-				</Typography>
+				<Avatar alt={firstName} src={image} className={classes.large} />
 			</IconButton>
+			<Typography variant="h6" className={classes.loginName}>
+				{firstName}
+			</Typography>
 			{userAmIHCP ? (
 				<Menu
 					id="menu-appbar"
