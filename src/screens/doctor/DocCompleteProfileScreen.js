@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import { Context as AuthContext } from '../../context/AuthContext';
-import Typography from '@material-ui/core/Typography';
 import { NavLink, Prompt } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
@@ -18,6 +17,7 @@ import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
 
 //MATERIAL UI
+import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';

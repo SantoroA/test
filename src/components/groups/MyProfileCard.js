@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
+import { Context as PatProfileContext } from '../../context/PatProfileContext';
 //MATERIAL UI
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -39,46 +40,41 @@ const useStyles = makeStyles({
 
 const MyProfileCard = () => {
 	const classes = useStyles();
-	const { state: { firstName, lastName, image, specialty } } = useContext(DocProfileContext);
 	const { state: { userAmIHCP } } = useContext(AuthContext);
-	if (userAmIHCP) {
-		return (
-			<Card elevation={0} className={classes.root}>
-				<CardMedia className={classes.cover} image={image} title={`Dr. ${lastName}`} />
+	const { state: { firstName, lastName, image, specialty, phoneNumber, email } } = useContext(
+		userAmIHCP ? DocProfileContext : PatProfileContext
+	);
 
-				<CardContent className={classes.content}>
-					<Typography variant="h4" className={classes.docName}>
-						Dr. {firstName} {lastName}
-					</Typography>
-					<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
-						{specialty}
-					</Typography>
-				</CardContent>
-			</Card>
-		);
-	} else {
-		return (
-			<Card elevation={0} className={classes.root}>
-				<CardMedia
-					className={classes.cover}
-					image="https://images.pexels.com/photos/4226462/pexels-photo-4226462.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-					title="Patient Card"
-				/>
+	return (
+		<Card elevation={0} className={classes.root}>
+			<CardMedia className={classes.cover} image={image} title={lastName} />
 
-				<CardContent className={classes.content}>
-					<Typography variant="h4" className={classes.docName}>
-						Patient Name
-					</Typography>
-					<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
-						<PhoneIcon className={classes.icon} color="primary" /> phone
-					</Typography>
-					<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
-						<MailIcon className={classes.icon} color="primary" /> email
-					</Typography>
-				</CardContent>
-			</Card>
-		);
-	}
+			<CardContent className={classes.content}>
+				{userAmIHCP ? (
+					<div>
+						<Typography variant="h4" className={classes.docName}>
+							Dr. {firstName} {lastName}
+						</Typography>
+						<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
+							{specialty}
+						</Typography>
+					</div>
+				) : (
+					<div>
+						<Typography variant="h4" className={classes.docName}>
+							{firstName} {lastName}
+						</Typography>
+						<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
+							<PhoneIcon className={classes.icon} color="primary" /> {phoneNumber}
+						</Typography>
+						<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
+							<MailIcon className={classes.icon} color="primary" /> {email}
+						</Typography>
+					</div>
+				)}
+			</CardContent>
+		</Card>
+	);
 };
 
 export default MyProfileCard;

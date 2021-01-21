@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
-
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import MyProfileCard from '../../components/groups/MyProfileCard';
 import TabDocuments from '../../components/tabs/TabDocuments';
@@ -37,7 +36,7 @@ const useStyles = makeStyles({
 		padding: '2rem'
 	},
 	userOptions: {
-		paddingLeft: '2rem',
+		padding: '2rem',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',

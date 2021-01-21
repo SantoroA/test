@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import { Context as PatProfileContext } from '../../../context/PatProfileContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
 import DialogPicture from '../DialogPicture';
@@ -22,13 +23,12 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const FormEmailAndPassword = () => {
-	const { updatePassword, state: { userId, isSocialMedia } } = useContext(AuthContext);
-	const { state: { email, image } } = useContext(DocProfileContext);
+	const { updatePassword, state: { userId, isSocialMedia, userAmIHCP } } = useContext(AuthContext);
+	const { state: { email, image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
 	const [ showChangePass, setShowChangePass ] = useState(true);
-
 	const [ isDialogOpen, setIsDialogOpen ] = useState(false);
 	const inputFileRef = createRef(null);
 	const classes = useStyles();
@@ -62,7 +62,7 @@ const FormEmailAndPassword = () => {
 							<Paper
 								style={{
 									backgroundImage: `url(${image})`,
-									backgroundSize: 'contain',
+									backgroundSize: 'cover',
 									backgroundRepeat: 'no-repeat',
 									backgroundPosition: 'center'
 								}}

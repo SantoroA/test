@@ -4,7 +4,7 @@ import { Provider as AuthProvider, Context as AuthContext } from './context/Auth
 import { Provider as LanguageProvider } from './context/LanguageContext';
 import { Provider as AvailabilityProvider } from './context/AvailabilityContext';
 import { Provider as DocProfileProvider, Context as DocProfileContext } from './context/DocProfileContext';
-
+import { Provider as PatProfileProvider, Context as PatProfileContext } from './context/PatProfileContext';
 import { Provider as SearchDoctorProvider } from './context/SearchDoctorContext';
 import LoadingScreen from './screens/public/LoadingScreen';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -34,13 +34,16 @@ const theme = createMuiTheme({
 
 const Routes = () => {
 	const [ isLoading, setIsLoading ] = useState(false);
-	const { getCookie, state: { isLoggedIn, userId } } = useContext(AuthContext);
+	const { getCookie, state: { isLoggedIn, userId, userAmIHCP } } = useContext(AuthContext);
 	const { getProfile } = useContext(DocProfileContext);
+	const { getPatProfile } = useContext(PatProfileContext);
 	useEffect(() => {
 		const loadPage = async () => {
 			await getCookie();
 			setIsLoading(false);
-			getProfile(userId);
+			{
+				userAmIHCP ? getProfile(userId) : getPatProfile(userId);
+			}
 		};
 		loadPage();
 		//  eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,13 +57,15 @@ const App = () => {
 			<AuthProvider>
 				<AvailabilityProvider>
 					<SearchDoctorProvider>
-						<DocProfileProvider>
-							<LanguageProvider>
-								<ThemeProvider theme={theme}>
-									<Routes />
-								</ThemeProvider>
-							</LanguageProvider>
-						</DocProfileProvider>
+						<PatProfileProvider>
+							<DocProfileProvider>
+								<LanguageProvider>
+									<ThemeProvider theme={theme}>
+										<Routes />
+									</ThemeProvider>
+								</LanguageProvider>
+							</DocProfileProvider>
+						</PatProfileProvider>
 					</SearchDoctorProvider>
 				</AvailabilityProvider>
 			</AuthProvider>

@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import { Context as PatProfileContext } from '../../../context/PatProfileContext';
 // import { Context as AuthContext } from '../../../context/AuthContext';
 
 // import MuiPhoneInput from 'material-ui-phone-number';
@@ -26,9 +27,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Context as AuthContext } from '../../../context/AuthContext';
 
 const FormContactInfo = () => {
-	const { updateContactInfo, getSpeciality, state } = useContext(DocProfileContext);
+	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const { updateContactInfo, state } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
+	const { getSpecialty } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
-	const { state: { userId } } = useContext(AuthContext);
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
 	const [ specialty, setSpecialty ] = useState(state.specialty);
@@ -42,7 +44,9 @@ const FormContactInfo = () => {
 	// console.log(state);
 
 	useEffect(() => {
-		getSpeciality();
+		{
+			userAmIHCP && getSpecialty();
+		}
 	}, []);
 
 	const resetState = () => {
@@ -112,29 +116,31 @@ const FormContactInfo = () => {
 									variant="outlined"
 								/>
 							</Grid>
-							<Grid item xs={12} sm={12} className={classes.input}>
-								<FormControl variant="outlined" fullWidth>
-									<InputLabel id="specialty-label">Specialty</InputLabel>
-									<Select
-										disabled={isDisabled}
-										required
-										labelId="specialty-label"
-										value={specialty}
-										onChange={(e) => setSpecialty(e.target.value)}
-										label="Specialty"
-									>
-										{state.allSpecialty !== 'undefined' ? (
-											state.allSpecialty.map((el, i) => {
-												return (
-													<MenuItem key={i} value={el}>
-														{el}
-													</MenuItem>
-												);
-											})
-										) : null}
-									</Select>
-								</FormControl>
-							</Grid>
+							{userAmIHCP && (
+								<Grid item xs={12} sm={12} className={classes.input}>
+									<FormControl variant="outlined" fullWidth>
+										<InputLabel id="specialty-label">Specialty</InputLabel>
+										<Select
+											disabled={isDisabled}
+											required
+											labelId="specialty-label"
+											value={specialty}
+											onChange={(e) => setSpecialty(e.target.value)}
+											label="Specialty"
+										>
+											{state.allSpecialty !== 'undefined' ? (
+												state.allSpecialty.map((el, i) => {
+													return (
+														<MenuItem key={i} value={el}>
+															{el}
+														</MenuItem>
+													);
+												})
+											) : null}
+										</Select>
+									</FormControl>
+								</Grid>
+							)}
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<FormControl variant="outlined" fullWidth>
 									<InputLabel id="gender-label">Gender</InputLabel>

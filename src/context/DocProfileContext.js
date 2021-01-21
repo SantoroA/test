@@ -320,7 +320,7 @@ export const { Context, Provider } = createDataContext(
 	},
 	{
 		services: [],
-		email: '',
+		email: 'doc@test.com',
 		image:
 			'https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg',
 		specialty: 'General care physician',
