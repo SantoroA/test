@@ -91,7 +91,7 @@ const FormSearchDoctor = () => {
 	const classes = useStyles();
 
 	let dateChoose = new Date(filterState.date).toDateString().split(' ');
-	let formatDate = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
+	let formatDateDisplay = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
 		month: 'long'
 	})}`;
 
@@ -113,15 +113,23 @@ const FormSearchDoctor = () => {
 		'Dentist',
 		'Any'
 	];
-
+	const formatDate = (date) => {
+		const year = date.getFullYear();
+		const month = '' + date.getMonth() + 1;
+		const day = '' + date.getDate();
+		if (month.length < 2) month = '0' + month;
+		if (day.length < 2) day = '0' + day;
+		return [ year, month, day ].join('-');
+	};
 	useEffect(() => {
 		const today = new Date();
+		const todayFormatted = formatDate(today);
 		const dateAsString = today.toString();
 		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);
-		setFilterState({ ...filterState, date: today });
+		setFilterState({ ...filterState, date: todayFormatted });
 	}, []);
 
 	return (
@@ -249,7 +257,7 @@ const FormSearchDoctor = () => {
 					</PaperCustomShadow>
 				</Grid>
 			</Grid>
-			<Typography variant="h5">{formatDate}</Typography>
+			<Typography variant="h5">{formatDateDisplay}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
 					<DoctorList filterState={filterState} />

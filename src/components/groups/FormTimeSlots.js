@@ -217,6 +217,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 								variant="contained"
 								color="primary"
 								fullWidth
+								disabled
 							>
 								Apply
 							</ButtonError>

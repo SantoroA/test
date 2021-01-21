@@ -50,7 +50,7 @@ const MyProfileCard = () => {
 					<Typography variant="h4" className={classes.docName}>
 						Dr. {firstName} {lastName}
 					</Typography>
-					<Typography variant="subtitle1" color="textSecondary">
+					<Typography className={classes.subtitle} variant="subtitle1" color="textSecondary">
 						{specialty}
 					</Typography>
 				</CardContent>
