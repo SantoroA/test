@@ -22,7 +22,7 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const FormEmailAndPassword = () => {
-	const { updatePassword, state: { userId } } = useContext(AuthContext);
+	const { updatePassword, state: { userId, isSocialMedia } } = useContext(AuthContext);
 	const { state: { email, image } } = useContext(DocProfileContext);
 	const [ oldPassword, setOldPassword ] = useState('');
 	const [ newPassword, setNewPassword ] = useState('');
@@ -32,7 +32,6 @@ const FormEmailAndPassword = () => {
 	const [ isDialogOpen, setIsDialogOpen ] = useState(false);
 	const inputFileRef = createRef(null);
 	const classes = useStyles();
-
 	useEffect(
 		() => {
 			ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -98,6 +97,7 @@ const FormEmailAndPassword = () => {
 							<Grid item xs={12} className={classes.button}>
 								<ButtonFilled
 									fullWidth
+									disabled={isSocialMedia}
 									onClick={() => setShowChangePass(false)}
 									variant="contained"
 									color="primary"

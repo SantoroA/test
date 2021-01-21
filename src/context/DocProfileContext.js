@@ -116,7 +116,7 @@ const getProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
-			console.log(response.data)
+			console.log(response.data);
 			dispatch({ type: 'get_profile', payload: response.data });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
@@ -321,13 +321,14 @@ export const { Context, Provider } = createDataContext(
 	{
 		services: [],
 		email: '',
-		image: '',
-		specialty: '',
+		image:
+			'https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg',
+		specialty: 'General care physician',
 		insurance: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: '',
-		lastName: '',
+		firstName: 'Phoebee',
+		lastName: 'Buffet',
 		gender: '',
 		phoneNumber: '',
 		birthPlace: '',

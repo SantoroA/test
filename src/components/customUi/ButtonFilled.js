@@ -10,6 +10,9 @@ const ButtonFilled = styled(Button)({
 	textTransform: 'none',
 	'&:hover': {
 		background: '#0BC7E0'
+	},
+	'&:disabled': {
+		background: 'rgba(232, 232, 232, 1)'
 	}
 });
 

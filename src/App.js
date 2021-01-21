@@ -3,7 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext';
 import { Provider as LanguageProvider } from './context/LanguageContext';
 import { Provider as AvailabilityProvider } from './context/AvailabilityContext';
-import { Provider as DocProfileProvider } from './context/DocProfileContext';
+import { Provider as DocProfileProvider, Context as DocProfileContext } from './context/DocProfileContext';
+
 import { Provider as SearchDoctorProvider } from './context/SearchDoctorContext';
 import LoadingScreen from './screens/public/LoadingScreen';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -33,11 +34,13 @@ const theme = createMuiTheme({
 
 const Routes = () => {
 	const [ isLoading, setIsLoading ] = useState(false);
-	const { getCookie, state: { isLoggedIn } } = useContext(AuthContext);
+	const { getCookie, state: { isLoggedIn, userId } } = useContext(AuthContext);
+	const { getProfile } = useContext(DocProfileContext);
 	useEffect(() => {
 		const loadPage = async () => {
 			await getCookie();
 			setIsLoading(false);
+			getProfile(userId);
 		};
 		loadPage();
 		//  eslint-disable-next-line react-hooks/exhaustive-deps

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
-
+import MyProfileCard from '../../components/groups/MyProfileCard';
 import TabDocuments from '../../components/tabs/TabDocuments';
 import TabQuestionnaries from '../../components/tabs/TabQuestionnaries';
 import TabPatientAppointments from '../../components/tabs/TabPatientAppointments';
@@ -114,14 +114,10 @@ const PatDashboardScreen = () => {
 	return (
 		<PatLayoutContainer>
 			<Grid container className={classes.userInfo}>
-				<Grid item lg={5} sm={8} xs={12}>
-					<Avatar className={classes.avatar} />
-					{/* fetch the foto as url- it's received from the back-end  */}
-					{/* get data request and display the response from the back-end on the page */}
-					<Typography variant="h4" className={classes.text}>
-						{userName}
-					</Typography>
+				<Grid item lg={5} md={8} xs={12}>
+					<MyProfileCard />
 				</Grid>
+
 				<Grid item lg={3} sm={4} xs={12} className={classes.userOptions}>
 					<NavLink className={classes.button} to="/in/patient/doctorsearch">
 						<ButtonFilled variant="contained">Search for a Doctor</ButtonFilled>

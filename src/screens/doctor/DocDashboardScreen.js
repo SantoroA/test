@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DocProfileCard from '../../components/groups/DocProfileCard';
+import MyProfileCard from '../../components/groups/MyProfileCard';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import DocUserOptions from '../../components/groups/DocUserOptions';
 import TabMyPatients from '../../components/tabs/TabMyPatients';
@@ -80,7 +80,7 @@ const DocDashboardScreen = () => {
 		<DocLayoutContainer>
 			<Grid container className={classes.userInfo}>
 				<Grid item lg={5} md={8} xs={12}>
-					<DocProfileCard />
+					<MyProfileCard />
 				</Grid>
 				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
 					<DocUserOptions />

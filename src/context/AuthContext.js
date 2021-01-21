@@ -31,6 +31,8 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
+		case 'set_is_social_media':
+			return { ...state, isSocialMedia: action.payload };
 		case 'update_image':
 			return { ...state, image: action.payload };
 		case 'set_dialog_message':
@@ -146,6 +148,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 		});
 		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
+		dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -196,6 +199,7 @@ const handleAppleLogin = (dispatch) => async (appleResponse) => {
 		});
 		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
+		dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -246,6 +250,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 		});
 		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
+		dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -387,13 +392,14 @@ export const { Provider, Context } = createDataContext(
 	{
 		userId: '',
 		userToken: '',
-		userAmIHCP: false,
+		userAmIHCP: true,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
 		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
-		image: null
+		image: null,
+		isSocialMedia: true
 	}
 );

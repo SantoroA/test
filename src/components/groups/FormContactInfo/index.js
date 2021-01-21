@@ -124,8 +124,12 @@ const FormContactInfo = () => {
 										label="Specialty"
 									>
 										{state.allSpecialty !== 'undefined' ? (
-											state.allSpecialty.map((el) => {
-												return <MenuItem value={el}>{el}</MenuItem>;
+											state.allSpecialty.map((el, i) => {
+												return (
+													<MenuItem key={i} value={el}>
+														{el}
+													</MenuItem>
+												);
 											})
 										) : null}
 									</Select>

@@ -85,8 +85,8 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
-	const { getProfile } = useContext(DocProfileContext);
-	const {state: {userId}} = useContext(AuthContext)
+	// const { getProfile } = useContext(DocProfileContext);
+	// const {state: {userId}} = useContext(AuthContext)
 	const { state: { dialogMessage, dialogOpen, firstName, lastName, specialty }, closeDialog } = useContext(
 		DocProfileContext
 	);
@@ -96,9 +96,9 @@ const DocCompleteProfileScreen = () => {
 	};
 	// const userId = '5fe8b0c48bef090026e253b7';
 
-	useEffect(() => {
-		getProfile(userId);
-	}, []);
+	// useEffect(() => {
+	// 	getProfile(userId);
+	// }, []);
 
 	return (
 		<DocLayoutContainer>
