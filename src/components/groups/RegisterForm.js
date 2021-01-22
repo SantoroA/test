@@ -10,6 +10,8 @@ import ButtonFilled from '../customUi/ButtonFilled';
 import RadioStyled from '../customUi/RadioStyled';
 import TextInput from '../customUi/TextInput';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
+//CUSTOM ICONS
+import GoogleIcon from '../customIcons/GoogleIcon';
 //Material UI
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -21,6 +23,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import AppleIcon from '@material-ui/icons/Apple';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,17 +67,11 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '1rem',
 		marginBottom: '1rem'
 	},
-	socialMedia: {
-		borderRadius: '3px',
-		backgroundColor: '#1877f2',
-		color: 'white',
-		width: '179px',
-		height: '44px',
-		textTransform: 'none'
-	},
+
 	radioGroup: {
 		marginTop: '1.5rem',
-		backgroundColor: '#D7FEF1'
+		backgroundColor: '#D7FEF1',
+		paddingLeft: '1rem'
 	},
 	textButton: {
 		textTransform: 'none',
@@ -82,8 +79,34 @@ const useStyles = makeStyles((theme) => ({
 			color: '#00A99D'
 		}
 	},
-	socialMediaButton: {
-		margin: '1rem'
+
+	facebookButton: {
+		borderRadius: '3px',
+		backgroundColor: '#1877f2',
+		color: 'white',
+		width: '40px',
+		height: '40px',
+		textTransform: 'none',
+		'&:hover': {
+			backgroundColor: '#3B5998'
+		}
+	},
+	googleButton: {
+		borderRadius: '3px',
+		backgroundColor: 'white',
+		width: '40px',
+		height: '40px'
+	},
+	appleButton: {
+		borderRadius: '3px',
+		backgroundColor: 'black',
+		color: '#fff',
+		width: '40px',
+		height: '40px',
+		'&:hover': {
+			backgroundColor: '#fff',
+			color: '#000'
+		}
 	}
 }));
 
@@ -212,9 +235,9 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								variant="contained"
 								onClick={renderProps.onClick}
 								color="primary"
-								className={classes.socialMedia}
+								className={classes.facebookButton}
 							>
-								<FacebookIcon /> <Typography variant="body2">Facebook</Typography>
+								<FacebookIcon />
 							</Button>
 						)}
 					/>
@@ -230,25 +253,34 @@ const RegisterForm = ({ toggleIsLogin }) => {
 							handleGoogleRegister({ ggResponse, language, subdomain, isHCP: role });
 						}}
 						onFailure={(ggResponse) => handleGoogleRegister({ ggResponse, language, subdomain })}
+						render={(renderProps) => (
+							<Button variant="contained" onClick={renderProps.onClick} className={classes.googleButton}>
+								<GoogleIcon />
+							</Button>
+						)}
 						cookiePolicy={'single_host_origin'}
 					/>
-					<div className={classes.socialMediaButton}>
-						<AppleLogin
-							clientId="com.react.apple.login"
-							redirectURI=""
-							responseType={'code'}
-							responseMode={'query'}
-							callback={(appleResponse) => {
-								let role;
-								if (isHCP === 'patient') {
-									role = false;
-								} else {
-									role = true;
-								}
-								handleAppleRegister({ appleResponse, language, subdomain, isHCP: role });
-							}}
-						/>
-					</div>
+
+					<AppleLogin
+						clientId="com.react.apple.login"
+						redirectURI=""
+						responseType={'code'}
+						responseMode={'query'}
+						callback={(appleResponse) => {
+							let role;
+							if (isHCP === 'patient') {
+								role = false;
+							} else {
+								role = true;
+							}
+							handleAppleRegister({ appleResponse, language, subdomain, isHCP: role });
+						}}
+						render={(renderProps) => (
+							<Button variant="contained" onClick={renderProps.onClick} className={classes.appleButton}>
+								<AppleIcon />
+							</Button>
+						)}
+					/>
 				</Grid>
 			</Grid>
 		</Grid>

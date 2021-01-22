@@ -81,7 +81,9 @@ const useStyles = makeStyles({
 	},
 	buttonWrapper: {
 		marginTop: '0.5rem',
-		marginBottom: '0.5rem'
+		marginBottom: '0.5rem',
+		display: 'flex',
+		justifyContent: 'center'
 	}
 });
 

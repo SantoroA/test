@@ -7,6 +7,8 @@ import AppleLogin from 'react-apple-login';
 import ButtonFilled from '../customUi/ButtonFilled';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
 import TextInput from '../customUi/TextInput';
+//CUSTOM ICONS
+import GoogleIcon from '../customIcons/GoogleIcon';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -14,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import AppleIcon from '@material-ui/icons/Apple';
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -55,22 +58,39 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '1rem',
 		marginBottom: '1rem'
 	},
-	socialMedia: {
+	facebookButton: {
 		borderRadius: '3px',
 		backgroundColor: '#1877f2',
 		color: 'white',
-		width: '179px',
-		height: '44px',
-		textTransform: 'none'
+		width: '40px',
+		height: '40px',
+		textTransform: 'none',
+		'&:hover': {
+			backgroundColor: '#3B5998'
+		}
+	},
+	googleButton: {
+		borderRadius: '3px',
+		backgroundColor: 'white',
+		width: '40px',
+		height: '40px'
+	},
+	appleButton: {
+		borderRadius: '3px',
+		backgroundColor: 'black',
+		color: '#fff',
+		width: '40px',
+		height: '40px',
+		'&:hover': {
+			backgroundColor: '#fff',
+			color: '#000'
+		}
 	},
 	textButton: {
 		textTransform: 'none',
 		'&:hover': {
 			color: '#00A99D'
 		}
-	},
-	socialMediaButton: {
-		margin: '1rem'
 	}
 }));
 
@@ -158,10 +178,9 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 								variant="contained"
 								onClick={renderProps.onClick}
 								color="primary"
-								className={classes.socialMedia}
+								className={classes.facebookButton}
 							>
 								<FacebookIcon />
-								<Typography variant="body2">Facebook</Typography>
 							</Button>
 						)}
 					/>
@@ -170,18 +189,27 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 						onSuccess={(ggResponse) => handleGoogleLogin(ggResponse)}
 						onFailure={(ggResponse) => handleGoogleLogin(ggResponse)}
 						cookiePolicy={'single_host_origin'}
+						render={(renderProps) => (
+							<Button variant="contained" onClick={renderProps.onClick} className={classes.googleButton}>
+								<GoogleIcon />
+							</Button>
+						)}
 					/>
-					<div className={classes.socialMediaButton}>
-						<AppleLogin
-							clientId="com.react.apple.login"
-							redirectURI=""
-							responseType={'code'}
-							responseMode={'query'}
-							callback={(appleResponse) => {
-								handleAppleLogin({ appleResponse });
-							}}
-						/>
-					</div>
+
+					<AppleLogin
+						clientId="com.react.apple.login"
+						redirectURI=""
+						responseType={'code'}
+						responseMode={'query'}
+						callback={(appleResponse) => {
+							handleAppleLogin({ appleResponse });
+						}}
+						render={(renderProps) => (
+							<Button variant="contained" onClick={renderProps.onClick} className={classes.appleButton}>
+								<AppleIcon />
+							</Button>
+						)}
+					/>
 				</Grid>
 			</Grid>
 		</Grid>
