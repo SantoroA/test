@@ -83,7 +83,7 @@ const TimeFilter = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
 
 	const handleChange = (e) => {
-		setFilterState({ ...filterState, timeFrame: e.target.value });
+		setFilterState({ ...filterState, time: e.target.value });
 	};
 	return (
 		<Grid className={classes.time}>
@@ -92,7 +92,7 @@ const TimeFilter = ({ filterState, setFilterState }) => {
 				<RadioGroup
 					aria-label="time-frame"
 					name="time-frame"
-					value={filterState.timeFrame}
+					value={filterState.time}
 					onChange={handleChange}
 				>
 					<FormControlLabel
@@ -175,11 +175,12 @@ const RatingFilter = ({ filterState, setFilterState }) => {
 				<RadioGroup
 					aria-label="rating"
 					name="rating"
+					defaultValue={0.1}
 					value={filterState.rating}
-					onChange={(e) => setFilterState({ ...filterState, rating: e.target.value })}
+					onChange={(e) => setFilterState({ ...filterState, rating: parseFloat(e.target.value) })}
 				>
 					<FormControlLabel
-						value={3}
+						value= {3}
 						control={<Radio color="primary" />}
 						label={
 							<Fragment>
@@ -273,7 +274,7 @@ const RatingFilter = ({ filterState, setFilterState }) => {
 };
 const MoreFilters = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-
+	console.log(filterState.gender)
 	return (
 		<Grid container className={classes.moreFilters}>
 			<FormControl component="fieldset">
@@ -282,12 +283,12 @@ const MoreFilters = ({ filterState, setFilterState }) => {
 					aria-label="gender"
 					name="gender"
 					value={filterState.gender}
-					onChange={(e) => setFilterState({ ...filterState, gender: e.target.value })}
+					onChange={(e) => setFilterState({ ...filterState, gender: parseInt(e.target.value) })}
 				>
 					<Grid container className={classes.filter}>
-						<FormControlLabel value="female" control={<Radio color="primary" />} label="Female" />
-						<FormControlLabel value="male" control={<Radio color="primary" />} label="Male" />
-						<FormControlLabel value="all" control={<Radio color="primary" />} label="All" />
+						<FormControlLabel value={1} control={<Radio color="primary" />} label="Female" />
+						<FormControlLabel value={0} control={<Radio color="primary" />} label="Male" />
+						<FormControlLabel value={2} control={<Radio color="primary" />} label="All" />
 					</Grid>
 				</RadioGroup>
 			</FormControl>
@@ -300,20 +301,20 @@ const MoreFilters = ({ filterState, setFilterState }) => {
 						aria-label="insurance"
 						name="insurance"
 						value={filterState.insurance}
-						onChange={(e) => setFilterState({ ...filterState, insurance: e.target.value })}
+						onChange={(e) => setFilterState({ ...filterState, insurance: parseInt(e.target.value) })}
 					>
 						<Grid container className={classes.filter}>
 							<FormControlLabel
-								value="public"
+								value= {1}
 								control={<Radio color="primary" />}
 								label="Public Insurance"
 							/>
 							<FormControlLabel
-								value="private"
+								value={0}
 								control={<Radio color="primary" />}
 								label="Private Insurance"
 							/>
-							<FormControlLabel value="all" control={<Radio color="primary" />} label="All" />
+							<FormControlLabel value={2} control={<Radio color="primary" />} label="All" />
 						</Grid>
 					</RadioGroup>
 				</FormControl>
