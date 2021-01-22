@@ -356,7 +356,7 @@ const DialogFilter = ({ isOpen, close, type, filterState, setFilterState }) => {
 				</DialogContent>
 
 				<DialogActions className={classes.dialogActions}>
-					<ButtonNoBorder onClick={handleClear}>Clear</ButtonNoBorder>
+					<ButtonNoBorder onClick={handleClear}>Clear All</ButtonNoBorder>
 					<ButtonFilled onClick={close} color="primary">
 						Ok
 					</ButtonFilled>

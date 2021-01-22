@@ -130,6 +130,8 @@ const APPOINTMENTS_QUERY = gql`
 		$insurance: Int!
 		$gender: Int!
 		$time: String!
+		$offset: Int
+		$limit: Int
 	) {
 		appointment(
 			date: $date
@@ -140,6 +142,8 @@ const APPOINTMENTS_QUERY = gql`
 			insurance: $insurance
 			rating: $rating
 			time: $time
+			offser: $offset
+			limit: $limit
 		) {
 			_id
 			appointmentDate
@@ -173,8 +177,8 @@ const DoctorList = ({ filterState }) => {
 		start: 0,
 		end: showPerPage
 	});
-	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance }
+	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY, {
+		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, limit: 10 }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	//USER ID
@@ -228,7 +232,7 @@ const DoctorList = ({ filterState }) => {
 									</Grid>
 									<Grid item>
 										<Typography variant="h5" className={classes.name}>
-											Dr. {`${doc.firstName} ${doc.lastName}`}
+											Dr. {`${doc.firstname} ${doc.lastname}`}
 										</Typography>
 									</Grid>
 									<Grid item>
@@ -276,9 +280,7 @@ const DoctorList = ({ filterState }) => {
 						</Card>
 					);
 				})
-			) : (
-				[]
-			)}
+			) : null}
 			<DialogReserve open={dialogReserveOpen} id={docId} close={() => setDialogReserveOpen(false)} />
 			<MessageDialog open={dialogOpen} message={error} close={() => setDialogOpen(false)} />
 			<Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={docList.length} />

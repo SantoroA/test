@@ -74,8 +74,6 @@ const FormSearchDoctor = () => {
 	//STATE
 	const [ timezone, setTimezone ] = useState('Eastern Time');
 	const [ nameZone, setNameZone ] = useState('New York, United States');
-	// const [ typeOfHCP, setTypeOfHCP ] = useState('Certified diabetes educator');
-	// const [ date, setDate ] = useState('');
 	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
 	const [ filterType, setFilterType ] = useState('');
 	const [ filterState, setFilterState ] = useState({
@@ -94,6 +92,8 @@ const FormSearchDoctor = () => {
 	let formatDateDisplay = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
 		month: 'long'
 	})}`;
+	console.log(filterState.date);
+	console.log(dateChoose);
 
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
