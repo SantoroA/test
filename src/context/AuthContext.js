@@ -400,6 +400,6 @@ export const { Provider, Context } = createDataContext(
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,
-		isSocialMedia: true
+		isSocialMedia: false
 	}
 );

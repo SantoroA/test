@@ -44,7 +44,8 @@ const useStyles = makeStyles({
 	},
 	wrapperTab: {
 		textTransform: 'capitalize',
-		fontSize: '1.2rem'
+		fontSize: '1.2rem',
+		justifyContent: 'center'
 	},
 	icons: {
 		fontSize: '2.3rem'
@@ -77,6 +78,10 @@ const useStyles = makeStyles({
 	},
 	buttonIcon: {
 		marginRight: '0.3rem'
+	},
+	buttonWrapper: {
+		marginTop: '0.5rem',
+		marginBottom: '0.5rem'
 	}
 });
 
@@ -126,16 +131,21 @@ const PatDashboardScreen = () => {
 					<MyProfileCard />
 				</Grid>
 
-				<Grid item lg={3} sm={4} xs={12} className={classes.userOptions}>
-					<NavLink className={classes.buttonNav} to="/in/patient/doctorsearch">
-						<ButtonFilled className={classes.button} variant="contained">
-							<SearchIcon className={classes.buttonIcon} /> Search for a Doctor
-						</ButtonFilled>
-					</NavLink>
-
-					<ButtonOutlined className={classes.button} variant="outlined" color="primary">
-						<ChatBubbleOutlineIcon className={classes.buttonIcon} /> Meet the assistant
-					</ButtonOutlined>
+				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
+					<Grid container>
+						<Grid item md={12} sm={6} xs={12} className={classes.buttonWrapper}>
+							<NavLink className={classes.buttonNav} to="/in/patient/doctorsearch">
+								<ButtonFilled className={classes.button} variant="contained">
+									<SearchIcon className={classes.buttonIcon} /> Search for a Doctor
+								</ButtonFilled>
+							</NavLink>
+						</Grid>
+						<Grid item md={12} sm={6} xs={12} className={classes.buttonWrapper}>
+							<ButtonOutlined className={classes.button} variant="outlined" color="primary">
+								<ChatBubbleOutlineIcon className={classes.buttonIcon} /> Meet the assistant
+							</ButtonOutlined>
+						</Grid>
+					</Grid>
 				</Grid>
 			</Grid>
 
