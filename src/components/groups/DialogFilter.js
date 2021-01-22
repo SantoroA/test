@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
+import ButtonNoBorder from '../customUi/ButtonNoBorder';
 import TextInput from '../customUi/TextInput';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
@@ -89,12 +90,7 @@ const TimeFilter = ({ filterState, setFilterState }) => {
 		<Grid className={classes.time}>
 			<FormControl component="fieldset">
 				<FormLabel component="legend">Time Frame</FormLabel>
-				<RadioGroup
-					aria-label="time-frame"
-					name="time-frame"
-					value={filterState.time}
-					onChange={handleChange}
-				>
+				<RadioGroup aria-label="time-frame" name="time-frame" value={filterState.time} onChange={handleChange}>
 					<FormControlLabel
 						value="morning"
 						control={<Radio color="primary" />}
@@ -126,6 +122,7 @@ const PriceFilter = ({ filterState, setFilterState }) => {
 	function valuetext(value) {
 		return `$${value}`;
 	}
+
 	return (
 		<Grid container>
 			<Grid item xs={12}>
@@ -180,7 +177,7 @@ const RatingFilter = ({ filterState, setFilterState }) => {
 					onChange={(e) => setFilterState({ ...filterState, rating: parseFloat(e.target.value) })}
 				>
 					<FormControlLabel
-						value= {3}
+						value={3}
 						control={<Radio color="primary" />}
 						label={
 							<Fragment>
@@ -274,7 +271,7 @@ const RatingFilter = ({ filterState, setFilterState }) => {
 };
 const MoreFilters = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	console.log(filterState.gender)
+	console.log(filterState.gender);
 	return (
 		<Grid container className={classes.moreFilters}>
 			<FormControl component="fieldset">
@@ -304,16 +301,8 @@ const MoreFilters = ({ filterState, setFilterState }) => {
 						onChange={(e) => setFilterState({ ...filterState, insurance: parseInt(e.target.value) })}
 					>
 						<Grid container className={classes.filter}>
-							<FormControlLabel
-								value= {1}
-								control={<Radio color="primary" />}
-								label="Public Insurance"
-							/>
-							<FormControlLabel
-								value={0}
-								control={<Radio color="primary" />}
-								label="Private Insurance"
-							/>
+							<FormControlLabel value={1} control={<Radio color="primary" />} label="Public Insurance" />
+							<FormControlLabel value={0} control={<Radio color="primary" />} label="Private Insurance" />
 							<FormControlLabel value={2} control={<Radio color="primary" />} label="All" />
 						</Grid>
 					</RadioGroup>
@@ -323,8 +312,29 @@ const MoreFilters = ({ filterState, setFilterState }) => {
 	);
 };
 
+// gender: 3,
+// 		time: 'all',
+// 		insurance: 3,
+// 		minPrice: 70,
+// 		maxPrice: 150,
+// 		rating: 0.1,
+// 		date: '',
+// 		typeOfHCP: 'Certified diabetes educator'
+
 const DialogFilter = ({ isOpen, close, type, filterState, setFilterState }) => {
 	const classes = useStyles();
+	const handleClear = () => {
+		close();
+		setFilterState({
+			...filterState,
+			gender: 3,
+			time: 'all',
+			insurance: 3,
+			minPrice: 70,
+			maxPrice: 150,
+			rating: 0.1
+		});
+	};
 	return (
 		<Dialog
 			open={isOpen}
@@ -346,6 +356,7 @@ const DialogFilter = ({ isOpen, close, type, filterState, setFilterState }) => {
 				</DialogContent>
 
 				<DialogActions className={classes.dialogActions}>
+					<ButtonNoBorder onClick={handleClear}>Clear</ButtonNoBorder>
 					<ButtonFilled onClick={close} color="primary">
 						Ok
 					</ButtonFilled>

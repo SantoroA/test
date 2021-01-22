@@ -5,10 +5,9 @@ const ButtonNoBorder = styled(Button)({
 	background: 'transparent',
 	border: 0,
 	borderRadius: '10px',
-	color: 'linear-gradient(119.45deg, #05B240 0%, #09B8EF 99.75%) !important',
+	color: '#07B597',
 	fontWeight: 'bold',
-	textTransform: 'none',
-	
+	textTransform: 'none'
 });
 
 export default ButtonNoBorder;
