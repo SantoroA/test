@@ -52,8 +52,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	submit: {
 		width: '100%',
-		height: '48px',
-		margin: '1rem'
+		height: '3rem'
 	},
 
 	redes: {
@@ -107,6 +106,10 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: '#fff',
 			color: '#000'
 		}
+	},
+	submitWrapper: {
+		paddingLeft: '1rem',
+		paddingRight: '1rem'
 	}
 }));
 
@@ -132,7 +135,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 
 	return (
 		<Grid container className={classes.container}>
-			<Grid className={classes.formContainer} xs={6} item>
+			<Grid className={classes.formContainer} xs={10} md={6} item>
 				<Typography variant="body1">Register here and create an account</Typography>
 				<form
 					onSubmit={(e) => {
@@ -208,7 +211,7 @@ const RegisterForm = ({ toggleIsLogin }) => {
 								Log In
 							</Button>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item className={classes.submitWrapper} xs={6}>
 							<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
 								Register
 							</ButtonFilled>

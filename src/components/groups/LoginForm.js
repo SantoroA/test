@@ -44,8 +44,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	submit: {
 		width: '100%',
-		height: '48px',
-		margin: '1rem'
+		height: '3rem'
 	},
 	redes: {
 		marginTop: 20,
@@ -91,6 +90,10 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			color: '#00A99D'
 		}
+	},
+	submitWrapper: {
+		paddingLeft: '1rem',
+		paddingRight: '1rem'
 	}
 }));
 
@@ -116,7 +119,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 
 	return (
 		<Grid container className={classes.container}>
-			<Grid className={classes.formContainer} xs={6} item>
+			<Grid className={classes.formContainer} xs={10} md={6} item>
 				<Typography variant="body1">Already have an account? Log in here</Typography>
 				<form
 					onSubmit={(e) => {
@@ -157,7 +160,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 								Sign up now
 							</Button>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid className={classes.submitWrapper} item xs={6}>
 							<ButtonFilled type="submit" variant="contained" color="primary" className={classes.submit}>
 								Log In
 							</ButtonFilled>
