@@ -79,12 +79,12 @@ const FormSearchDoctor = () => {
 	const [ filterDialogOpen, setFilterDialogOpen ] = useState(false);
 	const [ filterType, setFilterType ] = useState('');
 	const [ filterState, setFilterState ] = useState({
-		gender: 'all',
-		timeFrame: 'morning',
-		insurance: 'public',
+		gender: 3,
+		time: 'all',
+		insurance: 3,
 		minPrice: 70,
 		maxPrice: 150,
-		rating: 3,
+		rating: 0.1,
 		date: '',
 		typeOfHCP: 'Certified diabetes educator'
 	});
@@ -126,7 +126,7 @@ const FormSearchDoctor = () => {
 
 	return (
 		<div className={classes.root}>
-			<form onSubmit={() => {}}>
+			<form onSubmit={(e) => {}}>
 				<Grid container className={classes.formContainer}>
 					<Grid item xs={12} sm={7} md={5} lg={4} className={classes.input}>
 						<TextInputRounder

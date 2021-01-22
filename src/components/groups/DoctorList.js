@@ -117,44 +117,79 @@ const useStyles = makeStyles({
 	}
 });
 
-const APPOINTMENTS_QUERY = gql`
-	query GetAppointments(
-		$date: String!
-		$typeOfHCP: String!
-		$timeStart: String!
-		$timeEnd: String!
-		$minPrice: Float!
-		$maxPrice: Float!
-		$rating: Float!
-		$gender: String!
-		$insurance: String!
-	) {
-		appointments(appointmentDate: $date, typeOfHCP: $typeOfHCP, gender: $gender, insurance: $insurance) {
-			doctor {
-				firstName
-				lastName
-				gender
-				accoutId
-				profileInfo
-				typeOfHCP
-				insurance
-				image
-				rating {
-					averageRating
-					receivedRating
-				}
-			}
-			appointmentDate
-			appointmentTimeStart
-			appointmentTimeEnd
-			appointmentStatus
-			amount
-		}
-	}
-`;
+// testar a string
+// no back fazer um if do horario e fazer grater and litle
+
+const APPOINTMENTS_QUERY = gql`query GetAppointments(
+	$date: String!
+	$typeOfHCP: String!
+	$maxPrice: Float!
+	$minPrice: Float!
+	$rating: Float!
+	$insurance: Int!
+	$gender: Int!
+	$time: String!
+	){
+	appointment(date: $date, typeOfHCP: $typeOfHCP, minPrice: $minPrice, maxPrice: $maxPrice, gender: $gender, insurance: $insurance, 
+		rating: $rating, time: $time ){
+	_id
+	appointmentDate,
+      appointmentTimeStart,
+      appointmentTimeEnd,
+      slotCreated,
+      appointmentWeek,
+      appointmentStatus,
+      amount,
+    profileHCPid {
+	  firstName,
+	  lastName,
+      gender,
+	  profileInfo,
+    },
+    accountHCPid {
+      profilePicture
+    }
+  }
+}`
+
+// const APPOINTMENTS_QUERY = gql`
+// 	query GetAppointments(
+// 		$date: String!
+// 		$typeOfHCP: String!
+// 		$timeStart: String!
+// 		$timeEnd: String!
+// 		$minPrice: Float!
+// 		$maxPrice: Float!
+// 		$rating: Float!
+// 		$gender: Int!
+// 		$insurance: String!
+// 	) {
+// 		appointments(appointmentDate: $date, typeOfHCP: $typeOfHCP) {
+// 			doctor {
+// 				firstName
+// 				lastName
+// 				gender
+// 				accoutId
+// 				profileInfo
+// 				typeOfHCP
+// 				insurance
+// 				image
+// 				rating {
+// 					averageRating
+// 					receivedRating
+// 				}
+// 			}
+// 			appointmentDate
+// 			appointmentTimeStart
+// 			appointmentTimeEnd
+// 			appointmentStatus
+// 			amount
+// 		}
+// 	}
+// `;
 
 const DoctorList = ({ filterState }) => {
-	const { gender, timeFrame, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
+	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 	const classes = useStyles();
 	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
@@ -164,14 +199,13 @@ const DoctorList = ({ filterState }) => {
 		start: 0,
 		end: showPerPage
 	});
-	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, timeFrame, minPrice, maxPrice, rating, gender, insurance }
+	const { loading, error, data } = useQuery(APPOINTMENTS_QUERY,{
+		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	//USER ID
-	// const { state: { userId } } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
-
+	const { state: { userId } } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
 		let min = new Date(start).getMinutes();
@@ -182,7 +216,7 @@ const DoctorList = ({ filterState }) => {
 	const onPaginationChange = (start, end) => {
 		setPagination({ start: start, end: end });
 	};
-
+	console.log(data)
 	if (loading)
 		return (
 			<Container>
@@ -193,10 +227,10 @@ const DoctorList = ({ filterState }) => {
 	return (
 		<div className={classes.mainContent}>
 			{docList !== null ? (
-				docList.slice(pagination.start, pagination.end).map((doc) => {
+				docList.map((doc) => {
 					return (
-						<Card className={classes.card} key={doc.id}>
-							<CardMedia className={classes.media} image={doc.image} title="Doctor">
+						<Card className={classes.card} key={doc._id}>
+							<CardMedia className={classes.media} image={doc.accountHCPid.profilePicture} title="Doctor">
 								<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
 									View Profile
 								</Button>
@@ -220,11 +254,11 @@ const DoctorList = ({ filterState }) => {
 									</Grid>
 									<Grid item>
 										<Typography variant="h5" className={classes.name}>
-											Dr. {`${doc.firstname} ${doc.lastname}`}
+											Dr. {`${doc.profileHCPid.firstName} ${doc.profileHCPid.lastName}`}
 										</Typography>
 									</Grid>
 									<Grid item>
-										<Typography variant="body2">{doc.description}</Typography>
+										<Typography variant="body2">{doc.profileHCPid.profileInfo}</Typography>
 									</Grid>
 									<Grid item className={classes.times}>
 										{doctors
@@ -268,7 +302,7 @@ const DoctorList = ({ filterState }) => {
 						</Card>
 					);
 				})
-			) : null}
+			) : []}
 			<DialogReserve open={dialogReserveOpen} id={docId} close={() => setDialogReserveOpen(false)} />
 			<MessageDialog open={dialogOpen} message={error} close={() => setDialogOpen(false)} />
 			<Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={docList.length} />

@@ -16,7 +16,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 // PROVIDE URL OF RUNNING GRAPHQL SERVER
 
 const client = new ApolloClient({
-	uri: 'http://localhost:10101/dianurse/v1/graphql',
+	uri: 'http://localhost:10101/graphql',
 	cache: new InMemoryCache()
 });
 
