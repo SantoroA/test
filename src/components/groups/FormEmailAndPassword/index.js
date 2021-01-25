@@ -47,6 +47,7 @@ const FormEmailAndPassword = () => {
 	const handleSubmit = (e) => {
 		updatePassword({
 			id: userId,
+			userAmIHCP,
 			oldPassword,
 			newPassword
 			// image

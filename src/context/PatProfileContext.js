@@ -4,6 +4,7 @@ import dianurseApi from '../api/dianurseApi';
 const patProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
+
 			return {
 				...state,
 				dialogMessage: '',
@@ -14,8 +15,8 @@ const patProfileReducer = (state, action) => {
 				phoneNumber: action.payload.phoneNumber,
 				birthPlace: action.payload.birthPlace,
 				birthday: action.payload.birthday,
-				email: action.payload[0].accountId.username,
-				image: action.payload[0].accountId.profilePicture
+				email: action.payload.accountId.username,
+				image: action.payload.accountId.profilePicture
 			};
 
 		case 'update_contact_info':
@@ -43,11 +44,12 @@ const patProfileReducer = (state, action) => {
 
 const getPatProfile = (dispatch) => {
 	return async (id) => {
+		console.log(id)
 		try {
 			const response = await dianurseApi.get('/profile/patient/getprofile', {
 				params: { id }
 			});
-			console.log(response.data);
+			console.log('patient',response.data[0]);
 			dispatch({ type: 'get_profile', payload: response.data });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
@@ -57,8 +59,8 @@ const getPatProfile = (dispatch) => {
 };
 
 const updateContactInfo = (dispatch) => {
-	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday, specialty }) => {
-		console.log('inside context', firstName, lastName, specialty);
+	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday }) => {
+		console.log('inside context', firstName, lastName, birthPlace, birthday);
 		let userInfo = {
 			id,
 			firstName,
@@ -71,7 +73,7 @@ const updateContactInfo = (dispatch) => {
 		};
 
 		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			const response = await dianurseApi.put('/profile/patient/completeprofile', {
 				userInfo
 			});
 			console.log(response);
@@ -106,14 +108,17 @@ export const { Context, Provider } = createDataContext(
 		closeDialog
 	},
 	{
-		email: 'patient@test.com',
-		image:
-			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-
+		// email: 'patient@test.com',
+		// image:
+		// 	'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+		email: '',
+		image: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: 'Rachel',
-		lastName: 'Green',
+		// firstName: 'Rachel',
+		// lastName: 'Green',
+		firstName: '',
+		lastName: '',
 		gender: '',
 		phoneNumber: '',
 		birthPlace: '',

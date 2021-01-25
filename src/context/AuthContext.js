@@ -31,7 +31,7 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
-		case 'set_is_social_media':
+			case 'set_is_social_media':
 			return { ...state, isSocialMedia: action.payload };
 		case 'update_image':
 			return { ...state, image: action.payload };
@@ -297,7 +297,7 @@ const recoverPassword = (dispatch) => async ({ email }) => {
 };
 
 // complete profile update image
-const updateImage = (dispatch) => async ({ id, image }) => {
+const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 	console.log('id', id, image);
 
 	let userInfo = {
@@ -306,10 +306,15 @@ const updateImage = (dispatch) => async ({ id, image }) => {
 		form: 1
 	};
 	console.log(userInfo);
+	let response;
 	try {
-		const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+		
+		userAmIHCP ? 
+		response = await dianurseApi.put('/profile/doctor/completeprofile', {
 			userInfo
-		});
+		}) : response = await dianurseApi.put('/profile/patient/completeprofile', {
+			userInfo
+		})
 		dispatch({
 			type: 'update_image',
 			payload: image
@@ -325,7 +330,7 @@ const updateImage = (dispatch) => async ({ id, image }) => {
 };
 
 // complete profile change password
-const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id }) => {
+const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id, userAmIHCP }) => {
 	console.log(newPassword, oldPassword, id);
 	const userInfo = {
 		id,
@@ -333,10 +338,14 @@ const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id }) =>
 		newPassword,
 		form: 2
 	};
+	let response; 
 	try {
-		const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+		userAmIHCP ? 
+		response = await dianurseApi.put('/profile/doctor/completeprofile', {
 			userInfo
-		});
+		}) : response = await dianurseApi.put('/profile/patient/completeprofile', {
+			userInfo
+		})
 		dispatch({ type: 'set_dialog_message', payload: response.data.message });
 	} catch (err) {
 		dispatch({
@@ -396,7 +405,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,
