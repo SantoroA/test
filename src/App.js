@@ -41,19 +41,19 @@ const Routes = () => {
 		const loadPage = async () => {
 			await getCookie();
 			setIsLoading(false);
-			console.log(userId)	
-
-			userAmIHCP ? getProfile(userId) : getPatProfile(userId);
-		
+			console.log(userId);
 		};
 		loadPage();
 		//  eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	useEffect(() => {
-			console.log(userId)	
+	useEffect(
+		() => {
+			console.log(userId);
 			userAmIHCP ? getProfile(userId) : getPatProfile(userId);
 			//  eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userId]);
+		},
+		[ userId ]
+	);
 	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };
 

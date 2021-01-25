@@ -6,7 +6,7 @@ const docProfileReducer = (state, action) => {
 		case 'get_profile':
 			return {
 				...state,
-				specialty: action.payload.Specialty,
+				specialty: action.payload.specialty,
 				insurance: action.payload.insurance,
 				dialogMessage: '',
 				dialogOpen: false,
@@ -22,12 +22,12 @@ const docProfileReducer = (state, action) => {
 				city: action.payload.city,
 				zipcode: action.payload.zipcode,
 				street: action.payload.street,
-				num: action.payload.number,
+				num: action.payload.num,
 				education: action.payload.education,
 				yearsExperience: action.payload.yearsExperience,
 				yearsSpecialist: action.payload.yearsSpecialist,
-				email: action.payload[0].accountId.username,
-				image: action.payload[0].accountId.profilePicture
+				email: action.payload.email,
+				image: action.payload.image
 			};
 		case 'get_speciality':
 			return {
@@ -109,7 +109,14 @@ const getSpeciality = (dispatch) => {
 		}
 	};
 };
-
+const formatDate = (date) => {
+	const year = date.getFullYear();
+	const month = '' + date.getMonth() + 1;
+	const day = '' + date.getDate();
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+	return [ year, month, day ].join('-');
+};
 const getProfile = (dispatch) => {
 	return async (id) => {
 		try {
@@ -117,7 +124,32 @@ const getProfile = (dispatch) => {
 				params: { id }
 			});
 			console.log(response.data);
-			dispatch({ type: 'get_profile', payload: response.data });
+
+			dispatch({
+				type: 'get_profile',
+				payload: {
+					specialty: response.data.Specialty,
+					insurance: response.data.insurance,
+					firstName: response.data.firstName,
+					lastName: response.data.lastName,
+					gender: response.data.gender,
+					phoneNumber: response.data.phoneNumber,
+					birthPlace: response.data.birthPlace,
+					birthday: formatDate(response.data.birthday),
+					profileInfo: response.data.profileInfo,
+					websiteUrl: response.data.websiteUrl,
+					country: response.data.country,
+					city: response.data.city,
+					zipcode: response.data.zipcode,
+					street: response.data.street,
+					num: response.data.number,
+					education: response.data.education,
+					yearsExperience: response.data.yearsExperience,
+					yearsSpecialist: response.data.yearsSpecialist,
+					email: response.data[0].accountId.username,
+					image: response.data[0].accountId.profilePicture
+				}
+			});
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);

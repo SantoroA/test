@@ -48,7 +48,6 @@ const MyProfileCard = () => {
 	return (
 		<Card elevation={0} className={classes.root}>
 			<CardMedia className={classes.cover} image={image} title={lastName} />
-
 			<CardContent className={classes.content}>
 				{userAmIHCP ? (
 					<div>

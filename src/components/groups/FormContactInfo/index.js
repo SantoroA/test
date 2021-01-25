@@ -29,7 +29,7 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 const FormContactInfo = () => {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { updateContactInfo, state } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
-	const {getSpeciality } = useContext(DocProfileContext);
+	const { getSpeciality } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
@@ -45,7 +45,6 @@ const FormContactInfo = () => {
 	// console.log(phoneNumber)
 
 	useEffect(() => {
-		q;
 		{
 			userAmIHCP && getSpeciality();
 		}
@@ -60,7 +59,7 @@ const FormContactInfo = () => {
 		setBirthday(state.birthday);
 		setbirthPlace(state.birthPlace);
 	};
-	
+
 	const handleSubmit = () => {
 		console.log('submit', specialty);
 		updateContactInfo({
@@ -149,7 +148,7 @@ const FormContactInfo = () => {
 									<Select
 										disabled={isDisabled}
 										value={gender}
-										onChange={(e) => setGender(parse.Int(e.target.value))}
+										onChange={(e) => setGender(parseInt(e.target.value))}
 										label="Gender"
 									>
 										<MenuItem value={0}>Male</MenuItem>

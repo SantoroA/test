@@ -31,7 +31,7 @@ const authReducer = (state, action) => {
 				dialogMessage: '',
 				dialogOpen: false
 			};
-			case 'set_is_social_media':
+		case 'set_is_social_media':
 			return { ...state, isSocialMedia: action.payload };
 		case 'update_image':
 			return { ...state, image: action.payload };
@@ -308,13 +308,13 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 	console.log(userInfo);
 	let response;
 	try {
-		
-		userAmIHCP ? 
-		response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			userInfo
-		}) : response = await dianurseApi.put('/profile/patient/completeprofile', {
-			userInfo
-		})
+		userAmIHCP
+			? (response = await dianurseApi.put('/profile/doctor/completeprofile', {
+					userInfo
+				}))
+			: (response = await dianurseApi.put('/profile/patient/completeprofile', {
+					userInfo
+				}));
 		dispatch({
 			type: 'update_image',
 			payload: image
@@ -338,14 +338,15 @@ const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id, user
 		newPassword,
 		form: 2
 	};
-	let response; 
+	let response;
 	try {
-		userAmIHCP ? 
-		response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			userInfo
-		}) : response = await dianurseApi.put('/profile/patient/completeprofile', {
-			userInfo
-		})
+		userAmIHCP
+			? (response = await dianurseApi.put('/profile/doctor/completeprofile', {
+					userInfo
+				}))
+			: (response = await dianurseApi.put('/profile/patient/completeprofile', {
+					userInfo
+				}));
 		dispatch({ type: 'set_dialog_message', payload: response.data.message });
 	} catch (err) {
 		dispatch({
@@ -405,7 +406,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,
