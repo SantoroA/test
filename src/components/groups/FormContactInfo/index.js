@@ -44,6 +44,7 @@ const FormContactInfo = () => {
 	// console.log(state);
 
 	useEffect(() => {
+		q;
 		{
 			userAmIHCP && getSpecialty();
 		}
@@ -148,7 +149,7 @@ const FormContactInfo = () => {
 										disabled={isDisabled}
 										labelId="gender-label"
 										value={gender}
-										onChange={(e) => setGender(e.target.value)}
+										onChange={(e) => setGender(parse.Int(e.target.value))}
 										label="Gender"
 									>
 										<MenuItem value={0}>Male</MenuItem>
