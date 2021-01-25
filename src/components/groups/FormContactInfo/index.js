@@ -29,23 +29,24 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 const FormContactInfo = () => {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { updateContactInfo, state } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
-	const { getSpecialty } = useContext(DocProfileContext);
+	const {getSpeciality } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
 	const [ specialty, setSpecialty ] = useState(state.specialty);
 	const [ gender, setGender ] = useState(state.gender);
-	const [ phoneNumber, setPhoneNumber ] = useState(state.phoneNumber);
+	// const [ phoneNumber, setPhoneNumber ] = useState(state.phoneNumber);
 	const [ birthday, setBirthday ] = useState(state.birthday);
 	const [ birthPlace, setbirthPlace ] = useState(state.birthPlace);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
 	// console.log(state);
+	// console.log(phoneNumber)
 
 	useEffect(() => {
 		{
-			userAmIHCP && getSpecialty();
+			userAmIHCP && getSpeciality();
 		}
 	}, []);
 
@@ -54,11 +55,11 @@ const FormContactInfo = () => {
 		setLasttName(state.lastName);
 		setSpecialty(state.specialty);
 		setGender(state.gender);
-		setPhoneNumber(state.phoneNumber);
+		// setPhoneNumber(state.phoneNumber);
 		setBirthday(state.birthday);
 		setbirthPlace(state.birthPlace);
 	};
-
+	
 	const handleSubmit = () => {
 		console.log('submit', specialty);
 		updateContactInfo({
@@ -67,7 +68,7 @@ const FormContactInfo = () => {
 			lastName,
 			specialty,
 			gender,
-			phoneNumber,
+			// phoneNumber,
 			birthday,
 			birthPlace
 		});
@@ -146,7 +147,6 @@ const FormContactInfo = () => {
 									<InputLabel id="gender-label">Gender</InputLabel>
 									<Select
 										disabled={isDisabled}
-										labelId="gender-label"
 										value={gender}
 										onChange={(e) => setGender(e.target.value)}
 										label="Gender"
@@ -159,7 +159,7 @@ const FormContactInfo = () => {
 								</FormControl>
 							</Grid>
 
-							<Grid item xs={12} sm={6} className={classes.input}>
+							{/* <Grid item xs={12} sm={6} className={classes.input}>
 								<PhoneInput
 									fullWidth
 									inputStyle={{ width: '100%' }}
@@ -172,9 +172,9 @@ const FormContactInfo = () => {
 										required: true,
 										autoFocus: true
 									}}
-									// variant="outlined"
+									variant="outlined"
 								/>
-							</Grid>
+							</Grid> */}
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<TextField
 									fullWidth

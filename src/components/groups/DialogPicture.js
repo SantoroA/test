@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 });
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
-	const { updateImage, state: { userId } } = useContext(AuthContext);
+	const { updateImage, state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { state: { image } } = useContext(DocProfileContext);
 	const [ imageChange, setImageChange ] = useState(image);
 	const inputFileRef = createRef(null);
@@ -69,6 +69,7 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 		console.log('submit');
 		updateImage({
 			id: userId,
+			userAmIHCP,
 			image: imageChange
 		});
 		setIsDialogOpen(false);

@@ -175,9 +175,9 @@ const FormSearchDoctor = () => {
 						/>
 					</Grid>
 					<Grid item xs={3} sm={2} md={1} className={classes.input}>
-						<ButtonIcon className={classes.submit} type="submit">
+						{/* <ButtonIcon className={classes.submit} type="submit">
 							<SearchIcon />
-						</ButtonIcon>
+						</ButtonIcon> */}
 					</Grid>
 				</Grid>
 			</form>
