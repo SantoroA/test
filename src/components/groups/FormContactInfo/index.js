@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';
-// import { Context as AuthContext } from '../../../context/AuthContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import ReactPhoneInput from 'react-phone-input-mui';
 import useStyles from './style';
 //CUSTOM UI
@@ -19,7 +19,6 @@ import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
-import { Context as AuthContext } from '../../../context/AuthContext';
 
 const FormContactInfo = () => {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);

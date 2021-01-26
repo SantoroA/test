@@ -3,6 +3,7 @@ import { Context as SearchDoctorContext } from '../../context/SearchDoctorContex
 import { Context as AuthContext } from '../../context/AuthContext';
 import BoxTime from '../../components/customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { NavLink } from 'react-router-dom';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 //MATERIAL UI
@@ -44,6 +45,9 @@ const useStyles = makeStyles({
 	price: {
 		marginRight: '2rem',
 		marginLeft: '2rem'
+	},
+	navlink: {
+		textDecoration: 'none'
 	}
 });
 
@@ -78,16 +82,12 @@ const DialogReserve = ({ open, close, id }) => {
 									{convertTime(ap.appointmentTimeStart)} - {convertTime(ap.appointmentTimeEnd)}
 								</BoxTime>
 								<Typography className={classes.price}>$ {ap.amount}</Typography>
-								<ButtonFilled
-									onClick={() => {
-										reserve({
-											appointmentId: ap._id,
-											patientId: userId
-										});
-									}}
+								<NavLink
+									to={{ pathname: '/in/patient/reserve', state: { appointmentId: ap._id } }}
+									className={classes.navlink}
 								>
-									Reserve
-								</ButtonFilled>
+									<ButtonFilled onClick={() => {}}>Reserve</ButtonFilled>
+								</NavLink>
 							</Grid>
 						);
 					})}

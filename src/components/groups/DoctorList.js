@@ -168,8 +168,8 @@ const APPOINTMENTS_QUERY = gql`
 
 const DoctorList = ({ filterState }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
-	const classes = useStyles();
 	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
+	const [ offset, setOffset ] = useState(0);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
 	const [ docId, setDocId ] = useState('');
 	const [ showPerPage, setShowPerPage ] = useState(2);
@@ -178,12 +178,13 @@ const DoctorList = ({ filterState }) => {
 		end: showPerPage
 	});
 	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, limit: 10 }
+		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset, limit: 10 }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	//USER ID
 	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
+	const classes = useStyles();
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
 		let min = new Date(start).getMinutes();

@@ -402,7 +402,7 @@ export const { Provider, Context } = createDataContext(
 	{
 		userId: '',
 		userToken: '',
-		userAmIHCP: true,
+		userAmIHCP: false,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
