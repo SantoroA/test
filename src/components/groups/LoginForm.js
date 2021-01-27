@@ -109,7 +109,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 			setEmail(decoded[2]);
 			setPassword(decoded[1].split('&')[0]);
 		}
-	});
+	}, []);
 
 	const handleSubmit = async () => {
 		await login({ email, password });

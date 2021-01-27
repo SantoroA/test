@@ -26,8 +26,8 @@ const docProfileReducer = (state, action) => {
 				education: action.payload.education,
 				yearsExperience: action.payload.yearsExperience,
 				yearsSpecialist: action.payload.yearsSpecialist,
-				email: action.payload[0].accountId.username,
-				image: action.payload[0].accountId.profilePicture
+				email: action.payload.accountId.username,
+				image: action.payload.accountId.profilePicture
 			};
 		case 'get_speciality':
 			return {
@@ -112,12 +112,13 @@ const getSpeciality = (dispatch) => {
 
 const getProfile = (dispatch) => {
 	return async (id) => {
+		console.log(id)
 		try {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
-			console.log(response.data);
-			dispatch({ type: 'get_profile', payload: response.data });
+			console.log(response.data[0]);
+			dispatch({ type: 'get_profile', payload: response.data[0] });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
@@ -320,15 +321,14 @@ export const { Context, Provider } = createDataContext(
 	},
 	{
 		services: [],
-		email: 'doc@test.com',
-		image:
-			'https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg',
+		email: '',
+		image: '',
 		specialty: 'General care physician',
 		insurance: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: 'Phoebee',
-		lastName: 'Buffet',
+		firstName: '',
+		lastName: '',
 		gender: '',
 		phoneNumber: '',
 		birthPlace: '',
@@ -343,17 +343,6 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: [
-			'General care physician',
-			'Endocrinologist',
-			'Dietitian',
-			'Certified diabetes educator',
-			'Podiatrist',
-			'Nephrologist',
-			'Ophthalmologist',
-			'Physical trainer',
-			'Dentist',
-			'Any'
-		]
+		allSpecialty: [ ]
 	}
 );
