@@ -120,6 +120,7 @@ const useStyles = makeStyles({
 // testar a string
 // no back fazer um if do horario e fazer grater and litle
 
+
 const APPOINTMENTS_QUERY = gql`
 	query GetAppointments(
 		$date: String!
@@ -133,7 +134,7 @@ const APPOINTMENTS_QUERY = gql`
 		$offset: Int
 		$limit: Int
 	) {
-		appointment(
+		doctor(
 			date: $date
 			typeOfHCP: $typeOfHCP
 			minPrice: $minPrice
@@ -142,25 +143,22 @@ const APPOINTMENTS_QUERY = gql`
 			insurance: $insurance
 			rating: $rating
 			time: $time
-			offser: $offset
+			offset: $offset
 			limit: $limit
 		) {
-			_id
-			appointmentDate
-			appointmentTimeStart
-			appointmentTimeEnd
-			slotCreated
-			appointmentWeek
-			appointmentStatus
-			amount
-			profileHCPid {
-				firstName
-				lastName
-				gender
-				profileInfo
-			}
-			accountHCPid {
-				profilePicture
+			firstname
+			lastname
+			image
+			description
+			averageRating
+			receivedRating
+			id
+			minPrice
+			timeStart {
+			  amount 
+			  idApt
+			  start
+			  id
 			}
 		}
 	}
@@ -191,11 +189,11 @@ const DoctorList = ({ filterState }) => {
 		let realMin = min < 10 ? '00' : min;
 		return `${hours}:${realMin}`;
 	};
-	console.log(docList);
+
 	const onPaginationChange = (start, end) => {
 		setPagination({ start: start, end: end });
 	};
-	console.log(data);
+	console.log(data)
 	if (loading)
 		return (
 			<Container>
@@ -205,8 +203,8 @@ const DoctorList = ({ filterState }) => {
 
 	return (
 		<div className={classes.mainContent}>
-			{docList !== null ? (
-				docList.map((doc) => {
+			{data !== null ? (
+				data.doctor.map((doc) => {
 					return (
 						<Card className={classes.card} key={doc.id}>
 							<CardMedia className={classes.media} image={doc.image} title="Doctor">
@@ -240,12 +238,11 @@ const DoctorList = ({ filterState }) => {
 										<Typography variant="body2">{doc.description}</Typography>
 									</Grid>
 									<Grid item className={classes.times}>
-										{doctors
-											.filter((el) => el.profileHCPid._id === doc.id)
+										{doc.timeStart
 											.slice(0, 3)
 											.map((elem, i) => {
 												return (
-													<BoxTime key={i}>{convertTime(elem.appointmentTimeStart)}</BoxTime>
+													<BoxTime key={i}>{convertTime(elem.start)}</BoxTime>
 												);
 											})}
 										{/* <Button color="primary" className={classes.viewAvailButton}>
@@ -264,14 +261,15 @@ const DoctorList = ({ filterState }) => {
 
 								<Typography className={classes.priceText} variant="body1">
 									${' '}
-									{Math.min(
+									{doc.minPrice}
+									{/* {Math.min(
 										...doctors.filter((el) => el.profileHCPid._id === doc.id).map((e) => e.amount)
-									)}
+									)} */}
 									{/* $ {doc.amount} */}
 								</Typography>
 								<ButtonFilled
 									onClick={() => {
-										setDocId(doc.id);
+										setDocId(doc.timeStart.idApt);
 										setDialogReserveOpen(true);
 									}}
 								>

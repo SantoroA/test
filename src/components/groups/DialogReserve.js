@@ -51,6 +51,32 @@ const useStyles = makeStyles({
 	}
 });
 
+
+/*
+
+doctor: Array(1)
+0:
+averageRating: 2.1 
+description: "lalalalalalalala"
+firstname: "Gabriela"
+id: "600977fdaa83f600274ee150"
+image: "https://lh4.googleusercontent.com/-dE-iPaoO_Fw/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnSrHCR6ResfxW-M-MxEMwybl2eMw/s96-c/photo.jpg"
+lastname: "Martini"
+minPrice: 75
+receivedRating: 13
+timeStart: Array(6) // data.doctor.timeStart
+0:
+amount: 75
+id: "600977fdaa83f600274ee150" // data.doctor.timeStart.id Esse id é do doctor
+idApt: "600a90eea38ef50029772525" // esse id é o do apointment
+start: "2021-01-27T07:00:00.000Z" 
+__typename: "appointment"
+
+
+
+*/
+
+
 const DialogReserve = ({ open, close, id }) => {
 	const classes = useStyles();
 	// const { state: {userId} } = useContext(AuthContext);

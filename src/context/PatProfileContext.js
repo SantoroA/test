@@ -56,6 +56,7 @@ const getPatProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/patient/getprofile', {
 				params: { id }
 			});
+<<<<<<< HEAD
 			console.log('patient', response.data[0]);
 			dispatch({
 				type: 'get_profile',
@@ -70,6 +71,10 @@ const getPatProfile = (dispatch) => {
 					image: response.data[0].accountId.profilePicture
 				}
 			});
+=======
+			// console.log('patient',response.data[0]);
+			dispatch({ type: 'get_profile', payload: response.data[0] });
+>>>>>>> 75fbdf311a5ca1c0992b1beac5ea42539db438f2
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);
