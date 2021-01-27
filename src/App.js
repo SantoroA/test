@@ -18,7 +18,10 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
 	uri: 'http://localhost:10101/graphql',
-	cache: new InMemoryCache()
+	cache: new InMemoryCache({
+		dataIdFromObject: o => o.idApt,
+		// o.id ? `${o.__typename}-${o.id}` : `${o.__typename}-${o.cursor}`
+	})
 });
 
 const theme = createMuiTheme({
