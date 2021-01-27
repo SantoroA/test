@@ -224,7 +224,7 @@ const Footer = () => {
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid item xs={10} sm={11} className={classes.textFooter}>
+				<Grid item xs={12} className={classes.textFooter}>
 					<Grid container>
 						<Typography variant="body2">
 							The telemedicine services made available through Dianurse are provided by licensed
