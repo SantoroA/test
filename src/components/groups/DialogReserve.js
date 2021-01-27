@@ -79,7 +79,7 @@ const DialogReserve = ({ open, close, appointments, formatDate }) => {
 								</BoxTime>
 								<Typography className={classes.price}>$ {ap.amount}</Typography>
 								<NavLink
-									to={{ pathname: '/in/patient/reserve', state: { appointmentId: ap.idApt } }}
+									to={{ pathname: '/in/patient/reserve', state: { appointment: ap } }}
 									className={classes.navlink}
 								>
 									<ButtonFilled onClick={() => {}}>Reserve</ButtonFilled>

@@ -56,18 +56,25 @@ const useStyles = makeStyles({
 		}
 	}
 });
-const StepWizardContainer = ({ children, title, progress }) => {
+const StepWizardContainer = ({ children, title, progress, previousStep, step }) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
 			<Navbar />
 			<Container className={classes.container} maxWidth="md">
-				<NavLink to="/in/patient/doctorsearch" className={classes.backButton}>
-					<ButtonNoBorder onClick={() => {}}>
+				{step === 1 ? (
+					<NavLink className={classes.backButton} to="/in/patient/doctorsearch">
+						<ButtonNoBorder onClick={previousStep}>
+							<ArrowBackIcon />
+							<Typography>Back</Typography>
+						</ButtonNoBorder>
+					</NavLink>
+				) : (
+					<ButtonNoBorder className={classes.backButton} onClick={previousStep}>
 						<ArrowBackIcon />
 						<Typography>Back</Typography>
 					</ButtonNoBorder>
-				</NavLink>
+				)}
 				<Typography className={classes.title} color="primary" variant="h3">
 					{title}
 				</Typography>
