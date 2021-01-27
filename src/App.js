@@ -19,7 +19,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 const client = new ApolloClient({
 	uri: 'http://localhost:10101/graphql',
 	cache: new InMemoryCache({
-		dataIdFromObject: o => o.idApt,
+		dataIdFromObject: (o) => o.idApt
 		// o.id ? `${o.__typename}-${o.id}` : `${o.__typename}-${o.cursor}`
 	})
 });
@@ -36,7 +36,7 @@ const theme = createMuiTheme({
 });
 
 const Routes = () => {
-	const [ isLoading, setIsLoading ] = useState(false);
+	const [ isLoading, setIsLoading ] = useState(true);
 	const { getCookie, state: { isLoggedIn, userId, userAmIHCP } } = useContext(AuthContext);
 	const { getProfile } = useContext(DocProfileContext);
 	const { getPatProfile } = useContext(PatProfileContext);

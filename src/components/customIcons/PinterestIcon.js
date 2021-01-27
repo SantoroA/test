@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-export default function FolderIcon(props) {
+export default function PinterestIcon(props) {
 	return (
 		<SvgIcon viewBox="0 0 25 25  " {...props}>
 			<circle cx="12.0433" cy="12.346" r="11.9124" />

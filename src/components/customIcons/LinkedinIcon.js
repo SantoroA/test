@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-export default function FolderIcon(props) {
+export default function LinkedinIcon(props) {
 	return (
 		<SvgIcon viewBox="0 0 25 25  " {...props}>
 			<circle cx="12.5882" cy="12.346" r="11.9124" />

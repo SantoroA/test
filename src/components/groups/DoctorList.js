@@ -120,7 +120,6 @@ const useStyles = makeStyles({
 // testar a string
 // no back fazer um if do horario e fazer grater and litle
 
-
 const APPOINTMENTS_QUERY = gql`
 	query GetAppointments(
 		$date: String!
@@ -154,22 +153,23 @@ const APPOINTMENTS_QUERY = gql`
 			receivedRating
 			id
 			minPrice
-			timeStart {
-			  amount 
-			  idApt
-			  start
-			  id
+			appointments {
+				amount
+				idApt
+				start
+				end
+				id
 			}
 		}
 	}
 `;
 
-const DoctorList = ({ filterState }) => {
+const DoctorList = ({ filterState, formatDate }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
-	const { state: { doctors, docList } } = useContext(SearchDoctorContext);
 	const [ offset, setOffset ] = useState(0);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
 	const [ docId, setDocId ] = useState('');
+	const [ appointments, setAppointments ] = useState([]);
 	const [ showPerPage, setShowPerPage ] = useState(2);
 	const [ pagination, setPagination ] = useState({
 		start: 0,
@@ -179,9 +179,7 @@ const DoctorList = ({ filterState }) => {
 		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset, limit: 10 }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
-	//USER ID
-	const { state: { userId } } = useContext(AuthContext);
-	// const userId = '5fe8b0c48bef090026e253b7';
+
 	const classes = useStyles();
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
@@ -193,7 +191,7 @@ const DoctorList = ({ filterState }) => {
 	const onPaginationChange = (start, end) => {
 		setPagination({ start: start, end: end });
 	};
-	console.log(data)
+	console.log(data);
 	if (loading)
 		return (
 			<Container>
@@ -203,7 +201,7 @@ const DoctorList = ({ filterState }) => {
 
 	return (
 		<div className={classes.mainContent}>
-			{data !== null ? (
+			{data !== undefined ? (
 				data.doctor.map((doc) => {
 					return (
 						<Card className={classes.card} key={doc.id}>
@@ -238,13 +236,9 @@ const DoctorList = ({ filterState }) => {
 										<Typography variant="body2">{doc.description}</Typography>
 									</Grid>
 									<Grid item className={classes.times}>
-										{doc.timeStart
-											.slice(0, 3)
-											.map((elem, i) => {
-												return (
-													<BoxTime key={i}>{convertTime(elem.start)}</BoxTime>
-												);
-											})}
+										{doc.appointments.slice(0, 3).map((elem, i) => {
+											return <BoxTime key={i}>{convertTime(elem.start)}</BoxTime>;
+										})}
 										{/* <Button color="primary" className={classes.viewAvailButton}>
 											<CalendarTodayIcon className={classes.icon} /> View all Availability
 										</Button> */}
@@ -260,8 +254,7 @@ const DoctorList = ({ filterState }) => {
 								</Typography>
 
 								<Typography className={classes.priceText} variant="body1">
-									${' '}
-									{doc.minPrice}
+									$ {doc.minPrice}
 									{/* {Math.min(
 										...doctors.filter((el) => el.profileHCPid._id === doc.id).map((e) => e.amount)
 									)} */}
@@ -269,8 +262,8 @@ const DoctorList = ({ filterState }) => {
 								</Typography>
 								<ButtonFilled
 									onClick={() => {
-										setDocId(doc.timeStart.idApt);
 										setDialogReserveOpen(true);
+										setAppointments(doc.appointments);
 									}}
 								>
 									View
@@ -280,9 +273,14 @@ const DoctorList = ({ filterState }) => {
 					);
 				})
 			) : null}
-			<DialogReserve open={dialogReserveOpen} id={docId} close={() => setDialogReserveOpen(false)} />
+			<DialogReserve
+				open={dialogReserveOpen}
+				formatDate={formatDate}
+				appointments={appointments}
+				close={() => setDialogReserveOpen(false)}
+			/>
 			<MessageDialog open={dialogOpen} message={error} close={() => setDialogOpen(false)} />
-			<Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={docList.length} />
+			{/* <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange}  /> */}
 		</div>
 	);
 };

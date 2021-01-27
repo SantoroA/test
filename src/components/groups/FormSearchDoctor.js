@@ -260,7 +260,7 @@ const FormSearchDoctor = () => {
 			<Typography variant="h5">{formatDateDisplay}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList filterState={filterState} />
+					<DoctorList formatDate={formatDate} filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
 					<Calendar />

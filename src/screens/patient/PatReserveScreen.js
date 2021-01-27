@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import dianurseApi from '../../api/dianurseApi';
+import { Context as AuthContext } from '../../context/AuthContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
+import StepWizardContainer from '../../components/layout/StepWizardContainer';
 import { NavLink } from 'react-router-dom';
 import FormUserReason from '../../components/groups/FormUserReason';
 import FormUserInsurance from '../../components/groups/FormUserInsurance';
@@ -90,7 +93,10 @@ const useStyles = makeStyles({
 });
 
 const PatReserveScreen = (props) => {
-	const appointmentId = props.location.state.appointmentId;
+	// const appointmentId = props.location.state.appointmentId;
+	const appointmentId = '600a90eea38ef50029772525';
+	const { state: { userId } } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
 	const [ isMainPatient, setIsMainPatient ] = useState(true);
@@ -167,323 +173,236 @@ const PatReserveScreen = (props) => {
 		setSymptoms({ ...symptoms, [event.target.name]: event.target.checked });
 	};
 
+	const reserve = async ({ userId, appointmentId }) => {
+		try {
+			const response = await dianurseApi.post(`/appointment/addAppointment/${userId}`, {
+				appointmentId
+			});
+			console.log(response.data);
+			// dispatch({ type: 'set_dialog_message', payload: response.data });
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
+
 	switch (step) {
 		case 1:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<NavLink to="/in/patient/doctorsearch" className={classes.backButton}>
-							<ButtonNoBorder onClick={() => {}}>
-								<ArrowBackIcon />
-								<Typography>Back</Typography>
-							</ButtonNoBorder>
-						</NavLink>
-						<Typography className={classes.title} color="primary" variant="h3">
-							Now we want to know more about you!
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={1} />
-						<Typography className={classes.sub} variant="h5">
-							Please respond to a few questions to get you the best care!
-						</Typography>
-						<Typography color="textSecondary" variant="body1">
-							The appointment will hold for the next 20 minutes
-						</Typography>
-						<ButtonFilled onClick={nextStep} className={classes.startButton}>
-							Ok, Got it!
-						</ButtonFilled>
-					</Container>
-				</PatLayoutContainer>
+				<StepWizardContainer title="Now we want to know more about you!" progress={1}>
+					<Typography className={classes.sub} variant="h5">
+						Please respond to a few questions to get you the best care!
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						The appointment will hold for the next 20 minutes
+					</Typography>
+					<ButtonFilled onClick={nextStep} className={classes.startButton}>
+						Ok, Got it!
+					</ButtonFilled>
+				</StepWizardContainer>
 			);
 		case 2:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							What is the reason for the visit?
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={1} />
-						<Container maxWidth="sm">
-							<Grid className={classes.optionsWrapper} container>
-								<Grid item sm={8}>
-									<TextInputRounder
-										fullWidth
-										id="reason"
-										placeholder="Search for a Reason"
-										select
-										variant="outlined"
-										value={reasonForVisit}
-										onChange={(e) => setReasonForVisit(e.target.value)}
-										InputLabelProps={{
-											shrink: true
-										}}
-									>
-										<MenuItem value="check-up">Check-up</MenuItem>
-										<MenuItem value="emergency">Emergency</MenuItem>
-										<MenuItem value="headache">Headache</MenuItem>
-									</TextInputRounder>
-								</Grid>
-								<Grid item sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="What is the reason for the visit?" progress={1}>
+					<Container maxWidth="sm">
+						<Grid className={classes.optionsWrapper} container>
+							<Grid item sm={8}>
+								<TextInputRounder
+									fullWidth
+									id="reason"
+									placeholder="Search for a Reason"
+									select
+									variant="outlined"
+									value={reasonForVisit}
+									onChange={(e) => setReasonForVisit(e.target.value)}
+									InputLabelProps={{
+										shrink: true
+									}}
+								>
+									<MenuItem value="check-up">Check-up</MenuItem>
+									<MenuItem value="emergency">Emergency</MenuItem>
+									<MenuItem value="headache">Headache</MenuItem>
+								</TextInputRounder>
 							</Grid>
-						</Container>
+							<Grid item sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 3:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							How long have you felt this way?
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={10} />
-						<Container maxWidth="sm">
-							<Grid className={classes.optionsWrapper} container>
-								<Grid item sm={4}>
-									<TextField
-										type="number"
-										fullWidth
-										label="Amount"
-										value={symptomTime}
-										variant="outlined"
-										onChange={(e) => setSymptomTime(e.target.value)}
-									/>
-								</Grid>
-								<Grid item sm={4}>
-									<TextField
-										type="number"
-										fullWidth
-										label="Unit"
-										select
-										value={symptomTime}
-										variant="outlined"
-										onChange={(e) => setSymptomTime(e.target.value)}
-									>
-										<MenuItem value="hours">Hours</MenuItem>
-										<MenuItem value="weeks">Weeks</MenuItem>
-										<MenuItem value="months">Months</MenuItem>
-									</TextField>
-								</Grid>
-								<Grid item sm={3}>
-									<ButtonFilled className={classes.nextButton} fullWidth onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="How long have you felt this way?" progress={10}>
+					<Container maxWidth="sm">
+						<Grid className={classes.optionsWrapper} container>
+							<Grid item sm={4}>
+								<TextField
+									type="number"
+									fullWidth
+									label="Amount"
+									value={symptomTime}
+									variant="outlined"
+									onChange={(e) => setSymptomTime(e.target.value)}
+								/>
 							</Grid>
-						</Container>
+							<Grid item sm={4}>
+								<TextField
+									type="number"
+									fullWidth
+									label="Unit"
+									select
+									value={symptomTime}
+									variant="outlined"
+									onChange={(e) => setSymptomTime(e.target.value)}
+								>
+									<MenuItem value="hours">Hours</MenuItem>
+									<MenuItem value="weeks">Weeks</MenuItem>
+									<MenuItem value="months">Months</MenuItem>
+								</TextField>
+							</Grid>
+							<Grid item sm={3}>
+								<ButtonFilled className={classes.nextButton} fullWidth onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 4:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Do you have any of these symptoms?
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={20} />
-						<Typography color="textSecondary" variant="body1">
-							Please select all that apply
-						</Typography>
-						<Container maxWidth="sm">
-							<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="Do you have any of these symptoms?" progress={20}>
+					<Typography color="textSecondary" variant="body1">
+						Please select all that apply
+					</Typography>
+					<Container maxWidth="sm">
+						<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 5:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Complete your health profile
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={40} />
-
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="Complete your health profile" progress={30}>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 6:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Add your oxigen saturation level
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={50} />
-						<Typography color="textSecondary" variant="body1">
-							If you have a pulse oximeter, save time by measuring you current oxygen saturation before
-							your visit
-						</Typography>
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="Add your oxigen saturation level" progress={40}>
+					<Typography color="textSecondary" variant="body1">
+						If you have a pulse oximeter, save time by measuring you current oxygen saturation before your
+						visit
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 7:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Add your temperature
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={60} />
-						<Typography color="textSecondary" variant="body1">
-							If you have a thermometer, adding your temperature now will save time during your visit. No
-							guessing please!
-						</Typography>
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="Add your temperature" progress={50}>
+					<Typography color="textSecondary" variant="body1">
+						If you have a thermometer, adding your temperature now will save time during your visit. No
+						guessing please!
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 8:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Add other details
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={70} />
-						<Typography color="textSecondary" variant="body1">
-							Please incluse any other detail you want to tell the doctor
-						</Typography>
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="Add other details" progress={60}>
+					<Typography color="textSecondary" variant="body1">
+						Please incluse any other detail you want to tell the doctor
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 9:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Here are your appointment details!
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={80} />
-						<Typography className={classes.sub} variant="h5">
-							Review and confirm
-						</Typography>
-						<Typography color="textSecondary" variant="body1">
-							The appointment will be added to your Bookings in your profile once the payment is confirmed
-						</Typography>
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="What type of insurance do you have?" progress={70}>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
 			);
 		case 10:
 			return (
-				<PatLayoutContainer>
-					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
-						<Typography className={classes.title} color="primary" variant="h3">
-							Add Payment Method
-						</Typography>
-						<LinearProgress className={classes.progress} variant="determinate" value={90} />
-
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+				<StepWizardContainer title="Here are your appointment details!" progress={80}>
+					<Typography className={classes.sub} variant="h5">
+						Review and confirm
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						The appointment will be added to your Bookings in your profile once the payment is confirmed
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
 							</Grid>
-						</Container>
+						</Grid>
 					</Container>
-				</PatLayoutContainer>
+				</StepWizardContainer>
+			);
+		case 11:
+			return (
+				<StepWizardContainer title="Add Payment Method" progress={90}>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
 			);
 
 		default:
