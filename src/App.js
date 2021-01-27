@@ -36,17 +36,17 @@ const theme = createMuiTheme({
 });
 
 const Routes = () => {
-	const [ isLoading, setIsLoading ] = useState(true);
+	const [ isLoading, setIsLoading ] = useState(false);
 	const { getCookie, state: { isLoggedIn, userId, userAmIHCP } } = useContext(AuthContext);
 	const { getProfile } = useContext(DocProfileContext);
 	const { getPatProfile } = useContext(PatProfileContext);
-	const [gettingProfile, setGettingProfile]= useState(false)
+	// const [gettingProfile, setGettingProfile]= useState(false)
 	useEffect(() => {
 		const loadPage = async () => {
 			await getCookie();
 			setIsLoading(false);
 			console.log(userId)	
-setGettingProfile(true)
+// setGettingProfile(true)
 		};
 		loadPage();
 		//  eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +60,7 @@ setGettingProfile(true)
 			console.log(userAmIHCP)
 			userAmIHCP ? getProfile(userId) : getPatProfile(userId);
 			//  eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [gettingProfile]);
+	}, [userId]);
 
 	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };

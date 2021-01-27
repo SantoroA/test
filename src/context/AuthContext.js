@@ -14,7 +14,8 @@ const authReducer = (state, action) => {
 				preferredLanguage: action.payload.preferredLanguage,
 				isLoggedIn: true,
 				dialogMessage: '',
-				dialogOpen: false
+				dialogOpen: false,
+				isSocialMedia: action.payload.socialMedia
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
@@ -29,10 +30,11 @@ const authReducer = (state, action) => {
 				preferredLanguage: '',
 				isLoggedIn: false,
 				dialogMessage: '',
-				dialogOpen: false
+				dialogOpen: false,
+				isSocialMedia: false
 			};
-			case 'set_is_social_media':
-			return { ...state, isSocialMedia: action.payload };
+			// case 'set_is_social_media':
+			// return { ...state, isSocialMedia: action.payload };
 		case 'update_image':
 			return { ...state, image: action.payload };
 		case 'set_dialog_message':
@@ -148,7 +150,7 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 		});
 		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
-		dispatch({ type: 'set_is_social_media', payload: true });
+		// dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -199,7 +201,7 @@ const handleAppleLogin = (dispatch) => async (appleResponse) => {
 		});
 		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
-		dispatch({ type: 'set_is_social_media', payload: true });
+		// dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -250,7 +252,7 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 		});
 		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
-		dispatch({ type: 'set_is_social_media', payload: true });
+		// dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -409,6 +411,6 @@ export const { Provider, Context } = createDataContext(
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,
-		isSocialMedia: true
+		isSocialMedia: false
 	}
 );

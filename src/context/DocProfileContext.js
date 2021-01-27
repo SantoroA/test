@@ -4,9 +4,10 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
+			console.log(action.payload)
 			return {
 				...state,
-				specialty: action.payload.Specialty,
+				specialty: action.payload.typeOfHCP,
 				insurance: action.payload.insurance,
 				dialogMessage: '',
 				dialogOpen: false,
