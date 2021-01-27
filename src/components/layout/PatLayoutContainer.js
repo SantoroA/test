@@ -21,7 +21,9 @@ const PatLayoutContainer = ({ children }) => {
 		<div className={classes.root}>
 			<Navbar />
 			{children}
-			<div className={classes.footer}>{/* <Footer /> */}</div>
+			<div className={classes.footer}>
+				<Footer />
+			</div>
 		</div>
 	);
 };

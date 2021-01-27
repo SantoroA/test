@@ -275,7 +275,7 @@ const DoctorList = ({ filterState }) => {
 										setDialogReserveOpen(true);
 									}}
 								>
-									View Times
+									View
 								</ButtonFilled>
 							</CardActions>
 						</Card>
