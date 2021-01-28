@@ -4,7 +4,7 @@ import dianurseApi from '../api/dianurseApi';
 const patProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-
+		
 			return {
 				...state,
 				dialogMessage: '',
