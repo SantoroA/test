@@ -1,0 +1,771 @@
+import React, { useState, useContext } from 'react';
+import dianurseApi from '../../api/dianurseApi';
+import { Context as AuthContext } from '../../context/AuthContext';
+import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
+import StepWizardContainer from '../../components/layout/StepWizardContainer';
+import FormPayment from '../../components/groups/FormPayment';
+import FormSymptoms from '../../components/groups/FormSymptoms';
+import FormMedConditions from '../../components/groups/FormMedConditions';
+//CUSTOM UI
+import ButtonFilled from '../../components/customUi/ButtonFilled';
+import ToggleYesNoButton from '../../components/customUi/ToggleYesNoButton';
+import ButtonNoBorder from '../../components/customUi/ButtonNoBorder';
+import TextInputRounder from '../../components/customUi/TextInputRounder';
+import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
+//MATERIAL UI
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
+const useStyles = makeStyles({
+	container: {
+		textAlign: 'center',
+		justifyContent: 'center',
+		marginTop: '3rem'
+	},
+	backButton: {
+		textDecoration: 'none',
+		display: 'flex',
+		flexDirection: 'row',
+		color: '#07B597',
+		marginTop: '2rem',
+		marginBottom: '2rem'
+	},
+	skipButton: {
+		color: 'rgba(160, 164, 168, 1)',
+		'&:hover': {
+			color: '#07B597'
+		}
+	},
+	title: {
+		marginBottom: '2rem',
+		fontWeight: 700
+	},
+	sub: {
+		fontWeight: 700,
+		marginBottom: '1rem'
+	},
+	startButton: {
+		marginTop: '2rem',
+		paddingTop: '0.7rem',
+		paddingBottom: '0.7rem',
+		paddingRight: '1.5rem',
+		paddingLeft: '1.5rem'
+	},
+
+	buttonWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		marginTop: '1.5rem',
+		marginBottom: '1rem',
+		alignItems: 'center'
+	},
+	optionsWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		marginTop: '1rem'
+	},
+	nextButton: {
+		paddingTop: '0.7rem',
+		paddingBottom: '0.7rem'
+	},
+
+	yesNoButtons: {
+		justifyContent: 'center'
+	},
+	buttonOutlined: {
+		paddingRight: '1rem',
+		paddingLeft: '1rem'
+	},
+	paper: {
+		marginBottom: '2rem',
+		padding: '1rem'
+	},
+	section: {
+		marginTop: '2rem'
+	}
+});
+
+const PatReserveScreen = (props) => {
+	// const appointment = props.location.state.appointment;
+	const appointment = '600a90eea38ef50029772525';
+	const { state: { userId } } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
+	const classes = useStyles();
+	const [ step, setStep ] = useState(1);
+	const [ insurancePublic, setInsurancePublic ] = useState(false);
+	const [ reasonForVisit, setReasonForVisit ] = useState('');
+	const [ symptomTime, setSymptomTime ] = useState('');
+	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState('');
+	const [ isTakingMeds, setIsTakingMeds ] = useState(false);
+	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(false);
+	const [ oxygenSaturation, setOxygenStaturation ] = useState('');
+	const [ temperature, setTemperature ] = useState('');
+	const [ tempUnit, setTempUnit ] = useState('');
+	const [ otherInfo, setOtherInfo ] = useState('');
+	const [ symptoms, setSymptoms ] = useState({
+		difficultySleeping: false,
+		fatigue: false,
+		fever: false,
+		lossOfAppetite: false,
+		moodChanges: false,
+		nightSweats: false,
+		weightChange: false,
+		congestion: false,
+		difficultySwallowing: false,
+		earDrainage: false,
+		earPain: false,
+		eyeRedness: false,
+		noseBleed: false,
+		soreThroat: false,
+		headache: false,
+		hearingLoss: false,
+		nasalDischarge: false,
+		chestPain: false,
+		cough: false,
+		decreasedExerciseTolerance: false,
+		palpitations: false,
+		shortnessOfBreath: false,
+		phlegm: false,
+		wheezing: false,
+		abdominalPain: false,
+		bloodInStool: false,
+		constipation: false,
+		diarrhea: false,
+		heartburn: false,
+		nausea: false,
+		bloodInUrine: false,
+		discomfortUrination: false,
+		frequentUrination: false,
+		irregularPeriods: false,
+		vaginalBleeding: false,
+		vaginalDischarge: false,
+		dizzy: false,
+		lossOfConsciousness: false,
+		memoryLoss: false,
+		numbness: false,
+		tremors: false,
+		visionChanges: false,
+		bites: false,
+		bleeding: false,
+		bruising: false,
+		itching: false,
+		skinRashes: false,
+		sores: false,
+		swelling: false,
+		backPain: false,
+		jointStiffness: false,
+		limitedMobility: false,
+		musclePain: false,
+		muscleWeakness: false,
+		muscleSwelling: false
+	});
+	const [ medConditions, setMedConditions ] = useState({
+		abnormalThyroid: false,
+		anxiety: false,
+		arthritis: false,
+		asthma: false,
+		cancer: false,
+		cronicKidneyDisease: false,
+		chronicPain: false,
+		COPD: false,
+		depression: false,
+		diabetes: false,
+		foreignTravel: false,
+		heartDisease: false,
+		hemophilia: false,
+		highBloodPressure: false,
+		highCholesterol: false,
+		historyOfFainting: false,
+		historyOfFalls: false,
+		historyOfSkinCancer: false,
+		historyOfSTD: false,
+		historyOfStroke: false,
+		hospitalized: false,
+		insomnia: false,
+		ironDeficiency: false,
+		jointReplacement: false,
+		nicotineDependance: false,
+		obesity: false,
+		prediabetes: false,
+		pregnant: false,
+		rheumatoidArthritis: false,
+		seasonalAllergies: false,
+		substanceAbuse: false
+	});
+	const [ paymentOptions, setPaymentOptions ] = useState({
+		cardNumber: '',
+		expiration: '',
+		ccv: '',
+		billingZipCode: '',
+		country: ''
+	});
+	const nextStep = () => {
+		setStep(step + 1);
+	};
+
+	const previousStep = () => {
+		setStep(step - 1);
+	};
+
+	const handleChange = (event) => {
+		setSymptoms({ ...symptoms, [event.target.name]: event.target.checked });
+	};
+	const handleChangeMedCondition = (event) => {
+		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
+	};
+	const handleChangePaymentOptions = (event) => {
+		setPaymentOptions({ ...paymentOptions, [event.target.name]: event.target.checked });
+	};
+
+
+	// QUERY
+	// idApt: { 
+	// 	type: GraphQLID 
+	// },
+	// idPatient: { 
+	// 	type: GraphQLID
+	// },
+	//   // 	paymentOptions, how to do?
+	// insurance: {
+	// 	type: GraphQLInt
+	// },
+	// reasonForVisit : {
+	// 	type: GraphQLString
+	// },
+	// symptomTime: {
+	// 	type: GraphQLInt
+	// },
+	// symptomTimeUnit: {
+	// 	type: GraphQLString
+	// },
+	// isTakingMeds: {
+	// 	type: GraphQLBoolean
+	// },
+	// hasDrugAllergies: {
+	// 	type: GraphQLBoolean
+	// },
+	// oxygenSaturation: {
+	// 	type: GraphQLInt
+	// },
+	// temperature: {
+	// 	type: GraphQLInt
+	// },
+	// tempUnit: {
+	// 	type: GraphQLString
+	// },
+	// otherInfo: {
+	// 	type: GraphQLString
+	// },
+	// medCondition: {
+	// 	type: new GraphQLList(conditionSchema) ARRAY ????
+	// },
+	// symptomas: {
+	// 	type: new GraphQLList(symptomsSchema) ARRAY ???
+	// },
+
+	const reserve = async () => {
+		try {
+			const response = await dianurseApi.post(`/appointment/addAppointment/${userId}`, {
+				appointmentId: appointment.id
+			});
+			console.log(response.data);
+			nextStep();
+			// dispatch({ type: 'set_dialog_message', payload: response.data });
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
+
+	switch (step) {
+		case 1:
+			return (
+				<StepWizardContainer
+					step={1}
+					previousStep={previousStep}
+					title="Now we want to know more about you!"
+					progress={1}
+				>
+					<Typography className={classes.sub} variant="h5">
+						Please respond to a few questions to get you the best care!
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						The appointment will hold for the next 20 minutes
+					</Typography>
+					<ButtonFilled onClick={nextStep} className={classes.startButton}>
+						Ok, Got it!
+					</ButtonFilled>
+				</StepWizardContainer>
+			);
+		case 2:
+			return (
+				<StepWizardContainer
+					step={2}
+					previousStep={previousStep}
+					title="What is the reason for the visit?"
+					progress={1}
+				>
+					<Container maxWidth="sm">
+						<Grid className={classes.optionsWrapper} container>
+							<Grid item xs={8}>
+								<TextInputRounder
+									fullWidth
+									id="reason"
+									placeholder="Search for a Reason"
+									select
+									variant="outlined"
+									value={reasonForVisit}
+									onChange={(e) => setReasonForVisit(e.target.value)}
+									InputLabelProps={{
+										shrink: true
+									}}
+								>
+									<MenuItem value="check-up">Check-up</MenuItem>
+									<MenuItem value="emergency">Emergency</MenuItem>
+									<MenuItem value="headache">Headache</MenuItem>
+									<MenuItem value="acne">Acne</MenuItem>
+									<MenuItem value="allergies">Acid Reflux</MenuItem>
+									<MenuItem value="anxiety">Anxiety</MenuItem>
+									<MenuItem value="animal-bite">Animal bite</MenuItem>
+									<MenuItem value="asthma">Asthma</MenuItem>
+									<MenuItem value="cold">Cold</MenuItem>
+									<MenuItem value="covid">Coronavirus (Covid 19) Evaliation</MenuItem>
+									<MenuItem value="cough">Cough</MenuItem>
+									<MenuItem value="depression">Depression</MenuItem>
+									<MenuItem value="high-colesterol">High Cholesterol</MenuItem>
+									<MenuItem value="nasal-congestion">Nasal congestion</MenuItem>
+								</TextInputRounder>
+							</Grid>
+							<Grid container className={classes.buttonWrapper}>
+								<Grid item xs={5} sm={3}>
+									<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+										<Typography>Skip question</Typography>
+									</ButtonNoBorder>
+								</Grid>
+								<Grid item xs={5} sm={3}>
+									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+										Next <NavigateNextIcon />
+									</ButtonFilled>
+								</Grid>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 3:
+			return (
+				<StepWizardContainer
+					step={3}
+					previousStep={previousStep}
+					title="How long have you felt this way?"
+					progress={10}
+				>
+					<Container maxWidth="sm">
+						<Grid className={classes.optionsWrapper} container>
+							<Grid item xs={5}>
+								<TextField
+									type="number"
+									fullWidth
+									label="Amount"
+									value={symptomTime}
+									variant="outlined"
+									onChange={(e) => setSymptomTime(e.target.value)}
+								/>
+							</Grid>
+							<Grid item xs={5}>
+								<TextField
+									type="number"
+									fullWidth
+									label="Unit"
+									select
+									value={symptomTimeUnit}
+									variant="outlined"
+									onChange={(e) => setSymptomTimeUnit(e.target.value)}
+								>
+									<MenuItem value="hours">Hours</MenuItem>
+									<MenuItem value="days">Days</MenuItem>
+									<MenuItem value="weeks">Weeks</MenuItem>
+									<MenuItem value="months">Months</MenuItem>
+								</TextField>
+							</Grid>
+							<Grid container className={classes.buttonWrapper}>
+								<Grid item xs={5} sm={3}>
+									<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+										<Typography>Skip question</Typography>
+									</ButtonNoBorder>
+								</Grid>
+								<Grid item xs={5} sm={3}>
+									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+										Next <NavigateNextIcon />
+									</ButtonFilled>
+								</Grid>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 4:
+			return (
+				<StepWizardContainer
+					step={4}
+					previousStep={previousStep}
+					title="Do you have any of these symptoms?"
+					progress={20}
+				>
+					<Typography color="textSecondary" variant="body1">
+						Please select all that apply
+					</Typography>
+					<Container maxWidth="sm">
+						<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
+							</Grid>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 5:
+			return (
+				<StepWizardContainer
+					step={5}
+					previousStep={previousStep}
+					title="Complete your health profile"
+					progress={30}
+				>
+					<Container maxWidth="sm">
+						<PaperCustomShadow className={classes.paper}>
+							<Grid container className={classes.yesNoButtons}>
+								<Grid item xs={12}>
+									<Typography className={classes.sub} variant="h6">
+										Are you currently taking any medications?
+									</Typography>
+								</Grid>
+								<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
+									<ToggleYesNoButton
+										selected={isTakingMeds}
+										value="is-taking-meds"
+										onClick={() => setIsTakingMeds(!isTakingMeds)}
+									>
+										Yes
+									</ToggleYesNoButton>
+								</Grid>
+								<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
+									<ToggleYesNoButton
+										selected={!isTakingMeds}
+										value="is-not-taking-meds"
+										onClick={() => setIsTakingMeds(!isTakingMeds)}
+									>
+										No
+									</ToggleYesNoButton>
+								</Grid>
+							</Grid>
+						</PaperCustomShadow>
+						<PaperCustomShadow className={classes.paper}>
+							<Grid container className={classes.yesNoButtons}>
+								<Grid item xs={12}>
+									<Typography className={classes.sub} variant="h6">
+										Do you have any known drug allergies?
+									</Typography>
+								</Grid>
+								<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
+									<ToggleYesNoButton
+										value="has-drug-alergies"
+										selected={hasDrugAllergies}
+										onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
+									>
+										Yes
+									</ToggleYesNoButton>
+								</Grid>
+								<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
+									<ToggleYesNoButton
+										value="doesnt-have-drug-alergies"
+										selected={!hasDrugAllergies}
+										onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
+									>
+										No
+									</ToggleYesNoButton>
+								</Grid>
+							</Grid>
+						</PaperCustomShadow>
+						<FormMedConditions
+							medConditions={medConditions}
+							handleChangeMedCondition={handleChangeMedCondition}
+						/>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
+							</Grid>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 6:
+			return (
+				<StepWizardContainer
+					step={6}
+					previousStep={previousStep}
+					title="Add your oxigen saturation level"
+					progress={40}
+				>
+					<Typography color="textSecondary" variant="body1">
+						If you have a pulse oximeter, save time by measuring you current oxygen saturation before your
+						visit
+					</Typography>
+
+					<Container maxWidth="sm">
+						<PaperCustomShadow className={classes.paper}>
+							<Grid container className={classes.yesNoButtons}>
+								<Grid item xs={12}>
+									<Typography className={classes.sub} variant="h6">
+										Oxygen Saturation Level
+									</Typography>
+								</Grid>
+								<Grid className={classes.buttonOutlined} item xs={9}>
+									<TextField
+										type="number"
+										fullWidth
+										placeholder="Enter value (%)"
+										value={oxygenSaturation}
+										variant="outlined"
+										onChange={(e) => setOxygenStaturation(e.target.value)}
+									/>
+								</Grid>
+								<Grid container className={classes.buttonWrapper}>
+									<Grid item xs={5} sm={3}>
+										<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+											<Typography>Skip question</Typography>
+										</ButtonNoBorder>
+									</Grid>
+									<Grid item xs={5} sm={3}>
+										<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+											Next <NavigateNextIcon />
+										</ButtonFilled>
+									</Grid>
+								</Grid>
+							</Grid>
+						</PaperCustomShadow>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 7:
+			return (
+				<StepWizardContainer step={7} previousStep={previousStep} title="Add your temperature" progress={50}>
+					<Typography color="textSecondary" variant="body1">
+						If you have a thermometer, adding your temperature now will save time during your visit. No
+						guessing please!
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid className={classes.optionsWrapper} spacing={1} container>
+							<Grid item sm={5} xs={6}>
+								<TextField
+									type="number"
+									fullWidth
+									label="Amount"
+									value={temperature}
+									variant="outlined"
+									onChange={(e) => setTemperature(e.target.value)}
+								/>
+							</Grid>
+							<Grid item sm={5} xs={6}>
+								<TextField
+									type="number"
+									fullWidth
+									label="Unit"
+									select
+									value={tempUnit}
+									variant="outlined"
+									onChange={(e) => setTempUnit(e.target.value)}
+								>
+									<MenuItem value="celsius">Celsius</MenuItem>
+									<MenuItem value="fahrenheit">Fahrenheit</MenuItem>
+								</TextField>
+							</Grid>
+							<Grid container className={classes.buttonWrapper}>
+								<Grid item xs={5} sm={3}>
+									<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+										<Typography>Skip question</Typography>
+									</ButtonNoBorder>
+								</Grid>
+								<Grid item xs={5} sm={3}>
+									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+										Next <NavigateNextIcon />
+									</ButtonFilled>
+								</Grid>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 8:
+			return (
+				<StepWizardContainer step={8} previousStep={previousStep} title="Add other details" progress={60}>
+					<Typography color="textSecondary" variant="body1">
+						Please incluse any other detail you want to tell the doctor
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid container className={classes.section}>
+							<TextField
+								rows={4}
+								multiline
+								fullWidth
+								value={otherInfo}
+								onChange={(e) => setOtherInfo(e.target.value)}
+								variant="outlined"
+								placeholder="please type here any extra information that you want the doctor to know..."
+							/>
+						</Grid>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
+							</Grid>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 9:
+			return (
+				<StepWizardContainer
+					step={9}
+					previousStep={previousStep}
+					title="What type of insurance do you have?"
+					progress={70}
+				>
+					<Container maxWidth="sm">
+						<Grid container className={classes.yesNoButtons}>
+							<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
+								<ToggleYesNoButton
+									value="private-insurance"
+									selected={!insurancePublic}
+									onClick={() => setInsurancePublic(!insurancePublic)}
+								>
+									I have private insurance
+								</ToggleYesNoButton>
+							</Grid>
+							<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
+								<ToggleYesNoButton
+									value="public-insurance"
+									selected={insurancePublic}
+									onClick={() => setInsurancePublic(!insurancePublic)}
+								>
+									I have public insurance
+								</ToggleYesNoButton>
+							</Grid>
+						</Grid>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
+							</Grid>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Next <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 10:
+			return (
+				<StepWizardContainer
+					step={10}
+					previousStep={previousStep}
+					title="Here are your appointment details!"
+					progress={80}
+				>
+					<Typography className={classes.sub} variant="h5">
+						Review and confirm
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						The appointment will be added to your Bookings in your profile once the payment is confirmed
+					</Typography>
+					<Container maxWidth="sm">
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									Pay
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 11:
+			return (
+				<StepWizardContainer step={11} previousStep={previousStep} title="Add Payment Method" progress={90}>
+					<Container maxWidth="sm">
+						<FormPayment
+							paymentOptions={paymentOptions}
+							handleChangePaymentOptions={handleChangePaymentOptions}
+						/>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} onClick={reserve}>
+									Pay Now <NavigateNextIcon />
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</Container>
+				</StepWizardContainer>
+			);
+
+		default:
+			return (
+				<PatLayoutContainer>
+					<Container className={classes.container} maxWidth="md">
+						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
+							<ArrowBackIcon />
+							<Typography>Back</Typography>
+						</ButtonNoBorder>
+
+						<Typography className={classes.title} color="primary" variant="h3">
+							Completed
+						</Typography>
+
+						<Container maxWidth="sm">
+							<Grid container className={classes.buttonWrapper}>
+								<Grid item xs={5} sm={3}>
+									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+										Next <NavigateNextIcon />
+									</ButtonFilled>
+								</Grid>
+							</Grid>
+						</Container>
+					</Container>
+				</PatLayoutContainer>
+			);
+	}
+};
+
+export default PatReserveScreen;

@@ -19,7 +19,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 const client = new ApolloClient({
 	uri: 'http://localhost:10101/graphql',
 	cache: new InMemoryCache({
-		dataIdFromObject: o => o.idApt,
+		dataIdFromObject: (o) => o.idApt
 		// o.id ? `${o.__typename}-${o.id}` : `${o.__typename}-${o.cursor}`
 	})
 });
@@ -36,7 +36,7 @@ const theme = createMuiTheme({
 });
 
 const Routes = () => {
-	const [ isLoading, setIsLoading ] = useState(false);
+	const [ isLoading, setIsLoading ] = useState(true);
 	const { getCookie, state: { isLoggedIn, userId, userAmIHCP } } = useContext(AuthContext);
 	const { getProfile } = useContext(DocProfileContext);
 	const { getPatProfile } = useContext(PatProfileContext);
@@ -51,17 +51,14 @@ const Routes = () => {
 		loadPage();
 		//  eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-
-
-	useEffect(() => {
-			console.log(userId)	
-			console.log('calling get profile use effect')
-			console.log(userAmIHCP)
+	useEffect(
+		() => {
+			console.log(userId);
 			userAmIHCP ? getProfile(userId) : getPatProfile(userId);
 			//  eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userId]);
-
+		},
+		[ userId ]
+	);
 	return isLoading ? <LoadingScreen /> : <Router>{isLoggedIn ? <PrivateRoute /> : <PublicRoute />}</Router>;
 };
 

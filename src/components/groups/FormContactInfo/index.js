@@ -1,41 +1,35 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';
-// import { Context as AuthContext } from '../../../context/AuthContext';
-
-// import MuiPhoneInput from 'material-ui-phone-number';
-import PhoneInput from 'react-phone-input-2';
-
-import 'react-phone-input-2/lib/material.css';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import ReactPhoneInput from 'react-phone-input-mui';
 import useStyles from './style';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
-
+import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
-import { Context as AuthContext } from '../../../context/AuthContext';
 
 const FormContactInfo = () => {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { updateContactInfo, state } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
-	const {getSpeciality } = useContext(DocProfileContext);
+	const { getSpeciality } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const [ firstName, setFirstName ] = useState(state.firstName);
 	const [ lastName, setLasttName ] = useState(state.lastName);
 	const [ specialty, setSpecialty ] = useState(state.specialty);
 	const [ gender, setGender ] = useState(state.gender);
-	// const [ phoneNumber, setPhoneNumber ] = useState(state.phoneNumber);
+	const [ phoneNumber, setPhoneNumber ] = useState(state.phoneNumber);
 	const [ birthday, setBirthday ] = useState(state.birthday);
 	const [ birthPlace, setbirthPlace ] = useState(state.birthPlace);
 	const [ isDisabled, setIsDisabled ] = useState(true);
@@ -55,11 +49,11 @@ const FormContactInfo = () => {
 		setLasttName(state.lastName);
 		setSpecialty(state.specialty);
 		setGender(state.gender);
-		// setPhoneNumber(state.phoneNumber);
+		setPhoneNumber(state.phoneNumber);
 		setBirthday(state.birthday);
 		setbirthPlace(state.birthPlace);
 	};
-	
+
 	const handleSubmit = () => {
 		console.log('submit', specialty);
 		updateContactInfo({
@@ -68,7 +62,7 @@ const FormContactInfo = () => {
 			lastName,
 			specialty,
 			gender,
-			// phoneNumber,
+			phoneNumber,
 			birthday,
 			birthPlace
 		});
@@ -148,7 +142,7 @@ const FormContactInfo = () => {
 									<Select
 										disabled={isDisabled}
 										value={gender}
-										onChange={(e) => setGender(e.target.value)}
+										onChange={(e) => setGender(parseInt(e.target.value))}
 										label="Gender"
 									>
 										<MenuItem value={0}>Male</MenuItem>
@@ -159,22 +153,22 @@ const FormContactInfo = () => {
 								</FormControl>
 							</Grid>
 
-							{/* <Grid item xs={12} sm={6} className={classes.input}>
-								<PhoneInput
-									fullWidth
-									inputStyle={{ width: '100%' }}
-									className={classes.phoneInputStyle}
-									disabled={isDisabled}
+							<Grid item xs={12} sm={6} className={classes.input}>
+								<ReactPhoneInput
 									value={phoneNumber}
+									defaultCountry="bg"
 									onChange={(e) => setPhoneNumber(e)}
-									inputProps={{
-										name: 'phone',
-										required: true,
-										autoFocus: true
-									}}
+									dropdownClass={classes.countryList}
+									component={TextField}
 									variant="outlined"
+									disabled={isDisabled}
+									inputExtraProps={{
+										autoComplete: 'phone',
+										name: 'custom-username',
+										variant: 'outlined'
+									}}
 								/>
-							</Grid> */}
+							</Grid>
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<TextField
 									fullWidth

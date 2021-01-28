@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
-import { Context as AuthContext } from '../../context/AuthContext';
 import BoxTime from '../../components/customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { NavLink } from 'react-router-dom';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 //MATERIAL UI
@@ -44,40 +44,14 @@ const useStyles = makeStyles({
 	price: {
 		marginRight: '2rem',
 		marginLeft: '2rem'
+	},
+	navlink: {
+		textDecoration: 'none'
 	}
 });
 
-
-/*
-
-doctor: Array(1)
-0:
-averageRating: 2.1 
-description: "lalalalalalalala"
-firstname: "Gabriela"
-id: "600977fdaa83f600274ee150"
-image: "https://lh4.googleusercontent.com/-dE-iPaoO_Fw/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnSrHCR6ResfxW-M-MxEMwybl2eMw/s96-c/photo.jpg"
-lastname: "Martini"
-minPrice: 75
-receivedRating: 13
-timeStart: Array(6) // data.doctor.timeStart
-0:
-amount: 75
-id: "600977fdaa83f600274ee150" // data.doctor.timeStart.id Esse id é do doctor
-idApt: "600a90eea38ef50029772525" // esse id é o do apointment
-start: "2021-01-27T07:00:00.000Z" 
-__typename: "appointment"
-
-
-
-*/
-
-
-const DialogReserve = ({ open, close, id }) => {
+const DialogReserve = ({ open, close, appointments, formatDate }) => {
 	const classes = useStyles();
-	// const { state: {userId} } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
-	const { state: { doctors, formatDate }, reserve } = useContext(SearchDoctorContext);
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
 		let min = new Date(start).getMinutes();
@@ -97,23 +71,19 @@ const DialogReserve = ({ open, close, id }) => {
 				</IconButton>
 				<DialogTitle>Showing availability for {formatDate}</DialogTitle>
 				<DialogContent>
-					{doctors.filter((el) => el.profileHCPid._id === id).map((ap, i) => {
+					{appointments.map((ap) => {
 						return (
-							<Grid key={ap._id} container className={classes.appointment}>
+							<Grid key={ap.idApt} container className={classes.appointment}>
 								<BoxTime>
-									{convertTime(ap.appointmentTimeStart)} - {convertTime(ap.appointmentTimeEnd)}
+									{convertTime(ap.start)} - {convertTime(ap.end)}
 								</BoxTime>
 								<Typography className={classes.price}>$ {ap.amount}</Typography>
-								<ButtonFilled
-									onClick={() => {
-										reserve({
-											appointmentId: ap._id,
-											patientId: userId
-										});
-									}}
+								<NavLink
+									to={{ pathname: '/in/patient/reserve', state: { appointment: ap } }}
+									className={classes.navlink}
 								>
-									Reserve
-								</ButtonFilled>
+									<ButtonFilled onClick={() => {}}>Reserve</ButtonFilled>
+								</NavLink>
 							</Grid>
 						);
 					})}

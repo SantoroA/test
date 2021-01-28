@@ -23,12 +23,12 @@ const docProfileReducer = (state, action) => {
 				city: action.payload.city,
 				zipcode: action.payload.zipcode,
 				street: action.payload.street,
-				num: action.payload.number,
+				num: action.payload.num,
 				education: action.payload.education,
 				yearsExperience: action.payload.yearsExperience,
 				yearsSpecialist: action.payload.yearsSpecialist,
-				email: action.payload.accountId.username,
-				image: action.payload.accountId.profilePicture
+				email: action.payload.email,
+				image: action.payload.image
 			};
 		case 'get_speciality':
 			return {
@@ -110,7 +110,14 @@ const getSpeciality = (dispatch) => {
 		}
 	};
 };
-
+const formatDate = (date) => {
+	const year = date.getFullYear();
+	const month = '' + date.getMonth() + 1;
+	const day = '' + date.getDate();
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+	return [ year, month, day ].join('-');
+};
 const getProfile = (dispatch) => {
 	return async (id) => {
 		console.log(id)
@@ -118,8 +125,33 @@ const getProfile = (dispatch) => {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
 			});
-			console.log(response.data[0]);
-			dispatch({ type: 'get_profile', payload: response.data[0] });
+			console.log(response.data);
+
+			dispatch({
+				type: 'get_profile',
+				payload: {
+					specialty: response.data[0].typeOfHCP,
+					insurance: response.data[0].insurance,
+					firstName: response.data[0].firstName,
+					lastName: response.data[0].lastName,
+					gender: response.data[0].gender,
+					phoneNumber: response.data[0].phoneNumber,
+					birthPlace: response.data[0].birthPlace,
+					birthday: formatDate(response.data[0].birthday),
+					profileInfo: response.data[0].profileInfo,
+					websiteUrl: response.data[0].websiteUrl,
+					country: response.data[0].country,
+					city: response.data[0].city,
+					zipcode: response.data[0].zipcode,
+					street: response.data[0].street,
+					num: response.data[0].number,
+					education: response.data[0].education,
+					yearsExperience: response.data[0].yearsExperience,
+					yearsSpecialist: response.data[0].yearsSpecialist,
+					email: response.data[0].accountId.username,
+					image: response.data[0].accountId.profilePicture
+				}
+			});
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
 			console.log(err.message);

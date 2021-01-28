@@ -119,8 +119,9 @@ const FormSearchDoctor = () => {
 		const day = '' + date.getDate();
 		if (month.length < 2) month = '0' + month;
 		if (day.length < 2) day = '0' + day;
-		return [ year, month, day ].join('-');
+		return [ year, month, day ].join('-')
 	};
+
 	useEffect(() => {
 		const today = new Date();
 		const todayFormatted = formatDate(today);
@@ -260,7 +261,7 @@ const FormSearchDoctor = () => {
 			<Typography variant="h5">{formatDateDisplay}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList filterState={filterState} />
+					<DoctorList formatDate={filterState.date} filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
 					<Calendar />

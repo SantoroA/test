@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-export default function CalendarIcon(props) {
+export default function GoogleIcon(props) {
 	return (
 		<SvgIcon viewBox="0 0 20 21" {...props}>
 			<path
