@@ -41,7 +41,7 @@ const patProfileReducer = (state, action) => {
 	}
 };
 const formatDate = (date) => {
-	const newDate= new Date(date)
+	const newDate = new Date(date);
 	const year = newDate.getFullYear();
 	const month = '' + newDate.getMonth() + 1;
 	let day = '' + newDate.getDate();
@@ -128,15 +128,15 @@ export const { Context, Provider } = createDataContext(
 		closeDialog
 	},
 	{
-		email: '',
-		image:
-			'',
 		// email: '',
+		image:
+			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+		email: 'patient@test.com',
 		// image: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: '',
-		lastName: '',
+		firstName: 'Rachel',
+		lastName: 'Green',
 		// firstName: '',
 		// lastName: '',
 		gender: '',

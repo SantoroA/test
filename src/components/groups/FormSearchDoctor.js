@@ -88,7 +88,7 @@ const FormSearchDoctor = () => {
 	});
 	const classes = useStyles();
 
-	let dateChoose = new Date(filterState.date).toDateString().split(' ');
+	let dateChoose = new Date(Date.parse(filterState.date)).toDateString().split(' ');
 	let formatDateDisplay = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
 		month: 'long'
 	})}`;
@@ -119,7 +119,7 @@ const FormSearchDoctor = () => {
 		const day = '' + date.getDate();
 		if (month.length < 2) month = '0' + month;
 		if (day.length < 2) day = '0' + day;
-		return [ year, month, day ].join('-')
+		return [ year, month, day ].join('-');
 	};
 
 	useEffect(() => {
@@ -261,7 +261,7 @@ const FormSearchDoctor = () => {
 			<Typography variant="h5">{formatDateDisplay}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList formatDate={filterState.date} filterState={filterState} />
+					<DoctorList formatDateDisplay={formatDateDisplay} filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
 					<Calendar />

@@ -4,7 +4,7 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log(action.payload)
+			console.log(action.payload);
 			return {
 				...state,
 				specialty: action.payload.typeOfHCP,
@@ -120,7 +120,7 @@ const formatDate = (date) => {
 };
 const getProfile = (dispatch) => {
 	return async (id) => {
-		console.log(id)
+		console.log(id);
 		try {
 			const response = await dianurseApi.get('/profile/doctor/getprofile', {
 				params: { id }
@@ -354,14 +354,15 @@ export const { Context, Provider } = createDataContext(
 	},
 	{
 		services: [],
-		email: '',
-		image: '',
+		email: 'doc@test.com',
+		image:
+			'https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg',
 		specialty: 'General care physician',
 		insurance: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: '',
-		lastName: '',
+		firstName: 'Phoebee',
+		lastName: 'Buffet',
 		gender: '',
 		phoneNumber: '',
 		birthPlace: '',
@@ -376,6 +377,17 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: [ ]
+		allSpecialty: [
+			'General care physician',
+			'Endocrinologist',
+			'Dietitian',
+			'Certified diabetes educator',
+			'Podiatrist',
+			'Nephrologist',
+			'Ophthalmologist',
+			'Physical trainer',
+			'Dentist',
+			'Any'
+		]
 	}
 );

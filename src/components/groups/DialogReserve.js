@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogReserve = ({ open, close, appointments, formatDate }) => {
+const DialogReserve = ({ open, close, appointments, formatDateDisplay }) => {
 	const classes = useStyles();
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
@@ -69,7 +69,7 @@ const DialogReserve = ({ open, close, appointments, formatDate }) => {
 				<IconButton className={classes.closeButton} onClick={close} color="primary">
 					<CloseIcon />
 				</IconButton>
-				<DialogTitle>Showing availability for {formatDate}</DialogTitle>
+				<DialogTitle>Showing availability for {formatDateDisplay}</DialogTitle>
 				<DialogContent>
 					{appointments.map((ap) => {
 						return (
