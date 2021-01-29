@@ -8,12 +8,16 @@ import FormSymptoms from '../../components/groups/FormSymptoms';
 import FormMedConditions from '../../components/groups/FormMedConditions';
 import CardAppointment from '../../components/groups/CardAppointment';
 import { formatDateDisplay } from '../../helpers/dateHelper';
+import { animateScroll as scroll } from 'react-scroll';
+import Confetti from 'react-dom-confetti';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import ToggleYesNoButton from '../../components/customUi/ToggleYesNoButton';
 import ButtonNoBorder from '../../components/customUi/ButtonNoBorder';
 import TextInputRounder from '../../components/customUi/TextInputRounder';
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
+//CUSTOM ICONS
+import CompletedIcon from '../../components/customIcons/CompletedIcon';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -97,12 +101,19 @@ const useStyles = makeStyles({
 	sectionReview: {
 		marginTop: '2rem',
 		textAlign: 'start'
+	},
+	completedIcon: {
+		fontSize: '10rem',
+		marginBottom: '2rem'
+	},
+	confetti: {
+		marginLeft: '50%'
 	}
 });
 
 const PatReserveScreen = (props) => {
-	// const appointment = props.location.state.appointment;
-	// const apDoc = props.location.state.apDoc;
+	// const { apDoc, appointment } = props.location.state;
+
 	const appointment = {
 		amount: 95,
 		end: '2021-01-29T06:45:00.000Z',
@@ -111,7 +122,7 @@ const PatReserveScreen = (props) => {
 		start: '2021-01-29T06:00:00.000Z'
 	};
 	const dateDisplay = formatDateDisplay(appointment.start);
-
+	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
 	const apDoc = {
 		lastName: 'Santoro',
 		pic:
@@ -297,13 +308,19 @@ const PatReserveScreen = (props) => {
 				appointmentId: appointment.id
 			});
 			console.log(response.data);
+			console.log('reserve');
 			nextStep();
-			// dispatch({ type: 'set_dialog_message', payload: response.data });
+			setTimeout(() => {
+				setConfettiTrigger(true);
+			}, 500);
+			setTimeout(() => {
+				setConfettiTrigger(false);
+			}, 2000);
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
-
+	console.log(confettiTrigger);
 	switch (step) {
 		case 1:
 			return (
@@ -446,12 +463,25 @@ const PatReserveScreen = (props) => {
 						<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
 						<Grid container className={classes.buttonWrapper}>
 							<Grid item xs={5} sm={3}>
-								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+								<ButtonNoBorder
+									className={classes.skipButton}
+									onClick={() => {
+										scroll.scrollToTop({ delay: 0, duration: 400 });
+										nextStep();
+									}}
+								>
 									<Typography>Skip question</Typography>
 								</ButtonNoBorder>
 							</Grid>
 							<Grid item xs={5} sm={3}>
-								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+								<ButtonFilled
+									fullWidth
+									className={classes.nextButton}
+									onClick={() => {
+										scroll.scrollToTop({ delay: 0, duration: 400 });
+										nextStep();
+									}}
+								>
 									Next <NavigateNextIcon />
 								</ButtonFilled>
 							</Grid>
@@ -528,12 +558,25 @@ const PatReserveScreen = (props) => {
 						/>
 						<Grid container className={classes.buttonWrapper}>
 							<Grid item xs={5} sm={3}>
-								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+								<ButtonNoBorder
+									className={classes.skipButton}
+									onClick={() => {
+										scroll.scrollToTop();
+										nextStep();
+									}}
+								>
 									<Typography>Skip question</Typography>
 								</ButtonNoBorder>
 							</Grid>
 							<Grid item xs={5} sm={3}>
-								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+								<ButtonFilled
+									fullWidth
+									className={classes.nextButton}
+									onClick={() => {
+										scroll.scrollToTop();
+										nextStep();
+									}}
+								>
 									Next <NavigateNextIcon />
 								</ButtonFilled>
 							</Grid>
@@ -735,7 +778,13 @@ const PatReserveScreen = (props) => {
 							{dateDisplay}
 						</Typography>
 						<CardAppointment
-							state={{ appointment: appointment, info: apDoc, buttonText: 'Pay', title: 'Doctor' }}
+							state={{
+								appointment: appointment,
+								name: apDoc.lastName,
+								pic: apDoc.pic,
+								buttonText: 'Pay',
+								title: 'Doctor'
+							}}
 							onSubmit={nextStep}
 						/>
 					</Container>
@@ -763,24 +812,52 @@ const PatReserveScreen = (props) => {
 		default:
 			return (
 				<PatLayoutContainer>
+					{/* <ButtonFilled onClick={() => setConfettiTrigger(true)}>TriggerConfetti</ButtonFilled> */}
 					<Container className={classes.container} maxWidth="md">
-						<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
+						{/* <ButtonNoBorder onClick={previousStep} className={classes.backButton}>
 							<ArrowBackIcon />
 							<Typography>Back</Typography>
-						</ButtonNoBorder>
-
+						</ButtonNoBorder> */}
 						<Typography className={classes.title} color="primary" variant="h3">
 							Completed
 						</Typography>
+						<Confetti
+							className={classes.confetti}
+							active={confettiTrigger}
+							config={{
+								angle: 90,
+								spread: 100,
+								startVelocity: 150,
+								elementCount: 400,
+								dragFriction: 0.5,
+								duration: 4000,
+								stagger: 30,
+								width: '10px',
+								height: '10px',
+								perspective: '1000px',
+								colors: [ '#45B688', '#4360A8', '#31C8E0' ]
+							}}
+						/>
 
-						<Container maxWidth="sm">
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={5} sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
-							</Grid>
+						<CompletedIcon className={classes.completedIcon} />
+						<Typography color="textSecondary" variant="body2">
+							The appointment has been added to your Bookings in your profile.
+						</Typography>
+						<Container maxWidth="sm" className={classes.sectionReview}>
+							<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
+							<Typography color="primary" className={classes.sub} variant="h5">
+								{dateDisplay}
+							</Typography>
+							<CardAppointment
+								state={{
+									appointment: appointment,
+									name: apDoc.lastName,
+									pic: apDoc.pic,
+									buttonText: 'View',
+									title: 'Doctor'
+								}}
+								onSubmit={nextStep}
+							/>
 						</Container>
 					</Container>
 				</PatLayoutContainer>

@@ -3,6 +3,7 @@ import { Context as SearchDoctorContext } from '../../context/SearchDoctorContex
 import BoxTime from '../../components/customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { NavLink } from 'react-router-dom';
+import { convertTime } from '../../helpers/dateHelper';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 //MATERIAL UI
@@ -50,14 +51,9 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogReserve = ({ open, close, appointments, formatDateDisplay, apDoc }) => {
+const DialogReserve = ({ open, close, appointments, dateFormatted, apDoc }) => {
 	const classes = useStyles();
-	const convertTime = (start) => {
-		let hours = new Date(start).getHours();
-		let min = new Date(start).getMinutes();
-		let realMin = min < 10 ? '00' : min;
-		return `${hours}:${realMin}`;
-	};
+
 	return (
 		<Dialog
 			open={open}
@@ -69,7 +65,7 @@ const DialogReserve = ({ open, close, appointments, formatDateDisplay, apDoc }) 
 				<IconButton className={classes.closeButton} onClick={close} color="primary">
 					<CloseIcon />
 				</IconButton>
-				<DialogTitle>Showing availability for {formatDateDisplay}</DialogTitle>
+				<DialogTitle>Showing availability for {dateFormatted}</DialogTitle>
 				<DialogContent>
 					{appointments.map((ap) => {
 						return (

@@ -1,6 +1,8 @@
 const formatDateDisplay = (date) => {
 	let newDate = new Date(Date.parse(date)).toDateString().split(' ');
-	let dateDisplay = `${newDate[0]}, ${new Date(date).toLocaleString('default', {
+	let dateDisplay = `${new Date(date).toLocaleString('default', {
+		weekday: 'long'
+	})}, ${new Date(date).toLocaleString('default', {
 		month: 'long'
 	})} ${newDate[2]} ${newDate[3]}`;
 	return dateDisplay;
@@ -11,6 +13,16 @@ const convertTime = (date) => {
 	let min = new Date(date).getMinutes();
 	let realMin = min < 10 ? '00' : min;
 	return `${hours}:${realMin}`;
+};
+
+const formatDateNoYear = (date) => {
+	let newDate = new Date(Date.parse(date)).toDateString().split(' ');
+	let dateFormatted = `${new Date(date).toLocaleString('default', {
+		weekday: 'long'
+	})}, ${newDate[2]} ${new Date(date).toLocaleString('default', {
+		month: 'long'
+	})}`;
+	return dateFormatted;
 };
 
 const getTimeDifference = (date1, date2) => {
@@ -29,4 +41,4 @@ const getTimeDifference = (date1, date2) => {
 	return minutesDifference;
 };
 
-export { formatDateDisplay, convertTime, getTimeDifference };
+export { formatDateDisplay, convertTime, getTimeDifference, formatDateNoYear };

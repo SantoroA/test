@@ -165,7 +165,7 @@ const APPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const DoctorList = ({ filterState, formatDateDisplay }) => {
+const DoctorList = ({ filterState, dateFormatted }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 	const [ offset, setOffset ] = useState(0);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
@@ -269,7 +269,7 @@ const DoctorList = ({ filterState, formatDateDisplay }) => {
 			) : null}
 			<DialogReserve
 				open={dialogReserveOpen}
-				formatDateDisplay={formatDateDisplay}
+				dateFormatted={dateFormatted}
 				appointments={appointments}
 				apDoc={apDoc}
 				close={() => {

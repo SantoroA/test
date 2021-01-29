@@ -6,7 +6,6 @@ import ButtonFilled from '../customUi/ButtonFilled';
 import QuestionnaireIcon from '../customIcons/QuestionnaireIcon';
 import FolderIcon from '../customIcons/FolderIcon';
 //MATERIAL UI
-
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
@@ -72,6 +71,7 @@ const useStyles = makeStyles({
 
 const CardAppointment = ({ buttonText, onSubmit, state }) => {
 	const classes = useStyles();
+	// const {appointment, name, pic, buttonText, title} = state
 	const appointment = {
 		amount: 95,
 		end: '2021-01-29T07:15:00.000Z',

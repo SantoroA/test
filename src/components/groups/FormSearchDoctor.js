@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DialogFilter from './DialogFilter';
 import DoctorList from './DoctorList';
+import { formatDateNoYear } from '../../helpers/dateHelper';
 import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
@@ -87,13 +88,6 @@ const FormSearchDoctor = () => {
 		typeOfHCP: 'Certified diabetes educator'
 	});
 	const classes = useStyles();
-
-	let dateChoose = new Date(Date.parse(filterState.date)).toDateString().split(' ');
-	let formatDateDisplay = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
-		month: 'long'
-	})}`;
-	console.log(filterState.date);
-	console.log(dateChoose);
 
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
@@ -258,10 +252,10 @@ const FormSearchDoctor = () => {
 					</PaperCustomShadow>
 				</Grid>
 			</Grid>
-			<Typography variant="h5">{formatDateDisplay}</Typography>
+			<Typography variant="h5">{formatDateNoYear(filterState.date)}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList formatDateDisplay={formatDateDisplay} filterState={filterState} />
+					<DoctorList dateFormatted={formatDateNoYear(filterState.date)} filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
 					<Calendar />
