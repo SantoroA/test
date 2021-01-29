@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const MyProfileCard = () => {
+const CardMyProfile = () => {
 	const classes = useStyles();
 	const { state: { userAmIHCP } } = useContext(AuthContext);
 	const { state: { firstName, lastName, image, specialty, phoneNumber, email } } = useContext(
@@ -76,4 +76,4 @@ const MyProfileCard = () => {
 	);
 };
 
-export default MyProfileCard;
+export default CardMyProfile;

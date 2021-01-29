@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogReserve = ({ open, close, appointments, formatDateDisplay }) => {
+const DialogReserve = ({ open, close, appointments, formatDateDisplay, apDoc }) => {
 	const classes = useStyles();
 	const convertTime = (start) => {
 		let hours = new Date(start).getHours();
@@ -79,7 +79,10 @@ const DialogReserve = ({ open, close, appointments, formatDateDisplay }) => {
 								</BoxTime>
 								<Typography className={classes.price}>$ {ap.amount}</Typography>
 								<NavLink
-									to={{ pathname: '/in/patient/reserve', state: { appointment: ap } }}
+									to={{
+										pathname: '/in/patient/reserve',
+										state: { appointment: ap, apDoc: apDoc }
+									}}
 									className={classes.navlink}
 								>
 									<ButtonFilled onClick={() => {}}>Reserve</ButtonFilled>

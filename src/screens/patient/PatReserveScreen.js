@@ -6,6 +6,8 @@ import StepWizardContainer from '../../components/layout/StepWizardContainer';
 import FormPayment from '../../components/groups/FormPayment';
 import FormSymptoms from '../../components/groups/FormSymptoms';
 import FormMedConditions from '../../components/groups/FormMedConditions';
+import CardAppointment from '../../components/groups/CardAppointment';
+import { formatDateDisplay } from '../../helpers/dateHelper';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import ToggleYesNoButton from '../../components/customUi/ToggleYesNoButton';
@@ -91,12 +93,30 @@ const useStyles = makeStyles({
 	},
 	section: {
 		marginTop: '2rem'
+	},
+	sectionReview: {
+		marginTop: '2rem',
+		textAlign: 'start'
 	}
 });
 
 const PatReserveScreen = (props) => {
 	// const appointment = props.location.state.appointment;
-	const appointment = '600a90eea38ef50029772525';
+	// const apDoc = props.location.state.apDoc;
+	const appointment = {
+		amount: 95,
+		end: '2021-01-29T06:45:00.000Z',
+		id: '601175526913da0029424025',
+		idApt: '601186c472a95e0028bcb6f5',
+		start: '2021-01-29T06:00:00.000Z'
+	};
+	const dateDisplay = formatDateDisplay(appointment.start);
+
+	const apDoc = {
+		lastName: 'Santoro',
+		pic:
+			'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	};
 	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
@@ -226,12 +246,11 @@ const PatReserveScreen = (props) => {
 		setPaymentOptions({ ...paymentOptions, [event.target.name]: event.target.checked });
 	};
 
-
 	// QUERY
-	// idApt: { 
-	// 	type: GraphQLID 
+	// idApt: {
+	// 	type: GraphQLID
 	// },
-	// idPatient: { 
+	// idPatient: {
 	// 	type: GraphQLID
 	// },
 	//   // 	paymentOptions, how to do?
@@ -710,14 +729,15 @@ const PatReserveScreen = (props) => {
 					<Typography color="textSecondary" variant="body1">
 						The appointment will be added to your Bookings in your profile once the payment is confirmed
 					</Typography>
-					<Container maxWidth="sm">
-						<Grid container className={classes.buttonWrapper}>
-							<Grid item xs={5} sm={3}>
-								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-									Pay
-								</ButtonFilled>
-							</Grid>
-						</Grid>
+					<Container maxWidth="sm" className={classes.sectionReview}>
+						<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
+						<Typography color="primary" className={classes.sub} variant="h5">
+							{dateDisplay}
+						</Typography>
+						<CardAppointment
+							state={{ appointment: appointment, info: apDoc, buttonText: 'Pay', title: 'Doctor' }}
+							onSubmit={nextStep}
+						/>
 					</Container>
 				</StepWizardContainer>
 			);
