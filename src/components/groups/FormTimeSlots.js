@@ -91,7 +91,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	};
 
 	return (
-		<Box borderRadius="10px" border={1} className={classes.form}>
+		<Box borderradius="10px" border={1} className={classes.form}>
 			{/* <FormControlLabel
 				control={
 					<Checkbox

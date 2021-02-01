@@ -111,9 +111,10 @@ const getSpeciality = (dispatch) => {
 	};
 };
 const formatDate = (date) => {
-	const year = date.getFullYear();
-	const month = '' + date.getMonth() + 1;
-	const day = '' + date.getDate();
+	const newDate= new Date(date)
+	const year = newDate.getFullYear();
+	const month = '' + newDate.getMonth() + 1;
+	let day = '' + newDate.getDate();
 	if (month.length < 2) month = '0' + month;
 	if (day.length < 2) day = '0' + day;
 	return [ year, month, day ].join('-');
@@ -122,8 +123,8 @@ const getProfile = (dispatch) => {
 	return async (id) => {
 		console.log(id);
 		try {
-			const response = await dianurseApi.get('/profile/doctor/getprofile', {
-				params: { id }
+			const response = await dianurseApi.get(`/profile/doctor/getprofile/${id}`, {
+				withCredentials: true
 			});
 			console.log(response.data);
 
@@ -183,7 +184,6 @@ const updateContactInfo = (dispatch) => {
 	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday, specialty }) => {
 		console.log('inside context', firstName, lastName, specialty);
 		let userInfo = {
-			id,
 			firstName,
 			lastName,
 			specialty,
@@ -195,8 +195,9 @@ const updateContactInfo = (dispatch) => {
 		};
 
 		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-				userInfo
+			const response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
+				userInfo,
+				withCredentials: true
 			});
 			console.log(response);
 			dispatch({
@@ -221,7 +222,6 @@ const updateProfileInfo = (dispatch) => {
 	return async ({ profileInfo, websiteUrl, id, insurance }) => {
 		console.log(insurance);
 		let userInfo = {
-			id,
 			profileInfo,
 			websiteUrl,
 			insurance,
@@ -229,8 +229,9 @@ const updateProfileInfo = (dispatch) => {
 		};
 		console.log('inside profile info context', profileInfo);
 		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-				userInfo
+			const response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
+				userInfo,
+				withCredentials: true
 			});
 			console.log(response);
 			dispatch({
@@ -251,7 +252,6 @@ const updateLocationInfo = (dispatch) => {
 	return async ({ id, country, city, zipcode, street, num }) => {
 		console.log(zipcode);
 		let userInfo = {
-			id,
 			country,
 			city,
 			zipcode,
@@ -261,7 +261,7 @@ const updateLocationInfo = (dispatch) => {
 		};
 		console.log('inside location info context', country);
 		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			const response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
 				userInfo
 			});
 			console.log(response);
@@ -284,14 +284,14 @@ const updateLocationInfo = (dispatch) => {
 const updateEducation = (dispatch) => {
 	return async ({ id, education }) => {
 		let userInfo = {
-			id,
 			education,
 			form: 8
 		};
 		console.log('inside education context', education);
 		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-				userInfo
+			const response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
+				userInfo,
+				withCredentials: true
 			});
 			console.log(response);
 			dispatch({
@@ -309,15 +309,15 @@ const updateEducation = (dispatch) => {
 const updateExperience = (dispatch) => {
 	return async ({ id, yearsExperience, yearsSpecialist }) => {
 		let userInfo = {
-			id,
 			yearsExperience,
 			yearsSpecialist,
 			form: 7
 		};
 		console.log('inside experience context', yearsExperience);
 		try {
-			const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-				userInfo
+			const response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
+				userInfo,
+				withCredentials: true
 			});
 			console.log(response);
 			dispatch({

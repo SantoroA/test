@@ -54,8 +54,8 @@ const getPatProfile = (dispatch) => {
 	return async (id) => {
 		console.log(id);
 		try {
-			const response = await dianurseApi.get('/profile/patient/getprofile', {
-				params: { id }
+			const response = await dianurseApi.get(`/profile/patient/getprofile/${id}`, {
+				withCredentials: true
 			});
 			console.log('patient', response.data[0]);
 			dispatch({
@@ -82,7 +82,6 @@ const updateContactInfo = (dispatch) => {
 	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday }) => {
 		console.log('inside context', firstName, lastName, birthPlace, birthday);
 		let userInfo = {
-			id,
 			firstName,
 			lastName,
 			gender,
@@ -93,8 +92,9 @@ const updateContactInfo = (dispatch) => {
 		};
 
 		try {
-			const response = await dianurseApi.put('/profile/patient/completeprofile', {
-				userInfo
+			const response = await dianurseApi.put(`/profile/patient/completeprofile/${id}`, {
+				userInfo,
+				withCredentials: true
 			});
 			console.log(response);
 			dispatch({

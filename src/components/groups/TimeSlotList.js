@@ -29,7 +29,7 @@ const TimeSlotList = ({ weekDay, weekDayName }) => {
 	const { state, deleteSlot, setIsEditing } = useContext(AvailabilityContext);
 	const weekDaySlots = state.slots.filter((slot) => slot.weekDay == weekDay);
 	// console.log(state.slots);
-	// console.log(weekDaySlots);
+	console.log(weekDaySlots);
 	return (
 		<div>
 			{weekDaySlots.length > 0 ? (
@@ -39,7 +39,7 @@ const TimeSlotList = ({ weekDay, weekDayName }) => {
 						return (
 							<div key={slot.slotCreated}>
 								{slot.isEditing === false ? (
-									<PaperCustomShadow className={classes.box} borderRadius="10px" border={1}>
+									<PaperCustomShadow className={classes.box} borderradius="10px" border={1}>
 										<Grid container className={classes.info}>
 											<Grid item md={9} sm={8} xs={12}>
 												<Grid container>
