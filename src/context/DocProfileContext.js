@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext';
+import { formatFormDate } from '../helpers/dateHelper';
 import dianurseApi from '../api/dianurseApi';
 
 const docProfileReducer = (state, action) => {
@@ -110,15 +111,7 @@ const getSpeciality = (dispatch) => {
 		}
 	};
 };
-const formatDate = (date) => {
-	const newDate= new Date(date)
-	const year = newDate.getFullYear();
-	const month = '' + newDate.getMonth() + 1;
-	let day = '' + newDate.getDate();
-	if (month.length < 2) month = '0' + month;
-	if (day.length < 2) day = '0' + day;
-	return [ year, month, day ].join('-');
-};
+
 const getProfile = (dispatch) => {
 	return async (id) => {
 		console.log(id);
@@ -138,7 +131,7 @@ const getProfile = (dispatch) => {
 					gender: response.data[0].gender,
 					phoneNumber: response.data[0].phoneNumber,
 					birthPlace: response.data[0].birthPlace,
-					birthday: formatDate(response.data[0].birthday),
+					birthday: formatFormDate(new Date(response.data[0].birthday)),
 					profileInfo: response.data[0].profileInfo,
 					websiteUrl: response.data[0].websiteUrl,
 					country: response.data[0].country,

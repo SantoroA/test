@@ -779,9 +779,16 @@ const PatReserveScreen = (props) => {
 						</Typography>
 						<CardAppointment
 							state={{
-								appointment: appointment,
-								name: apDoc.lastName,
-								pic: apDoc.pic,
+								appointment: {
+									amount: 95,
+									end: '2021-01-29T07:15:00.000Z',
+									id: '601175526913da0029424025',
+									idApt: '601186c472a95e0028bcb6f5',
+									start: '2021-01-29T06:50:00.000Z'
+								},
+								name: 'Santoro',
+								pic:
+									'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 								buttonText: 'Pay',
 								title: 'Doctor'
 							}}

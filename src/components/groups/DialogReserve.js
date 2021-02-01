@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+// import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import BoxTime from '../../components/customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { NavLink } from 'react-router-dom';

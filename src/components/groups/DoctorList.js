@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+// import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import Pagination from './Pagination';

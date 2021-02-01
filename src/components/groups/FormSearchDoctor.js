@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DialogFilter from './DialogFilter';
 import DoctorList from './DoctorList';
-import { formatDateNoYear } from '../../helpers/dateHelper';
+import { formatDateNoYear, formatFormDate } from '../../helpers/dateHelper';
 import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
@@ -9,7 +9,7 @@ import ButtonIcon from '../customUi/ButtonIcon';
 import ButtonFilterOption from '../customUi/ButtonFilterOption';
 import FilterIcon from '../customIcons/FilterIcon';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
-import Calendar from '../../components/customUi/Calendar';
+import CalendarApp from '../../components/customUi/CalendarApp';
 //MATERIAL UI
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -107,18 +107,10 @@ const FormSearchDoctor = () => {
 		'Dentist',
 		'Any'
 	];
-	const formatDate = (date) => {
-		const year = date.getFullYear();
-		const month = '' + date.getMonth() + 1;
-		const day = '' + date.getDate();
-		if (month.length < 2) month = '0' + month;
-		if (day.length < 2) day = '0' + day;
-		return [ year, month, day ].join('-');
-	};
 
 	useEffect(() => {
 		const today = new Date();
-		const todayFormatted = formatDate(today);
+		const todayFormatted = formatFormDate(today);
 		const dateAsString = today.toString();
 		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -258,7 +250,7 @@ const FormSearchDoctor = () => {
 					<DoctorList dateFormatted={formatDateNoYear(filterState.date)} filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
-					<Calendar />
+					<CalendarApp />
 				</Grid>
 			</Grid>
 			<DialogFilter

@@ -8,6 +8,19 @@ const formatDateDisplay = (date) => {
 	return dateDisplay;
 };
 
+const formatFormDate = (timestamp) => {
+	let year = timestamp.getFullYear();
+	let month = timestamp.getMonth() + 1;
+	let day = timestamp.getDate();
+	if (month < 10) {
+		month = `0${month}`;
+	}
+	if (day < 10) {
+		day = `0${day}`;
+	}
+	return [ year, month, day ].join('-');
+};
+
 const convertTime = (date) => {
 	let hours = new Date(date).getHours();
 	let min = new Date(date).getMinutes();
@@ -41,4 +54,4 @@ const getTimeDifference = (date1, date2) => {
 	return minutesDifference;
 };
 
-export { formatDateDisplay, convertTime, getTimeDifference, formatDateNoYear };
+export { formatDateDisplay, convertTime, getTimeDifference, formatDateNoYear, formatFormDate };
