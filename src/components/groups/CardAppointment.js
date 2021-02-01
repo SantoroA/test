@@ -56,6 +56,7 @@ const useStyles = makeStyles({
 		display: 'flex',
 		alignItems: 'center',
 		flexDirection: 'row',
+		justifyContent: 'flex-end',
 		textAlign: 'end',
 		padding: '1rem'
 	},

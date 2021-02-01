@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 			marginBottom: '1rem'
 		},
 		'& .react-calendar__navigation button': {
-			minWidth: '44px',
+			minWidth: '1.5rem',
 			background: 'none'
 		},
 		'& .react-calendar button': {

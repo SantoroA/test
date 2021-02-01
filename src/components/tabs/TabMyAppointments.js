@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { formatDateDisplay } from '../../helpers/dateHelper';
+import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import CardAppointment from '../groups/CardAppointment';
 //CUSTOM UI
 import CalendarApp from '../customUi/CalendarApp';
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 	root: {
@@ -27,11 +30,31 @@ const useStyles = makeStyles({
 
 const TabMyAppointments = () => {
 	const classes = useStyles();
+	const theme = useTheme();
 	const [ date, setDate ] = useState(new Date());
+	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	console.log(date);
+	console.log(formatFormDate(date));
+	console.log(new Date(formatFormDate(date)));
 	return (
 		<Grid className={classes.root} container>
-			<Grid item sm={8} md={8}>
+			<Grid item sm={7} md={8}>
+				{/* {isMobile && (
+					<Grid item xs={12}>
+						<TextField
+							fullWidth
+							id="date"
+							label="Date"
+							type="date"
+							variant="outlined"
+							value={date}
+							onChange={(e) => setDate(e.target.value)}
+							InputLabelProps={{
+								shrink: true
+							}}
+						/>
+					</Grid>
+				)} */}
 				<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
@@ -50,13 +73,15 @@ const TabMyAppointments = () => {
 						pic:
 							'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 						buttonText: 'View',
-						title: 'Doctor'
+						title: 'Patient'
 					}}
 				/>
 			</Grid>
-			<Grid item xs={false} md={4} className={classes.datePicker}>
-				<CalendarApp value={date} onChange={setDate} />
-			</Grid>
+			{!isMobile && (
+				<Grid item sm={5} md={4} className={classes.datePicker}>
+					<CalendarApp value={date} onChange={setDate} />
+				</Grid>
+			)}
 		</Grid>
 	);
 };
