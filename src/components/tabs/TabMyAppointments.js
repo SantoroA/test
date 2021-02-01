@@ -47,8 +47,8 @@ const TabMyAppointments = () => {
 							label="Date"
 							type="date"
 							variant="outlined"
-							value={date}
-							onChange={(e) => setDate(e.target.value)}
+							value={formatFormDate(date)}
+							onChange={(e) => setDate(new Date(e.target.value))}
 							InputLabelProps={{
 								shrink: true
 							}}
