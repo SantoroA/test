@@ -25,7 +25,8 @@ const availabilityReducer = (state, action) => {
 						editStatus: action.payload.editStatus,
 						id: action.payload.id,
 						weekDay: action.payload.weekDay,
-						isEditing: false
+						isEditing: false,
+						timeZone: action.payload.timeZone
 					}
 				]
 			};
@@ -72,9 +73,10 @@ const getSlots = (dispatch) => {
 	return async (id) => {
 		// effect function - isso vai buscar os slots do back
 		try {
-			const response = await dianurseApi.get('/appointment/getAvailabilitySlot', {
-				params: { id }
+			const response = await dianurseApi.get(`/appointment/getAvailabilitySlot/${id}`, {
+				withCredentials: true
 			});
+			console.log('getSlot',response)
 			let i = 0;
 			let slotArr = [];
 			let showArr = [];
@@ -142,15 +144,15 @@ const getSlots = (dispatch) => {
 };
 
 const createSlot = (dispatch) => {
-	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id }) => {
+	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, timeZone }) => {
 		let day_1 = new Date(availableStart);
 		let day_2 = new Date(availableEnd);
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;
 		let slotCreated = new Date();
-		console.log(id);
-
+		console.log(availableEnd, availableStart);
+		console.log(id)
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
 				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
@@ -159,26 +161,30 @@ const createSlot = (dispatch) => {
 				let slot = (newLastDate - newStartDate) / timeDuration;
 				let t = 1;
 				for (t; t <= slot; t++) {
+					console.log(new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset())
 					arr = arr.concat({
-						id: id,
+						// id: id,
 						date: new Date(day_2 - i),
 						week: new Date(day_2 - i).getDay(),
 						start: new Date(newStartDate - i + timeDuration * t - timeDuration),
 						end: new Date(newStartDate - i + timeDuration * t),
 						amount: amount, // check amount esta sendo salvo com o valor certo
-						slotCreated
+						slotCreated,
+						timeZone: new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset()
+
 					});
 				}
 			}
 		}
 		try {
-			// const response = await dianurseApi.post('/appointment/createAvailability', {
-			// 	arr
-			// });
-			// console.log(response);
-			let x = 200;
-			// if (response.status === 200) {
-			if (x === 200) {
+			const response = await dianurseApi.post(`/appointment/createAvailability/${id}`, {
+				arr,
+				withCredentials: true
+			});
+			console.log(response);
+			// let x = 200;
+			if (response.status === 200) {
+			// if (x === 200) {
 				return dispatch({
 					type: 'create_slot',
 					payload: {
@@ -191,7 +197,8 @@ const createSlot = (dispatch) => {
 						slotCreated,
 						editStatus: false,
 						weekDay,
-						id: id
+						id: id,
+						timeZone: timeZone
 					}
 				});
 			}
@@ -205,12 +212,11 @@ const deleteSlot = (dispatch) => {
 	return async (key, id) => {
 		console.log(id);
 		let slotData = {
-			slotCreated: key,
-			id
+			slotCreated: key
 		};
 		try {
-			const response = await dianurseApi.delete(`/appointment/deleteAvailability/`, {
-				data: slotData
+			const response = await dianurseApi.delete(`/appointment/deleteAvailability/${id}`, {
+				slotData
 			});
 			console.log(response.data);
 			dispatch({ type: 'delete_slot', payload: key });
@@ -221,13 +227,13 @@ const deleteSlot = (dispatch) => {
 	};
 };
 const updateSlot = (dispatch) => {
-	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key }) => {
+	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key, timeZone }) => {
 		let day_1 = new Date(availableStart);
 		let day_2 = new Date(availableEnd);
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;
-
+		console.log('updateslotId', id)
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
 				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
@@ -237,20 +243,21 @@ const updateSlot = (dispatch) => {
 				let t = 1;
 				for (t; t <= slot; t++) {
 					arr = arr.concat({
-						id: id.toString(),
+						// id: id.toString(),
 						date: new Date(day_2 - i),
 						week: new Date(day_2 - i).getDay(),
 						start: new Date(newStartDate - i + timeDuration * t - timeDuration),
 						end: new Date(newStartDate - i + timeDuration * t),
 						amount: amount, // check amount estpa sendo salvo com o valor certo
-						slotCreated: key
+						slotCreated: key,
+						timeZone: new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset()
 					});
 				}
 			}
 		}
 		try {
 			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
-			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
+			const response = await dianurseApi.post(`/appointment/updateAvailability/${id}`, {
 				arr
 			});
 			console.log(response.data);
@@ -268,7 +275,8 @@ const updateSlot = (dispatch) => {
 						editStatus: false,
 						isEditing: false,
 						weekDay,
-						id
+						id,
+						timeZone: timeZone
 					}
 				});
 			}
