@@ -5,11 +5,8 @@ import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
 import TextInput from '../customUi/TextInput';
 import ButtonFilled from '../customUi/ButtonFilled';
-import ButtonError from '../customUi/ButtonError';
-
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
-import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -49,7 +46,7 @@ const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot
 	const [ duration, setDuration ] = useState(slot);
 	const classes = useStyles();
 	const { state, updateSlot, setIsEditing } = useContext(AvailabilityContext);
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 
 	// console.log(state);

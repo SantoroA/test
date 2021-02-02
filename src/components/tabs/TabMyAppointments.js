@@ -3,6 +3,9 @@ import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import CardAppointment from '../groups/CardAppointment';
 //CUSTOM UI
 import CalendarApp from '../customUi/CalendarApp';
+import PaperCustomShadow from '../customUi/PaperCustomShadow';
+//CUSTOM ICONS
+import EmptyCalendarIcon from '../customIcons/EmptyCalendarIcon';
 //MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -35,6 +38,21 @@ const useStyles = makeStyles({
 	sub: {
 		fontWeight: 700,
 		marginBottom: '1rem'
+	},
+	emptyCalendar: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '20rem',
+		flexDirection: 'column'
+	},
+	icon: {
+		fontSize: '5rem',
+		marginTop: '1rem'
+	},
+	detail: {
+		fontWeight: 'bold',
+		marginTop: '1rem'
 	}
 });
 
@@ -69,6 +87,15 @@ const TabMyAppointments = () => {
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
 				</Typography>
+				{/* <PaperCustomShadow className={classes.emptyCalendar}>
+					<Typography color="textSecondary" variant="subtitle1">
+						Start by updating your profile to be seen by patients!
+					</Typography>
+					<EmptyCalendarIcon className={classes.icon} />
+					<Typography className={classes.detail} variant="subtitle1">
+						No Appointments Scheduled
+					</Typography>
+				</PaperCustomShadow> */}
 				<CardAppointment
 					onSubmit={() => {}}
 					state={{

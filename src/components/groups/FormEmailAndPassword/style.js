@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import FormEmailAndPassword from './index';
 
 const useStyles = makeStyles({
 	container: {

@@ -30,7 +30,6 @@ const FormEmailAndPassword = () => {
 	const [ newPasswordMatch, setNewPasswordMatch ] = useState('');
 	const [ showChangePass, setShowChangePass ] = useState(true);
 	const [ isDialogOpen, setIsDialogOpen ] = useState(false);
-	const inputFileRef = createRef(null);
 	const classes = useStyles();
 	useEffect(
 		() => {

@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
-import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -18,7 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 const FormEducation = () => {
 	const { updateEducation, state } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	const [ education, setEducation ] = useState(state.education);
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();

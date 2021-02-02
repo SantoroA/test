@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 //CUSTOM UI
-
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
 import ButtonFilled from '../customUi/ButtonFilled';
 //MATERIAL UI
@@ -11,16 +10,11 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import { smartTable as st } from 'smart-table-core';
 
 const useStyles = makeStyles({
-	table: {
-		minWidth: 650
-	},
 	name: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -38,19 +32,6 @@ const useStyles = makeStyles({
 function Row({ value, buttonText }) {
 	const classes = useStyles();
 	const { profilePatientid, start, reasonForVisit, end, amount, idApt } = value;
-
-	// profilePatientid: {
-	//     lastName: 'White',
-	//     firstName: 'Mrs.',
-	//     _id: '6011887772a95e0028bcbcd8'
-	// },
-	// reasonForVisit: 'headache',
-	// idApt: '60196388539b8800272f3a35',
-	// end: '2021-02-01T07:30:00.000Z',
-	// start: '2021-02-01T07:00:00.000Z',
-	// image:
-	//     'https://images.pexels.com/photos/4511649/pexels-photo-4511649.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-	// amount: '45'
 
 	return (
 		<TableRow>

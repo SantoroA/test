@@ -52,8 +52,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'headache',
 			idApt: '6019638853gre9b8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			end: '2021-02-10T07:30:00.000Z',
+			start: '2021-02-10T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -67,8 +67,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'covid',
 			idApt: '60196388539asdb8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			end: '2021-02-05T07:30:00.000Z',
+			start: '2021-02-05T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -82,8 +82,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'allergies',
 			idApt: '60196388gf539b8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			end: '2021-02-04T07:30:00.000Z',
+			start: '2021-02-04T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -97,8 +97,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'cold',
 			idApt: '601963rgw88539b8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			end: '2021-02-09T07:30:00.000Z',
+			start: '2021-02-09T07:00:00.000Z',
 
 			amount: '$45.56'
 		},

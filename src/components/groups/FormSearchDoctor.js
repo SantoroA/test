@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import DialogFilter from './DialogFilter';
 import DoctorList from './DoctorList';
 import { formatDateNoYear, formatFormDate } from '../../helpers/dateHelper';
-import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
-import ButtonIcon from '../customUi/ButtonIcon';
 import ButtonFilterOption from '../customUi/ButtonFilterOption';
 import FilterIcon from '../customIcons/FilterIcon';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
@@ -17,7 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles({
 	root: {
@@ -117,6 +114,7 @@ const FormSearchDoctor = () => {
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);
 		setFilterState({ ...filterState, date: todayFormatted });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
