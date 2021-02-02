@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { convertTime, formatDateNoYear } from '../../helpers/dateHelper';
+import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 //CUSTOM UI
 
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
@@ -62,7 +62,7 @@ function Row({ value, buttonText }) {
 				/>
 				{profilePatientid.firstName} {profilePatientid.lastName}
 			</TableCell>
-			<TableCell>{formatDateNoYear(start)}</TableCell>
+			<TableCell>{formatDateShort(start)}</TableCell>
 			<TableCell>
 				{convertTime(start)} - {convertTime(end)}
 			</TableCell>

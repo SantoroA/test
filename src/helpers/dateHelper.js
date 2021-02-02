@@ -20,6 +20,19 @@ const formatFormDate = (timestamp) => {
 	}
 	return [ year, month, day ].join('-');
 };
+const formatDateShort = (date) => {
+	let timestamp = new Date(date);
+	let year = timestamp.getFullYear();
+	let month = timestamp.getMonth() + 1;
+	let day = timestamp.getDate();
+	if (month < 10) {
+		month = `0${month}`;
+	}
+	if (day < 10) {
+		day = `0${day}`;
+	}
+	return [ month, day, year ].join('/');
+};
 
 const convertTime = (date) => {
 	let timestamp = new Date(date);
@@ -55,4 +68,4 @@ const getTimeDifference = (date1, date2) => {
 	return minutesDifference;
 };
 
-export { formatDateDisplay, convertTime, getTimeDifference, formatDateNoYear, formatFormDate };
+export { formatDateDisplay, convertTime, getTimeDifference, formatDateNoYear, formatFormDate, formatDateShort };
