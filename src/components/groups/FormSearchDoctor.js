@@ -18,6 +18,9 @@ import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+
 const useStyles = makeStyles({
 	root: {
 		display: 'flex',
@@ -84,7 +87,8 @@ const FormSearchDoctor = () => {
 		maxPrice: 150,
 		rating: 0.1,
 		date: '',
-		typeOfHCP: 'Certified diabetes educator'
+		typeOfHCP: 'Certified diabetes educator',
+		timeZoneValue: +300
 	});
 	const classes = useStyles();
 
@@ -116,13 +120,20 @@ const FormSearchDoctor = () => {
 	const formatDate = (date) => {
 		const year = date.getFullYear();
 		const month = '' + date.getMonth() + 1;
-		const day = '' + date.getDate();
+		let day = '' + date.getDate();
 		if (month.length < 2) month = '0' + month;
 		if (day.length < 2) day = '0' + day;
 		return [ year, month, day ].join('-')
 	};
 
 	useEffect(() => {
+		const getdata = async () => {
+			const response = await fetch(`https://ipapi.co/json`)
+			const d = await response.json()
+			console.log(d.country_name)
+		  }
+		  getdata()
+
 		const today = new Date();
 		const todayFormatted = formatDate(today);
 		const dateAsString = today.toString();
@@ -130,7 +141,7 @@ const FormSearchDoctor = () => {
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);
-		setFilterState({ ...filterState, date: todayFormatted });
+		setFilterState({ ...filterState, date: todayFormatted, timeZoneValue: today.getTimezoneOffset() });
 	}, []);
 
 	return (
@@ -189,15 +200,37 @@ const FormSearchDoctor = () => {
 					<Typography>
 						We believe you are in - {timezone} ({nameZone}) -
 					</Typography>
-					<TextInputRounder
-						id="time"
-						type="time"
-						placeholder="CHANGE THE TIME ZONE"
-						multiline
-						InputLabelProps={{
-							shrink: true
-						}}
-					/>
+					<FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="change-time-zone">CHANGE THE TIME ZONE</InputLabel>
+        <Select
+          labelId="change-time-zone"
+          id="change-time-zone"
+          value={+300}
+		  onChange={(e) => {
+			setFilterState({ ...filterState, timeZoneValue: e.target.value });
+			//   setTimezone( newTime ) // CHANGE TIMEZONE
+			//   setNameZone(nameTimeZone)   
+		}}
+
+
+          label="CHANGE THE TIME ZONE"
+        >
+          {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+          <MenuItem value={+60}>Horário Padrão da Europa Central Madrid (GMT+1)</MenuItem>
+          <MenuItem value={0}>Horário do Meridiano de Greenwich Londres (GMT)</MenuItem>
+          <MenuItem value={+60}>Horário Padrão da Europa Central Paris (GMT+1)</MenuItem>
+		  <MenuItem value={+60}>Horário Padrão da Europa Central Rome (GMT+1)</MenuItem>
+          <MenuItem value={+120}>Horário Padrão da Europa Oriental Bucareste (GMT+2)</MenuItem>
+          <MenuItem value={+180}>Horário Padrão de Moscou Minsk (GMT+3)</MenuItem>
+		  <MenuItem value={-120}>Horário Padrão de Fernando de Noronha Ilha Fernando de Noronha (GMT-2)</MenuItem>
+		  <MenuItem value={-180}>Horário Padrão de Brasília Belém (GMT-3)</MenuItem>
+          <MenuItem value={-240}>Horário Padrão do Amazonas Manaus - AM, Brasil (GMT-4)</MenuItem>
+          <MenuItem value={-300}>Horário Padrão do Acre Rio Branco (GMT-5)</MenuItem>
+        </Select>
+      </FormControl>
+
 				</FormControl>
 			</PaperCustomShadow>
 			<Divider orientation="horizontal" />
