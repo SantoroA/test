@@ -22,6 +22,16 @@ const useStyles = makeStyles({
 	datePicker: {
 		padding: '1rem'
 	},
+	datePickerMobile: {
+		'& .MuiFilledInput-root': {
+			backgroundColor: 'rgba(255, 255, 255, 0)'
+		},
+		'& .MuiInputBase-input': {
+			textAlign: 'center',
+			fontSize: '1.2rem'
+		},
+		marginBottom: '1rem'
+	},
 	sub: {
 		fontWeight: 700,
 		marginBottom: '1rem'
@@ -39,22 +49,22 @@ const TabMyAppointments = () => {
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
-				{/* {isMobile && (
+				{isMobile && (
 					<Grid item xs={12}>
 						<TextField
 							fullWidth
 							id="date"
-							label="Date"
 							type="date"
-							variant="outlined"
+							variant="filled"
+							className={classes.datePickerMobile}
 							value={formatFormDate(date)}
 							onChange={(e) => setDate(new Date(e.target.value))}
-							InputLabelProps={{
-								shrink: true
+							InputProps={{
+								disableUnderline: true
 							}}
 						/>
 					</Grid>
-				)} */}
+				)}
 				<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
