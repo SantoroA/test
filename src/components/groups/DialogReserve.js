@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+// import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import BoxTime from '../../components/customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { NavLink } from 'react-router-dom';
+import { convertTime } from '../../helpers/dateHelper';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 //MATERIAL UI
@@ -50,14 +51,9 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogReserve = ({ open, close, appointments, formatDate }) => {
+const DialogReserve = ({ open, close, appointments, dateFormatted, apDoc }) => {
 	const classes = useStyles();
-	const convertTime = (start) => {
-		let hours = new Date(start).getHours();
-		let min = new Date(start).getMinutes();
-		let realMin = min < 10 ? '00' : min;
-		return `${hours}:${realMin}`;
-	};
+
 	return (
 		<Dialog
 			open={open}
@@ -69,7 +65,7 @@ const DialogReserve = ({ open, close, appointments, formatDate }) => {
 				<IconButton className={classes.closeButton} onClick={close} color="primary">
 					<CloseIcon />
 				</IconButton>
-				<DialogTitle>Showing availability for {formatDate}</DialogTitle>
+				<DialogTitle>Showing availability for {dateFormatted}</DialogTitle>
 				<DialogContent>
 					{appointments.map((ap) => {
 						return (
@@ -79,7 +75,10 @@ const DialogReserve = ({ open, close, appointments, formatDate }) => {
 								</BoxTime>
 								<Typography className={classes.price}>$ {ap.amount}</Typography>
 								<NavLink
-									to={{ pathname: '/in/patient/reserve', state: { appointment: ap } }}
+									to={{
+										pathname: '/in/patient/reserve',
+										state: { appointment: ap, apDoc: apDoc }
+									}}
 									className={classes.navlink}
 								>
 									<ButtonFilled onClick={() => {}}>Reserve</ButtonFilled>

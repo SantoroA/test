@@ -20,7 +20,8 @@ const useStyles = makeStyles({
 		padding: '1rem',
 		justifyContent: 'center',
 		marginBottom: '1rem',
-		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)'
+		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)',
+		borderRadius: '10px'
 	}
 });
 
@@ -39,7 +40,7 @@ const TimeSlotList = ({ weekDay, weekDayName }) => {
 						return (
 							<div key={slot.slotCreated}>
 								{slot.isEditing === false ? (
-									<PaperCustomShadow className={classes.box} borderradius="10px" border={1}>
+									<PaperCustomShadow className={classes.box} border={1}>
 										<Grid container className={classes.info}>
 											<Grid item md={9} sm={8} xs={12}>
 												<Grid container>

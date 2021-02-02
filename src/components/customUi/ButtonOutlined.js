@@ -11,8 +11,8 @@ const ButtonOutlined = styled(Button)({
 	textTransform: 'none',
 
 	'&:hover': {
-		border: 'none',
-		borderColor: '#0BC7E0',
+		border: '2px solid',
+		borderColor: '#D6FBF1',
 		color: '#0BC7E0',
 		backgroundColor: '#D6FBF1'
 	}

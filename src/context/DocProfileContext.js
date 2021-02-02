@@ -1,10 +1,11 @@
 import createDataContext from './createDataContext';
+import { formatFormDate } from '../helpers/dateHelper';
 import dianurseApi from '../api/dianurseApi';
 
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log(action.payload)
+			console.log(action.payload);
 			return {
 				...state,
 				specialty: action.payload.typeOfHCP,
@@ -110,18 +111,10 @@ const getSpeciality = (dispatch) => {
 		}
 	};
 };
-const formatDate = (date) => {
-	const newDate= new Date(date)
-	const year = newDate.getFullYear();
-	const month = '' + newDate.getMonth() + 1;
-	let day = '' + newDate.getDate();
-	if (month.length < 2) month = '0' + month;
-	if (day.length < 2) day = '0' + day;
-	return [ year, month, day ].join('-');
-};
+
 const getProfile = (dispatch) => {
 	return async (id) => {
-		console.log(id)
+		console.log(id);
 		try {
 			const response = await dianurseApi.get(`/profile/doctor/getprofile/${id}`, {
 				withCredentials: true
@@ -138,7 +131,7 @@ const getProfile = (dispatch) => {
 					gender: response.data[0].gender,
 					phoneNumber: response.data[0].phoneNumber,
 					birthPlace: response.data[0].birthPlace,
-					birthday: formatDate(response.data[0].birthday),
+					birthday: formatFormDate(new Date(response.data[0].birthday)),
 					profileInfo: response.data[0].profileInfo,
 					websiteUrl: response.data[0].websiteUrl,
 					country: response.data[0].country,
@@ -354,14 +347,15 @@ export const { Context, Provider } = createDataContext(
 	},
 	{
 		services: [],
-		email: '',
-		image: '',
+		email: 'doc@test.com',
+		image:
+			'https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg',
 		specialty: 'General care physician',
 		insurance: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: '',
-		lastName: '',
+		firstName: 'Phoebee',
+		lastName: 'Buffet',
 		gender: '',
 		phoneNumber: '',
 		birthPlace: '',
@@ -376,6 +370,17 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
-		allSpecialty: [ ]
+		allSpecialty: [
+			'General care physician',
+			'Endocrinologist',
+			'Dietitian',
+			'Certified diabetes educator',
+			'Podiatrist',
+			'Nephrologist',
+			'Ophthalmologist',
+			'Physical trainer',
+			'Dentist',
+			'Any'
+		]
 	}
 );

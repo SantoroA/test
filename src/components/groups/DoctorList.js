@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
+// import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import Pagination from './Pagination';
@@ -7,6 +7,7 @@ import DialogReserve from './DialogReserve';
 import Loader from 'react-loader-spinner';
 import { useQuery, gql } from '@apollo/client';
 import MessageDialog from './MessageDialog';
+import { convertTime } from '../../helpers/dateHelper';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import BoxTime from '../../components/customUi/BoxTime';
@@ -164,11 +165,11 @@ const APPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const DoctorList = ({ filterState, formatDate }) => {
+const DoctorList = ({ filterState, dateFormatted }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 	const [ offset, setOffset ] = useState(0);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
-	const [ docId, setDocId ] = useState('');
+	const [ apDoc, setApDoc ] = useState('');
 	const [ appointments, setAppointments ] = useState([]);
 	const [ showPerPage, setShowPerPage ] = useState(2);
 	const [ pagination, setPagination ] = useState({
@@ -179,15 +180,7 @@ const DoctorList = ({ filterState, formatDate }) => {
 		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset, limit: 10 }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
-
 	const classes = useStyles();
-	const convertTime = (start) => {
-		let hours = new Date(start).getHours();
-		let min = new Date(start).getMinutes();
-		let realMin = min < 10 ? '00' : min;
-		return `${hours}:${realMin}`;
-	};
-
 	const onPaginationChange = (start, end) => {
 		setPagination({ start: start, end: end });
 	};
@@ -264,6 +257,7 @@ const DoctorList = ({ filterState, formatDate }) => {
 									onClick={() => {
 										setDialogReserveOpen(true);
 										setAppointments(doc.appointments);
+										setApDoc({ lastName: doc.lastname, pic: doc.image });
 									}}
 								>
 									View
@@ -275,9 +269,14 @@ const DoctorList = ({ filterState, formatDate }) => {
 			) : null}
 			<DialogReserve
 				open={dialogReserveOpen}
-				formatDate={formatDate}
+				dateFormatted={dateFormatted}
 				appointments={appointments}
-				close={() => setDialogReserveOpen(false)}
+				apDoc={apDoc}
+				close={() => {
+					setDialogReserveOpen(false);
+					setAppointments('');
+					setApDoc('');
+				}}
 			/>
 			<MessageDialog open={dialogOpen} message={error} close={() => setDialogOpen(false)} />
 			{/* <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange}  /> */}

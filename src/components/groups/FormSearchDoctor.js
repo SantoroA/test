@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DialogFilter from './DialogFilter';
 import DoctorList from './DoctorList';
+import { formatDateNoYear, formatFormDate } from '../../helpers/dateHelper';
 import dianurseApi from '../../api/dianurseApi';
 //CUSTOM UI
 import TextInputRounder from '../customUi/TextInputRounder';
@@ -8,7 +9,7 @@ import ButtonIcon from '../customUi/ButtonIcon';
 import ButtonFilterOption from '../customUi/ButtonFilterOption';
 import FilterIcon from '../customIcons/FilterIcon';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
-import Calendar from '../../components/customUi/Calendar';
+import CalendarApp from '../../components/customUi/CalendarApp';
 //MATERIAL UI
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -92,13 +93,6 @@ const FormSearchDoctor = () => {
 	});
 	const classes = useStyles();
 
-	let dateChoose = new Date(filterState.date).toDateString().split(' ');
-	let formatDateDisplay = `${dateChoose[0]}, ${dateChoose[2]} ${new Date(filterState.date).toLocaleString('default', {
-		month: 'long'
-	})}`;
-	console.log(filterState.date);
-	console.log(dateChoose);
-
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
 	// 	console.log('submit', typeOfHCP);
@@ -117,25 +111,17 @@ const FormSearchDoctor = () => {
 		'Dentist',
 		'Any'
 	];
-	const formatDate = (date) => {
-		const year = date.getFullYear();
-		const month = '' + date.getMonth() + 1;
-		let day = '' + date.getDate();
-		if (month.length < 2) month = '0' + month;
-		if (day.length < 2) day = '0' + day;
-		return [ year, month, day ].join('-')
-	};
 
 	useEffect(() => {
-		const getdata = async () => {
-			const response = await fetch(`https://ipapi.co/json`)
-			const d = await response.json()
-			console.log(d.country_name)
-		  }
-		  getdata()
+		// const getdata = async () => {
+		// 	const response = await fetch(`https://ipapi.co/json`)
+		// 	const d = await response.json()
+		// 	console.log(d.country_name)
+		//   }
+		//   getdata()
 
 		const today = new Date();
-		const todayFormatted = formatDate(today);
+		const todayFormatted = formatFormDate(today);
 		const dateAsString = today.toString();
 		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -291,13 +277,13 @@ const FormSearchDoctor = () => {
 					</PaperCustomShadow>
 				</Grid>
 			</Grid>
-			<Typography variant="h5">{formatDateDisplay}</Typography>
+			<Typography variant="h5">{formatDateNoYear(filterState.date)}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList formatDate={filterState.date} filterState={filterState} />
+					<DoctorList dateFormatted={formatDateNoYear(filterState.date)} filterState={filterState} />
 				</Grid>
 				<Grid item md={3}>
-					<Calendar />
+					<CalendarApp />
 				</Grid>
 			</Grid>
 			<DialogFilter

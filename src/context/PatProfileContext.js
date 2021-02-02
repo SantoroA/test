@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext';
+import { formatFormDate } from '../helpers/dateHelper';
 import dianurseApi from '../api/dianurseApi';
 
 const patProfileReducer = (state, action) => {
@@ -40,15 +41,6 @@ const patProfileReducer = (state, action) => {
 			return state;
 	}
 };
-const formatDate = (date) => {
-	const newDate= new Date(date)
-	const year = newDate.getFullYear();
-	const month = '' + newDate.getMonth() + 1;
-	let day = '' + newDate.getDate();
-	if (month.length < 2) month = '0' + month;
-	if (day.length < 2) day = '0' + day;
-	return [ year, month, day ].join('-');
-};
 
 const getPatProfile = (dispatch) => {
 	return async (id) => {
@@ -66,7 +58,7 @@ const getPatProfile = (dispatch) => {
 					gender: response.data[0].gender,
 					phoneNumber: response.data[0].phoneNumber,
 					birthPlace: response.data[0].birthPlace,
-					birthday: formatDate(response.data[0].birthday),
+					birthday: formatFormDate(new Date(response.data[0].birthday)),
 					email: response.data[0].accountId.username,
 					image: response.data[0].accountId.profilePicture
 				}
@@ -128,15 +120,15 @@ export const { Context, Provider } = createDataContext(
 		closeDialog
 	},
 	{
-		email: '',
-		image:
-			'',
 		// email: '',
+		image:
+			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+		email: 'patient@test.com',
 		// image: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: '',
-		lastName: '',
+		firstName: 'Rachel',
+		lastName: 'Green',
 		// firstName: '',
 		// lastName: '',
 		gender: '',

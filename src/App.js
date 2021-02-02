@@ -5,7 +5,7 @@ import { Provider as LanguageProvider } from './context/LanguageContext';
 import { Provider as AvailabilityProvider } from './context/AvailabilityContext';
 import { Provider as DocProfileProvider, Context as DocProfileContext } from './context/DocProfileContext';
 import { Provider as PatProfileProvider, Context as PatProfileContext } from './context/PatProfileContext';
-import { Provider as SearchDoctorProvider } from './context/SearchDoctorContext';
+// import { Provider as SearchDoctorProvider } from './context/SearchDoctorContext';
 import LoadingScreen from './screens/public/LoadingScreen';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import PublicRoute from './routes/PublicRoute';
@@ -45,8 +45,8 @@ const Routes = () => {
 		const loadPage = async () => {
 			await getCookie();
 			setIsLoading(false);
-			console.log(userId)	
-// setGettingProfile(true)
+			console.log(userId);
+			// setGettingProfile(true)
 		};
 		loadPage();
 		//  eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,17 +67,17 @@ const App = () => {
 		<ApolloProvider client={client}>
 			<AuthProvider>
 				<AvailabilityProvider>
-					<SearchDoctorProvider>
-						<PatProfileProvider>
-							<DocProfileProvider>
-								<LanguageProvider>
-									<ThemeProvider theme={theme}>
-										<Routes />
-									</ThemeProvider>
-								</LanguageProvider>
-							</DocProfileProvider>
-						</PatProfileProvider>
-					</SearchDoctorProvider>
+					{/* <SearchDoctorProvider> */}
+					<PatProfileProvider>
+						<DocProfileProvider>
+							<LanguageProvider>
+								<ThemeProvider theme={theme}>
+									<Routes />
+								</ThemeProvider>
+							</LanguageProvider>
+						</DocProfileProvider>
+					</PatProfileProvider>
+					{/* </SearchDoctorProvider> */}
 				</AvailabilityProvider>
 			</AuthProvider>
 		</ApolloProvider>

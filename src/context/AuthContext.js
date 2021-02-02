@@ -33,8 +33,8 @@ const authReducer = (state, action) => {
 				dialogOpen: false,
 				isSocialMedia: false
 			};
-			// case 'set_is_social_media':
-			// return { ...state, isSocialMedia: action.payload };
+		// case 'set_is_social_media':
+		// return { ...state, isSocialMedia: action.payload };
 		case 'update_image':
 			return { ...state, image: action.payload };
 		case 'set_dialog_message':
@@ -404,11 +404,11 @@ export const { Provider, Context } = createDataContext(
 	{
 		userId: '',
 		userToken: '',
-		userAmIHCP: false,
+		userAmIHCP: true,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,

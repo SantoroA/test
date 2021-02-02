@@ -29,7 +29,8 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
 		borderColor: 'rgba(160, 164, 168, 1)',
 		marginTop: '1.5rem',
-		marginBottom: '1.5rem'
+		marginBottom: '1.5rem',
+		borderRadius: '10px'
 	},
 
 	buttons: {
@@ -91,7 +92,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	};
 
 	return (
-		<Box borderradius="10px" border={1} className={classes.form}>
+		<Box border={1} className={classes.form}>
 			{/* <FormControlLabel
 				control={
 					<Checkbox

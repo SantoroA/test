@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
-import MyProfileCard from '../../components/groups/MyProfileCard';
+import CardMyProfile from '../../components/groups/CardMyProfile';
 import TabDocuments from '../../components/tabs/TabDocuments';
 import TabQuestionnaries from '../../components/tabs/TabQuestionnaries';
 import TabPatientAppointments from '../../components/tabs/TabPatientAppointments';
@@ -130,7 +130,7 @@ const PatDashboardScreen = () => {
 		<PatLayoutContainer>
 			<Grid container className={classes.userInfo}>
 				<Grid item lg={5} md={8} xs={12}>
-					<MyProfileCard />
+					<CardMyProfile />
 				</Grid>
 
 				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
