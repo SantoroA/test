@@ -8,7 +8,15 @@ const TextInputRounder = withStyles({
 		},
 
 		'& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-			borderColor: 'linear-gradient(119.45deg, #05B240 0%, #09B8EF 99.75%)'
+			borderColor: '#07B597',
+			borderWidth: 2
+		},
+		'& .MuiFilledInput-root': {
+			backgroundColor: 'rgba(255, 255, 255, 0)'
+		},
+		'& .MuiOutlinedInput-input': {
+			paddingTop: '0.8rem',
+			paddingBottom: '0.8rem'
 		}
 	}
 })(TextField);

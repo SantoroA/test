@@ -22,8 +22,9 @@ const formatFormDate = (timestamp) => {
 };
 
 const convertTime = (date) => {
-	let hours = new Date(date).getHours();
-	let min = new Date(date).getMinutes();
+	let timestamp = new Date(date);
+	let hours = timestamp.getHours();
+	let min = timestamp.getMinutes();
 	let realMin = min < 10 ? '00' : min;
 	return `${hours}:${realMin}`;
 };
