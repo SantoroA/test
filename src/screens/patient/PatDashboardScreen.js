@@ -20,7 +20,6 @@ import PrescriptionIcon from '../../components/customIcons/PrescriptionIcon';
 import LabTestsIcon from '../../components/customIcons/LabTestsIcon';
 import QuestionnaireIcon from '../../components/customIcons/QuestionnaireIcon';
 //MATERIAL UI
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';

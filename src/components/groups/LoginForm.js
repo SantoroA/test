@@ -109,6 +109,7 @@ const LoginForm = ({ togglePasswordRecoveryOpen, toggleIsLogin, loginCredentials
 			setEmail(decoded[2]);
 			setPassword(decoded[1].split('&')[0]);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleSubmit = async () => {

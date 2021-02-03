@@ -63,7 +63,7 @@ const useStyles = makeStyles({
 
 const FormLocation = () => {
 	const { updateLocationInfo, state } = useContext(DocProfileContext);
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const [ country, setCountry ] = useState(state.country);
 	const [ city, setCity ] = useState(state.city);

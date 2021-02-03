@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import CurrencyInput from 'react-currency-input';
 import { Context as AvailabilityContext } from '../../context/AvailabilityContext';
 import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
@@ -12,8 +11,6 @@ import SleepIcon from '../customIcons/SleepIcon';
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Hidden from '@material-ui/core/Hidden';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -21,7 +18,6 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
 	form: {

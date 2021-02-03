@@ -25,7 +25,6 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles({

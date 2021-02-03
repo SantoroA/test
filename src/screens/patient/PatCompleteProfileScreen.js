@@ -1,6 +1,6 @@
 import React from 'react';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
-import { NavLink, Prompt } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
 import FormContactInfo from '../../components/groups/FormContactInfo';
 //MATERIAL UI

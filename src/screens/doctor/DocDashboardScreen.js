@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 		padding: '2rem'
 	},
 	userOptions: {
-		paddingLeft: '2rem'
+		paddingRight: '2rem'
 	},
 	wrapperTab: {
 		textTransform: 'capitalize',
@@ -35,6 +35,10 @@ const useStyles = makeStyles({
 	},
 	icons: {
 		fontSize: '2.3rem'
+	},
+	cardContainer: {
+		paddingRight: '2rem',
+		marginBottom: '1rem'
 	}
 });
 
@@ -79,7 +83,7 @@ const DocDashboardScreen = () => {
 	return (
 		<DocLayoutContainer>
 			<Grid container className={classes.userInfo}>
-				<Grid item lg={5} md={8} xs={12}>
+				<Grid className={classes.cardContainer} item lg={5} md={8} xs={12}>
 					<CardMyProfile />
 				</Grid>
 				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>

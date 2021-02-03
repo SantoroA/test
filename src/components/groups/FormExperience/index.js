@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
-import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -20,7 +19,7 @@ import CardTravelIcon from '@material-ui/icons/CardTravel';
 const FormExperience = () => {
 	const { updateExperience, state } = useContext(DocProfileContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
-	const { state: {userId} } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	const [ yearsExperience, setYearsExperience ] = useState(state.yearsExperience);
 	const [ yearsSpecialist, setYearsSpecialist ] = useState(state.yearsSpecialist);
 

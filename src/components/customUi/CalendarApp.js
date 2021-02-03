@@ -5,7 +5,6 @@ import Calendar from 'react-calendar';
 const useStyles = makeStyles({
 	root: {
 		background: 'linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%)',
-
 		marginBottom: '1rem',
 		borderRadius: '8px',
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
