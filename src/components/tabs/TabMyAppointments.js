@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context as AuthContext } from '../../context/AuthContext';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import CardAppointment from '../groups/CardAppointment';
 //CUSTOM UI
@@ -13,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
+import { useQuery, gql } from '@apollo/client';
 
 const useStyles = makeStyles({
 	root: {
@@ -56,14 +58,51 @@ const useStyles = makeStyles({
 	}
 });
 
+const MYAPPOINTMENTS_QUERY = gql`
+	query GetAppointments(
+		$date: String!
+		$id: ID!
+		$offset: Int
+		$limit: Int
+
+	) {
+		doctorsAppointments(
+			date: $date
+			id: $id
+			offset: $offset
+			limit: $limit
+		) {
+			profileHCPid
+			_id
+			appointmentTimeStart
+			appointmentTimeEnd
+			profilePatientid {
+				_id
+				firstName
+				lastName
+			  },
+			accountPatientid {
+				  profilePicture
+			  }
+			amount
+			}
+	}
+`;
+
 const TabMyAppointments = () => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [ date, setDate ] = useState(new Date());
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	console.log(date);
-	console.log(formatFormDate(date));
-	console.log(new Date(formatFormDate(date)));
+	const { state: { userId } } = useContext(AuthContext);
+	const { loading, error, data, fetchMore } = useQuery(MYAPPOINTMENTS_QUERY, {
+		variables: { date, id: userId, offset: 0, limit: 1}
+	});
+	// console.log(date);
+	// console.log(formatFormDate(date));
+	// console.log(new Date(formatFormDate(date)));
+	console.log(userId)
+	console.log(data)
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -95,24 +134,34 @@ const TabMyAppointments = () => {
 					<Typography className={classes.detail} variant="subtitle1">
 						No Appointments Scheduled
 					</Typography>
-				</PaperCustomShadow> */}
-				<CardAppointment
-					onSubmit={() => {}}
+				</PaperCustomShadow> 
+				<CardAppointment */}
+				{data !== undefined ? (
+				data.doctorsAppointments.map((apt) => {
+					return (
+						<CardAppointment
+					// onSubmit={() => {}}
+					key={apt._id}
 					state={{
 						appointment: {
-							amount: 85,
-							end: '2021-01-29T07:15:00.000Z',
-							id: '601175526913da0029424025',
-							idApt: '601186c472a95e0028bcb6f5',
-							start: '2021-01-29T06:50:00.000Z'
+							amount: apt.amount,
+							end: apt.appointmentTimeEnd,
+							id: apt.profilePatientid._id,
+							idApt: apt._id,
+							start: apt.appointmentTimeStart,
 						},
-						name: 'Aline',
+						name: `${apt.profilePatientid.firstName} ${apt.profilePatientid.lastName}`,
 						pic:
 							'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+							// apt.accountPatientid.profilePicture
 						buttonText: 'View',
 						title: 'Patient'
 					}}
 				/>
+					)
+				})
+				): null}
+				
 			</Grid>
 			{!isMobile && (
 				<Grid item sm={5} md={4} className={classes.datePicker}>
