@@ -5,7 +5,7 @@ import logo from '../../assets/dianurse-logo.png';
 import NavMenu from './NavMenu';
 import { NavLink } from 'react-router-dom';
 //MATERIAL UI
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,6 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
@@ -49,6 +50,9 @@ export default function ButtonAppBar() {
 	const { state: { language }, changeLanguage } = useContext(LanguageContext);
 	const { state: { isLoggedIn, userAmIHCP } } = useContext(AuthContext);
 	const [ currency, setCurrency ] = useState('dolar');
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+	console.log(isMobile);
 	const classes = useStyles();
 	const handleChange = (event) => {
 		changeLanguage(event.target.value);

@@ -36,7 +36,6 @@ const PrivateRouteDoctor = () => {
 	const { state: { isFirstTimeUser } } = useContext(AuthContext);
 	return (
 		<Switch>
-			<Route path="/in/doctor/dashboard" exact component={DocDashboardScreen} />
 			<Route path="/in/doctor/coachmark" exact component={DocCoachMarkScreen} />
 			<Route path="/in/doctor/completeprofile" exact component={DocCompleteProfileScreen} />
 			<Route path="/in/doctor/help" exact component={DocHelpScreen} />
@@ -46,6 +45,7 @@ const PrivateRouteDoctor = () => {
 			<Route path="/in/doctor/videocall" exact component={DocVideoCallScreen} />
 			<Route path="/in/doctor/videoprecall" exact component={DocVideoPrecallScreen} />
 			<Route path="/in/doctor/viewprofile" exact component={DocViewPublicProfileScreen} />
+			<Route path="/in/doctor/dashboard" component={DocDashboardScreen} />
 			<Route path="/" component={LoadingScreen}>
 				{isFirstTimeUser ? <Redirect to="/in/doctor/coachmark" /> : <Redirect to="/in/doctor/dashboard" />}
 			</Route>
@@ -57,7 +57,6 @@ const PrivateRoutePatient = () => {
 	const { state: { isFirstTimeUser } } = useContext(AuthContext);
 	return (
 		<Switch>
-			<Route path="/in/patient/dashboard" exact component={PatDashboardScreen} />
 			<Route path="/in/patient/coachmark" exact component={PatCoachMarkScreen} />
 			<Route path="/in/patient/completeprofile" exact component={PatCompleteProfileScreen} />
 			<Route path="/in/patient/assistant" exact component={PatAssistantScreen} />
@@ -69,6 +68,7 @@ const PrivateRoutePatient = () => {
 			<Route path="/in/patient/pastappointments" exact component={PatPastAppointmentsScreen} />
 			<Route path="/in/patient/videocall" exact component={PatVideoCallScreen} />
 			<Route path="/in/patient/videoprecall" exact component={PatVideoPrecallScreen} />
+			<Route path="/in/patient/dashboard" component={PatDashboardScreen} />
 			<Route path="/" component={LoadingScreen}>
 				{isFirstTimeUser ? <Redirect to="/in/patient/coachmark" /> : <Redirect to="/in/patient/dashboard" />}
 			</Route>
