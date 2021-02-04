@@ -3,6 +3,7 @@ import { Context as AuthContext } from '../../context/AuthContext';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import CardAppointment from '../groups/CardAppointment';
 import Loader from 'react-loader-spinner';
+import MessageDialog from '../groups/MessageDialog';
 import { useQuery, gql } from '@apollo/client';
 //CUSTOM UI
 import CalendarApp from '../customUi/CalendarApp';
@@ -13,11 +14,10 @@ import EmptyCalendarIcon from '../customIcons/EmptyCalendarIcon';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-
 
 const useStyles = makeStyles({
 	root: {
@@ -44,12 +44,13 @@ const useStyles = makeStyles({
 		fontWeight: 700,
 		marginBottom: '1rem'
 	},
-	emptyCalendar: {
+	emptyState: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
 		height: '20rem',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		textAlign: 'center'
 	},
 	icon: {
 		fontSize: '5rem',
@@ -62,19 +63,8 @@ const useStyles = makeStyles({
 });
 
 const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments(
-		$date: String!
-		$id: ID!
-		$offset: Int
-		$limit: Int
-
-	) {
-		doctorsAppointments(
-			date: $date
-			id: $id
-			offset: $offset
-			limit: $limit
-		) {
+	query GetAppointments($date: String!, $id: ID!, $offset: Int, $limit: Int) {
+		doctorsAppointments(date: $date, id: $id, offset: $offset, limit: $limit) {
 			profileHCPid
 			_id
 			appointmentTimeStart
@@ -83,14 +73,55 @@ const MYAPPOINTMENTS_QUERY = gql`
 				_id
 				firstName
 				lastName
-			  },
-			accountPatientid {
-				  profilePicture
-			  }
-			amount
 			}
+			accountPatientid {
+				profilePicture
+			}
+			amount
+		}
 	}
 `;
+
+const ShowData = (data) => {
+	const classes = useStyles();
+	if (data.length > 0) {
+		return data.doctorsAppointments.map((apt) => {
+			return (
+				<CardAppointment
+					// onSubmit={() => {}}
+					key={apt._id}
+					state={{
+						appointment: {
+							amount: apt.amount,
+							end: apt.appointmentTimeEnd,
+							id: apt.profilePatientid._id,
+							idApt: apt._id,
+							start: apt.appointmentTimeStart
+						},
+						name: `${apt.profilePatientid.firstName} ${apt.profilePatientid.lastName}`,
+						pic:
+							'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+						// apt.accountPatientid.profilePicture
+						buttonText: 'View',
+						title: 'Patient'
+					}}
+				/>
+			);
+		});
+	} else {
+		return (
+			<PaperCustomShadow className={classes.emptyState}>
+				<Typography color="textSecondary" variant="subtitle1">
+					Start by updating your profile to be seen by patients!
+				</Typography>
+				<EmptyCalendarIcon className={classes.icon} />
+				<Typography className={classes.detail} variant="subtitle1">
+					No Appointments Scheduled
+				</Typography>
+			</PaperCustomShadow>
+		);
+	}
+};
 
 const TabMyAppointments = () => {
 	const classes = useStyles();
@@ -99,21 +130,14 @@ const TabMyAppointments = () => {
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(MYAPPOINTMENTS_QUERY, {
-		variables: { date, id: userId, offset: 0, limit: 1}
+		variables: { date, id: userId, offset: 0, limit: 1 }
 	});
 	// console.log(date);
 	// console.log(formatFormDate(date));
 	// console.log(new Date(formatFormDate(date)));
-	console.log(userId)
-	console.log('data',data)
-
-	if (loading)
-		return (
-			<Container>
-				<Loader type="TailSpin" color="primary" height={80} width={80} />;
-			</Container>
-		);
-		
+	console.log(userId);
+	console.log(data);
+	console.log(error);
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -148,7 +172,7 @@ const TabMyAppointments = () => {
 				</PaperCustomShadow> 
 				<CardAppointment */}
 				
-				{data !== undefined ? (
+				{/* {data !== undefined ? (
 				data.doctorsAppointments.map((apt) => {
 					return (
 						<CardAppointment
@@ -173,7 +197,21 @@ const TabMyAppointments = () => {
 					)
 				})
 				): null}
-				
+				 */}
+
+				{loading && (
+					<Container className={classes.emptyState}>
+						<Loader type="TailSpin" color="primary" height={80} width={80} />
+					</Container>
+				)}
+				{data !== undefined && <ShowData data={data} />}
+				{error && (
+					<Container className={classes.emptyState}>
+						<Typography color="textSecondary" variant="h4">
+							Something went wrong, please try again later
+						</Typography>
+					</Container>
+				)}
 			</Grid>
 			{!isMobile && (
 				<Grid item sm={5} md={4} className={classes.datePicker}>

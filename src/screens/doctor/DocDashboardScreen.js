@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import CardMyProfile from '../../components/groups/CardMyProfile';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import DocUserOptions from '../../components/groups/DocUserOptions';
@@ -16,10 +17,11 @@ import ClockIcon from '../../components/customIcons/ClockIcon';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
 	userInfo: {
@@ -76,10 +78,13 @@ function a11yProps(index) {
 
 const DocDashboardScreen = () => {
 	const [ value, setValue ] = useState(0);
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const classes = useStyles();
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	let { path, url } = useRouteMatch();
 	return (
 		<DocLayoutContainer>
 			<Grid container className={classes.userInfo}>
@@ -92,50 +97,64 @@ const DocDashboardScreen = () => {
 			</Grid>
 			<Divider variant="middle" />
 			<Container>
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					variant="fullWidth"
-					indicatorColor="primary"
-					aria-label="icon label tabs"
-				>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<CalendarIcon className={classes.icons} />}
-						label="My Appointments"
-						{...a11yProps(0)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<PeopleIcon className={classes.icons} />}
-						label="My Patients"
-						{...a11yProps(1)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<EarningsIcon className={classes.icons} />}
-						label="My Earnings"
-						{...a11yProps(2)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<ClockIcon className={classes.icons} />}
-						label="Availability"
-						{...a11yProps(3)}
-					/>
-				</Tabs>
-				<TabPanel value={value} index={0}>
-					<TabMyAppointments />
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<TabMyPatients />
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					<TabMyEarnings />
-				</TabPanel>
-				<TabPanel value={value} index={3}>
-					<TabAvailability />
-				</TabPanel>
+				{isMobile ? (
+					<Switch>
+						<Route path={`${path}/appointments`} component={TabMyAppointments} />
+						<Route path={`${path}/patients`} component={TabMyPatients} />
+						<Route path={`${path}/earnings`} component={TabMyEarnings} />
+						<Route path={`${path}/availability`} component={TabAvailability} />
+						<Route path={`${path}/`}>
+							<Redirect to={`${path}/appointments`} />
+						</Route>
+					</Switch>
+				) : (
+					<div>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							variant="fullWidth"
+							indicatorColor="primary"
+							aria-label="icon label tabs"
+						>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<CalendarIcon className={classes.icons} />}
+								label="My Appointments"
+								{...a11yProps(0)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<PeopleIcon className={classes.icons} />}
+								label="My Patients"
+								{...a11yProps(1)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<EarningsIcon className={classes.icons} />}
+								label="My Earnings"
+								{...a11yProps(2)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<ClockIcon className={classes.icons} />}
+								label="Availability"
+								{...a11yProps(3)}
+							/>
+						</Tabs>
+						<TabPanel value={value} index={0}>
+							<TabMyAppointments />
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<TabMyPatients />
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<TabMyEarnings />
+						</TabPanel>
+						<TabPanel value={value} index={3}>
+							<TabAvailability />
+						</TabPanel>
+					</div>
+				)}
 			</Container>
 		</DocLayoutContainer>
 	);

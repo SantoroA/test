@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 		alignItems: 'center'
 	},
 	icon: {
-		fontSize: '2.5rem'
+		fontSize: '2rem'
 	},
 	timeWrapper: {
 		padding: '1rem',
