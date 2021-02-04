@@ -114,20 +114,20 @@ const useStyles = makeStyles({
 
 const APPOINTMENTSRESERVE_MUTATION = gql`
 	mutation AppointmentAdd(
-		$idApt: ID!,
-		$idPatient: ID!,
-		$insurance: Int,
-		$reasonForVisit : String!,
-		$symptomTime: Int,
-		$symptomTimeUnit: String,
-		$isTakingMeds: Boolean,
-		$hasDrugAllergies: Boolean,
-		$oxygenSaturation: Int,
-		$temperature: Int,
-		$tempUnit: String,
-		$otherInfo: String,
-		$medCondition: [String],
-		$symptoms: [String],
+		$idApt: ID!
+		$idPatient: ID!
+		$insurance: Int
+		$reasonForVisit: String!
+		$symptomTime: Int
+		$symptomTimeUnit: String
+		$isTakingMeds: Boolean
+		$hasDrugAllergies: Boolean
+		$oxygenSaturation: Int
+		$temperature: Int
+		$tempUnit: String
+		$otherInfo: String
+		$medCondition: [String]
+		$symptoms: [String]
 	) {
 		appointmentAdd(
 			idApt: $idApt
@@ -166,7 +166,7 @@ const PatReserveScreen = (props) => {
 	// 		'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 	// };
 	const { state: { userId } } = useContext(AuthContext);
-		// const userId = '5fe8b0c48bef090026e253b7';
+	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
 	const [ insurancePublic, setInsurancePublic ] = useState(false);
@@ -280,14 +280,26 @@ const PatReserveScreen = (props) => {
 		country: ''
 	});
 
-	const [appointmentAdd, {data, error, loading} ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
-		variables: {  insurance, reasonForVisit, symptomTime, symptomTimeUnit, isTakingMeds,
-			hasDrugAllergies, oxygenSaturation, temperature, tempUnit, otherInfo, symptoms: symptomsArr, medCondition: medArr, idPatient: userId, idApt: appointment.idApt
-		   }
-	  });
+	const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
+		variables: {
+			insurance,
+			reasonForVisit,
+			symptomTime,
+			symptomTimeUnit,
+			isTakingMeds,
+			hasDrugAllergies,
+			oxygenSaturation,
+			temperature,
+			tempUnit,
+			otherInfo,
+			symptoms: symptomsArr,
+			medCondition: medArr,
+			idPatient: userId,
+			idApt: appointment.idApt
+		}
+	});
 
-
-	console.log(data)
+	console.log(data);
 	const nextStep = () => {
 		setStep(step + 1);
 	};
@@ -298,22 +310,39 @@ const PatReserveScreen = (props) => {
 
 	const handleChange = (event) => {
 		let newSymptom = symptomsArr.indexOf(event.target.name);
-		newSymptom > -1 ? setSymptomsArr(symptomsArr.filter((el) => el !== event.target.name)) : setSymptomsArr([...symptomsArr, event.target.name])
+		newSymptom > -1
+			? setSymptomsArr(symptomsArr.filter((el) => el !== event.target.name))
+			: setSymptomsArr([ ...symptomsArr, event.target.name ]);
 		setSymptoms({ ...symptoms, [event.target.name]: event.target.checked });
 	};
 	const handleChangeMedCondition = (event) => {
 		let newCondition = medArr.indexOf(event.target.name);
-		newCondition > -1 ? setMedArr(medArr.filter((el) => el !== event.target.name)) : setMedArr([...medArr, event.target.name])
+		newCondition > -1
+			? setMedArr(medArr.filter((el) => el !== event.target.name))
+			: setMedArr([ ...medArr, event.target.name ]);
 		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
 	};
 	const handleChangePaymentOptions = (event) => {
 		setPaymentOptions({ ...paymentOptions, [event.target.name]: event.target.checked });
 	};
 
-	console.log(appointment.idApt, userId, insurance, reasonForVisit, symptomTime, symptomTimeUnit,
-		isTakingMeds, hasDrugAllergies, oxygenSaturation, temperature, "tempUnit", tempUnit, otherInfo, medArr, symptomsArr
-)
-
+	console.log(
+		appointment.idApt,
+		userId,
+		insurance,
+		reasonForVisit,
+		symptomTime,
+		symptomTimeUnit,
+		isTakingMeds,
+		hasDrugAllergies,
+		oxygenSaturation,
+		temperature,
+		'tempUnit',
+		tempUnit,
+		otherInfo,
+		medArr,
+		symptomsArr
+	);
 
 	// const reserve = async () => {
 	// 	try {
@@ -336,11 +365,11 @@ const PatReserveScreen = (props) => {
 	console.log('reserve', data);
 
 	if (loading)
-	return (
-		<Container>
-			<Loader type="TailSpin" color="primary" height={80} width={80} />;
-		</Container>
-	);
+		return (
+			<Container>
+				<Loader type="TailSpin" color="primary" height={80} width={80} />;
+			</Container>
+		);
 
 	switch (step) {
 		case 1:
@@ -751,11 +780,12 @@ const PatReserveScreen = (props) => {
 									selected={!insurancePublic}
 									onClick={() => {
 										if (insurancePublic === false) {
-											setInsurance(0)
+											setInsurance(0);
 										} else {
-											setInsurance(1)
+											setInsurance(1);
 										}
-										setInsurancePublic(!insurancePublic)}}
+										setInsurancePublic(!insurancePublic);
+									}}
 								>
 									I have private insurance
 								</ToggleYesNoButton>
@@ -766,11 +796,12 @@ const PatReserveScreen = (props) => {
 									selected={insurancePublic}
 									onClick={() => {
 										if (insurancePublic === false) {
-											setInsurance(0)
+											setInsurance(0);
 										} else {
-											setInsurance(1)
+											setInsurance(1);
 										}
-										setInsurancePublic(!insurancePublic)}}
+										setInsurancePublic(!insurancePublic);
+									}}
 								>
 									I have public insurance
 								</ToggleYesNoButton>
@@ -813,27 +844,27 @@ const PatReserveScreen = (props) => {
 						<CardAppointment
 							state={{
 								appointment: {
-								// 	amount: 95,
-								// 	end: '2021-01-29T07:15:00.000Z',
-								// 	id: '601175526913da0029424025',
-								// 	idApt: '601186c472a95e0028bcb6f5',
-								// 	start: '2021-01-29T06:50:00.000Z'
-								// },
-								// name: 'Santoro',
-								// pic:
-								// 	'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-								// buttonText: 'Pay',
-								// title: 'Doctor'
-								 	amount: appointment.amount,
-								 	end: appointment.end,
-								 	id: appointment.id,
-								 	idApt: appointment.idApt,
-								 	start: appointment.start
-								 },
-								 name: apDoc.lastName,
-								 pic: apDoc.pic,
-								 buttonText: 'Pay',
-								 title: 'Doctor'
+									// 	amount: 95,
+									// 	end: '2021-01-29T07:15:00.000Z',
+									// 	id: '601175526913da0029424025',
+									// 	idApt: '601186c472a95e0028bcb6f5',
+									// 	start: '2021-01-29T06:50:00.000Z'
+									// },
+									// name: 'Santoro',
+									// pic:
+									// 	'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+									// buttonText: 'Pay',
+									// title: 'Doctor'
+									amount: appointment.amount,
+									end: appointment.end,
+									id: appointment.id,
+									idApt: appointment.idApt,
+									start: appointment.start
+								},
+								name: apDoc.lastName,
+								pic: apDoc.pic,
+								buttonText: 'Pay',
+								title: 'Doctor'
 							}}
 							onSubmit={nextStep}
 						/>
@@ -850,8 +881,11 @@ const PatReserveScreen = (props) => {
 						/>
 						<Grid container className={classes.buttonWrapper}>
 							<Grid item xs={5} sm={3}>
-								<ButtonFilled fullWidth className={classes.nextButton} onClick={(e) => {
-									 appointmentAdd();
+								<ButtonFilled
+									fullWidth
+									className={classes.nextButton}
+									onClick={(e) => {
+										appointmentAdd();
 
 										nextStep();
 										setTimeout(() => {
@@ -860,7 +894,8 @@ const PatReserveScreen = (props) => {
 										setTimeout(() => {
 											setConfettiTrigger(false);
 										}, 2000);
-								}}>
+									}}
+								>
 									Pay Now <NavigateNextIcon />
 								</ButtonFilled>
 							</Grid>
