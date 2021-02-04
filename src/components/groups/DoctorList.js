@@ -150,8 +150,7 @@ const APPOINTMENTS_QUERY = gql`
 		$time: String!
 		$offset: Int
 		$limit: Int
-		$cursor: String
-
+		$cursor: ID
 	) {
 		doctors(
 			date: $date
@@ -166,35 +165,36 @@ const APPOINTMENTS_QUERY = gql`
 			limit: $limit
 			cursor: $cursor
 		) {
-			edges{
-			firstname
-			lastname
-			image
-			description
-			averageRating
-			receivedRating
-			id
-			minPrice
-			appointments {
-				amount
-				idApt
-				start
-				end
+			edges {
+				firstname
+				lastname
+				image
+				description
+				averageRating
+				receivedRating
 				id
+				minPrice
+				appointments {
+					amount
+					idApt
+					start
+					end
+					id
+				}
 			}
-		}
-		totalCount
-		pageInfo {
-			endCursor,
-			hasNextPage
-		}
+			totalCount
+			pageInfo {
+				endCursor
+				hasNextPage
+			}
 		}
 	}
 `;
 
 const ShowData = ({ data, setAppointments, setApDoc, setDialogReserveOpen }) => {
 	const classes = useStyles();
-	if (data.length > 0) {
+	console.log('data', data.doctors)
+	if (data.doctors.edges.length > 0) {
 		return data.doctors.edges.map((doc) => {
 			return (
 				<Card className={classes.card} key={doc.id}>
@@ -280,25 +280,29 @@ const ShowData = ({ data, setAppointments, setApDoc, setDialogReserveOpen }) => 
 
 const DoctorList = ({ filterState, dateFormatted }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
-	const [ offset, setOffset ] = useState(0);
+
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
 	const [ apDoc, setApDoc ] = useState('');
 	const [ appointments, setAppointments ] = useState([]);
-	const [ showPerPage, setShowPerPage ] = useState(2);
-	const [ pagination, setPagination ] = useState({
-		start: 0,
-		end: showPerPage
-	});
-	const [limit, setLimit] = useState(1);
+
 	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, cursor: null }
+		variables: {
+			date,
+			typeOfHCP,
+			time,
+			minPrice,
+			maxPrice,
+			rating,
+			gender,
+			insurance,
+			offset: 0,
+			limit: 1,
+			cursor: null
+		}
 	});
-	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	const classes = useStyles();
-	const onPaginationChange = (start, end) => {
-		setPagination({ start: start, end: end });
-	};
-	console.log(data);
+
+	console.log('data', data);
 	if (loading)
 		return (
 			<Container>
@@ -317,29 +321,38 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				/>
 			)}
 			<button
-			onClick ={
-				() => {
-					 const { endCursor } = data.doctors.pageInfo
-					// console.log(data.doctors.pageInfo.endCursor)
-					 console.log(endCursor)
-					 console.log(date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance)
-					 fetchMore({
-					 variables:{date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, cursor: endCursor },
-					 updateQuery: (prevResult, {fetchMoreResult}) => {
-					 	console.log(prevResult)
-					 	console.log(fetchMoreResult)
-					 	  fetchMoreResult.doctors.edges = [
-							   ...prevResult.doctors.edges,
-							   ...fetchMoreResult.doctors.edges
-						   ];
-					 	  return fetchMoreResult;
-					 }
-					
-					 })
-					
-			}
-		}
-			>Load More</button>
+				onClick={() => {
+					const { endCursor } = data.doctors.pageInfo;
+					console.log(endCursor);
+					fetchMore({
+						variables: {
+							date,
+							typeOfHCP,
+							time,
+							minPrice,
+							maxPrice,
+							rating,
+							gender,
+							insurance,
+							offset: 0,
+							limit: 1,
+							cursor: endCursor
+						},
+						updateQuery: (prevResult, { fetchMoreResult }) => {
+							console.log('prev',prevResult);
+							console.log('fetch',fetchMoreResult);
+							fetchMoreResult.doctors.edges = [
+								...prevResult.doctors.edges,
+								...fetchMoreResult.doctors.edges
+							];
+							return fetchMoreResult;
+							// if endcursor === false No data 
+						}
+					});
+				}}
+			>
+				Load More
+			</button>
 			{error && (
 				<Container className={classes.emptyState}>
 					<Typography color="textSecondary" variant="h4">
