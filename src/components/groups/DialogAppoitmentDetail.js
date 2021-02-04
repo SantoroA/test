@@ -1,94 +1,137 @@
-import React, { useContext } from 'react';
-// import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
-import BoxTime from '../../components/customUi/BoxTime';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { NavLink } from 'react-router-dom';
-import { convertTime } from '../../helpers/dateHelper';
+import React from 'react';
+import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
+import CardAppointment from './CardAppointment';
 //CUSTOM UI
-import ButtonFilled from '../../components/customUi/ButtonFilled';
+import ButtonOutlined from '../../components/customUi/ButtonOutlined';
+import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
+import ButtonNoBorder from '../../components/customUi/ButtonNoBorder';
 //MATERIAL UI
-import IconButton from '@material-ui/core/IconButton';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ShareIcon from '@material-ui/icons/Share';
+import EditIcon from '@material-ui/icons/Edit';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles({
 	layout: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: '2rem',
-		textAlign: 'center'
+		justifyContent: 'flex-start',
+		padding: '2rem'
 	},
-	logo: {
-		width: '8rem',
-		marginBottom: '2rem'
-	},
-	divider: {
-		marginTop: '1rem',
-		marginBottom: '1rem'
+	container: {
+		display: 'flex',
+		flexDirection: 'column'
 	},
 	closeButton: {
 		alignSelf: 'flex-end'
 	},
-	appointment: {
+	sub: {
+		fontWeight: 700,
+		marginBottom: '1rem'
+	},
+	subtitle: {
+		fontWeight: 700,
+		marginTop: '1rem'
+	},
+	optionsContainer: {
+		paddingTop: '1rem',
+		paddingLeft: '1rem',
+		paddingRight: '1rem'
+	},
+	iconsWrapper: {
 		display: 'flex',
 		flexDirection: 'row',
-		alignItems: 'center'
+		justifyContent: 'space-around'
 	},
-	price: {
-		marginRight: '2rem',
-		marginLeft: '2rem'
-	},
-	navlink: {
-		textDecoration: 'none'
+	divider: {
+		marginBottom: '1rem',
+		marginTop: '1rem'
 	}
 });
 
-const DialogAppointmentDetail = ({ open, close, appointments, dateFormatted, apDoc }) => {
+const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 	const classes = useStyles();
 
 	return (
 		<Dialog
-			open={open}
+			fullScreen
+			open={isOpen}
 			onClose={close}
-			aria-labelledby="alert-dialog-title"
-			aria-describedby="alert-dialog-description"
+			aria-labelledby="appointment-detail"
+			aria-describedby="appointment-detail"
 		>
-			<Grid className={classes.layout}>
-				<IconButton className={classes.closeButton} onClick={close} color="primary">
-					<CloseIcon />
-				</IconButton>
-				<DialogTitle>Showing availability for {dateFormatted}</DialogTitle>
-				<DialogContent>
-					{appointments.map((ap) => {
-						return (
-							<Grid key={ap.idApt} container className={classes.appointment}>
-								<BoxTime>
-									{convertTime(ap.start)} - {convertTime(ap.end)}
-								</BoxTime>
-								<Typography className={classes.price}>$ {ap.amount}</Typography>
-								<NavLink
-									to={{
-										pathname: '/in/patient/reserve',
-										state: { appointment: ap, apDoc: apDoc }
-									}}
-									className={classes.navlink}
-								>
-									<ButtonFilled onClick={() => {}}>Reserve</ButtonFilled>
-								</NavLink>
+			<Container maxWidth="md" className={classes.layout}>
+				<div className={classes.buttonWrapper}>
+					<ButtonNoBorder onClick={close}>
+						<ArrowBackIcon />
+						<Typography>Back to my profile</Typography>
+					</ButtonNoBorder>
+				</div>
+				<Divider className={classes.divider} />
+				<Grid container className={classes.container}>
+					<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
+					<Typography color="primary" className={classes.sub} variant="h5">
+						{formatDateDisplay(appointment.appointmentTimeStart)}
+					</Typography>
+					<CardAppointment
+						onSubmit={() => {}}
+						key={appointment._id}
+						state={{
+							appointment: {
+								amount: appointment.amount,
+								end: appointment.appointmentTimeEnd,
+								id: appointment.profilePatientid._id,
+								idappointment: appointment._id,
+								start: appointment.appointmentTimeStart
+							},
+							name: `${appointment.profilePatientid.firstName} ${appointment.profilePatientid.lastName}`,
+							pic:
+								'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+							// apt.accountPatientid.profilePicture
+							buttonText: 'Start Video',
+							title: 'Patient'
+						}}
+					/>
+					<PaperCustomShadow>
+						<Grid container className={classes.optionsContainer}>
+							<Grid item sm={8}>
+								<ButtonOutlined fullWidth>Test your device here</ButtonOutlined>
 							</Grid>
-						);
-					})}
-				</DialogContent>
-				<DialogActions />
-			</Grid>
+							<Grid item sm={4} className={classes.iconsWrapper}>
+								<CalendarTodayIcon /> <ShareIcon /> <EditIcon />
+								<HighlightOffIcon color="secondary" />
+							</Grid>
+						</Grid>
+					</PaperCustomShadow>
+					<Typography className={classes.subtitle} variant="h5">
+						Description
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						Bacon ipsum dolor amet short ribs capicola venison swine flank chislic cow. Pastrami pork loin
+						turkey swine pork chop, chislic strip steak corned beef ball tip meatball cow kielbasa tail
+						chicken. Shank filet mignon ham hock beef meatloaf shoulder doner jerky hamburger chuck short
+						loin jowl cow. Kevin chislic leberkas alcatra kielbasa swine meatball bacon pancetta tongue
+						short ribs biltong ham.
+					</Typography>
+					<Typography className={classes.subtitle} variant="h5">
+						Important Information
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						Biltong chislic doner fatback boudin pork belly sirloin beef. Tri-tip burgdoggen spare ribs
+						ground round brisket, pork loin kielbasa jerky pork chop andouille shoulder sirloin pancetta
+						biltong. Turducken beef ribs beef strip steak jerky bacon. Swine tail tenderloin shankle
+						meatloaf sirloin. T-bone pancetta tail chuck porchetta kielbasa short loin turducken pastrami
+						hamburger strip steak tenderloin rump.
+					</Typography>
+				</Grid>
+			</Container>
 		</Dialog>
 	);
 };

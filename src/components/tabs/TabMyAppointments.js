@@ -3,7 +3,7 @@ import { Context as AuthContext } from '../../context/AuthContext';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import CardAppointment from '../groups/CardAppointment';
 import Loader from 'react-loader-spinner';
-import MessageDialog from '../groups/MessageDialog';
+import DialogAppointmentDetail from '../groups/DialogAppoitmentDetail';
 import { useQuery, gql } from '@apollo/client';
 //CUSTOM UI
 import CalendarApp from '../customUi/CalendarApp';
@@ -82,13 +82,13 @@ const MYAPPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const ShowData = (data) => {
-	const classes = useStyles();
-	if (data.length > 0) {
-		return data.doctorsAppointments.map((apt) => {
-			return (
+const ShowData = (appointments) => {
+	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
+	return appointments.map((apt) => {
+		return (
+			<div>
 				<CardAppointment
-					// onSubmit={() => {}}
+					onSubmit={() => setDialogAppDetailOpen(true)}
 					key={apt._id}
 					state={{
 						appointment: {
@@ -106,27 +106,52 @@ const ShowData = (data) => {
 						title: 'Patient'
 					}}
 				/>
-			);
-		});
-	} else {
-		return (
-			<PaperCustomShadow className={classes.emptyState}>
-				<Typography color="textSecondary" variant="subtitle1">
-					Start by updating your profile to be seen by patients!
-				</Typography>
-				<EmptyCalendarIcon className={classes.icon} />
-				<Typography className={classes.detail} variant="subtitle1">
-					No Appointments Scheduled
-				</Typography>
-			</PaperCustomShadow>
+
+				<DialogAppointmentDetail
+					appointment={{
+						profileHCPid: 'asdasd',
+						_id: 'asdasd',
+						appointmentTimeStart: new Date(),
+						appointmentTimeEnd: new Date(),
+						profilePatientid: {
+							_id: 'asd',
+							firstName: 'Aline',
+							lastName: 'Santoro'
+						},
+						accountPatientid: {
+							profilePicture:
+								'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+						},
+						amount: 45
+					}}
+					isOpen={dialogAppDetailOpen}
+					close={() => setDialogAppDetailOpen(false)}
+				/>
+			</div>
 		);
-	}
+	});
+};
+
+const EmptyAppState = () => {
+	const classes = useStyles();
+	return (
+		<PaperCustomShadow className={classes.emptyState}>
+			<Typography color="textSecondary" variant="subtitle1">
+				Start by updating your profile to be seen by patients!
+			</Typography>
+			<EmptyCalendarIcon className={classes.icon} />
+			<Typography className={classes.detail} variant="subtitle1">
+				No Appointments Scheduled
+			</Typography>
+		</PaperCustomShadow>
+	);
 };
 
 const TabMyAppointments = () => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [ date, setDate ] = useState(new Date());
+
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(MYAPPOINTMENTS_QUERY, {
@@ -161,50 +186,23 @@ const TabMyAppointments = () => {
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
 				</Typography>
-				{/* <PaperCustomShadow className={classes.emptyCalendar}>
-					<Typography color="textSecondary" variant="subtitle1">
-						Start by updating your profile to be seen by patients!
-					</Typography>
-					<EmptyCalendarIcon className={classes.icon} />
-					<Typography className={classes.detail} variant="subtitle1">
-						No Appointments Scheduled
-					</Typography>
-				</PaperCustomShadow> 
-				<CardAppointment */}
-
-				{/* {data !== undefined ? (
-				data.doctorsAppointments.map((apt) => {
-					return (
-						<CardAppointment
-					// onSubmit={() => {}}
-					key={apt._id}
-					state={{
-						appointment: {
-							amount: apt.amount,
-							end: apt.appointmentTimeEnd,
-							id: apt.profilePatientid._id,
-							idApt: apt._id,
-							start: apt.appointmentTimeStart,
-						},
-						name: `${apt.profilePatientid.firstName} ${apt.profilePatientid.lastName}`,
-						pic:
-							'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-							// apt.accountPatientid.profilePicture
-						buttonText: 'View',
-						title: 'Patient'
-					}}
-				/>
-					)
-				})
-				): null}
-				 */}
 
 				{loading && (
 					<Container className={classes.emptyState}>
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
 					</Container>
 				)}
-				{data !== undefined && <ShowData data={data} />}
+
+				{data && (
+					<div>
+						{data.data.doctorsAppointments.length > 0 ? (
+							<ShowData appointments={data.data.doctorsAppointments} />
+						) : (
+							<EmptyAppState />
+						)}
+					</div>
+				)}
+
 				{error && (
 					<Container className={classes.emptyState}>
 						<Typography color="textSecondary" variant="h4">

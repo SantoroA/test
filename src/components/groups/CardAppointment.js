@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 	},
 
 	avatarWrapper: {
-		padding: '1rem',
+		padding: '0.5rem',
 		display: 'flex',
 		alignItems: 'center'
 	},
@@ -89,10 +89,10 @@ const CardAppointment = ({ onSubmit, state }) => {
 			</Grid>
 			<Grid item xs={7} sm={5}>
 				<Grid container className={classes.docInfo}>
-					<Grid item className={classes.avatarWrapper}>
+					<Grid item sm={4} className={classes.avatarWrapper}>
 						<Avatar alt={name} src={pic} />
 					</Grid>
-					<Grid item>
+					<Grid item sm={8}>
 						<Typography variant="body2">{title}</Typography>
 						<Typography className={classes.sub} variant="h5">
 							{name}

@@ -321,8 +321,10 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 			)}
 			<button
 				onClick={() => {
-					const { endCursor } = data.pageInfo.endCursor;
+					const { endCursor } = data.doctors.pageInfo;
+					// console.log(data.doctors.pageInfo.endCursor)
 					console.log(endCursor);
+					console.log(date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance);
 					fetchMore({
 						variables: {
 							date,
@@ -340,8 +342,11 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 						updateQuery: (prevResult, { fetchMoreResult }) => {
 							console.log(prevResult);
 							console.log(fetchMoreResult);
-							// fetchMoreResult.doctors.edges =
-							// return
+							fetchMoreResult.doctors.edges = [
+								...prevResult.doctors.edges,
+								...fetchMoreResult.doctors.edges
+							];
+							return fetchMoreResult;
 						}
 					});
 				}}
