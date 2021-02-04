@@ -15,6 +15,7 @@ import MessageDialog from '../../components/groups/MessageDialog';
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
+import InfoIcon from '../../components/customIcons/InfoIcon';
 
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
@@ -127,12 +128,18 @@ const DocCompleteProfileScreen = () => {
 						label="My Profile"
 						{...a11yProps(0)}
 					/>
+					<TabCustom
+						className={classes.wrapperTab}
+						icon={<InfoIcon className={classes.icons} />}
+						label="General Information"
+						{...a11yProps(1)}
+					/>
 
 					<TabCustom
 						className={classes.wrapperTab}
 						icon={<AboutIcon className={classes.icons} />}
 						label="About me"
-						{...a11yProps(1)}
+						{...a11yProps(2)}
 					/>
 				</Tabs>
 				<TabPanel value={value} index={0}>
@@ -143,7 +150,7 @@ const DocCompleteProfileScreen = () => {
 						<FormContactInfo />
 					</div>
 				</TabPanel>
-				<TabPanel value={value} index={1}>
+				<TabPanel value={value} index={2}>
 					<div className={classes.section}>
 						<FormProfile />
 					</div>

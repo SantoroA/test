@@ -131,8 +131,8 @@ const NavMenu = () => {
 		return (
 			<div className={classes.drawerIconContainer}>
 				<Avatar alt={firstName} src={image} className={classes.avatar} />
-				<IconButton>
-					<DrawerIcon onClick={() => setDrawerOpen(true)} />
+				<IconButton onClick={() => setDrawerOpen(true)}>
+					<DrawerIcon />
 				</IconButton>
 				<Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
 					<DrawerList setDrawerOpen={setDrawerOpen} logout={logout} />
