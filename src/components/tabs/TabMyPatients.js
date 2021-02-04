@@ -50,6 +50,10 @@ const useStyles = makeStyles({
 		height: '20rem',
 		flexDirection: 'column',
 		textAlign: 'center'
+	},
+	icon: {
+		fontSize: '5rem',
+		marginTop: '1rem'
 	}
 });
 
