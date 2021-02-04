@@ -151,7 +151,6 @@ const APPOINTMENTS_QUERY = gql`
 		$offset: Int
 		$limit: Int
 		$cursor: String
-
 	) {
 		doctors(
 			date: $date
@@ -166,28 +165,28 @@ const APPOINTMENTS_QUERY = gql`
 			limit: $limit
 			cursor: $cursor
 		) {
-			edges{
-			firstname
-			lastname
-			image
-			description
-			averageRating
-			receivedRating
-			id
-			minPrice
-			appointments {
-				amount
-				idApt
-				start
-				end
+			edges {
+				firstname
+				lastname
+				image
+				description
+				averageRating
+				receivedRating
 				id
+				minPrice
+				appointments {
+					amount
+					idApt
+					start
+					end
+					id
+				}
 			}
-		}
-		totalCount
-		pageInfo {
-			endCursor,
-			hasNextPage
-		}
+			totalCount
+			pageInfo {
+				endCursor
+				hasNextPage
+			}
 		}
 	}
 `;
@@ -280,24 +279,28 @@ const ShowData = ({ data, setAppointments, setApDoc, setDialogReserveOpen }) => 
 
 const DoctorList = ({ filterState, dateFormatted }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
-	const [ offset, setOffset ] = useState(0);
+
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
 	const [ apDoc, setApDoc ] = useState('');
 	const [ appointments, setAppointments ] = useState([]);
-	const [ showPerPage, setShowPerPage ] = useState(2);
-	const [ pagination, setPagination ] = useState({
-		start: 0,
-		end: showPerPage
-	});
-	const [limit, setLimit] = useState(1);
+
 	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, cursor: null }
+		variables: {
+			date,
+			typeOfHCP,
+			time,
+			minPrice,
+			maxPrice,
+			rating,
+			gender,
+			insurance,
+			offset: 0,
+			limit: 1,
+			cursor: null
+		}
 	});
-	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	const classes = useStyles();
-	const onPaginationChange = (start, end) => {
-		setPagination({ start: start, end: end });
-	};
+
 	console.log(data);
 	if (loading)
 		return (
@@ -317,24 +320,34 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				/>
 			)}
 			<button
-			onClick ={
-				() => {
-					const { endCursor } = data.pageInfo.endCursor
-					console.log(endCursor)
+				onClick={() => {
+					const { endCursor } = data.pageInfo.endCursor;
+					console.log(endCursor);
 					fetchMore({
-					variables:{date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, cursor: endCursor },
-					updateQuery: (prevResult, {fetchMoreResult}) => {
-						console.log(prevResult)
-						console.log(fetchMoreResult)
-						// fetchMoreResult.doctors.edges = 
-						// return 
-					}
-					
-					})
-					
-			}
-		}
-			>Load More</button>
+						variables: {
+							date,
+							typeOfHCP,
+							time,
+							minPrice,
+							maxPrice,
+							rating,
+							gender,
+							insurance,
+							offset: 0,
+							limit: 1,
+							cursor: endCursor
+						},
+						updateQuery: (prevResult, { fetchMoreResult }) => {
+							console.log(prevResult);
+							console.log(fetchMoreResult);
+							// fetchMoreResult.doctors.edges =
+							// return
+						}
+					});
+				}}
+			>
+				Load More
+			</button>
 			{error && (
 				<Container className={classes.emptyState}>
 					<Typography color="textSecondary" variant="h4">
