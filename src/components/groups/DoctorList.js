@@ -324,6 +324,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				onClick={() => {
 					const { endCursor } = data.doctors.pageInfo;
 					console.log(endCursor);
+					console.log(date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance);
 					fetchMore({
 						variables: {
 							date,
