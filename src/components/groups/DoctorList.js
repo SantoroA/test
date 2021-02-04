@@ -319,18 +319,23 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 			<button
 			onClick ={
 				() => {
-					const { endCursor } = data.pageInfo.endCursor
-					console.log(endCursor)
-					fetchMore({
-					variables:{date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, cursor: endCursor },
-					updateQuery: (prevResult, {fetchMoreResult}) => {
-						console.log(prevResult)
-						console.log(fetchMoreResult)
-						// fetchMoreResult.doctors.edges = 
-						// return 
-					}
+					 const { endCursor } = data.doctors.pageInfo
+					// console.log(data.doctors.pageInfo.endCursor)
+					 console.log(endCursor)
+					 console.log(date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance)
+					 fetchMore({
+					 variables:{date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, cursor: endCursor },
+					 updateQuery: (prevResult, {fetchMoreResult}) => {
+					 	console.log(prevResult)
+					 	console.log(fetchMoreResult)
+					 	  fetchMoreResult.doctors.edges = [
+							   ...prevResult.doctors.edges,
+							   ...fetchMoreResult.doctors.edges
+						   ];
+					 	  return fetchMoreResult;
+					 }
 					
-					})
+					 })
 					
 			}
 		}
