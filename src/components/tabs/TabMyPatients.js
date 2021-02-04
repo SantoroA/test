@@ -96,13 +96,6 @@ const TabMyPatients = () => {
 		variables: { id: userId, offset: 0, limit: 1 }
 	});
 
-	if (loading)
-		return (
-			<Container>
-				<Loader type="TailSpin" color="primary" height={80} width={80} />;
-			</Container>
-		);
-
 	console.log(data);
 	console.log(userId);
 	// const doctorsPatients = [
