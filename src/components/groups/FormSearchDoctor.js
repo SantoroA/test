@@ -202,7 +202,7 @@ const FormSearchDoctor = () => {
           {/* <MenuItem value="">
             <em>None</em>
           </MenuItem> */}
-          <MenuItem value={+60}>Horário Padrão da Europa Central Madrid (GMT+1)</MenuItem>
+          {/* <MenuItem value={+60}>Horário Padrão da Europa Central Madrid (GMT+1)</MenuItem>
           <MenuItem value={0}>Horário do Meridiano de Greenwich Londres (GMT)</MenuItem>
           <MenuItem value={+60}>Horário Padrão da Europa Central Paris (GMT+1)</MenuItem>
 		  <MenuItem value={+60}>Horário Padrão da Europa Central Rome (GMT+1)</MenuItem>
@@ -211,7 +211,7 @@ const FormSearchDoctor = () => {
 		  <MenuItem value={-120}>Horário Padrão de Fernando de Noronha Ilha Fernando de Noronha (GMT-2)</MenuItem>
 		  <MenuItem value={-180}>Horário Padrão de Brasília Belém (GMT-3)</MenuItem>
           <MenuItem value={-240}>Horário Padrão do Amazonas Manaus - AM, Brasil (GMT-4)</MenuItem>
-          <MenuItem value={-300}>Horário Padrão do Acre Rio Branco (GMT-5)</MenuItem>
+          <MenuItem value={-300}>Horário Padrão do Acre Rio Branco (GMT-5)</MenuItem> */}
         </Select>
       </FormControl>
 

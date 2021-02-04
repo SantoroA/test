@@ -133,6 +133,7 @@ const APPOINTMENTS_QUERY = gql`
 		$time: String!
 		$offset: Int
 		$limit: Int
+
 	) {
 		doctors(
 			date: $date
@@ -146,6 +147,7 @@ const APPOINTMENTS_QUERY = gql`
 			offset: $offset
 			limit: $limit
 		) {
+			edges{
 			firstname
 			lastname
 			image
@@ -162,10 +164,12 @@ const APPOINTMENTS_QUERY = gql`
 				id
 			}
 		}
+		totalCount
+		}
 	}
 `;
 
-const DoctorList = ({ filterState, dateFormatted }) => {
+const DoctorList = ({ filterState, dateFormatted, type = "PUBLIC" }) => {
 	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 	const [ offset, setOffset ] = useState(0);
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
@@ -176,8 +180,9 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 		start: 0,
 		end: showPerPage
 	});
+	const [limit, setLimit] = useState(1);
 	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset, limit: 10 }
+		variables: { date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance, offset: 0, limit: 1, type: type.toUpperCase(), }
 	});
 	const [ dialogOpen, setDialogOpen ] = useState(error ? true : false);
 	const classes = useStyles();
@@ -195,9 +200,10 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 	return (
 		<div className={classes.mainContent}>
 			{data !== undefined ? (
-				data.doctors.map((doc) => {
+				data.doctors.edges.map((doc) => {
 					return (
-						<Card className={classes.card} key={doc.id}>
+						<Card className={classes.card} key={doc.id}
+						>
 							<CardMedia className={classes.media} image={doc.image} title="Doctor">
 								<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
 									View Profile

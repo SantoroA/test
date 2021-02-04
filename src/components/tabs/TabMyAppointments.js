@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import CardAppointment from '../groups/CardAppointment';
+import Loader from 'react-loader-spinner';
+import { useQuery, gql } from '@apollo/client';
 //CUSTOM UI
 import CalendarApp from '../customUi/CalendarApp';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
@@ -14,7 +16,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
-import { useQuery, gql } from '@apollo/client';
+import Container from '@material-ui/core/Container';
+
 
 const useStyles = makeStyles({
 	root: {
@@ -102,7 +105,15 @@ const TabMyAppointments = () => {
 	// console.log(formatFormDate(date));
 	// console.log(new Date(formatFormDate(date)));
 	console.log(userId)
-	console.log(data)
+	console.log('data',data)
+
+	if (loading)
+		return (
+			<Container>
+				<Loader type="TailSpin" color="primary" height={80} width={80} />;
+			</Container>
+		);
+		
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -136,6 +147,7 @@ const TabMyAppointments = () => {
 					</Typography>
 				</PaperCustomShadow> 
 				<CardAppointment */}
+				
 				{data !== undefined ? (
 				data.doctorsAppointments.map((apt) => {
 					return (
@@ -171,5 +183,5 @@ const TabMyAppointments = () => {
 		</Grid>
 	);
 };
-
+// message de erro
 export default TabMyAppointments;
