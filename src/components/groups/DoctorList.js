@@ -378,17 +378,19 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 					</Typography>
 				</Container>
 			)}
-			<DialogReserve
-				open={dialogReserveOpen}
-				dateFormatted={dateFormatted}
-				appointments={appointments}
-				apDoc={apDoc}
-				close={() => {
-					setDialogReserveOpen(false);
-					setAppointments('');
-					setApDoc('');
-				}}
-			/>
+			{appointments && (
+				<DialogReserve
+					open={dialogReserveOpen}
+					dateFormatted={dateFormatted}
+					appointments={appointments}
+					apDoc={apDoc}
+					close={() => {
+						setDialogReserveOpen(false);
+						setAppointments('');
+						setApDoc('');
+					}}
+				/>
+			)}
 		</div>
 	);
 };
