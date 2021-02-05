@@ -76,7 +76,7 @@ const getSlots = (dispatch) => {
 			const response = await dianurseApi.get(`/appointment/getAvailabilitySlot/${id}`, {
 				withCredentials: true
 			});
-			console.log('getSlot',response)
+			console.log('getSlot', response);
 			let i = 0;
 			let slotArr = [];
 			let showArr = [];
@@ -152,7 +152,7 @@ const createSlot = (dispatch) => {
 		let i = 0;
 		let slotCreated = new Date();
 		console.log(availableEnd, availableStart);
-		console.log(id)
+		console.log(id);
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
 				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
@@ -161,7 +161,7 @@ const createSlot = (dispatch) => {
 				let slot = (newLastDate - newStartDate) / timeDuration;
 				let t = 1;
 				for (t; t <= slot; t++) {
-					console.log(new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset())
+					console.log(new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset());
 					arr = arr.concat({
 						// id: id,
 						date: new Date(day_2 - i),
@@ -171,7 +171,6 @@ const createSlot = (dispatch) => {
 						amount: amount, // check amount esta sendo salvo com o valor certo
 						slotCreated,
 						timeZone: new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset()
-
 					});
 				}
 			}
@@ -184,7 +183,7 @@ const createSlot = (dispatch) => {
 			console.log(response);
 			// let x = 200;
 			if (response.status === 200) {
-			// if (x === 200) {
+				// if (x === 200) {
 				return dispatch({
 					type: 'create_slot',
 					payload: {
@@ -227,13 +226,24 @@ const deleteSlot = (dispatch) => {
 	};
 };
 const updateSlot = (dispatch) => {
-	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key, timeZone }) => {
+	return async ({
+		availableStart,
+		availableEnd,
+		timeStart,
+		timeEnd,
+		amount,
+		duration,
+		weekDay,
+		id,
+		key,
+		timeZone
+	}) => {
 		let day_1 = new Date(availableStart);
 		let day_2 = new Date(availableEnd);
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;
-		console.log('updateslotId', id)
+		console.log('updateslotId', id);
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
 				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
