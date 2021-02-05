@@ -103,6 +103,7 @@ const getSlots = (dispatch) => {
 				let max = getFormattedDate(new Date(Math.max(...data.map((e) => new Date(e.appointmentDate)))));
 				let min = getFormattedDate(new Date(Math.min(...data.map((e) => new Date(e.appointmentDate)))));
 				let amount = response.data[l].amount;
+				console.log(response.data[l].amount)
 				let startTime = new Date(Math.min(...data.map((e) => new Date(e.appointmentTimeStart))));
 				let startHours = startTime.getHours();
 				startHours = startHours > 9 ? startHours : '0' + startHours;
@@ -212,11 +213,12 @@ const deleteSlot = (dispatch) => {
 	return async (key, id) => {
 		console.log(id);
 		let slotData = {
-			slotCreated: key
+			slotCreated: key,
+			id
 		};
 		try {
-			const response = await dianurseApi.delete(`/appointment/deleteAvailability/${id}`, {
-				slotData
+			const response = await dianurseApi.delete(`/appointment/deleteAvailability`, {
+				params: slotData
 			});
 			console.log(response.data);
 			dispatch({ type: 'delete_slot', payload: key });
@@ -255,10 +257,14 @@ const updateSlot = (dispatch) => {
 				}
 			}
 		}
+		let newArr = {
+			arr,
+			id
+		}
 		try {
 			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
-			const response = await dianurseApi.post(`/appointment/updateAvailability/${id}`, {
-				arr
+			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
+				newArr
 			});
 			console.log(response.data);
 			if (response.status === 200) {

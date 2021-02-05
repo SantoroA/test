@@ -60,7 +60,7 @@ const useStyles = makeStyles({
 const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ timeStart, setTimeStart ] = useState('');
 	const [ timeEnd, setTimeEnd ] = useState('');
-	const [ amount, setAmount ] = useState(75);
+	const [ amount, setAmount ] = useState('');
 	const [ duration, setDuration ] = useState('');
 
 	const [ isOffDay, setIsOffDay ] = useState(false);

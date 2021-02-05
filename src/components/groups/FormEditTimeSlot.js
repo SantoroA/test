@@ -48,7 +48,7 @@ const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot
 	const { state, updateSlot, setIsEditing } = useContext(AvailabilityContext);
 	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
-
+console.log(price)
 	// console.log(state);
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -148,7 +148,7 @@ const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot
 						</FormControl>
 					</Grid>
 					<Grid item xs={6} className={classes.input}>
-						<CurrencyInput value={price} prefix="$" onChange={handleChangePrice} />
+						<CurrencyInput value={price}  onChange={handleChangePrice} />
 					</Grid>
 				</Grid>
 
