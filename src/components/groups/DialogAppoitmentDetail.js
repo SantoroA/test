@@ -92,8 +92,7 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 								start: appointment.appointmentTimeStart
 							},
 							name: `${appointment.profilePatientid.firstName} ${appointment.profilePatientid.lastName}`,
-							pic:
-								'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+							pic: appointment.accountPatientid.profilePicture,
 							// apt.accountPatientid.profilePicture
 							buttonText: 'Start Video',
 							title: 'Patient'

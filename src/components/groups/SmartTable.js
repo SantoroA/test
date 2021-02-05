@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 function Row({ value, buttonText }) {
 	const classes = useStyles();
-	const { profilePatientid, start, reasonForVisit, end, amount, idApt } = value;
+	const { profilePatientid, start, reasonForVisit, end, amount, idApt, accountPatientid } = value;
 
 	return (
 		<TableRow>
@@ -39,7 +39,7 @@ function Row({ value, buttonText }) {
 				<Avatar
 					className={classes.avatar}
 					alt={profilePatientid.lastName}
-					src={profilePatientid.profilePicture}
+					src={accountPatientid.profilePicture}
 				/>
 				{profilePatientid.firstName} {profilePatientid.lastName}
 			</TableCell>

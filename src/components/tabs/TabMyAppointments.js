@@ -63,9 +63,9 @@ const useStyles = makeStyles({
 });
 
 const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments($date: String!, $id: ID!, $offset: Int, $limit: Int) {
-		doctorsAppointments(date: $date, id: $id, offset: $offset, limit: $limit) {
-			profileHCPid
+	query GetAppointments($date: String!, $id: ID!) {
+		doctorsAppointments(date: $date, id: $id) {
+				profileHCPid
 			_id
 			appointmentTimeStart
 			appointmentTimeEnd
@@ -78,13 +78,15 @@ const MYAPPOINTMENTS_QUERY = gql`
 				profilePicture
 			}
 			amount
-		}
+			}
+
 	}
 `;
 
 const ShowData = (appointments) => {
 	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
-	return appointments.map((apt) => {
+	console.log('apt',appointments.appointments)
+	return appointments.appointments.map((apt) => {
 		return (
 			<div>
 				<CardAppointment
@@ -99,8 +101,7 @@ const ShowData = (appointments) => {
 							start: apt.appointmentTimeStart
 						},
 						name: `${apt.profilePatientid.firstName} ${apt.profilePatientid.lastName}`,
-						pic:
-							'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+						pic: apt.accountPatientid.profilePicture,
 						// apt.accountPatientid.profilePicture
 						buttonText: 'View',
 						title: 'Patient'
@@ -108,21 +109,21 @@ const ShowData = (appointments) => {
 				/>
 
 				<DialogAppointmentDetail
+					key={apt.profilePatientid._id}
 					appointment={{
 						profileHCPid: 'asdasd',
-						_id: 'asdasd',
-						appointmentTimeStart: new Date(),
-						appointmentTimeEnd: new Date(),
+						_id: apt._id,
+						appointmentTimeStart: apt.appointmentTimeStart,
+						appointmentTimeEnd: apt.appointmentTimeEnd,
 						profilePatientid: {
 							_id: 'asd',
-							firstName: 'Aline',
-							lastName: 'Santoro'
+							firstName: apt.profilePatientid.firstName,
+							lastName: apt.profilePatientid.lastName
 						},
 						accountPatientid: {
-							profilePicture:
-								'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+							profilePicture: apt.accountPatientid.profilePicture,
 						},
-						amount: 45
+						amount: apt.amount
 					}}
 					isOpen={dialogAppDetailOpen}
 					close={() => setDialogAppDetailOpen(false)}
@@ -154,14 +155,14 @@ const TabMyAppointments = () => {
 
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { userId } } = useContext(AuthContext);
-	const { loading, error, data, fetchMore } = useQuery(MYAPPOINTMENTS_QUERY, {
-		variables: { date, id: userId, offset: 0, limit: 1 }
+	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+		variables: { date, id: userId, limit: 2, cursor: null }
 	});
 	// console.log(date);
 	// console.log(formatFormDate(date));
 	// console.log(new Date(formatFormDate(date)));
 	console.log(userId);
-	console.log(data);
+	console.log('data',data);
 	console.log(error);
 	return (
 		<Grid className={classes.root} container>
@@ -192,11 +193,10 @@ const TabMyAppointments = () => {
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
 					</Container>
 				)}
-
 				{data && (
 					<div>
-						{data.data.doctorsAppointments.length > 0 ? (
-							<ShowData appointments={data.data.doctorsAppointments} />
+						{data.doctorsAppointments.length > 0 ? (
+							<ShowData appointments={data.doctorsAppointments} />
 						) : (
 							<EmptyAppState />
 						)}
