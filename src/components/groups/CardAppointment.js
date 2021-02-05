@@ -82,7 +82,7 @@ const CardAppointment = ({ onSubmit, state }) => {
 				<Typography className={classes.sub} variant="h5">
 					{convertTime(appointment.start)}
 				</Typography>
-				<Typography variant="body2">{getTimeDifference(appointment.end, appointment.start)} mins</Typography>
+				<Typography variant="body2">{getTimeDifference(appointment.end, appointment.start) === 0 ? '60' : getTimeDifference(appointment.end, appointment.start)} mins</Typography>
 			</Grid>
 			<Grid item>
 				<Divider orientation="vertical" />

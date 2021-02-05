@@ -180,6 +180,7 @@ const APPOINTMENTS_QUERY = gql`
 				description
 				averageRating
 				receivedRating
+				insurance
 				id
 				minPrice
 				appointments {
@@ -213,7 +214,6 @@ const EmptyDocState = () => {
 
 const ShowData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) => {
 	const classes = useStyles();
-	console.log('data', docs);
 	return docs.map((doc) => {
 		return (
 			<Card className={classes.card} key={doc.id}>
@@ -276,7 +276,7 @@ const ShowData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) => 
 						onClick={() => {
 							setDialogReserveOpen(true);
 							setAppointments(doc.appointments);
-							setApDoc({ lastName: doc.lastname, pic: doc.image });
+							setApDoc({ lastName: doc.lastname, pic: doc.image, insurance: doc.insurance });
 						}}
 					>
 						View
@@ -305,7 +305,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 			gender,
 			insurance,
 			offset: 0,
-			limit: 1,
+			limit: 2,
 			cursor: null
 		}
 	});
@@ -320,7 +320,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}
-			{data && (
+			{data ? (
 				<div>
 					{data.doctors.edges.length > 0 ? (
 						<div className={classes.infoContainer}>
@@ -330,12 +330,11 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 								setAppointments={setAppointments}
 								setApDoc={setApDoc}
 							/>
+							{data.doctors.pageInfo.hasNextPage && 
 							<ButtonNoBorder
 								className={classes.buttonLoadMore}
 								onClick={() => {
 									const { endCursor } = data.doctors.pageInfo;
-									console.log(endCursor);
-									console.log(date, typeOfHCP, time, minPrice, maxPrice, rating, gender, insurance);
 									fetchMore({
 										variables: {
 											date,
@@ -347,7 +346,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 											gender,
 											insurance,
 											offset: 0,
-											limit: 1,
+											limit: 3,
 											cursor: endCursor
 										},
 										updateQuery: (prevResult, { fetchMoreResult }) => {
@@ -364,12 +363,17 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 								}}
 							>
 								Load More <ExpandMoreIcon />
-							</ButtonNoBorder>
+							</ButtonNoBorder> 
+							}
 						</div>
 					) : (
 						<EmptyDocState />
 					)}
 				</div>
+			) : (
+				
+					<EmptyDocState/>
+			
 			)}
 			{error && (
 				<Container className={classes.emptyState}>
@@ -385,8 +389,8 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				apDoc={apDoc}
 				close={() => {
 					setDialogReserveOpen(false);
-					setAppointments('');
-					setApDoc('');
+					// setAppointments('');
+					// setApDoc('');
 				}}
 			/>
 		</div>

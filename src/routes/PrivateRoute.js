@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as PatProfileContext } from '../context/PatProfileContext';
+import { Context as DocProfileContext } from '../context/DocProfileContext';
 import LoadingScreen from '../screens/public/LoadingScreen';
 //doctor screens
 import DocDashboardScreen from '../screens/doctor/DocDashboardScreen';
@@ -33,7 +35,7 @@ const PrivateRoute = () => {
 };
 
 const PrivateRouteDoctor = () => {
-	const { state: { isFirstTimeUser } } = useContext(AuthContext);
+	const { state: { isFirstTimeUser } } = useContext(DocProfileContext);
 	return (
 		<Switch>
 			<Route path="/in/doctor/coachmark" exact component={DocCoachMarkScreen} />
@@ -54,7 +56,7 @@ const PrivateRouteDoctor = () => {
 };
 
 const PrivateRoutePatient = () => {
-	const { state: { isFirstTimeUser } } = useContext(AuthContext);
+	const { state: { isFirstTimeUser } } = useContext(PatProfileContext);
 	return (
 		<Switch>
 			<Route path="/in/patient/coachmark" exact component={PatCoachMarkScreen} />

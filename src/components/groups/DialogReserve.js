@@ -40,7 +40,9 @@ const useStyles = makeStyles({
 	appointment: {
 		display: 'flex',
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: '1rem',
+		justifyContent: 'space-between'
 	},
 	price: {
 		marginRight: '2rem',
@@ -48,12 +50,13 @@ const useStyles = makeStyles({
 	},
 	navlink: {
 		textDecoration: 'none'
-	}
+	},
+	
 });
 
 const DialogReserve = ({ open, close, appointments, dateFormatted, apDoc }) => {
 	const classes = useStyles();
-
+	console.log(apDoc)
 	return (
 		<Dialog
 			open={open}
@@ -66,7 +69,7 @@ const DialogReserve = ({ open, close, appointments, dateFormatted, apDoc }) => {
 					<CloseIcon />
 				</IconButton>
 				<DialogTitle>Showing availability for {dateFormatted}</DialogTitle>
-				<DialogContent>
+				<DialogContent >
 					{appointments.map((ap) => {
 						return (
 							<Grid key={ap.idApt} container className={classes.appointment}>

@@ -5,10 +5,10 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log(action.payload);
+			console.log(action.payload.specialty)
 			return {
 				...state,
-				specialty: action.payload.typeOfHCP,
+				specialty: action.payload.specialty,
 				insurance: action.payload.insurance,
 				dialogMessage: '',
 				dialogOpen: false,
@@ -29,7 +29,8 @@ const docProfileReducer = (state, action) => {
 				yearsExperience: action.payload.yearsExperience,
 				yearsSpecialist: action.payload.yearsSpecialist,
 				email: action.payload.email,
-				image: action.payload.image
+				image: action.payload.image,
+				isFirstTimeUser: action.payload.isFirstTimeUser
 			};
 		case 'get_speciality':
 			return {
@@ -50,7 +51,8 @@ const docProfileReducer = (state, action) => {
 				gender: action.payload.gender,
 				phoneNumber: action.payload.phoneNumber,
 				birthday: action.payload.birthday,
-				birthPlace: action.payload.birthPlace
+				birthPlace: action.payload.birthPlace,
+				isFirstTimeUser: action.payload.isFirstTimeUser
 			};
 		case 'update_profile_info':
 			return {
@@ -143,7 +145,8 @@ const getProfile = (dispatch) => {
 					yearsExperience: response.data[0].yearsExperience,
 					yearsSpecialist: response.data[0].yearsSpecialist,
 					email: response.data[0].accountId.username,
-					image: response.data[0].accountId.profilePicture
+					image: response.data[0].accountId.profilePicture,
+					isFirstTimeUser: response.data[0].accountId.isFirstTimeUser
 				}
 			});
 		} catch (err) {
@@ -202,7 +205,8 @@ const updateContactInfo = (dispatch) => {
 					gender,
 					phoneNumber,
 					birthPlace,
-					birthday
+					birthday,
+					isFirstTimeUser: false
 				}
 			});
 		} catch (err) {
@@ -370,6 +374,7 @@ export const { Context, Provider } = createDataContext(
 		education: '',
 		yearsExperience: '',
 		yearsSpecialist: '',
+		isFirstTimeUser: false,
 		allSpecialty: [
 			'General care physician',
 			'Endocrinologist',

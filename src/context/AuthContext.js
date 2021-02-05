@@ -311,10 +311,10 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 	let response;
 	try {
 		userAmIHCP
-			? (response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			? (response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
 					userInfo
 				}))
-			: (response = await dianurseApi.put('/profile/patient/completeprofile', {
+			: (response = await dianurseApi.put(`/profile/patient/completeprofile/${id}`, {
 					userInfo
 				}));
 		dispatch({
@@ -335,7 +335,6 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id, userAmIHCP }) => {
 	console.log(newPassword, oldPassword, id);
 	const userInfo = {
-		id,
 		oldPassword,
 		newPassword,
 		form: 2
@@ -343,10 +342,10 @@ const updatePassword = (dispatch) => async ({ newPassword, oldPassword, id, user
 	let response;
 	try {
 		userAmIHCP
-			? (response = await dianurseApi.put('/profile/doctor/completeprofile', {
+			? (response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
 					userInfo
 				}))
-			: (response = await dianurseApi.put('/profile/patient/completeprofile', {
+			: (response = await dianurseApi.put(`/profile/patient/completeprofile/${id}`, {
 					userInfo
 				}));
 		dispatch({ type: 'set_dialog_message', payload: response.data.message });
@@ -408,7 +407,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,

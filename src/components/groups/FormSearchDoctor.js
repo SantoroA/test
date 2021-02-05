@@ -293,9 +293,9 @@ const FormSearchDoctor = () => {
 				<Grid item md={9} className={classes.listContainer}>
 					<DoctorList dateFormatted={formatDateNoYear(filterState.date)} filterState={filterState} />
 				</Grid>
-				<Grid item md={3}>
+				{/* <Grid item md={3}>
 					<CalendarApp />
-				</Grid>
+				</Grid> */}
 			</Grid>
 			<DialogFilter
 				filterState={filterState}

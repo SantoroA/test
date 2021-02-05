@@ -5,8 +5,10 @@ import dianurseApi from '../api/dianurseApi';
 const patProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
+			console.log('patient', action.payload)
 			return {
 				...state,
+				isFirstTimeUser: action.payload.isFirstTimeUser,
 				dialogMessage: '',
 				dialogOpen: false,
 				firstName: action.payload.firstName,
@@ -27,7 +29,9 @@ const patProfileReducer = (state, action) => {
 				gender: action.payload.gender,
 				phoneNumber: action.payload.phoneNumber,
 				birthday: action.payload.birthday,
-				birthPlace: action.payload.birthPlace
+				birthPlace: action.payload.birthPlace,
+				isFirstTimeUser: action.payload.isFirstTimeUser,
+				
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
@@ -60,6 +64,7 @@ const getPatProfile = (dispatch) => {
 					birthPlace: response.data[0].birthPlace,
 					birthday: formatFormDate(new Date(response.data[0].birthday)),
 					email: response.data[0].accountId.username,
+					isFirstTimeUser: response.data[0].accountId.isFirstTimeUser,
 					image: response.data[0].accountId.profilePicture
 				}
 			});
@@ -97,7 +102,8 @@ const updateContactInfo = (dispatch) => {
 					gender,
 					phoneNumber,
 					birthPlace,
-					birthday
+					birthday,
+					isFirstTimeUser: false
 				}
 			});
 		} catch (err) {
@@ -123,17 +129,19 @@ export const { Context, Provider } = createDataContext(
 		// email: '',
 		image:
 			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		email: 'patient@test.com',
+		// email: 'patient@test.com',
+		email:'',
 		// image: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		firstName: 'Rachel',
-		lastName: 'Green',
-		// firstName: '',
-		// lastName: '',
+		// firstName: 'Rachel',
+		// lastName: 'Green',
+		firstName: '',
+		lastName: '',
 		gender: '',
 		phoneNumber: '',
 		birthPlace: '',
-		birthday: ''
+		birthday: '',
+		isFirstTimeUser: false
 	}
 );

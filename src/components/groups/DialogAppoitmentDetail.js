@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 
 const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 	const classes = useStyles();
-
+	console.log('detail', appointment)
 	return (
 		<Dialog
 			fullScreen

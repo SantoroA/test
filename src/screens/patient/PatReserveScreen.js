@@ -327,21 +327,7 @@ const PatReserveScreen = (props) => {
 	};
 
 	console.log(
-		appointment.idApt,
-		userId,
-		insurance,
-		reasonForVisit,
-		symptomTime,
-		symptomTimeUnit,
-		isTakingMeds,
-		hasDrugAllergies,
-		oxygenSaturation,
-		temperature,
-		'tempUnit',
-		tempUnit,
-		otherInfo,
-		medArr,
-		symptomsArr
+		apDoc
 	);
 
 	// const reserve = async () => {

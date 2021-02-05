@@ -85,7 +85,6 @@ const MYAPPOINTMENTS_QUERY = gql`
 
 const ShowData = (appointments) => {
 	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
-	console.log('apt',appointments.appointments)
 	return appointments.appointments.map((apt) => {
 		return (
 			<div>
@@ -107,16 +106,16 @@ const ShowData = (appointments) => {
 						title: 'Patient'
 					}}
 				/>
-
+{console.log('apt',apt)}
 				<DialogAppointmentDetail
 					key={apt.profilePatientid._id}
 					appointment={{
-						profileHCPid: 'asdasd',
+						profileHCPid: apt.profileHCPid,
 						_id: apt._id,
 						appointmentTimeStart: apt.appointmentTimeStart,
 						appointmentTimeEnd: apt.appointmentTimeEnd,
 						profilePatientid: {
-							_id: 'asd',
+							_id: apt.profilePatientid._id,
 							firstName: apt.profilePatientid.firstName,
 							lastName: apt.profilePatientid.lastName
 						},
