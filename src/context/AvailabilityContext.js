@@ -86,14 +86,14 @@ const getSlots = (dispatch) => {
 				slotArr = slotArr.concat(response.data[i].slotCreated);
 			}
 			slotArr = [ ...new Set(slotArr) ];
-			console.log(slotArr)
+			console.log(slotArr);
 			let l = 0;
 			for (l; l < slotArr.length; l++) {
 				// eslint-disable-next-line no-loop-func
 				let data = response.data.filter((el) => {
 					return el.slotCreated === slotArr[l];
 				});
-				console.log(data)
+				console.log(data);
 				let availability = data.filter((el) => {
 					return el.appointmentStatus === 'Available';
 				});
@@ -104,7 +104,6 @@ const getSlots = (dispatch) => {
 				let editStatus = availability < data ? true : false;
 				let max = getFormattedDate(new Date(Math.max(...data.map((e) => new Date(e.appointmentDate)))));
 				let min = getFormattedDate(new Date(Math.min(...data.map((e) => new Date(e.appointmentDate)))));
-				let amount = data[l].amount;
 				let startTime = new Date(Math.min(...data.map((e) => new Date(e.appointmentTimeStart))));
 				let startHours = startTime.getHours();
 				startHours = startHours > 9 ? startHours : '0' + startHours;
@@ -120,7 +119,7 @@ const getSlots = (dispatch) => {
 				let endMin = startTime.getMinutes();
 				endMin = endMin > 9 ? endMin : '0' + endMin;
 				let slot = (minEndTime - startTime) / 60000;
-				console.log(data[l].amount)
+				console.log(data[l].amount);
 				arr = arr.concat({
 					startDay: min,
 					endDay: max,
@@ -268,11 +267,11 @@ const updateSlot = (dispatch) => {
 				}
 			}
 		}
-// 		console.log('idApp',id)
-// let newArr = {
-// 	arr,
-// 	id
-// }
+		// 		console.log('idApp',id)
+		// let newArr = {
+		// 	arr,
+		// 	id
+		// }
 		try {
 			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
 			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
