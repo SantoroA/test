@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import CurrencyInput from 'react-currency-input';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield';
+// import CurrencyInput from 'react-currency-input';
 import { Context as AvailabilityContext } from '../../context/AvailabilityContext';
 import { Context as AuthContext } from '../../context/AuthContext';
 //CUSTOM UI
@@ -57,16 +58,16 @@ console.log(price)
 			availableEnd,
 			timeStart,
 			timeEnd,
-			amount,
+			amount: price,
 			duration,
 			weekDay,
 			id: userId,
 			key: slotCreated
 		});
 	};
-	const handleChangePrice = (maskedValue) => {
-		setPrice(maskedValue);
-	};
+	// const handleChangePrice = (maskedValue) => {
+	// 	setPrice(maskedValue);
+	// };
 
 	return (
 		<Box borderRadius="10px" border={1} className={classes.form}>
@@ -148,7 +149,16 @@ console.log(price)
 						</FormControl>
 					</Grid>
 					<Grid item xs={6} className={classes.input}>
-						<CurrencyInput value={price}  onChange={handleChangePrice} />
+						<CurrencyTextField
+							fullWidth
+							label="Amount"
+							variant="outlined"
+							value={amount}
+							currencySymbol="$"
+							outputFormat="string"
+							onChange={(event, amount) => setPrice(amount)}
+						/>
+						{/* <CurrencyInput value={price} prefix="$" onChange={handleChangePrice} /> */}
 					</Grid>
 				</Grid>
 

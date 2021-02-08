@@ -83,13 +83,15 @@ const MYAPPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const ShowData = (appointments) => {
-	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
-	return appointments.appointments.map((apt) => {
+const ShowData = ({ appointments, setDialogAppDetailOpen, setAppointmentToView }) => {
+	return appointments.map((apt) => {
 		return (
 			<div>
 				<CardAppointment
-					onSubmit={() => setDialogAppDetailOpen(true)}
+					onSubmit={() => {
+						setDialogAppDetailOpen(true);
+						setAppointmentToView(apt);
+					}}
 					key={apt._id}
 					state={{
 						appointment: {
@@ -105,27 +107,6 @@ const ShowData = (appointments) => {
 						buttonText: 'View',
 						title: 'Patient'
 					}}
-				/>
-{console.log('apt',apt)}
-				<DialogAppointmentDetail
-					key={apt.profilePatientid._id}
-					appointment={{
-						profileHCPid: apt.profileHCPid,
-						_id: apt._id,
-						appointmentTimeStart: apt.appointmentTimeStart,
-						appointmentTimeEnd: apt.appointmentTimeEnd,
-						profilePatientid: {
-							_id: apt.profilePatientid._id,
-							firstName: apt.profilePatientid.firstName,
-							lastName: apt.profilePatientid.lastName
-						},
-						accountPatientid: {
-							profilePicture: apt.accountPatientid.profilePicture,
-						},
-						amount: apt.amount
-					}}
-					isOpen={dialogAppDetailOpen}
-					close={() => setDialogAppDetailOpen(false)}
 				/>
 			</div>
 		);
@@ -150,8 +131,9 @@ const EmptyAppState = () => {
 const TabMyAppointments = () => {
 	const classes = useStyles();
 	const theme = useTheme();
+	const [ appointmentToView, setAppointmentToView ] = useState('');
 	const [ date, setDate ] = useState(new Date());
-
+	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
@@ -192,15 +174,6 @@ const TabMyAppointments = () => {
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
 					</Container>
 				)}
-				{data && (
-					<div>
-						{data.doctorsAppointments.length > 0 ? (
-							<ShowData appointments={data.doctorsAppointments} />
-						) : (
-							<EmptyAppState />
-						)}
-					</div>
-				)}
 
 				{error && (
 					<Container className={classes.emptyState}>
@@ -209,11 +182,50 @@ const TabMyAppointments = () => {
 						</Typography>
 					</Container>
 				)}
+				{data && (
+					<div>
+						{data.doctorsAppointments.length > 0 ? (
+							<ShowData
+								setDialogAppDetailOpen={setDialogAppDetailOpen}
+								appointments={data.doctorsAppointments}
+								setAppointmentToView={setAppointmentToView}
+							/>
+						) : (
+							<EmptyAppState />
+						)}
+					</div>
+				)}
 			</Grid>
 			{!isMobile && (
 				<Grid item sm={5} md={4} className={classes.datePicker}>
 					<CalendarApp value={date} onChange={setDate} />
 				</Grid>
+			)}
+			{appointmentToView && (
+				<DialogAppointmentDetail
+					appointment={appointmentToView}
+					// appointment={{
+					// 	profileHCPid: 'asdasd',
+					// 	_id: 'asdasd',
+					// 	appointmentTimeStart: new Date(),
+					// 	appointmentTimeEnd: new Date(),
+					// 	profilePatientid: {
+					// 		_id: 'asd',
+					// 		firstName: 'Aline',
+					// 		lastName: 'Santoro'
+					// 	},
+					// 	accountPatientid: {
+					// 		profilePicture:
+					// 			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+					// 	},
+					// 	amount: 45
+					// }}
+					isOpen={dialogAppDetailOpen}
+					close={() => {
+						setDialogAppDetailOpen(false);
+						setAppointmentToView('');
+					}}
+				/>
 			)}
 		</Grid>
 	);

@@ -35,7 +35,7 @@ const PrivateRoute = () => {
 };
 
 const PrivateRouteDoctor = () => {
-	const { state: { isFirstTimeUser } } = useContext(DocProfileContext);
+	const { state: { isFirstTimeUser } } = useContext(AuthContext);
 	return (
 		<Switch>
 			<Route path="/in/doctor/coachmark" exact component={DocCoachMarkScreen} />
@@ -56,7 +56,7 @@ const PrivateRouteDoctor = () => {
 };
 
 const PrivateRoutePatient = () => {
-	const { state: { isFirstTimeUser } } = useContext(PatProfileContext);
+	const { state: { isFirstTimeUser } } = useContext(AuthContext);
 	return (
 		<Switch>
 			<Route path="/in/patient/coachmark" exact component={PatCoachMarkScreen} />
