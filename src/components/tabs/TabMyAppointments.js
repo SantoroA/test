@@ -65,7 +65,7 @@ const useStyles = makeStyles({
 const MYAPPOINTMENTS_QUERY = gql`
 	query GetAppointments($date: String!, $id: ID!) {
 		doctorsAppointments(date: $date, id: $id) {
-				profileHCPid
+			profileHCPid
 			_id
 			appointmentTimeStart
 			appointmentTimeEnd
@@ -78,8 +78,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 				profilePicture
 			}
 			amount
-			}
-
+		}
 	}
 `;
 
@@ -143,7 +142,7 @@ const TabMyAppointments = () => {
 	// console.log(formatFormDate(date));
 	// console.log(new Date(formatFormDate(date)));
 	console.log(userId);
-	console.log('data',data);
+	console.log('data', data);
 	console.log(error);
 	return (
 		<Grid className={classes.root} container>

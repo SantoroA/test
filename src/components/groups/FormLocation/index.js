@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
-import ButtonFilled from '../customUi/ButtonFilled';
-import ButtonOutlined from '../customUi/ButtonOutlined';
-import PaperCustomShadow from '../customUi/PaperCustomShadow';
+import ButtonFilled from '../../customUi/ButtonFilled';
+import ButtonOutlined from '../../customUi/ButtonOutlined';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -15,51 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-	container: {
-		alignItems: 'center',
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	paper: {
-		width: '100%',
-		padding: '1.5rem',
-		display: 'flex',
-		flexWrap: 'wrap',
-		flexDirection: 'column',
-		alignItems: 'center'
-	},
-	gridContainer: {
-		justifyContent: 'center'
-	},
-	form: {
-		width: '100%',
-		justifyContent: 'center'
-	},
-
-	title: {
-		display: 'flex',
-		flexDirection: 'row',
-		width: '100%',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		padding: '0.5rem'
-	},
-	buttons: {
-		marginTop: '1.5rem',
-		alignItems: 'center',
-		justifyContent: 'space-around'
-	},
-	button: {
-		padding: '0.5rem'
-	},
-
-	input: {
-		padding: '0.5rem'
-	}
-});
+import useStyles from './style';
 
 const FormLocation = () => {
 	const { updateLocationInfo, state } = useContext(DocProfileContext);

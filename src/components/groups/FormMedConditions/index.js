@@ -1,6 +1,7 @@
 import React from 'react';
+import useStyles from './style';
 //CUSTOM UI
-import PaperCustomShadow from '../customUi/PaperCustomShadow';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,31 +9,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-	root: {
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	medConditionSection: {
-		marginTop: '1rem',
-		padding: '1.5rem'
-	},
-	column: {
-		display: 'flex',
-		justifyContent: 'flex-start'
-	},
-	label: {
-		'& .MuiFormControlLabel-label': {
-			textAlign: 'start'
-		}
-	},
-	sub: {
-		fontWeight: 700,
-		marginBottom: '1rem'
-	}
-});
 
 const FormMedConditions = ({ medConditions, handleChangeMedCondition }) => {
 	const classes = useStyles();

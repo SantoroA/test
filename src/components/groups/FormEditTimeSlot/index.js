@@ -1,42 +1,19 @@
 import React, { useState, useContext } from 'react';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield';
+import useStyles from './style';
 // import CurrencyInput from 'react-currency-input';
-import { Context as AvailabilityContext } from '../../context/AvailabilityContext';
-import { Context as AuthContext } from '../../context/AuthContext';
+import { Context as AvailabilityContext } from '../../../context/AvailabilityContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
-import TextInput from '../customUi/TextInput';
-import ButtonFilled from '../customUi/ButtonFilled';
+import TextInput from '../../customUi/TextInput';
+import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-
-const useStyles = makeStyles({
-	form: {
-		padding: '1rem',
-		justifyContent: 'center',
-		borderColor: 'rgba(160, 164, 168, 1)',
-		marginTop: '1.5rem',
-		marginBottom: '1.5rem'
-	},
-
-	buttons: {
-		marginTop: '1.5rem',
-		alignItems: 'center',
-		justifyContent: 'space-around'
-	},
-	button: {
-		padding: '0.5rem'
-	},
-
-	input: {
-		padding: '0.5rem'
-	}
-});
 
 const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot, amount, slotCreated }) => {
 	const [ timeStart, setTimeStart ] = useState(startTime);
@@ -49,7 +26,7 @@ const FormEditTimeSlots = ({ startDay, endDay, startTime, weekDay, endTime, slot
 	const { state, updateSlot, setIsEditing } = useContext(AvailabilityContext);
 	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
-console.log(price)
+	console.log(price);
 	// console.log(state);
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -65,9 +42,6 @@ console.log(price)
 			key: slotCreated
 		});
 	};
-	// const handleChangePrice = (maskedValue) => {
-	// 	setPrice(maskedValue);
-	// };
 
 	return (
 		<Box borderRadius="10px" border={1} className={classes.form}>

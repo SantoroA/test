@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import useToggle from '../../hooks/useToggle';
-import dianurseApi from '../../api/dianurseApi';
+import useToggle from '../../../hooks/useToggle';
+import dianurseApi from '../../../api/dianurseApi';
 //CUSTOM UI
-import ButtonFilled from '../customUi/ButtonFilled';
-import ToggleButtonCustom from '../customUi/ToggleButtonCustom';
-import ButtonOutlined from '../customUi/ButtonOutlined';
-import PaperCustomShadow from '../customUi/PaperCustomShadow';
+import ButtonFilled from '../../customUi/ButtonFilled';
+import ToggleButtonCustom from '../../customUi/ToggleButtonCustom';
+import ButtonOutlined from '../../customUi/ButtonOutlined';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -14,59 +14,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-	container: {
-		alignItems: 'center',
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	paper: {
-		width: '100%',
-		padding: '1.5rem',
-		display: 'flex',
-		flexWrap: 'wrap',
-		flexDirection: 'column',
-		alignItems: 'center'
-	},
-	gridContainer: {
-		justifyContent: 'center'
-	},
-	form: {
-		width: '100%',
-		justifyContent: 'center'
-	},
-
-	title: {
-		display: 'flex',
-		flexDirection: 'row',
-		width: '100%',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		padding: '0.5rem'
-	},
-	buttons: {
-		marginTop: '1.5rem',
-		alignItems: 'center',
-		justifyContent: 'space-around'
-	},
-	button: {
-		padding: '0.5rem'
-	},
-
-	selects: {
-		padding: '0.5rem'
-	},
-	toggleButton: {
-		marginRight: '1rem',
-		paddingRight: '1rem',
-		paddingLeft: '1rem'
-	},
-	subtitle: {
-		padding: '0.5rem'
-	}
-});
+import useStyles from './style';
 
 const FormBillingTypes = () => {
 	const [ isInsurance, toggleIsInsurance ] = useState(false);

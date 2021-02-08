@@ -1,42 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Context as AuthContext } from '../../context/AuthContext';
-import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { Context as PatProfileContext } from '../../context/PatProfileContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import { Context as PatProfileContext } from '../../../context/PatProfileContext';
 //MATERIAL UI
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
 
-const useStyles = makeStyles({
-	root: {
-		display: 'flex',
-		height: '12rem',
-		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
-	},
-
-	content: {
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	cover: {
-		width: '12rem'
-	},
-	docName: {
-		fontWeight: '700'
-	},
-	subtitle: {
-		display: 'flex',
-		alignItems: 'center',
-		marginTop: '1rem'
-	},
-	icon: {
-		marginRight: '0.5rem'
-	}
-});
+import useStyles from './style';
 
 const CardMyProfile = () => {
 	const classes = useStyles();
@@ -44,7 +18,7 @@ const CardMyProfile = () => {
 	const { state: { firstName, lastName, image, specialty, phoneNumber, email } } = useContext(
 		userAmIHCP ? DocProfileContext : PatProfileContext
 	);
-		console.log(specialty)
+	console.log(specialty);
 	return (
 		<Card elevation={0} className={classes.root}>
 			<CardMedia className={classes.cover} image={image} title={lastName} />

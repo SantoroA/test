@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 // import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
-import BoxTime from '../../components/customUi/BoxTime';
+import BoxTime from '../../customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { NavLink } from 'react-router-dom';
-import { convertTime } from '../../helpers/dateHelper';
+import { convertTime } from '../../../helpers/dateHelper';
+import useStyles from './style';
 //CUSTOM UI
-import ButtonFilled from '../../components/customUi/ButtonFilled';
+import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -14,49 +15,11 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-
-const useStyles = makeStyles({
-	layout: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: '2rem',
-		textAlign: 'center'
-	},
-	logo: {
-		width: '8rem',
-		marginBottom: '2rem'
-	},
-	divider: {
-		marginTop: '1rem',
-		marginBottom: '1rem'
-	},
-	closeButton: {
-		alignSelf: 'flex-end'
-	},
-	appointment: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		padding: '1rem',
-		justifyContent: 'space-between'
-	},
-	price: {
-		marginRight: '2rem',
-		marginLeft: '2rem'
-	},
-	navlink: {
-		textDecoration: 'none'
-	},
-	
-});
 
 const DialogReserve = ({ open, close, appointments, dateFormatted, apDoc }) => {
 	const classes = useStyles();
-	console.log(apDoc)
+	console.log(apDoc);
 	return (
 		<Dialog
 			open={open}
@@ -69,7 +32,7 @@ const DialogReserve = ({ open, close, appointments, dateFormatted, apDoc }) => {
 					<CloseIcon />
 				</IconButton>
 				<DialogTitle>Showing availability for {dateFormatted}</DialogTitle>
-				<DialogContent >
+				<DialogContent>
 					{appointments.map((ap) => {
 						return (
 							<Grid key={ap.idApt} container className={classes.appointment}>

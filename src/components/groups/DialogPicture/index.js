@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect, createRef } from 'react';
-import { Context as AuthContext } from '../../context/AuthContext';
-import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import logo from '../../assets/dianurse-logo.png';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import logo from '../../../assets/dianurse-logo.png';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-
+import useStyles from './style';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
@@ -15,47 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
-
-const useStyles = makeStyles({
-	layout: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifycontent: 'center',
-		alignItems: 'center',
-		padding: '2rem',
-
-		textAlign: 'center'
-	},
-	logo: {
-		width: '8rem',
-		marginBottom: '2rem'
-	},
-	divider: {
-		marginTop: '1rem',
-		marginBottom: '1rem'
-	},
-	closeButton: {
-		alignSelf: 'flex-end'
-	},
-	media: {
-		borderRadius: '50%',
-		justifycontent: 'center',
-		width: '14rem',
-		height: '14rem',
-		marginTop: '1rem',
-		marginBottom: '1rem',
-		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
-		backgroundColor: 'rgba(232, 232, 232, 1)',
-		color: 'rgba(160, 164, 168, 1)'
-	},
-	imageContainer: {
-		display: 'flex',
-		justifycontent: 'center'
-	}
-});
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	const { updateImage, state: { userId, userAmIHCP } } = useContext(AuthContext);

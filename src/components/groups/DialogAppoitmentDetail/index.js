@@ -1,64 +1,27 @@
 import React from 'react';
-import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
-import CardAppointment from './CardAppointment';
+import { formatDateDisplay, formatFormDate } from '../../../helpers/dateHelper';
+import CardAppointment from '../CardAppointment';
 //CUSTOM UI
-import ButtonOutlined from '../../components/customUi/ButtonOutlined';
-import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
-import ButtonNoBorder from '../../components/customUi/ButtonNoBorder';
+import ButtonOutlined from '../../customUi/ButtonOutlined';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
+import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core/styles';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ShareIcon from '@material-ui/icons/Share';
 import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-const useStyles = makeStyles({
-	layout: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		padding: '2rem'
-	},
-	container: {
-		display: 'flex',
-		flexDirection: 'column'
-	},
-	closeButton: {
-		alignSelf: 'flex-end'
-	},
-	sub: {
-		fontWeight: 700,
-		marginBottom: '1rem'
-	},
-	subtitle: {
-		fontWeight: 700,
-		marginTop: '1rem'
-	},
-	optionsContainer: {
-		paddingTop: '1rem',
-		paddingLeft: '1rem',
-		paddingRight: '1rem'
-	},
-	iconsWrapper: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-around'
-	},
-	divider: {
-		marginBottom: '1rem',
-		marginTop: '1rem'
-	}
-});
+import useStyles from './style';
 
 const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 	const classes = useStyles();
-	console.log('detail', appointment)
+	console.log('detail', appointment);
 	return (
 		<Dialog
 			fullScreen

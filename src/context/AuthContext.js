@@ -403,11 +403,11 @@ export const { Provider, Context } = createDataContext(
 	{
 		userId: '',
 		userToken: '',
-		userAmIHCP: true,
+		userAmIHCP: false,
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,
