@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
-import MessageDialog from '../../components/groups/MessageDialog';
+import DialogMessage from '../../components/groups/DialogMessage';
 import logo from '../../assets/dianurse-logo.png';
 import useToggle from '../../hooks/useToggle';
-import RegisterForm from '../../components/groups/RegisterForm';
-import LoginForm from '../../components/groups/LoginForm';
-import RecoverPassDialog from '../../components/groups/RecoverPassDialog';
+import FormRegister from '../../components/groups/FormRegister';
+import FormLogin from '../../components/groups/FormLogin';
+import DialogRecoverPassword from '../../components/groups/DialogRecoverPassword';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,22 +51,22 @@ const GetStartedScreen = (props) => {
 				<Grid item xs={12} md={6} className={classes.forms}>
 					<img src={logo} alt="Logo" className={classes.logo} />
 					{isLogin ? (
-						<LoginForm
+						<FormLogin
 							loginCredentials={loginCredentials}
 							togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 							toggleIsLogin={toggleIsLogin}
 						/>
 					) : (
-						<RegisterForm toggleIsLogin={toggleIsLogin} amIHCP={false} />
+						<FormRegister toggleIsLogin={toggleIsLogin} amIHCP={false} />
 					)}
 				</Grid>
 			</Grid>
-			<RecoverPassDialog
+			<DialogRecoverPassword
 				recoverPassword={recoverPassword}
 				togglePasswordRecoveryOpen={togglePasswordRecoveryOpen}
 				passwordRecoveryOpen={passwordRecoveryOpen}
 			/>
-			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
+			<DialogMessage open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</div>
 	);
 };

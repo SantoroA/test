@@ -11,7 +11,7 @@ import FormProfile from '../../components/groups/FormProfile';
 import FormExperience from '../../components/groups/FormExperience';
 import FormEducation from '../../components/groups/FormEducation';
 import FormLocation from '../../components/groups/FormLocation';
-import MessageDialog from '../../components/groups/MessageDialog';
+import DialogMessage from '../../components/groups/DialogMessage';
 //CUSTOM ICONS
 import ProfileIcon from '../../components/customIcons/ProfileIcon';
 import AboutIcon from '../../components/customIcons/AboutIcon';
@@ -165,7 +165,7 @@ const DocCompleteProfileScreen = () => {
 					</div>
 				</TabPanel>
 			</Container>
-			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
+			<DialogMessage open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</DocLayoutContainer>
 	);
 };

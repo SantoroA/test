@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
-import MessageDialog from '../../components/groups/MessageDialog';
+import DialogMessage from '../../components/groups/DialogMessage';
 import FormChangePassword from '../../components/groups/FormChangePassword';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
@@ -36,7 +36,7 @@ const ChangePasswordScreen = (props) => {
 					<FormChangePassword recToken={recToken} />
 				</Grid>
 			</Grid>
-			<MessageDialog open={dialogOpen} message={dialogMessage} close={closeDialog} />
+			<DialogMessage open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</div>
 	);
 };
