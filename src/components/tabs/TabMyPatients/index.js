@@ -3,6 +3,7 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import SmartTable from '../../groups/SmartTable';
 import Loader from 'react-loader-spinner';
+import useStyles from './style';
 //CUSTOM UI
 import TextInputRounder from '../../customUi/TextInputRounder';
 import ButtonIcon from '../../customUi/ButtonIcon';
@@ -10,52 +11,11 @@ import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //CUSTOM ICONS
 import EmptyPatientIcon from '../../customIcons/EmptyPatientIcon';
 //MATERIAL UI
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import Container from '@material-ui/core/Container';
-
-const useStyles = makeStyles({
-	root: {
-		flexGrow: 1,
-		flexDirection: 'column'
-	},
-	section: {
-		marginTop: '2em'
-	},
-	title: {
-		fontWeight: 'bold',
-		marginBottom: '1rem'
-	},
-	submit: {
-		width: '100%',
-		height: '2.6rem',
-		borderRadius: '1.3rem'
-	},
-	searchContainer: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center'
-	},
-	tableContainer: {
-		marginTop: '2rem'
-	},
-	emptyState: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		height: '20rem',
-		flexDirection: 'column',
-		textAlign: 'center'
-	},
-	icon: {
-		fontSize: '5rem',
-		marginTop: '1rem'
-	}
-});
 
 const MYPATIENTS_QUERY = gql`
 	query GetPatients($id: ID!, $offset: Int, $limit: Int) {
@@ -96,7 +56,7 @@ const TabMyPatients = () => {
 	const classes = useStyles();
 	const [ patientName, setPatientName ] = useState('');
 	const { state: { userId } } = useContext(AuthContext);
-	const { loading, error, data, fetchMore } = useQuery(MYPATIENTS_QUERY, {
+	const { loading, error, data } = useQuery(MYPATIENTS_QUERY, {
 		variables: { id: userId, offset: 0, limit: 1 }
 	});
 

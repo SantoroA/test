@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Context as AvailabilityContext } from '../../../context/AvailabilityContext';
 import FormEditTimeSlots from '../FormEditTimeSlot';
 import useStyles from './style';

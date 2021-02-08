@@ -5,7 +5,7 @@ import dianurseApi from '../api/dianurseApi';
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log(action.payload.specialty)
+			console.log(action.payload.specialty);
 			return {
 				...state,
 				specialty: action.payload.specialty,
@@ -156,26 +156,26 @@ const getProfile = (dispatch) => {
 	};
 };
 
-const updateServices = (dispatch) => {
-	return async ({ services, id }) => {
-		let userInfo = {
-			id,
-			services,
-			form: 5
-		};
+// const updateServices = (dispatch) => {
+// 	return async ({ services, id }) => {
+// 		let userInfo = {
+// 			id,
+// 			services,
+// 			form: 5
+// 		};
 
-		try {
-			// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
-			// 	userInfo
-			// });
-			// console.log(response);
-			dispatch({ type: 'update_services', payload: services });
-		} catch (err) {
-			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
-		}
-	};
-};
+// 		try {
+// const response = await dianurseApi.put('/profile/doctor/completeprofile', {
+// 	userInfo
+// });
+// console.log(response);
+// 			dispatch({ type: 'update_services', payload: services });
+// 		} catch (err) {
+// 			dispatch({ type: 'add_error', payload: err.message });
+// 			console.log(err.message);
+// 		}
+// 	};
+// };
 const updateContactInfo = (dispatch) => {
 	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday, specialty }) => {
 		console.log('inside context', firstName, lastName, specialty);
@@ -341,7 +341,7 @@ export const { Context, Provider } = createDataContext(
 	{
 		getSpeciality,
 		getProfile,
-		updateServices,
+		// updateServices,
 		updateContactInfo,
 		updateProfileInfo,
 		updateEducation,

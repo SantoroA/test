@@ -35,7 +35,7 @@ function Row({ value, buttonText }) {
 			<TableCell>{reasonForVisit}</TableCell>
 			<TableCell className={classes.amount}>{amount}</TableCell>
 			<TableCell align="left">
-				<ButtonFilled>{buttonText}</ButtonFilled>
+				<ButtonFilled id={idApt}>{buttonText}</ButtonFilled>
 			</TableCell>
 		</TableRow>
 	);

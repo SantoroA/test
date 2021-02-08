@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import dianurseApi from '../../api/dianurseApi';
 import { Context as AuthContext } from '../../context/AuthContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import StepWizardContainer from '../../components/layout/StepWizardContainer';
@@ -326,9 +325,7 @@ const PatReserveScreen = (props) => {
 		setPaymentOptions({ ...paymentOptions, [event.target.name]: event.target.checked });
 	};
 
-	console.log(
-		apDoc
-	);
+	console.log(apDoc);
 
 	// const reserve = async () => {
 	// 	try {

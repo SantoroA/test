@@ -32,7 +32,7 @@ const FormSearchDoctor = () => {
 		rating: 0.1,
 		date: '',
 		typeOfHCP: 'Certified diabetes educator',
-		timeZoneValue: +300
+		timeZoneValue: '+300'
 	});
 	const classes = useStyles();
 

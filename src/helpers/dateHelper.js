@@ -63,8 +63,6 @@ const getTimeDifference = (date1, date2) => {
 	let minutesDifference = Math.floor(difference / 1000 / 60);
 	difference -= minutesDifference * 1000 * 60;
 
-	let secondsDifference = Math.floor(difference / 1000);
-
 	return minutesDifference;
 };
 

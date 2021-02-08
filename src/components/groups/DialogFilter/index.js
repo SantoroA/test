@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import TimeFilter from './TimeFilter';
 import RatingFilter from './RatingFilter';
 import MoreFilters from './MoreFilters';

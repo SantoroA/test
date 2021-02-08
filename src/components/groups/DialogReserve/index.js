@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 // import { Context as SearchDoctorContext } from '../../context/SearchDoctorContext';
 import BoxTime from '../../customUi/BoxTime';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';

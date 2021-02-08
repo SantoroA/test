@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { Context as AuthContext } from '../../context/AuthContext';
+// import { Context as AuthContext } from '../../context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';

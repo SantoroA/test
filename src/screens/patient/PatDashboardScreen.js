@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { Context as AuthContext } from '../../context/AuthContext';
+import React, { useState } from 'react';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import CardMyProfile from '../../components/groups/CardMyProfile';
 import TabDocuments from '../../components/tabs/TabDocuments';
@@ -120,7 +119,6 @@ function a11yProps(index) {
 
 const PatDashboardScreen = () => {
 	const [ value, setValue ] = useState(0);
-	const { state: { userName } } = useContext(AuthContext);
 	const classes = useStyles();
 	const handleChange = (event, newValue) => {
 		setValue(newValue);

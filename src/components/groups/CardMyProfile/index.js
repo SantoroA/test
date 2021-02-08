@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';

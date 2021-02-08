@@ -7,7 +7,7 @@ import TextInput from '../../customUi/TextInput';
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonError from '../../customUi/ButtonError';
 //CUSTOM ICONS
-import SleepIcon from '../../customIcons/SleepIcon';
+// import SleepIcon from '../../customIcons/SleepIcon';
 //MATERIAL UI
 import Select from '@material-ui/core/Select';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield';
@@ -24,7 +24,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 	const [ amount, setAmount ] = useState('');
 	const [ duration, setDuration ] = useState('');
 
-	const [ isOffDay, setIsOffDay ] = useState(false);
+	// const [ isOffDay, setIsOffDay ] = useState(false);
 	const classes = useStyles();
 	const { createSlot } = useContext(AvailabilityContext);
 	const { state: { userId } } = useContext(AuthContext);
@@ -43,9 +43,6 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 			weekDay,
 			id: userId
 		});
-	};
-	const handleChangePrice = (maskedValue) => {
-		setAmount(maskedValue);
 	};
 
 	return (

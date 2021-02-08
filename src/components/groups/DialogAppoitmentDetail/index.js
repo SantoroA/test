@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDateDisplay, formatFormDate } from '../../../helpers/dateHelper';
+import { formatDateDisplay } from '../../../helpers/dateHelper';
 import CardAppointment from '../CardAppointment';
 //CUSTOM UI
 import ButtonOutlined from '../../customUi/ButtonOutlined';

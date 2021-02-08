@@ -84,7 +84,7 @@ const DocDashboardScreen = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-	let { path, url } = useRouteMatch();
+	let { path } = useRouteMatch();
 	return (
 		<DocLayoutContainer>
 			<Grid container className={classes.userInfo}>

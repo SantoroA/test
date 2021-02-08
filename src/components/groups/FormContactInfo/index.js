@@ -35,13 +35,12 @@ const FormContactInfo = () => {
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
- console.log(firstName, lastName, gender, phoneNumber, birthday, birthPlace);
+	console.log(firstName, lastName, gender, phoneNumber, birthday, birthPlace);
 	// console.log(phoneNumber)
 
 	useEffect(() => {
-		{
-			userAmIHCP && getSpeciality();
-		}
+		userAmIHCP && getSpeciality();
+		//  eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const resetState = () => {

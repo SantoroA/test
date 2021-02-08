@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, createRef } from 'react';
+import React, { useState, useContext, createRef } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import logo from '../../../assets/dianurse-logo.png';
