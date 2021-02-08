@@ -330,50 +330,48 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 								setAppointments={setAppointments}
 								setApDoc={setApDoc}
 							/>
-							{data.doctors.pageInfo.hasNextPage && 
-							<ButtonNoBorder
-								className={classes.buttonLoadMore}
-								onClick={() => {
-									const { endCursor } = data.doctors.pageInfo;
-									fetchMore({
-										variables: {
-											date,
-											typeOfHCP,
-											time,
-											minPrice,
-											maxPrice,
-											rating,
-											gender,
-											insurance,
-											offset: 0,
-											limit: 3,
-											cursor: endCursor
-										},
-										updateQuery: (prevResult, { fetchMoreResult }) => {
-											console.log('prev', prevResult);
-											console.log('fetch', fetchMoreResult);
-											fetchMoreResult.doctors.edges = [
-												...prevResult.doctors.edges,
-												...fetchMoreResult.doctors.edges
-											];
-											return fetchMoreResult;
-											// if endcursor === false No data
-										}
-									});
-								}}
-							>
-								Load More <ExpandMoreIcon />
-							</ButtonNoBorder> 
-							}
+							{data.doctors.pageInfo.hasNextPage && (
+								<ButtonNoBorder
+									className={classes.buttonLoadMore}
+									onClick={() => {
+										const { endCursor } = data.doctors.pageInfo;
+										fetchMore({
+											variables: {
+												date,
+												typeOfHCP,
+												time,
+												minPrice,
+												maxPrice,
+												rating,
+												gender,
+												insurance,
+												offset: 0,
+												limit: 3,
+												cursor: endCursor
+											},
+											updateQuery: (prevResult, { fetchMoreResult }) => {
+												console.log('prev', prevResult);
+												console.log('fetch', fetchMoreResult);
+												fetchMoreResult.doctors.edges = [
+													...prevResult.doctors.edges,
+													...fetchMoreResult.doctors.edges
+												];
+												return fetchMoreResult;
+												// if endcursor === false No data
+											}
+										});
+									}}
+								>
+									Load More <ExpandMoreIcon />
+								</ButtonNoBorder>
+							)}
 						</div>
 					) : (
 						<EmptyDocState />
 					)}
 				</div>
 			) : (
-				
-					<EmptyDocState/>
-			
+				<EmptyDocState />
 			)}
 			{error && (
 				<Container className={classes.emptyState}>
