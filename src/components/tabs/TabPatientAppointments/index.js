@@ -1,31 +1,168 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import { formatDateDisplay, formatFormDate } from '../../../helpers/dateHelper';
+import Loader from 'react-loader-spinner';
+import DialogAppointmentDetail from '../../groups/DialogAppoitmentDetail';
+import { useQuery, gql } from '@apollo/client';
+import useStyles from './style';
+import EmptyAppState from './EmptyAppState';
+import ShowAppData from './ShowAppData';
+//CUSTOM UI
+import CalendarApp from '../../customUi/CalendarApp';
 //MATERIAL UI
-import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
-	root: {
-		flexGrow: 1,
-		flexDirection: 'column'
-	},
-	section: {
-		marginTop: '2em'
-	}
-});
+// const MYAPPOINTMENTS_QUERY = gql`
+// 	query GetAppointments($date: String!, $id: ID!) {
+// 		doctorsAppointments(date: $date, id: $id) {
+// 			profileHCPid
+// 			_id
+// 			appointmentTimeStart
+// 			appointmentTimeEnd
+// 			profilePatientid {
+// 				_id
+// 				firstName
+// 				lastName
+// 			}
+// 			accountPatientid {
+// 				profilePicture
+// 			}
+// 			amount
+// 		}
+// 	}
+// `;
 
 const TabPatientAppointments = () => {
 	const classes = useStyles();
+	const theme = useTheme();
+	const [ appointmentToView, setAppointmentToView ] = useState('');
+	const [ date, setDate ] = useState(new Date());
+	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
+	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+	const { state: { userId } } = useContext(AuthContext);
+	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+	// 	variables: { date, id: userId, limit: 2, cursor: null }
+	// });
+	// console.log(date);
+	// console.log(formatFormDate(date));
+	// console.log(new Date(formatFormDate(date)));
+	console.log(userId);
+	// console.log('data', data);
+	// console.log(error);
 	return (
-		<div>
-			<Grid className={classes.root} container>
-				<Paper className={classes.section}>
-					<Typography>My Appointemtns</Typography>
-				</Paper>
+		<Grid className={classes.root} container>
+			<Grid item sm={7} md={8}>
+				{isMobile && (
+					<Grid item xs={12}>
+						<TextField
+							fullWidth
+							id="date"
+							type="date"
+							variant="filled"
+							className={classes.datePickerMobile}
+							value={formatFormDate(date)}
+							onChange={(e) => setDate(new Date(e.target.value))}
+							InputProps={{
+								disableUnderline: true
+							}}
+						/>
+					</Grid>
+				)}
+				<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
+				<Typography color="primary" className={classes.sub} variant="h5">
+					{formatDateDisplay(date)}
+				</Typography>
+				<ShowAppData
+					setDialogAppDetailOpen={setDialogAppDetailOpen}
+					appointments={[
+						{
+							profileHCPid: 'asdasd',
+							_id: 'asdasd',
+							appointmentTimeStart: new Date(),
+							appointmentTimeEnd: new Date(),
+							//get doctor name and profile pic
+							profilePatientid: {
+								_id: 'adsd'
+							},
+							amount: 45
+						}
+					]}
+					setAppointmentToView={setAppointmentToView}
+				/>
+				{/* {loading && (
+					<Container className={classes.emptyState}>
+						<Loader type="TailSpin" color="primary" height={80} width={80} />
+					</Container>
+				)}
+
+				{error && (
+					<Container className={classes.emptyState}>
+						<Typography color="textSecondary" variant="h4">
+							Something went wrong, please try again later
+						</Typography>
+					</Container>
+				)}
+				{data && (
+					<div>
+						{data.doctorsAppointments.length > 0 ? (
+							<ShowAppData
+								setDialogAppDetailOpen={setDialogAppDetailOpen}
+								appointments={[
+									{
+										profileHCPid: 'asdasd',
+										_id: 'asdasd',
+										appointmentTimeStart: new Date(),
+										appointmentTimeEnd: new Date(),
+										//get doctor name and profile pic
+										amount: 45
+									}
+								]}
+								setAppointmentToView={setAppointmentToView}
+							/>
+						) : (
+							<EmptyAppState />
+						)}
+					</div>
+				)} */}
 			</Grid>
-		</div>
+			{!isMobile && (
+				<Grid item sm={5} md={4} className={classes.datePicker}>
+					<CalendarApp value={date} onChange={setDate} />
+				</Grid>
+			)}
+			{appointmentToView && (
+				<DialogAppointmentDetail
+					appointment={appointmentToView}
+					// appointment={{
+					// 	profileHCPid: 'asdasd',
+					// 	_id: 'asdasd',
+					// 	appointmentTimeStart: new Date(),
+					// 	appointmentTimeEnd: new Date(),
+					// 	profilePatientid: {
+					// 		_id: 'asd',
+					// 		firstName: 'Aline',
+					// 		lastName: 'Santoro'
+					// 	},
+					// 	accountPatientid: {
+					// 		profilePicture:
+					// 			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+					// 	},
+					// 	amount: 45
+					// }}
+					isOpen={dialogAppDetailOpen}
+					close={() => {
+						setDialogAppDetailOpen(false);
+						setAppointmentToView('');
+					}}
+				/>
+			)}
+		</Grid>
 	);
 };
-
+// message de erro
 export default TabPatientAppointments;

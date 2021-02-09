@@ -286,7 +286,7 @@ const PatReserveScreen = (props) => {
 			idApt: appointment.idApt
 		}
 	});
-
+	console.log(error);
 	console.log(data);
 	const nextStep = () => {
 		setStep(step + 1);
@@ -313,13 +313,6 @@ const PatReserveScreen = (props) => {
 
 	console.log(apDoc);
 	console.log('reserve', data);
-
-	if (loading)
-		return (
-			<Container>
-				<Loader type="TailSpin" color="primary" height={80} width={80} />;
-			</Container>
-		);
 
 	switch (step) {
 		case 1:
@@ -807,7 +800,9 @@ const PatReserveScreen = (props) => {
 								buttonText: 'Book',
 								title: 'Doctor'
 							}}
+							showPrice={true}
 							onSubmit={(e) => {
+								e.preventDefault();
 								appointmentAdd();
 								nextStep();
 								setTimeout(() => {
@@ -832,7 +827,7 @@ const PatReserveScreen = (props) => {
 							<Loader type="TailSpin" color="primary" height={80} width={80} />
 						</Container>
 					)}
-					{error ? (
+					{error && (
 						<Container className={classes.container} maxWidth="md">
 							<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
 								<ArrowBackIcon />
@@ -840,7 +835,8 @@ const PatReserveScreen = (props) => {
 							</ButtonNoBorder>
 							<Typography>Something went wrong. Please try again later</Typography>
 						</Container>
-					) : (
+					)}
+					{data && (
 						<Container className={classes.container} maxWidth="md">
 							<Typography className={classes.title} color="primary" variant="h3">
 								Completed

@@ -3,6 +3,7 @@ import React from 'react';
 import CardAppointment from '../../groups/CardAppointment';
 
 const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToView }) => {
+	console.log(appointments);
 	return appointments.map((apt) => {
 		return (
 			<div>
@@ -12,7 +13,7 @@ const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToVie
 						setAppointmentToView(apt);
 					}}
 					key={apt._id}
-					showPrice={false}
+					showPrice={true}
 					state={{
 						appointment: {
 							amount: apt.amount,
@@ -21,11 +22,12 @@ const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToVie
 							idApt: apt._id,
 							start: apt.appointmentTimeStart
 						},
-						name: `${apt.profilePatientid.firstName} ${apt.profilePatientid.lastName}`,
-						pic: apt.accountPatientid.profilePicture,
+						name: 'Doctor Fulano',
+						pic:
+							'https://images.pexels.com/photos/3985163/pexels-photo-3985163.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 						// apt.accountPatientid.profilePicture
 						buttonText: 'View',
-						title: 'Patient'
+						title: 'Doctor'
 					}}
 				/>
 			</div>
