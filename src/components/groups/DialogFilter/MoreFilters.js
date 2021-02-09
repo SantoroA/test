@@ -4,7 +4,7 @@ import useStyles from './style';
 import FormControl from '@material-ui/core/FormControl';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -30,7 +30,7 @@ const MoreFilters = ({ filterState, setFilterState }) => {
 				</RadioGroup>
 			</FormControl>
 
-			<Divider className={classes.divider} light />
+			{/* <Divider className={classes.divider} light />
 			<Grid className={classes.filter}>
 				<FormControl component="fieldset">
 					<FormLabel component="legend">Insurance Type</FormLabel>
@@ -47,7 +47,7 @@ const MoreFilters = ({ filterState, setFilterState }) => {
 						</Grid>
 					</RadioGroup>
 				</FormControl>
-			</Grid>
+			</Grid> */}
 		</Grid>
 	);
 };

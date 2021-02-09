@@ -115,7 +115,6 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 	mutation AppointmentAdd(
 		$idApt: ID!
 		$idPatient: ID!
-		$insurance: Int
 		$reasonForVisit: String!
 		$symptomTime: Int
 		$symptomTimeUnit: String
@@ -131,7 +130,6 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 		appointmentAdd(
 			idApt: $idApt
 			idPatient: $idPatient
-			insurance: $insurance
 			reasonForVisit: $reasonForVisit
 			symptomTime: $symptomTime
 			symptomTimeUnit: $symptomTimeUnit
@@ -148,22 +146,22 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 `;
 
 const PatReserveScreen = (props) => {
-	const { apDoc, appointment } = props.location.state;
+	// const { apDoc, appointment } = props.location.state;
 
-	// const appointment = {
-	// 	amount: 95,
-	// 	end: '2021-01-29T06:45:00.000Z',
-	// 	id: '601175526913da0029424025',
-	// 	idApt: '601186c472a95e0028bcb6f5',
-	// 	start: '2021-01-29T06:00:00.000Z'
-	// };
+	const appointment = {
+		amount: 95,
+		end: '2021-01-29T06:45:00.000Z',
+		id: '601175526913da0029424025',
+		idApt: '601186c472a95e0028bcb6f5',
+		start: '2021-01-29T06:00:00.000Z'
+	};
 	const dateDisplay = formatDateDisplay(appointment.start);
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
-	// const apDoc = {
-	// 	lastName: 'Santoro',
-	// 	pic:
-	// 		'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-	// };
+	const apDoc = {
+		lastName: 'Santoro',
+		pic:
+			'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	};
 	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
@@ -321,30 +319,8 @@ const PatReserveScreen = (props) => {
 			: setMedArr([ ...medArr, event.target.name ]);
 		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
 	};
-	const handleChangePaymentOptions = (event) => {
-		setPaymentOptions({ ...paymentOptions, [event.target.name]: event.target.checked });
-	};
 
 	console.log(apDoc);
-
-	// const reserve = async () => {
-	// 	try {
-	// 		const response = await dianurseApi.post(`/appointment/addAppointment/${userId}`, {
-	// 			appointmentId: appointment.id
-	// 		});
-	// 		console.log(response.data);
-	// 		console.log('reserve');
-	// 		nextStep();
-	// 		setTimeout(() => {
-	// 			setConfettiTrigger(true);
-	// 		}, 500);
-	// 		setTimeout(() => {
-	// 			setConfettiTrigger(false);
-	// 		}, 2000);
-	// 	} catch (err) {
-	// 		console.log(err.message);
-	// 	}
-	// };
 	console.log('reserve', data);
 
 	if (loading)
@@ -750,64 +726,6 @@ const PatReserveScreen = (props) => {
 		case 9:
 			return (
 				<StepWizardContainer
-					step={9}
-					previousStep={previousStep}
-					title="What type of insurance do you have?"
-					progress={70}
-				>
-					<Container maxWidth="sm">
-						<Grid container className={classes.yesNoButtons}>
-							<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
-								<ToggleYesNoButton
-									value="private-insurance"
-									selected={!insurancePublic}
-									onClick={() => {
-										if (insurancePublic === false) {
-											setInsurance(0);
-										} else {
-											setInsurance(1);
-										}
-										setInsurancePublic(!insurancePublic);
-									}}
-								>
-									I have private insurance
-								</ToggleYesNoButton>
-							</Grid>
-							<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
-								<ToggleYesNoButton
-									value="public-insurance"
-									selected={insurancePublic}
-									onClick={() => {
-										if (insurancePublic === false) {
-											setInsurance(0);
-										} else {
-											setInsurance(1);
-										}
-										setInsurancePublic(!insurancePublic);
-									}}
-								>
-									I have public insurance
-								</ToggleYesNoButton>
-							</Grid>
-						</Grid>
-						<Grid container className={classes.buttonWrapper}>
-							<Grid item xs={5} sm={3}>
-								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
-									<Typography>Skip question</Typography>
-								</ButtonNoBorder>
-							</Grid>
-							<Grid item xs={5} sm={3}>
-								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-									Next <NavigateNextIcon />
-								</ButtonFilled>
-							</Grid>
-						</Grid>
-					</Container>
-				</StepWizardContainer>
-			);
-		case 10:
-			return (
-				<StepWizardContainer
 					step={10}
 					previousStep={previousStep}
 					title="Here are your appointment details!"
@@ -849,40 +767,17 @@ const PatReserveScreen = (props) => {
 								buttonText: 'Pay',
 								title: 'Doctor'
 							}}
-							onSubmit={nextStep}
+							onSubmit={(e) => {
+								appointmentAdd();
+								nextStep();
+								setTimeout(() => {
+									setConfettiTrigger(true);
+								}, 500);
+								setTimeout(() => {
+									setConfettiTrigger(false);
+								}, 2000);
+							}}
 						/>
-					</Container>
-				</StepWizardContainer>
-			);
-		case 11:
-			return (
-				<StepWizardContainer step={11} previousStep={previousStep} title="Add Payment Method" progress={90}>
-					<Container maxWidth="sm">
-						<FormPayment
-							paymentOptions={paymentOptions}
-							handleChangePaymentOptions={handleChangePaymentOptions}
-						/>
-						<Grid container className={classes.buttonWrapper}>
-							<Grid item xs={5} sm={3}>
-								<ButtonFilled
-									fullWidth
-									className={classes.nextButton}
-									onClick={(e) => {
-										appointmentAdd();
-
-										nextStep();
-										setTimeout(() => {
-											setConfettiTrigger(true);
-										}, 500);
-										setTimeout(() => {
-											setConfettiTrigger(false);
-										}, 2000);
-									}}
-								>
-									Pay Now <NavigateNextIcon />
-								</ButtonFilled>
-							</Grid>
-						</Grid>
 					</Container>
 				</StepWizardContainer>
 			);

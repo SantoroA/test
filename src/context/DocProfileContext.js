@@ -9,7 +9,7 @@ const docProfileReducer = (state, action) => {
 			return {
 				...state,
 				specialty: action.payload.specialty,
-				insurance: action.payload.insurance,
+
 				dialogMessage: '',
 				dialogOpen: false,
 				firstName: action.payload.firstName,
@@ -58,8 +58,7 @@ const docProfileReducer = (state, action) => {
 			return {
 				...state,
 				profileInfo: action.payload.profileInfo,
-				websiteUrl: action.payload.websiteUrl,
-				insurance: action.payload.insurance
+				websiteUrl: action.payload.websiteUrl
 			};
 		case 'update_location_info':
 			return {
@@ -127,7 +126,7 @@ const getProfile = (dispatch) => {
 				type: 'get_profile',
 				payload: {
 					specialty: response.data[0].typeOfHCP,
-					insurance: response.data[0].insurance,
+
 					firstName: response.data[0].firstName,
 					lastName: response.data[0].lastName,
 					gender: response.data[0].gender,
@@ -216,12 +215,11 @@ const updateContactInfo = (dispatch) => {
 	};
 };
 const updateProfileInfo = (dispatch) => {
-	return async ({ profileInfo, websiteUrl, id, insurance }) => {
-		console.log(insurance);
+	return async ({ profileInfo, websiteUrl, id }) => {
 		let userInfo = {
 			profileInfo,
 			websiteUrl,
-			insurance,
+
 			form: 6
 		};
 		console.log('inside profile info context', profileInfo);
@@ -235,7 +233,7 @@ const updateProfileInfo = (dispatch) => {
 				type: 'update_profile_info',
 				payload: {
 					profileInfo,
-					insurance,
+
 					websiteUrl
 				}
 			});
@@ -355,7 +353,7 @@ export const { Context, Provider } = createDataContext(
 		image:
 			'https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?cs=srgb&dl=pexels-anna-shvets-3846038.jpg&fm=jpg',
 		specialty: 'General care physician',
-		insurance: '',
+
 		dialogMessage: '',
 		dialogOpen: false,
 		firstName: 'Phoebee',

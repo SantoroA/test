@@ -26,13 +26,12 @@ const FormSearchDoctor = () => {
 	const [ filterState, setFilterState ] = useState({
 		gender: 3,
 		time: 'all',
-		insurance: 3,
 		minPrice: 70,
 		maxPrice: 150,
 		rating: 0.1,
 		date: '',
-		typeOfHCP: 'Certified diabetes educator',
-		timeZoneValue: '+300'
+		typeOfHCP: 'Certified diabetes educator'
+		// timeZoneValue: '+300'
 	});
 	const classes = useStyles();
 
@@ -124,7 +123,7 @@ const FormSearchDoctor = () => {
 					<Typography>
 						We believe you are in - {timezone} ({nameZone}) -
 					</Typography>
-					<FormControl variant="outlined" className={classes.formControl}>
+					{/* <FormControl variant="outlined" className={classes.formControl}>
 						<InputLabel id="change-time-zone">CHANGE THE TIME ZONE</InputLabel>
 						<Select
 							labelId="change-time-zone"
@@ -137,7 +136,7 @@ const FormSearchDoctor = () => {
 							}}
 							label="CHANGE THE TIME ZONE"
 						/>
-					</FormControl>
+					</FormControl> */}
 				</FormControl>
 			</PaperCustomShadow>
 			<Divider orientation="horizontal" />

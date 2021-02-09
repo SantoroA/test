@@ -34,7 +34,7 @@ export default function ButtonAppBar() {
 
 	return (
 		<div>
-			<AppBar className={classes.navbar} position="static">
+			<AppBar className={classes.navbar} style={{ backgroundColor: '#EFF8FF' }} position="static">
 				<Toolbar className={classes.toolbar}>
 					{userAmIHCP ? (
 						<NavLink to="/in/patient/dashboard">

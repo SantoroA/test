@@ -22,7 +22,6 @@ const APPOINTMENTS_QUERY = gql`
 		$maxPrice: Float!
 		$minPrice: Float!
 		$rating: Float!
-		$insurance: Int!
 		$gender: Int!
 		$time: String!
 		$offset: Int
@@ -35,7 +34,6 @@ const APPOINTMENTS_QUERY = gql`
 			minPrice: $minPrice
 			maxPrice: $maxPrice
 			gender: $gender
-			insurance: $insurance
 			rating: $rating
 			time: $time
 			offset: $offset
@@ -49,7 +47,6 @@ const APPOINTMENTS_QUERY = gql`
 				description
 				averageRating
 				receivedRating
-				insurance
 				id
 				minPrice
 				appointments {
@@ -70,7 +67,7 @@ const APPOINTMENTS_QUERY = gql`
 `;
 
 const DoctorList = ({ filterState, dateFormatted }) => {
-	const { gender, time, insurance, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
+	const { gender, time, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 
 	const [ dialogReserveOpen, setDialogReserveOpen ] = useState(false);
 	const [ apDoc, setApDoc ] = useState('');
@@ -85,7 +82,6 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 			maxPrice,
 			rating,
 			gender,
-			insurance,
 			offset: 0,
 			limit: 2,
 			cursor: null
@@ -126,7 +122,6 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 												maxPrice,
 												rating,
 												gender,
-												insurance,
 												offset: 0,
 												limit: 3,
 												cursor: endCursor
