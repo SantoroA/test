@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
-import SmartTable from '../../groups/SmartTable';
 import Loader from 'react-loader-spinner';
 import useStyles from './style';
+import PatientTable from './table';
 //CUSTOM UI
 import TextInputRounder from '../../customUi/TextInputRounder';
 import ButtonIcon from '../../customUi/ButtonIcon';
@@ -237,7 +237,7 @@ const TabMyPatients = () => {
 					{data && (
 						<div>
 							{data.doctorsPatients.length > 0 ? (
-								<SmartTable
+								<PatientTable
 									data={data.doctorsPatients}
 									buttonText="More"
 									tableTitles={[
