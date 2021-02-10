@@ -46,11 +46,11 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 		let options = { content: formData };
 		console.log(file);
 		console.log(options);
-		// try {
-		// 	dianurseApi.put(`profile/completeprofile/uploadImage/${userId}`, formData);
-		// } catch (error) {
-		// 	console.log(error);
-		// }
+		try {
+			dianurseApi.put(`profile/completeprofile/uploadImage/${userId}`, options);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleClose = () => {
