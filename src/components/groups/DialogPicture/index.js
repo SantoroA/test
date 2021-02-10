@@ -23,9 +23,9 @@ import TextField from '@material-ui/core/TextField';
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	const { updateImage, state: { userId, userAmIHCP } } = useContext(AuthContext);
-	const { state: { image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
-	const [ imageSelected, setImageSelected ] = useState(image);
-	const [ imagePreview, setImagePreview ] = useState(image);
+	// const { state: { image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
+	const [ imageSelected, setImageSelected ] = useState('');
+	const [ imagePreview, setImagePreview ] = useState('');
 	const classes = useStyles();
 
 	// const handleSubmit = (e) => {
@@ -39,14 +39,15 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	// 	setIsDialogOpen(false);
 	// };
 
-	const onFileUpload = () => {
-		const formData = new FormData();
-
-		formData.append('image', imageSelected, imageSelected.name);
-		console.log(imageSelected);
+	const onFileUpload = (file) => {
+		let formData = new FormData();
 		console.log(formData);
+		formData.append('image', 'test');
+		let options = { content: formData };
+		console.log(file);
+		console.log(options);
 		try {
-			dianurseApi.post(`profile/completeprofile/uploadImage${userId}`, formData);
+			dianurseApi.put(`profile/completeprofile/uploadImage/${userId}`, options);
 		} catch (error) {
 			console.log(error);
 		}
@@ -54,7 +55,8 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 
 	const handleClose = () => {
 		setIsDialogOpen(false);
-		setImageSelected(image);
+		// setImageSelected(image);
+		// setImagePreview(image);
 	};
 
 	const onFileChange = (e) => {
@@ -68,7 +70,7 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	};
 
 	console.log(imageSelected);
-	console.log(image);
+	// console.log(image);
 	return (
 		<Dialog
 			open={isDialogOpen}
@@ -103,7 +105,7 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 						</Grid>
 						<Grid item xs={6}>
 							<input type="file" onChange={onFileChange} />
-							<button onClick={onFileUpload}>Upload</button>
+							<button onClick={() => onFileUpload(imageSelected)}>Upload</button>
 							{/* <label htmlFor="uploadphoto">
 									<TextField
 										fullWidth
