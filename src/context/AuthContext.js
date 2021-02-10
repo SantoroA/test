@@ -303,8 +303,8 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 	console.log('id', id, image);
 
 	let userInfo = {
-		id,
-		image: image,
+		// id,
+		image,
 		form: 1
 	};
 	console.log(userInfo);
@@ -312,10 +312,16 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 	try {
 		userAmIHCP
 			? (response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
-					userInfo
+					userInfo,
+					headers: {
+				         'content-type': 'multipart/form-data'
+					   }
 				}))
 			: (response = await dianurseApi.put(`/profile/patient/completeprofile/${id}`, {
-					userInfo
+					userInfo,
+					headers: {
+						'content-type': 'multipart/form-data'
+					  }
 				}));
 		dispatch({
 			type: 'update_image',
@@ -407,7 +413,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,

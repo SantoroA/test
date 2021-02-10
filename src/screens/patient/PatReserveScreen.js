@@ -117,12 +117,12 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 		$idApt: ID!
 		$idPatient: ID!
 		$reasonForVisit: String!
-		$symptomTime: Int
+		$symptomTime: String
 		$symptomTimeUnit: String
 		$isTakingMeds: Boolean
 		$hasDrugAllergies: Boolean
-		$oxygenSaturation: Int
-		$temperature: Int
+		$oxygenSaturation: String
+		$temperature: String
 		$tempUnit: String
 		$otherInfo: String
 		$medCondition: [String]

@@ -7,6 +7,7 @@ const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToVie
 	return appointments.map((apt) => {
 		return (
 			<div>
+				{console.log(apt)}
 				<CardAppointment
 					onSubmit={() => {
 						setDialogAppDetailOpen(true);
@@ -22,10 +23,8 @@ const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToVie
 							idApt: apt._id,
 							start: apt.appointmentTimeStart
 						},
-						name: 'Doctor Fulano',
-						pic:
-							'https://images.pexels.com/photos/3985163/pexels-photo-3985163.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-						// apt.accountPatientid.profilePicture
+						name: `${apt.profileHCPid.firstName} ${apt.profileHCPid.lastName}`,
+						pic: apt.accountHCPid.profilePicture,
 						buttonText: 'View',
 						title: 'Doctor'
 					}}
