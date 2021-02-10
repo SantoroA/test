@@ -1,9 +1,12 @@
 import React, { useState, useContext, createRef } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import { Context as PatProfileContext } from '../../../context/PatProfileContext';
 import logo from '../../../assets/dianurse-logo.png';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import useStyles from './style';
+import dianurseApi from '../../../api/dianurseApi';
+import axios from 'axios';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
@@ -20,27 +23,51 @@ import TextField from '@material-ui/core/TextField';
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	const { updateImage, state: { userId, userAmIHCP } } = useContext(AuthContext);
-	const { state: { image } } = useContext(DocProfileContext);
-	const [ imageChange, setImageChange ] = useState(image);
-	const inputFileRef = createRef(null);
+	const { state: { image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
+	const [ imageSelected, setImageSelected ] = useState(image);
+	const [ imagePreview, setImagePreview ] = useState(image);
 	const classes = useStyles();
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log('submit');
-		updateImage({
-			id: userId,
-			userAmIHCP,
-			image: imageChange
-		});
-		setIsDialogOpen(false);
+	// const handleSubmit = (e) => {
+	// 	e.preventDefault();
+	// 	console.log('submit');
+	// 	updateImage({
+	// 		id: userId,
+	// 		userAmIHCP,
+	// 		image: imageSelected
+	// 	});
+	// 	setIsDialogOpen(false);
+	// };
+
+	const onFileUpload = () => {
+		const formData = new FormData();
+
+		formData.append('image', imageSelected, imageSelected.name);
+		console.log(imageSelected);
+		console.log(formData);
+		try {
+			dianurseApi.post(`profile/completeprofile/uploadImage${userId}`, formData);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleClose = () => {
 		setIsDialogOpen(false);
-		setImageChange(image);
+		setImageSelected(image);
 	};
-	console.log(imageChange);
+
+	const onFileChange = (e) => {
+		let file = e.target.files[0];
+		let reader = new FileReader();
+		reader.onloadend = () => {
+			setImageSelected(file);
+			setImagePreview(reader.result);
+		};
+		reader.readAsDataURL(file);
+	};
+
+	console.log(imageSelected);
 	console.log(image);
 	return (
 		<Dialog
@@ -56,26 +83,28 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 				<img src={logo} alt="Logo" className={classes.logo} />
 				<Divider className={classes.divider} />
 				<DialogContent>
-					<form onSubmit={handleSubmit}>
-						<Typography>Edit your picture</Typography>
-						<Grid container>
-							<Grid item xs={12} justifycontent="center" className={classes.imageContainer}>
-								{imageChange !== null ? (
-									<Paper
-										style={{
-											backgroundImage: `url(${imageChange})`,
-											backgroundSize: 'contain',
-											backgroundRepeat: 'no-repeat',
-											backgroundPosition: 'center'
-										}}
-										className={classes.media}
-									/>
-								) : (
-									<Paper className={classes.media} />
-								)}
-							</Grid>
-							<Grid item xs={6}>
-								<label htmlFor="uploadphoto">
+					{/* <form onSubmit={handleSubmit}> */}
+					{/* <Typography>Edit your picture</Typography> */}
+					<Grid container>
+						<Grid item xs={12} justifycontent="center" className={classes.imageContainer}>
+							{imageSelected !== null ? (
+								<Paper
+									style={{
+										backgroundImage: `url(${imagePreview})`,
+										backgroundSize: 'cover',
+										backgroundRepeat: 'no-repeat',
+										backgroundPosition: 'center'
+									}}
+									className={classes.media}
+								/>
+							) : (
+								<Paper className={classes.media} />
+							)}
+						</Grid>
+						<Grid item xs={6}>
+							<input type="file" onChange={onFileChange} />
+							<button onClick={onFileUpload}>Upload</button>
+							{/* <label htmlFor="uploadphoto">
 									<TextField
 										fullWidth
 										type="file"
@@ -96,18 +125,18 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 									<Typography variant="body1" color="primary">
 										Upload
 									</Typography>
-								</label>
-							</Grid>
-							<Grid item xs={6}>
-								<IconButton type="submit">
-									<SaveAltIcon color="primary" />
-								</IconButton>
-								<Typography variant="body1" color="primary">
-									Save
-								</Typography>
-							</Grid>
+								</label> */}
 						</Grid>
-					</form>
+						{/* <Grid item xs={6}>
+							<IconButton type="submit">
+								<SaveAltIcon color="primary" />
+							</IconButton>
+							<Typography variant="body1" color="primary">
+								Save
+							</Typography>
+						</Grid> */}
+					</Grid>
+					{/* </form> */}
 				</DialogContent>
 				<DialogActions />
 			</Grid>
