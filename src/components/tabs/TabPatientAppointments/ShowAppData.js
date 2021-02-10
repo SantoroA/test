@@ -1,5 +1,4 @@
 import React from 'react';
-
 import CardAppointment from '../../groups/CardAppointment';
 
 const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToView }) => {

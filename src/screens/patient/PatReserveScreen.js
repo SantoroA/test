@@ -163,8 +163,8 @@ const PatReserveScreen = (props) => {
 		pic:
 			'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 	};
-	const { state: { userId } } = useContext(AuthContext);
-	// const userId = '5fe8b0c48bef090026e253b7';
+	// const { state: { userId } } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
 	const [ medArr, setMedArr ] = useState([]);
@@ -313,6 +313,19 @@ const PatReserveScreen = (props) => {
 
 	console.log(apDoc);
 	console.log('reserve', data);
+	// if (error) {
+	// 	return (
+	// 		<PatLayoutContainer>
+	// 			<Container className={classes.container} maxWidth="md">
+	// 				<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
+	// 					<ArrowBackIcon />
+	// 					<Typography>Back</Typography>
+	// 				</ButtonNoBorder>
+	// 				<Typography>Something went wrong. Please try again later</Typography>
+	// 			</Container>
+	// 		</PatLayoutContainer>
+	// 	);
+	// }
 
 	switch (step) {
 		case 1:
@@ -381,7 +394,7 @@ const PatReserveScreen = (props) => {
 									</TextInputRounder>
 								</Grid>
 								<Grid container className={classes.buttonWrapper}>
-									<Grid item xs={5} sm={3}>
+									{/* <Grid item xs={5} sm={3}>
 										<ButtonNoBorder
 											className={classes.skipButton}
 											onClick={() => {
@@ -391,7 +404,7 @@ const PatReserveScreen = (props) => {
 										>
 											<Typography>Skip question</Typography>
 										</ButtonNoBorder>
-									</Grid>
+									</Grid> */}
 									<Grid item xs={5} sm={3}>
 										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
 											Next <NavigateNextIcon />
@@ -427,7 +440,7 @@ const PatReserveScreen = (props) => {
 										label="Amount"
 										value={symptomTime}
 										variant="outlined"
-										onChange={(e) => setSymptomTime(parseInt(e.target.value))}
+										onChange={(e) => setSymptomTime(e.target.value)}
 									/>
 								</Grid>
 								<Grid item xs={5}>
@@ -644,7 +657,7 @@ const PatReserveScreen = (props) => {
 											placeholder="Enter value (%)"
 											value={oxygenSaturation}
 											variant="outlined"
-											onChange={(e) => setOxygenStaturation(parseInt(e.target.value))}
+											onChange={(e) => setOxygenStaturation(e.target.value)}
 										/>
 									</Grid>
 									<Grid container className={classes.buttonWrapper}>
@@ -687,7 +700,7 @@ const PatReserveScreen = (props) => {
 										label="Amount"
 										value={temperature}
 										variant="outlined"
-										onChange={(e) => setTemperature(parseInt(e.target.value))}
+										onChange={(e) => setTemperature(e.target.value)}
 									/>
 								</Grid>
 								<Grid item sm={5} xs={6}>

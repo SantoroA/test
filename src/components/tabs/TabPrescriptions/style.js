@@ -1,29 +1,29 @@
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
 	root: {
-		flexGrow: 1,
+		display: 'flex',
 		flexDirection: 'column'
+	},
+	header: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginTop: '1rem'
 	},
 	section: {
 		marginTop: '2em'
 	},
+	uploadButton: {
+		paddingTop: '0.6rem',
+		paddingBottom: '0.6rem',
+		paddingRight: '1rem',
+		paddingLeft: '1rem'
+	},
 	title: {
-		fontWeight: 'bold',
-		marginBottom: '1rem'
+		fontWeight: 'bold'
 	},
-	submit: {
-		width: '100%',
-		height: '2.6rem',
-		borderRadius: '1.3rem'
-	},
-	searchContainer: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center'
-	},
-	tableContainer: {
-		marginTop: '2rem'
+	uploadIcon: {
+		marginLeft: '0.5rem'
 	},
 	emptyState: {
 		display: 'flex',
@@ -37,6 +37,13 @@ const useStyles = makeStyles({
 		fontSize: '5rem',
 		marginTop: '1rem'
 	},
+	detail: {
+		fontWeight: 'bold',
+		marginTop: '1rem'
+	},
+	tableHeader: {
+		fontWeight: 'bold'
+	},
 	name: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -44,11 +51,6 @@ const useStyles = makeStyles({
 	},
 	avatar: {
 		marginRight: '1rem'
-	},
-	amount: {
-		fontWeight: 'bold',
-		color: 'rgba(82, 87, 92, 1)'
 	}
 });
-
 export default useStyles;

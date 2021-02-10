@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner';
 import DialogAppointmentDetail from '../../groups/DialogAppoitmentDetail';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
-import EmptyAppState from './EmptyAppState';
+import EmptyAppState from './emptyState';
 import ShowAppData from './ShowAppData';
 //CUSTOM UI
 import CalendarApp from '../../customUi/CalendarApp';
@@ -77,29 +77,7 @@ const TabMyAppointments = () => {
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
 				</Typography>
-				<ShowAppData
-					setDialogAppDetailOpen={setDialogAppDetailOpen}
-					// appointments={[
-					// 	{
-					// 		profileHCPid: 'asdasd',
-					// 		_id: 'asdasd',
-					// 		appointmentTimeStart: new Date(),
-					// 		appointmentTimeEnd: new Date(),
-					// 		profilePatientid: {
-					// 			_id: 'asd',
-					// 			firstName: 'Aline',
-					// 			lastName: 'Santoro'
-					// 		},
-					// 		accountPatientid: {
-					// 			profilePicture:
-					// 				'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-					// 		},
-					// 		amount: 45
-					// 	}
-					// ]}
-					appointments={data.doctorsAppointments}
-					setAppointmentToView={setAppointmentToView}
-				/>
+
 				{loading && (
 					<Container className={classes.emptyState}>
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
