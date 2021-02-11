@@ -1,6 +1,7 @@
 import React from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import useStyles from './style';
+import { Link } from 'react-router-dom';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
@@ -10,8 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 function Row({ value, buttonText }) {
 	const classes = useStyles();
-	const { profilePatientid, start, reasonForVisit, end, amount, idApt, accountPatientid } = value;
-
+	const { profilePatientid, start, reasonForVisit, end, accountPatientid } = value;
 	return (
 		<TableRow>
 			<TableCell align="left" className={classes.name}>
@@ -27,9 +27,19 @@ function Row({ value, buttonText }) {
 				{convertTime(start)} - {convertTime(end)}
 			</TableCell>
 			<TableCell>{reasonForVisit}</TableCell>
-			<TableCell className={classes.amount}>{amount}</TableCell>
 			<TableCell align="left">
-				<ButtonFilled id={idApt}>{buttonText}</ButtonFilled>
+				<ButtonFilled
+					component={Link}
+					className={classes.moreButton}
+					to={{
+						pathname: '/in/doctor/viewpatientprofile',
+						state: {
+							id: profilePatientid._id
+						}
+					}}
+				>
+					{buttonText}
+				</ButtonFilled>
 			</TableCell>
 		</TableRow>
 	);

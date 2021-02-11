@@ -10,7 +10,7 @@ import DocCoachMarkScreen from '../screens/doctor/DocCoachMarkScreen';
 import DocCompleteProfileScreen from '../screens/doctor/DocCompleteProfileScreen';
 import DocHelpScreen from '../screens/doctor/DocHelpScreen';
 import DocMembershipScreen from '../screens/doctor/DocMembershipScreen';
-import DocMyPatientsScreen from '../screens/doctor/DocMyPatientsScreen';
+import DocViewPatProfile from '../screens/doctor/DocViewPatProfile';
 import DocPastAppointmentsScreen from '../screens/doctor/DocPastAppointmentsScreen';
 import DocVideoCallScreen from '../screens/doctor/DocVideoCallScreen';
 import DocVideoPrecallScreen from '../screens/doctor/DocVideoPrecallScreen';
@@ -41,7 +41,7 @@ const PrivateRouteDoctor = () => {
 			<Route path="/in/doctor/coachmark" exact component={DocCoachMarkScreen} />
 			<Route path="/in/doctor/help" exact component={DocHelpScreen} />
 			<Route path="/in/doctor/membership" exact component={DocMembershipScreen} />
-			<Route path="/in/doctor/mypatients" exact component={DocMyPatientsScreen} />
+			<Route path="/in/doctor/viewpatientprofile" exact component={DocViewPatProfile} />
 			<Route path="/in/doctor/pastappointments" exact component={DocPastAppointmentsScreen} />
 			<Route path="/in/doctor/videocall" exact component={DocVideoCallScreen} />
 			<Route path="/in/doctor/videoprecall" exact component={DocVideoPrecallScreen} />
