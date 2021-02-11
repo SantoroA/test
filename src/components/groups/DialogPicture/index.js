@@ -43,11 +43,9 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 		let formData = new FormData();
 		console.log(formData);
 		formData.append('image', 'test');
-		let options = { content: formData };
 		console.log(file);
-		console.log(options);
 		try {
-			dianurseApi.put(`profile/completeprofile/uploadImage/${userId}`, options);
+			dianurseApi.put(`profile/completeprofile/uploadImage/${userId}`, formData);
 		} catch (error) {
 			console.log(error);
 		}
