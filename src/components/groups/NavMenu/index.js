@@ -25,7 +25,7 @@ const NavMenu = () => {
 	const { state: { firstName, image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	console.log(isMobile);
+	// console.log(isMobile);
 	const handleChange = (event) => {
 		setMenuItem(event.currentTarget);
 	};

@@ -18,7 +18,7 @@ const CardMyProfile = () => {
 	const { state: { firstName, lastName, image, specialty, phoneNumber, email } } = useContext(
 		userAmIHCP ? DocProfileContext : PatProfileContext
 	);
-	console.log(specialty);
+	// console.log(specialty);
 	return (
 		<Card elevation={0} className={classes.root}>
 			<CardMedia className={classes.cover} image={image} title={lastName} />

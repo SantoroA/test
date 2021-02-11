@@ -67,8 +67,8 @@ const TabAvailability = () => {
 	const handleChangeIndex = (index) => {
 		setValue(index);
 	};
-	console.log(availableStart, availableEnd);
-	console.log(state);
+	// console.log(availableStart, availableEnd);
+	// console.log(state);
 
 	useEffect(() => {
 		getSlots(userId);
