@@ -89,7 +89,7 @@ const TabMyAppointments = () => {
 				{error && (
 					<Container className={classes.emptyState}>
 						<Typography color="textSecondary" variant="h4">
-							{t("Something_wrong")}
+							{t('Something_wrong.1')}
 						</Typography>
 					</Container>
 				)}

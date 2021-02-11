@@ -4,6 +4,7 @@ import { useQuery, gql } from '@apollo/client';
 import SmartTable from '../../groups/SmartTable';
 import Loader from 'react-loader-spinner';
 import useStyles from './style';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import TextInputRounder from '../../customUi/TextInputRounder';
 import ButtonIcon from '../../customUi/ButtonIcon';
@@ -46,7 +47,7 @@ const EmptyState = () => {
 			</Typography>
 			<EmptyPatientIcon className={classes.icon} />
 			<Typography className={classes.detail} variant="subtitle1">
-				No Patients Yes!
+				No Patients Yet!
 			</Typography>
 		</PaperCustomShadow>
 	);
@@ -62,6 +63,7 @@ const TabMyPatients = () => {
 
 	console.log(data);
 	console.log(userId);
+	const { t , i18n} = useTranslation();
 	// const doctorsPatients = [
 	// {
 	// 	profilePatientid: {
@@ -189,7 +191,7 @@ const TabMyPatients = () => {
 			<Grid container>
 				<Grid item xs={12} sm={6} md={7}>
 					<Typography className={classes.title} variant="h5">
-						My Patients
+						{t('My_Patients.1')}
 					</Typography>
 				</Grid>
 				<Grid item xs={12} sm={6} md={5}>
@@ -200,7 +202,7 @@ const TabMyPatients = () => {
 									type="search"
 									fullWidth
 									id="search-patient"
-									label="Patient Name"
+									label={t("Patient_Name.1")}
 									variant="outlined"
 									value={patientName}
 									onChange={(e) => setPatientName(e.target.value)}
@@ -230,7 +232,7 @@ const TabMyPatients = () => {
 					{error && (
 						<Container className={classes.emptyState}>
 							<Typography color="textSecondary" variant="h4">
-								Something went wrong, please try again later
+								{t("Something_wrong.1")}
 							</Typography>
 						</Container>
 					)}

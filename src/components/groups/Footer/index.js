@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../../assets/dianurse-logo.png';
 import useStyles from './style';
+import { useTranslation } from 'react-i18next';
 //CUSTOM ICON
 import InstagramIcon from '../../customIcons/InstagramIcon';
 import PinterestIcon from '../../customIcons/PinterestIcon';
@@ -15,6 +16,7 @@ import Link from '@material-ui/core/Link';
 
 const Footer = () => {
 	const classes = useStyles();
+	const { t , i18n} = useTranslation();
 	return (
 		<footer className={classes.footer}>
 			<Grid container>
@@ -46,40 +48,40 @@ const Footer = () => {
 				</Grid>
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>COMPANY</Typography>
+						<Typography className={classes.title}>{t('COMPANY.1')}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Terms of Service
+							{t('THERMS_OF_SERVICE.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Privacy Policy
+							{t("PRIVACY_POLICY.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Cookie Policy
+							{t("COOKIE_POLICY.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Cancellation & Refund Policy
+							{t("CANCELLATION.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Sign in as Doctor
+							{t("SIGN_IN_AS_DOCTOR.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Membership
+							{t("MEMBERSHIP.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Tools
+							{t("TOOLS.1")}
 							</Link>
 						</Grid>
 					</Grid>
@@ -87,36 +89,36 @@ const Footer = () => {
 
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>PODCASTS</Typography>
+						<Typography className={classes.title}>{t("PODCASTS.1")}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								About Us
+							{t("ABOUT_US.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Dianurse Blog
+							{t("DIANURSE_BLOG.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Careers
+							{t("CAREERS.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Contact Us
+							{t("CONTACT_US.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-								Help Center & FAQs
+							{t("HELP_CENTER.1")}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Grid container>
 								<Typography className={classes.email}>
-									Email:<a
+								{t("EMAIL.1")}<a
 										href="mailto:support@dianurse.com"
 										target="_top"
 										className={classes.emailLink}
@@ -131,7 +133,7 @@ const Footer = () => {
 
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>PRODUCTS</Typography>
+						<Typography className={classes.title}>{t("PRODUCTS.1")}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
 								Apple
@@ -162,11 +164,7 @@ const Footer = () => {
 				<Grid item xs={12} className={classes.textFooter}>
 					<Grid container>
 						<Typography variant="body2">
-							The telemedicine services made available through Dianurse are provided by licensed
-							physicians practicing within a group of independently owned professional practices
-							collectively known as “Dianurse Professionals”. These professional practices provide
-							services via the Dianurse telehealth platform. Dianurse does not itself provide any
-							physician, mental health or other healthcare provider services.
+						{t("FOOTER_DESC.1")}
 						</Typography>
 					</Grid>
 				</Grid>

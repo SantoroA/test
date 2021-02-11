@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context as AvailabilityContext } from '../../../context/AvailabilityContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import TextInput from '../../customUi/TextInput';
 import ButtonFilled from '../../customUi/ButtonFilled';
@@ -44,7 +45,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 			id: userId
 		});
 	};
-
+	const { t , i18n} = useTranslation();
 	return (
 		<Box border={1} className={classes.form}>
 			{/* <FormControlLabel
@@ -76,7 +77,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 									type="date"
 									value={availableStart}
 									onChange={(e) => e.preventDefault()}
-									label="Availability from"
+									label={t("Availability_from.1")}
 									variant="outlined"
 									InputLabelProps={{
 										shrink: true
@@ -90,7 +91,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 									type="date"
 									value={availableEnd}
 									onChange={(e) => e.preventDefault}
-									label="Availability to"
+									label={t("Availability_to.1")}
 									variant="outlined"
 									InputLabelProps={{
 										shrink: true
@@ -107,7 +108,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 							type="time"
 							value={timeStart}
 							onChange={(e) => setTimeStart(e.target.value)}
-							label="Time from"
+							label={t("Time_from.1")}
 							variant="outlined"
 							InputLabelProps={{
 								shrink: true
@@ -121,7 +122,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 							type="time"
 							value={timeEnd}
 							onChange={(e) => setTimeEnd(e.target.value)}
-							label="Time to"
+							label={t("Time_to.1")}
 							variant="outlined"
 							InputLabelProps={{
 								shrink: true
@@ -130,24 +131,24 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 					</Grid>
 					<Grid item xs={6} className={classes.input}>
 						<FormControl required fullWidth variant="outlined">
-							<InputLabel id="slot-durantion-label">Slot Duration</InputLabel>
+							<InputLabel id="slot-durantion-label">{t("Slot_Duration.1")}</InputLabel>
 							<Select
 								labelId="slot-durantion-label"
 								value={duration}
 								onChange={(e) => setDuration(e.target.value)}
-								label="Slot Duration"
+								label={t("Slot_Duration.1")}
 							>
-								<MenuItem value={15}>15 min</MenuItem>
-								<MenuItem value={30}>30 min</MenuItem>
-								<MenuItem value={45}>45 min</MenuItem>
-								<MenuItem value={60}>1 hour</MenuItem>
+								<MenuItem value={15}>15 {t("Min.1")}</MenuItem>
+								<MenuItem value={30}>30 {t("Min.1")}</MenuItem>
+								<MenuItem value={45}>45 {t("Min.1")}</MenuItem>
+								<MenuItem value={60}>1 {t('Hour.1')}</MenuItem>
 							</Select>
 						</FormControl>
 					</Grid>
 					<Grid item xs={6} className={classes.input}>
 						<CurrencyTextField
 							fullWidth
-							label="Amount"
+							label={t("Amount.1")}
 							variant="outlined"
 							value={amount}
 							currencySymbol="$"
@@ -160,7 +161,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 					<Grid container className={classes.buttons}>
 						<Grid item xs={12} className={classes.button}>
 							<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-								Apply
+								{t("Apply.1")}
 							</ButtonFilled>
 						</Grid>
 					</Grid>
@@ -174,7 +175,7 @@ const FormTimeSlots = ({ weekDay, availableEnd, availableStart }) => {
 								fullWidth
 								disabled
 							>
-								Apply
+								{t("Apply.1")}
 							</ButtonError>
 						</Grid>
 					</Grid>

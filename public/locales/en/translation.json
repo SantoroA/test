@@ -44,6 +44,151 @@
     },
     "Something_wrong": {
         "1": "Something went wrong, please try again later"
+    },
+    "Service_Availability": {
+        "1": "Service Availability"
+    },
+    "Availability_from":{
+        "1": "Availability from"
     }
+    ,
+    "Availability_to":{
+        "1": "Availability to"
+    },
+    "Sun":{
+        "1": "Sun"
+    },
+    "Mon":{
+        "1": "Mon"
+    },
+    "Tue":{
+        "1": "Tue"
+    },
+    "Wed":{
+        "1": "Wed"
+    },
+    "Thu":{
+        "1": "Thu"
+    },
+    "Fri":{
+        "1": "Fri"
+    },
+    "Sat":{
+        "1": "Sat"
+    },
+    "Time_slots_Sunday" : {
+        "1": "Time Slots for Sunday"
+    },
+    "Time_slots_Monday" : {
+        "1": "Time Slots for Monday"
+    },
+    "Time_slots_Tuesday" : {
+        "1": "Time Slots for Tuesday"
+    },
+    "Time_slots_Wednesday" : {
+        "1": "Time Slots for Wednesday"
+    },
+    "Time_slots_Thursday" : {
+        "1": "Time Slots for Thursday"
+    },
+    "Time_slots_Friday" : {
+        "1": "Time Slots for Friday"
+    },
+    "Time_slots_Saturday" : {
+        "1": "Time Slots for Saturday"
+    },
+    "Time_from": {
+        "1": "Time from"
+    },
+    "Time_to": {
+        "1": "Time to"
+    },
+    "Slot_Duration": {
+        "1": "Slot Duration"
+    },
+    "Min" :{
+        "1": "min"
+    },
+    "Hour" :{
+        "1": "hour"
+    },
+    "Amount": {
+        "1": "Amount"
+    },
+    "Apply": {
+        "1": "Apply"
+    },
+    "Patient_Name": {
+        "1": "Patient Name"
+    },
+    "COMPANY" : {
+    "1": "COMPANY"
+    },
+    "THERMS_OF_SERVICE":{
+        "1": "Therms od Service"
+    },
+    "PRIVACY_POLICY":{
+        "1": "Privacy Policy"
+    },
+    "COOKIE_POLICY":{
+        "1": "Cookie Policy"
+    },
+    "CANCELLATION":{
+        "1": "Cancellation & Refund Policy"
+    },
+    "SIGN_IN_AS_DOCTOR":{
+        "1": "Sign in as Doctor"
+    },
+    "MEMBERSHIP":{
+        "1": "Membership"
+    },
+    "TOOLS":{
+        "1": "Tools"
+    },
+    "PODCASTS":{
+        "1": "PODCASTS"
+    },
+    "ABOUT_US":{
+        "1": "About us"
+    },
+    "DIANURSE_BLOG":{
+        "1": "Dianurse Blog"
+    },
+    "CAREERS":{
+        "1": "Careers"
+    },
+    "CONTACT_US":{
+        "1": "Contact us"
+    },
+    "HELP_CENTER":{
+        "1": "Help center & FAQs"
+    },
+    "EMAIL":{
+        "1": "Email:"
+    },
+    "PRODUCTS":{
+        "1": "PRODUCTS"
+    },
+    "APPLE":{
+        "1": "Apple"
+    },
+    "BREAKER":{
+        "1": "Breaker"
+    },
+    "GOOGLE":{
+        "1": "Google"
+    },
+    "SPOTIFY":{
+        "1": "Spotify"
+    },
+    "RADIOPUBLIC":{
+        "1": "RadioPublic"
+    },
+    "FOOTER_DESC":{
+        "1": "The telemedicine services made available through Dianurse are provided by licensed physicians practicing within a group of independently owned professional practices collectively known as “Dianurse Professionals”. These professional practices provide services via the Dianurse telehealth platform. Dianurse does not itself provide any physician, mental health or other healthcare provider services."
+    }
+
+    
+    
 
 }

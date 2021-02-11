@@ -21,7 +21,7 @@ const TabPatientAppointments = () => {
 		<div>
 			<Grid className={classes.root} container>
 				<Paper className={classes.section}>
-					<Typography>My Appointemtns</Typography>
+					<Typography>My Appointments</Typography>
 				</Paper>
 			</Grid>
 		</div>
