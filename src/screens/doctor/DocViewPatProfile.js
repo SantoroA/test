@@ -143,8 +143,8 @@ const DocViewPatProfile = () => {
 		setValue(newValue);
 	};
 	const location = useLocation();
-	const { id } = location.state;
-	console.log(id);
+	// const { id } = location.state;
+	// console.log(id);
 
 	const documents = [
 		{
