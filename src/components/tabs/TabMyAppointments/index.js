@@ -7,6 +7,7 @@ import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
 import EmptyAppState from './EmptyAppState';
 import ShowAppData from './ShowAppData';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import CalendarApp from '../../customUi/CalendarApp';
 //MATERIAL UI
@@ -54,6 +55,7 @@ const TabMyAppointments = () => {
 	console.log(userId);
 	console.log('data', data);
 	console.log(error);
+	const { t , i18n} = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -73,7 +75,7 @@ const TabMyAppointments = () => {
 						/>
 					</Grid>
 				)}
-				<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
+				<Typography variant="subtitle1">{t('Showing_appointment_for.1')}</Typography>
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
 				</Typography>
@@ -87,7 +89,7 @@ const TabMyAppointments = () => {
 				{error && (
 					<Container className={classes.emptyState}>
 						<Typography color="textSecondary" variant="h4">
-							Something went wrong, please try again later
+							{t("Something_wrong")}
 						</Typography>
 					</Container>
 				)}

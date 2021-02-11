@@ -1,0 +1,49 @@
+{
+    "Thanks":{
+        "1": "Thanks"
+    },
+    "Profile_Settings":{
+        "1": "Profile Settings"
+    },
+    "Past_Appointments":{
+        "1":"Past Appointments"
+    },
+    "Membership":{
+        "1":"Membership"
+    },
+    "Help":{
+        "1":"Help"
+    }
+    ,
+    "Logout":{
+        "1":"Logout"
+    },
+    "Reviews":{
+        "1": "reviews"
+    },
+    "Price_from":{
+        "1": "Price from"
+    },
+    "Private_profile": {
+        "1": "Private profile"
+    },
+    "My_Appointments":{
+        "1": "My Appointments"
+    },
+    "My_Patients":{
+        "1": "My Patients"
+    },
+    "My_Earnings":{
+        "1": "My Earnings"
+    },
+    "Availability":{
+        "1": "Availability"
+    },
+    "Showing_appointment_for": {
+        "1": "SHOWING APPOINTMENT FOR"
+    },
+    "Something_wrong": {
+        "1": "Something went wrong, please try again later"
+    }
+
+}

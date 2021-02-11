@@ -9,6 +9,7 @@ import TabMyEarnings from '../../components/tabs/TabMyEarnings';
 import TabAvailability from '../../components/tabs/TabAvailability';
 import PropTypes from 'prop-types';
 import TabCustom from '../../components/customUi/TabCustom';
+import { useTranslation } from 'react-i18next';
 //CUSTOM ICONS
 import CalendarIcon from '../../components/customIcons/CalendarIcon';
 import PeopleIcon from '../../components/customIcons/PeopleIcon';
@@ -47,7 +48,7 @@ const useStyles = makeStyles({
 //TAB PANEL
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
-
+	
 	return (
 		<div
 			role="tabpanel"
@@ -85,6 +86,7 @@ const DocDashboardScreen = () => {
 		setValue(newValue);
 	};
 	let { path } = useRouteMatch();
+	const { t , i18n} = useTranslation();
 	return (
 		<DocLayoutContainer>
 			<Grid container className={classes.userInfo}>
@@ -119,25 +121,25 @@ const DocDashboardScreen = () => {
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<CalendarIcon className={classes.icons} />}
-								label="My Appointments"
+								label={t('My_Appointments.1')}
 								{...a11yProps(0)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<PeopleIcon className={classes.icons} />}
-								label="My Patients"
+								label={t('My_Patients.1')}
 								{...a11yProps(1)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<EarningsIcon className={classes.icons} />}
-								label="My Earnings"
+								label={t('My_Earnings.1')}
 								{...a11yProps(2)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<ClockIcon className={classes.icons} />}
-								label="Availability"
+								label={t('Availability.1')}
 								{...a11yProps(3)}
 							/>
 						</Tabs>

@@ -5,6 +5,7 @@ import { Context as DocProfileContext } from '../../../context/DocProfileContext
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';
 import useStyles from './style';
 import DrawerList from './DrawerList';
+import { useTranslation } from 'react-i18next';
 //CUSTOM ICONS
 import DrawerIcon from '../../customIcons/DrawerIcon';
 //MaterialUI
@@ -33,7 +34,7 @@ const NavMenu = () => {
 	const handleClose = () => {
 		setMenuItem(null);
 	};
-
+	const { t , i18n} = useTranslation();
 	if (isMobile) {
 		return (
 			<div className={classes.drawerIconContainer}>
@@ -72,16 +73,16 @@ const NavMenu = () => {
 					onClose={handleClose}
 				>
 					<MenuItem component={Link} to="/in/doctor/completeprofile" onClick={handleClose}>
-						Profile Settings
+						{t('Profile_Settings.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/doctor/pastappointments" onClick={handleClose}>
-						Past Appointments
+						{t('Past_Appointments.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/doctor/membership" onClick={handleClose}>
-						Membership
+						{t('Membership.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/doctor/help" onClick={handleClose}>
-						Help
+						{t('Help.1')}
 					</MenuItem>
 					<MenuItem
 						component={Link}
@@ -91,7 +92,7 @@ const NavMenu = () => {
 							handleClose();
 						}}
 					>
-						Logout
+						{t('Logout.1')}
 					</MenuItem>
 				</Menu>
 			) : (
@@ -104,16 +105,16 @@ const NavMenu = () => {
 					onClose={handleClose}
 				>
 					<MenuItem component={Link} to="/in/patient/completeprofile" onClick={handleClose}>
-						Profile Settings
+					{t('Profile_Settings.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/patient/pastappointments" onClick={handleClose}>
-						Past Appointments
+					{t('Past_Appointments.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/patient/membership" onClick={handleClose}>
-						Membership
+					{t('Membership.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/patient/help" onClick={handleClose}>
-						Help
+					{t('Help.1')}
 					</MenuItem>
 					<MenuItem
 						component={Link}
@@ -123,7 +124,7 @@ const NavMenu = () => {
 							handleClose();
 						}}
 					>
-						Logout
+						{t('Logout.1')}
 					</MenuItem>
 				</Menu>
 			)}

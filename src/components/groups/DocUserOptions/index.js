@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
@@ -23,18 +24,18 @@ const DocUserOptions = () => {
 	const handleChange = (event) => {
 		setState({ ...state, [event.target.name]: event.target.checked });
 	};
-
+	const { t , i18n} = useTranslation();
 	return (
 		<Paper elevation={0} className={classes.root}>
 			{/* to be dynamic later, the doc should click on reviews */}
 
 			<Rating name="read-only" value={0} readOnly />
-			<Typography variant="subtitle1">(0 reviews)</Typography>
+			<Typography variant="subtitle1">(0 {t('Reviews.1')})</Typography>
 
 			<ButtonFilled>
 				<div className={classes.button}>
 					<Typography variant="body1" className={classes.price}>
-						Price from
+						{t('Price_from.1')}
 					</Typography>
 					<Typography variant="h5">LV 00.00</Typography>
 				</div>
@@ -49,7 +50,7 @@ const DocUserOptions = () => {
 							color="primary"
 						/>
 					}
-					label="Private profile"
+					label={t("Private_profile.1")}
 				/>
 			</FormGroup>
 		</Paper>

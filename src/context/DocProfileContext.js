@@ -1,6 +1,7 @@
 import createDataContext from './createDataContext';
 import { formatFormDate } from '../helpers/dateHelper';
 import dianurseApi from '../api/dianurseApi';
+import { useTranslation } from 'react-i18next';
 
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
@@ -334,7 +335,9 @@ const closeDialog = (dispatch) => () => {
 	dispatch({ type: 'close_dialog' });
 };
 
+	
 export const { Context, Provider } = createDataContext(
+	
 	docProfileReducer,
 	{
 		getSpeciality,

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Context as LanguageContext } from '../../../context/LanguageContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import logo from '../../../assets/dianurse-logo.png';
 import NavMenu from '../NavMenu';
 import { NavLink } from 'react-router-dom';
@@ -25,12 +26,22 @@ export default function ButtonAppBar() {
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	console.log(isMobile);
 	const classes = useStyles();
-	const handleChange = (event) => {
-		changeLanguage(event.target.value);
+	const { t , i18n} = useTranslation();
+	const handleChange = (lang) => {
+		// changeLanguage(event.target.value);
+		i18n.changeLanguage(lang);
+		console.log(" THIS IS THE LANGUAGE", lang);
+	};
+	const handleClick = (lang) => {
+		// changeLanguage(event.target.value);
+		i18n.changeLanguage(lang);
+		console.log(" THIS IS THE LANGUAGE", lang);
 	};
 	const handleChangeCurrency = (event) => {
 		setCurrency(event.target.value);
 	};
+
+	
 
 	return (
 		<div>
@@ -45,7 +56,12 @@ export default function ButtonAppBar() {
 							<img src={logo} alt="Logo" className={classes.img} />
 						</NavLink>
 					)}
-					{/* <FormControl variant="outlined" className={classes.formControl}>
+					
+					
+
+					<button onClick={() => handleClick('en')}>English</button>
+					<button onClick={() => handleClick('bg')}>Bulgarian</button>
+					 {/*<FormControl variant="outlined" className={classes.formControl}>
 						<Select value={language} onChange={handleChange}>
 							<MenuItem value={'en_US'}>English</MenuItem>
 							<MenuItem value={'bg_BG'}>Bulgarian</MenuItem>
