@@ -38,6 +38,9 @@ const useStyles = makeStyles({
 		'&.Mui-selected': {
 			color: '#07B597',
 			backgroundColor: 'transparent'
+		},
+		'&.MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover': {
+			backgroundColor: 'transparent'
 		}
 	},
 	icons: {
