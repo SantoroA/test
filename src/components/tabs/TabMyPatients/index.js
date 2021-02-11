@@ -263,11 +263,11 @@ const TabMyPatients = () => {
 							</Typography>
 						</Container>
 					)}
-					{/* {data && ( */}
-					{doctorsPatients && (
+					{/* {doctorsPatients && ( */}
+					{data && (
 						<div>
-							{/* {data.doctorsPatients.length > 0 ? ( */}
-							{doctorsPatients.length > 0 ? (
+							{/* {doctorsPatients.length > 0 ? ( */}
+							{data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -276,18 +276,17 @@ const TabMyPatients = () => {
 												<TableCell className={classes.tableHeader}>Date</TableCell>
 												<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
 												<TableCell className={classes.tableHeader}>Conditions</TableCell>
+
 												<TableCell />
 											</TableRow>
 										</TableHead>
 										<TableBody>
 											{(rowsPerPage > 0
-												? // ? data.doctorsPatients.slice(
-													doctorsPatients.slice(
+												? data.doctorsPatients.slice(
 														page * rowsPerPage,
 														page * rowsPerPage + rowsPerPage
 													)
-												: // : data.doctorsPatients).map((patient) => {
-													doctorsPatients).map((patient) => {
+												: data.doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
 										</TableBody>
@@ -298,8 +297,8 @@ const TabMyPatients = () => {
 										onChangePage={(e, newPage) => setPage(newPage)}
 										rowsPerPage={rowsPerPage}
 										component="div"
-										// count={data.doctorsPatients.length}
-										count={doctorsPatients.length}
+										count={data.doctorsPatients.length}
+										// count={doctorsPatients.length}
 										onChangeRowsPerPage={handleChangeRowsPerPage}
 									/>
 								</TableContainer>
