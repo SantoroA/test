@@ -19,6 +19,43 @@ const useStyles = makeStyles({
 	},
 	avatar: {
 		marginRight: '0.5rem'
+	},
+	menuList: {
+		padding: '1rem 1rem'
+	},
+
+	drawer: {
+		'& .MuiDrawer-paperAnchorRight': {
+			marginTop: '15%',
+			width: '65%',
+			height: 'fit-content',
+			borderTopLeftRadius: '8px',
+			borderBottomLeftRadius: '8px'
+		}
+	},
+	listItems: {
+		color: '#A0A4A8',
+		'&.Mui-selected': {
+			color: '#07B597',
+			backgroundColor: 'transparent'
+		}
+	},
+	icons: {
+		marginRight: '1.2rem',
+		marginLeft: '0.6rem'
+	},
+	listText: {
+		fontWeight: 'bold'
+	},
+	linkItems: {
+		color: '#111111',
+		'&.Mui-selected': {
+			color: '#07B597',
+			backgroundColor: 'transparent'
+		},
+		'&.MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover': {
+			backgroundColor: 'transparent'
+		}
 	}
 });
 

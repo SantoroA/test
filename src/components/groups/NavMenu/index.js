@@ -4,7 +4,7 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';
 import useStyles from './style';
-import DrawerList from './DrawerList';
+import DrawerList from './list';
 //CUSTOM ICONS
 import DrawerIcon from '../../customIcons/DrawerIcon';
 //MaterialUI
@@ -41,7 +41,12 @@ const NavMenu = () => {
 				<IconButton onClick={() => setDrawerOpen(true)}>
 					<DrawerIcon />
 				</IconButton>
-				<Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+				<Drawer
+					className={classes.drawer}
+					anchor="right"
+					open={drawerOpen}
+					onClose={() => setDrawerOpen(false)}
+				>
 					<DrawerList setDrawerOpen={setDrawerOpen} logout={logout} />
 				</Drawer>
 			</div>

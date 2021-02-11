@@ -39,7 +39,6 @@ const PrivateRouteDoctor = () => {
 	return (
 		<Switch>
 			<Route path="/in/doctor/coachmark" exact component={DocCoachMarkScreen} />
-			<Route path="/in/doctor/completeprofile" exact component={DocCompleteProfileScreen} />
 			<Route path="/in/doctor/help" exact component={DocHelpScreen} />
 			<Route path="/in/doctor/membership" exact component={DocMembershipScreen} />
 			<Route path="/in/doctor/mypatients" exact component={DocMyPatientsScreen} />
@@ -47,6 +46,7 @@ const PrivateRouteDoctor = () => {
 			<Route path="/in/doctor/videocall" exact component={DocVideoCallScreen} />
 			<Route path="/in/doctor/videoprecall" exact component={DocVideoPrecallScreen} />
 			<Route path="/in/doctor/viewprofile" exact component={DocViewPublicProfileScreen} />
+			<Route path="/in/doctor/completeprofile" component={DocCompleteProfileScreen} />
 			<Route path="/in/doctor/dashboard" component={DocDashboardScreen} />
 			<Route path="/" component={LoadingScreen}>
 				{isFirstTimeUser ? <Redirect to="/in/doctor/coachmark" /> : <Redirect to="/in/doctor/dashboard" />}
@@ -60,7 +60,6 @@ const PrivateRoutePatient = () => {
 	return (
 		<Switch>
 			<Route path="/in/patient/coachmark" exact component={PatCoachMarkScreen} />
-			<Route path="/in/patient/completeprofile" exact component={PatCompleteProfileScreen} />
 			<Route path="/in/patient/assistant" exact component={PatAssistantScreen} />
 			<Route path="/in/patient/doctorsearchdetail" exact component={PatDoctorSearchDetailScreen} />
 			<Route path="/in/patient/doctorsearch" exact component={PatDoctorSearchScreen} />
@@ -70,6 +69,7 @@ const PrivateRoutePatient = () => {
 			<Route path="/in/patient/pastappointments" exact component={PatPastAppointmentsScreen} />
 			<Route path="/in/patient/videocall" exact component={PatVideoCallScreen} />
 			<Route path="/in/patient/videoprecall" exact component={PatVideoPrecallScreen} />
+			<Route path="/in/patient/completeprofile" component={PatCompleteProfileScreen} />
 			<Route path="/in/patient/dashboard" component={PatDashboardScreen} />
 			<Route path="/" component={LoadingScreen}>
 				{isFirstTimeUser ? <Redirect to="/in/patient/coachmark" /> : <Redirect to="/in/patient/dashboard" />}
