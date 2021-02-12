@@ -313,15 +313,9 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 		userAmIHCP
 			? (response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
 					userInfo,
-					headers: {
-				         'content-type': 'multipart/form-data'
-					   }
 				}))
 			: (response = await dianurseApi.put(`/profile/patient/completeprofile/${id}`, {
 					userInfo,
-					headers: {
-						'content-type': 'multipart/form-data'
-					  }
 				}));
 		dispatch({
 			type: 'update_image',

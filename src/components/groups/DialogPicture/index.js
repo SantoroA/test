@@ -1,4 +1,4 @@
-import React, { useState, useContext, createRef } from 'react';
+import React, { useState, useContext, createRef, useEffect } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';
@@ -22,11 +22,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
-	const { updateImage, state: { userId, userAmIHCP } } = useContext(AuthContext);
-	// const { state: { image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
+	const { updateImage, state: { userId, userAmIHCP, isSocialMedia } } = useContext(AuthContext);
+	const { state: { image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
 	const [ imageSelected, setImageSelected ] = useState('');
 	const [ imagePreview, setImagePreview ] = useState('');
 	const classes = useStyles();
+// `http://localhost:10101/dianurse/v1/profile/static/images/${action.payload.image}`
 
 	// const handleSubmit = (e) => {
 	// 	e.preventDefault();
@@ -40,14 +41,11 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	// };
 
 	const onFileUpload = (file) => {
-		let formData = new FormData();
-		console.log(formData);
-		formData.append('image', 'test');
-		let options = { content: formData };
-		console.log(file);
-		console.log(options);
+		let  profileImage = new FormData();
+		profileImage.append('profileImage', file);
+		let id = userId
 		try {
-			dianurseApi.put(`profile/completeprofile/uploadImage/${userId}`, options);
+			dianurseApi.put(`profile/completeprofile/uploadImage/${id}`, profileImage);
 		} catch (error) {
 			console.log(error);
 		}
@@ -89,19 +87,19 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 					{/* <Typography>Edit your picture</Typography> */}
 					<Grid container>
 						<Grid item xs={12} justifycontent="center" className={classes.imageContainer}>
-							{imageSelected !== null ? (
+							 {image !== null ? ( 
 								<Paper
 									style={{
-										backgroundImage: `url(${imagePreview})`,
+										backgroundImage: image.includes("http") ?`url(${image})`: `url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`,
 										backgroundSize: 'cover',
 										backgroundRepeat: 'no-repeat',
 										backgroundPosition: 'center'
 									}}
 									className={classes.media}
 								/>
-							) : (
+							 ) : (
 								<Paper className={classes.media} />
-							)}
+							)} 
 						</Grid>
 						<Grid item xs={6}>
 							<input type="file" onChange={onFileChange} />

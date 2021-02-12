@@ -12,22 +12,24 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 
 function Row({ value }) {
 	const classes = useStyles();
-	const { docName, start, end, patComments, docStatus, id, docPic } = value;
+	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, patientComent, docStatus, id, accountHCPid } = value;
+	const filename = value.patientDoc
 
 	return (
 		<TableRow>
 			<TableCell align="left">
 				<div className={classes.name}>
-					<Avatar className={classes.avatar} alt={docName} src={docPic} />
-					{docName}
+					<Avatar className={classes.avatar} alt={profileHCPid.firstName} src={accountHCPid.profilePicture.includes("http") ? accountHCPid.profilePicture : `url(http://localhost:10101/dianurse/v1/profile/static/images/${accountHCPid.profilePicture})`} />
+					{profileHCPid.firstName}
 				</div>
 			</TableCell>
-			<TableCell>{formatDateShort(start)}</TableCell>
+			<TableCell>{formatDateShort(appointmentTimeStart)}</TableCell>
 			<TableCell>
-				{convertTime(start)} - {convertTime(end)}
+				{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
 			</TableCell>
-			<TableCell>{patComments}</TableCell>
+			<TableCell>{patientComent}</TableCell>
 			<TableCell>{docStatus}</TableCell>
+			<a href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${filename}`}>{filename}</a>
 			<TableCell>
 				<IconButton>
 					<EditIcon />
