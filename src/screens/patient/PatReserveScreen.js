@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import StepWizardContainer from '../../components/layout/StepWizardContainer';
-import FormPayment from '../../components/groups/FormPayment';
 import FormSymptoms from '../../components/groups/FormSymptoms';
 import FormMedConditions from '../../components/groups/FormMedConditions';
 import CardAppointment from '../../components/groups/CardAppointment';
