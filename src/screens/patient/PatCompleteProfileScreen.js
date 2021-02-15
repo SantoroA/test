@@ -3,6 +3,7 @@ import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import { NavLink } from 'react-router-dom';
 import FormEmailAndPassword from '../../components/groups/FormEmailAndPassword';
 import FormContactInfo from '../../components/groups/FormContactInfo';
+import { useTranslation } from 'react-i18next';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,12 +29,13 @@ const useStyles = makeStyles({
 
 const PatCompleteProfileScreen = () => {
 	const classes = useStyles();
+	const { t , i18n} = useTranslation();
 	return (
 		<PatLayoutContainer>
 			<Container maxWidth="md">
 				<NavLink to="/in/doctor/dashboard" className={classes.backButton}>
 					<ArrowBackIcon />
-					<Typography>Back to my profile</Typography>
+					<Typography>{t("Back_to_profile.1")}</Typography>
 				</NavLink>
 				<Divider />
 				<Grid container className={classes.section}>

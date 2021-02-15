@@ -48,7 +48,7 @@ const Footer = () => {
 				</Grid>
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>{t('COMPANY.1')}</Typography>
+						<Typography className={classes.title}>{t("PRODUCTS.1")}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
 							{t('THERMS_OF_SERVICE.1')}
@@ -89,7 +89,7 @@ const Footer = () => {
 
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>{t("PODCASTS.1")}</Typography>
+						<Typography className={classes.title}>{t('COMPANY.1')} </Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
 							{t("ABOUT_US.1")}
@@ -133,7 +133,7 @@ const Footer = () => {
 
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>{t("PRODUCTS.1")}</Typography>
+						<Typography className={classes.title}>{t("PODCASTS.1")}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
 								Apple

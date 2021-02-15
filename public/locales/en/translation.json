@@ -186,7 +186,199 @@
     },
     "FOOTER_DESC":{
         "1": "The telemedicine services made available through Dianurse are provided by licensed physicians practicing within a group of independently owned professional practices collectively known as “Dianurse Professionals”. These professional practices provide services via the Dianurse telehealth platform. Dianurse does not itself provide any physician, mental health or other healthcare provider services."
+    },
+    "MY_PROFILE": {
+        "1": "My Profile"
+    },
+    "GENERAL_INFORMATION": {
+        "1": "General Information"
+    },
+    "ABOUT_ME": {
+        "1": "About me"
+    },
+    "DOCUMENTS": {
+        "1": "Documents"
+    },
+    "PRESCRIPTIONS": {
+        "1": "Prescriptions"
+    },
+    "LAB_TESTS": {
+        "1": "Lab Tests"
+    },
+    "SURVEYS": {
+        "1": "Surveys"
+    },
+    "Back_to_profile":{
+        "1": "Back to my profile"
+    },
+    "Name_and_specialty": {
+        "1": "Name and specialty must be filled to appear in searches"
+    },
+    "Email_and_password": {
+        "1": "Email and Password"
+    },
+    "Change_my_password": {
+        "1": "Change my password"
+    },
+    "Change_your_password": {
+        "1": "Change your password"
+    },
+    "Old_password": {
+        "1": "Old Password"
+    },
+    "New_password": {
+        "1": "New Password"
+    },
+    "Confirm_password": {
+        "1": "Confirm Password"
+    },
+    "Cancel": {
+        "1": "Cancel"
+    },
+    "Update": {
+        "1": "Update"
+    },
+    "Contact_information":{
+        "1": "Contact Information"
+    },
+    "Profile": {
+        "1": "Profile"
+    },
+    "Add_information_about": {
+        "1": "Add information about your clinical practice"
+    },
+    "Website_Url":{
+        "1":"Website Url"
+    },
+    "Experience": {
+        "1": "Experience"
+    },
+    "Years_of_experience": {
+        "1": "Years of experience"
+    },
+    "Years_as_specialist": {
+        "1": "Years as a specialist"
+    },
+    "Education": {
+        "1": "Education"
+    },
+    "Information_about_studies":{
+        "1": "Add information about your studies"
+    },
+    "Location": {
+        "1": "Location"
+    },
+    "Country":{
+        "1": "Country"
+    },
+    "City": {
+        "1": "City"
+    },
+    "Zip_Code": {
+        "1": "Zip Code"
+    },
+    "Street":{
+        "1": "Street"
+    },
+    "Apt/Suite/Door": {
+        "1": "Apt/Suite/Door"
+    },
+    "First_Name": {
+        "1": "First name"
+    },
+    "Last_Name": {
+        "1": "Last name"
+    },
+    "Specialty": {
+        "1": "Specialty"
+    },
+    "Gender": {
+        "1": "Gender"
+    },
+    "Male": {
+        "1": "Male"
+    },
+    "Female": {
+        "1": "Female"
+    },
+    "Other": {
+        "1": "Other"
+    },
+    "Prefer_not_to_say": {
+        "1": "Prefer not to say"
+    },
+    "Birthday": {
+        "1": "Birthday"
+    },
+    "Place_of_Birth":{
+        "1": "Place of Birth"
+    },
+    "Search_Doctor": {
+        "1": "Search for a Doctor"
+    },
+    "Meet_assistant": {
+        "1": "Meet the assistant"
+    },
+    "Doctor": {
+        "1": "Doctor"
+    },
+    "Upload_new_document":{
+        "1": "Upload new document"
+    },
+    "Doctor_Name": {
+        "1": "Doctor Name"
+    },
+    "Date": {
+        "1": "Date"
+    },
+    "Appointment_Time": {
+        "1": "Appointment Time"
+    },
+    "Patient_comments":{
+        "1": "Patient comments"
+    },
+    "Document_Status": {
+        "1": "Document Status"
+    },
+    "Save_time": {
+        "1": "Save time! Documents uploaded to your doctor will appear here."
+    },
+    "No_documents_added": {
+        "1": "No Documents Added"
+    },
+    "Here_you_will_see_prescriptions": {
+        "1": "Here you will see your prescriptions and health recommendations"
+    },
+    "No_Prescriptions_Added":{
+        "1": "No Prescriptions Added"
+    },
+    "Here_you_will_see_LabTests": {
+        "1": "Here you will see your lab tests results."
+    },
+    "No_LabTests_Added":{
+        "1": "No Lab tests Added"
+    },
+    "Upload_results":{
+        "1": "Upload results"
+    },
+    "Doctor_comments": {
+        "1": "Doctor comments"
+    },
+    "Here_you_will_see_surveys": {
+        "1": "Here you will see questionnaries and surveys from your doctor."
+    },
+    "No_Surveys_Added":{
+        "1": "No Surveys Added"
+    },
+    "Take_Survey": {
+        "1": "Take Survey"
+    },
+    "View": {
+        "1": "View"
     }
+
+
+
 
     
     

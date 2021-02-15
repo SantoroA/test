@@ -98,7 +98,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}
-			{data ? (
+			{data && (
 				<div>
 					{data.doctors.edges.length > 0 ? (
 						<div className={classes.infoContainer}>
@@ -147,8 +147,6 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 						<EmptyDocState />
 					)}
 				</div>
-			) : (
-				<EmptyDocState />
 			)}
 			{error && (
 				<Container className={classes.emptyState}>

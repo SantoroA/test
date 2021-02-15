@@ -46,6 +46,7 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 					<CardAppointment
 						onSubmit={() => {}}
 						key={appointment._id}
+						showPrice={false}
 						state={{
 							appointment: {
 								amount: appointment.amount,

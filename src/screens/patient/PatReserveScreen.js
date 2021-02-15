@@ -27,6 +27,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles({
 	container: {
@@ -116,12 +117,12 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 		$idApt: ID!
 		$idPatient: ID!
 		$reasonForVisit: String!
-		$symptomTime: Int
+		$symptomTime: String
 		$symptomTimeUnit: String
 		$isTakingMeds: Boolean
 		$hasDrugAllergies: Boolean
-		$oxygenSaturation: Int
-		$temperature: Int
+		$oxygenSaturation: String
+		$temperature: String
 		$tempUnit: String
 		$otherInfo: String
 		$medCondition: [String]
@@ -162,21 +163,19 @@ const PatReserveScreen = (props) => {
 		pic:
 			'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 	};
-	const { state: { userId } } = useContext(AuthContext);
-	// const userId = '5fe8b0c48bef090026e253b7';
+	// const { state: { userId } } = useContext(AuthContext);
+	const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
-	const [ insurancePublic, setInsurancePublic ] = useState(false);
-	const [ insurance, setInsurance ] = useState(1);
 	const [ medArr, setMedArr ] = useState([]);
 	const [ symptomsArr, setSymptomsArr ] = useState([]);
 	const [ reasonForVisit, setReasonForVisit ] = useState('');
-	const [ symptomTime, setSymptomTime ] = useState(0);
+	const [ symptomTime, setSymptomTime ] = useState('');
 	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState('');
 	const [ isTakingMeds, setIsTakingMeds ] = useState(false);
 	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(false);
-	const [ oxygenSaturation, setOxygenStaturation ] = useState(0);
-	const [ temperature, setTemperature ] = useState(0);
+	const [ oxygenSaturation, setOxygenStaturation ] = useState('');
+	const [ temperature, setTemperature ] = useState('');
 	const [ tempUnit, setTempUnit ] = useState('');
 	const [ otherInfo, setOtherInfo ] = useState('');
 	const [ symptoms, setSymptoms ] = useState({
@@ -269,17 +268,9 @@ const PatReserveScreen = (props) => {
 		seasonalAllergies: false,
 		substanceAbuse: false
 	});
-	const [ paymentOptions, setPaymentOptions ] = useState({
-		cardNumber: '',
-		expiration: '',
-		ccv: '',
-		billingZipCode: '',
-		country: ''
-	});
 
 	const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
 		variables: {
-			insurance,
 			reasonForVisit,
 			symptomTime,
 			symptomTimeUnit,
@@ -295,7 +286,7 @@ const PatReserveScreen = (props) => {
 			idApt: appointment.idApt
 		}
 	});
-
+	console.log(error);
 	console.log(data);
 	const nextStep = () => {
 		setStep(step + 1);
@@ -322,13 +313,19 @@ const PatReserveScreen = (props) => {
 
 	console.log(apDoc);
 	console.log('reserve', data);
-
-	if (loading)
-		return (
-			<Container>
-				<Loader type="TailSpin" color="primary" height={80} width={80} />;
-			</Container>
-		);
+	// if (error) {
+	// 	return (
+	// 		<PatLayoutContainer>
+	// 			<Container className={classes.container} maxWidth="md">
+	// 				<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
+	// 					<ArrowBackIcon />
+	// 					<Typography>Back</Typography>
+	// 				</ButtonNoBorder>
+	// 				<Typography>Something went wrong. Please try again later</Typography>
+	// 			</Container>
+	// 		</PatLayoutContainer>
+	// 	);
+	// }
 
 	switch (step) {
 		case 1:
@@ -359,49 +356,63 @@ const PatReserveScreen = (props) => {
 					progress={1}
 				>
 					<Container maxWidth="sm">
-						<Grid className={classes.optionsWrapper} container>
-							<Grid item xs={8}>
-								<TextInputRounder
-									fullWidth
-									id="reason"
-									placeholder="Search for a Reason"
-									select
-									variant="outlined"
-									value={reasonForVisit}
-									onChange={(e) => setReasonForVisit(e.target.value)}
-									InputLabelProps={{
-										shrink: true
-									}}
-								>
-									<MenuItem value="check-up">Check-up</MenuItem>
-									<MenuItem value="emergency">Emergency</MenuItem>
-									<MenuItem value="headache">Headache</MenuItem>
-									<MenuItem value="acne">Acne</MenuItem>
-									<MenuItem value="allergies">Acid Reflux</MenuItem>
-									<MenuItem value="anxiety">Anxiety</MenuItem>
-									<MenuItem value="animal-bite">Animal bite</MenuItem>
-									<MenuItem value="asthma">Asthma</MenuItem>
-									<MenuItem value="cold">Cold</MenuItem>
-									<MenuItem value="covid">Coronavirus (Covid 19) Evaliation</MenuItem>
-									<MenuItem value="cough">Cough</MenuItem>
-									<MenuItem value="depression">Depression</MenuItem>
-									<MenuItem value="high-colesterol">High Cholesterol</MenuItem>
-									<MenuItem value="nasal-congestion">Nasal congestion</MenuItem>
-								</TextInputRounder>
-							</Grid>
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={5} sm={3}>
-									<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
-										<Typography>Skip question</Typography>
-									</ButtonNoBorder>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+							}}
+						>
+							<Grid className={classes.optionsWrapper} container>
+								<Grid item xs={8}>
+									<TextInputRounder
+										fullWidth
+										required
+										id="reason"
+										placeholder="Search for a Reason"
+										select
+										variant="outlined"
+										value={reasonForVisit}
+										onChange={(e) => setReasonForVisit(e.target.value)}
+										InputLabelProps={{
+											shrink: true
+										}}
+									>
+										<MenuItem value="check-up">Check-up</MenuItem>
+										<MenuItem value="emergency">Emergency</MenuItem>
+										<MenuItem value="headache">Headache</MenuItem>
+										<MenuItem value="acne">Acne</MenuItem>
+										<MenuItem value="allergies">Acid Reflux</MenuItem>
+										<MenuItem value="anxiety">Anxiety</MenuItem>
+										<MenuItem value="animal-bite">Animal bite</MenuItem>
+										<MenuItem value="asthma">Asthma</MenuItem>
+										<MenuItem value="cold">Cold</MenuItem>
+										<MenuItem value="covid">Coronavirus (Covid 19) Evaliation</MenuItem>
+										<MenuItem value="cough">Cough</MenuItem>
+										<MenuItem value="depression">Depression</MenuItem>
+										<MenuItem value="high-colesterol">High Cholesterol</MenuItem>
+										<MenuItem value="nasal-congestion">Nasal congestion</MenuItem>
+									</TextInputRounder>
 								</Grid>
-								<Grid item xs={5} sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
+								<Grid container className={classes.buttonWrapper}>
+									{/* <Grid item xs={5} sm={3}>
+										<ButtonNoBorder
+											className={classes.skipButton}
+											onClick={() => {
+												setReasonForVisit('');
+												nextStep();
+											}}
+										>
+											<Typography>Skip question</Typography>
+										</ButtonNoBorder>
+									</Grid> */}
+									<Grid item xs={5} sm={3}>
+										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+											Next <NavigateNextIcon />
+										</ButtonFilled>
+									</Grid>
 								</Grid>
 							</Grid>
-						</Grid>
+						</form>
 					</Container>
 				</StepWizardContainer>
 			);
@@ -411,49 +422,66 @@ const PatReserveScreen = (props) => {
 					step={3}
 					previousStep={previousStep}
 					title="How long have you felt this way?"
-					progress={10}
+					progress={15}
 				>
 					<Container maxWidth="sm">
-						<Grid className={classes.optionsWrapper} container>
-							<Grid item xs={5}>
-								<TextField
-									type="number"
-									fullWidth
-									label="Amount"
-									value={symptomTime}
-									variant="outlined"
-									onChange={(e) => setSymptomTime(parseInt(e.target.value))}
-								/>
-							</Grid>
-							<Grid item xs={5}>
-								<TextField
-									type="number"
-									fullWidth
-									label="Unit"
-									select
-									value={symptomTimeUnit}
-									variant="outlined"
-									onChange={(e) => setSymptomTimeUnit(e.target.value)}
-								>
-									<MenuItem value="hours">Hours</MenuItem>
-									<MenuItem value="days">Days</MenuItem>
-									<MenuItem value="weeks">Weeks</MenuItem>
-									<MenuItem value="months">Months</MenuItem>
-								</TextField>
-							</Grid>
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={5} sm={3}>
-									<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
-										<Typography>Skip question</Typography>
-									</ButtonNoBorder>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+							}}
+						>
+							<Grid className={classes.optionsWrapper} container>
+								<Grid item xs={5}>
+									<TextField
+										type="number"
+										fullWidth
+										required
+										label="Amount"
+										value={symptomTime}
+										variant="outlined"
+										onChange={(e) => setSymptomTime(e.target.value)}
+									/>
 								</Grid>
-								<Grid item xs={5} sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-										Next <NavigateNextIcon />
-									</ButtonFilled>
+								<Grid item xs={5}>
+									<TextField
+										type="number"
+										fullWidth
+										required
+										label="Unit"
+										select
+										value={symptomTimeUnit}
+										variant="outlined"
+										onChange={(e) => setSymptomTimeUnit(e.target.value)}
+									>
+										<MenuItem value="hours">Hours</MenuItem>
+										<MenuItem value="days">Days</MenuItem>
+										<MenuItem value="weeks">Weeks</MenuItem>
+										<MenuItem value="months">Months</MenuItem>
+										<MenuItem value="years">Years</MenuItem>
+									</TextField>
+								</Grid>
+								<Grid container className={classes.buttonWrapper}>
+									<Grid item xs={5} sm={3}>
+										<ButtonNoBorder
+											className={classes.skipButton}
+											onClick={() => {
+												setSymptomTime('');
+												setSymptomTimeUnit('');
+												nextStep();
+											}}
+										>
+											<Typography>Skip question</Typography>
+										</ButtonNoBorder>
+									</Grid>
+									<Grid item xs={5} sm={3}>
+										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+											Next <NavigateNextIcon />
+										</ButtonFilled>
+									</Grid>
 								</Grid>
 							</Grid>
-						</Grid>
+						</form>
 					</Container>
 				</StepWizardContainer>
 			);
@@ -463,38 +491,39 @@ const PatReserveScreen = (props) => {
 					step={4}
 					previousStep={previousStep}
 					title="Do you have any of these symptoms?"
-					progress={20}
+					progress={30}
 				>
 					<Typography color="textSecondary" variant="body1">
 						Please select all that apply
 					</Typography>
 					<Container maxWidth="sm">
-						<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
-						<Grid container className={classes.buttonWrapper}>
-							<Grid item xs={5} sm={3}>
-								<ButtonNoBorder
-									className={classes.skipButton}
-									onClick={() => {
-										scroll.scrollToTop({ delay: 0, duration: 400 });
-										nextStep();
-									}}
-								>
-									<Typography>Skip question</Typography>
-								</ButtonNoBorder>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+								scroll.scrollToTop({ delay: 0, duration: 400 });
+							}}
+						>
+							<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
+							<Grid container className={classes.buttonWrapper}>
+								<Grid item xs={5} sm={3}>
+									<ButtonNoBorder
+										className={classes.skipButton}
+										onClick={() => {
+											scroll.scrollToTop({ delay: 0, duration: 400 });
+											nextStep();
+										}}
+									>
+										<Typography>Skip question</Typography>
+									</ButtonNoBorder>
+								</Grid>
+								<Grid item xs={5} sm={3}>
+									<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+										Next <NavigateNextIcon />
+									</ButtonFilled>
+								</Grid>
 							</Grid>
-							<Grid item xs={5} sm={3}>
-								<ButtonFilled
-									fullWidth
-									className={classes.nextButton}
-									onClick={() => {
-										scroll.scrollToTop({ delay: 0, duration: 400 });
-										nextStep();
-									}}
-								>
-									Next <NavigateNextIcon />
-								</ButtonFilled>
-							</Grid>
-						</Grid>
+						</form>
 					</Container>
 				</StepWizardContainer>
 			);
@@ -504,92 +533,93 @@ const PatReserveScreen = (props) => {
 					step={5}
 					previousStep={previousStep}
 					title="Complete your health profile"
-					progress={30}
+					progress={45}
 				>
 					<Container maxWidth="sm">
-						<PaperCustomShadow className={classes.paper}>
-							<Grid container className={classes.yesNoButtons}>
-								<Grid item xs={12}>
-									<Typography className={classes.sub} variant="h6">
-										Are you currently taking any medications?
-									</Typography>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+								scroll.scrollToTop();
+							}}
+						>
+							<PaperCustomShadow className={classes.paper}>
+								<Grid container className={classes.yesNoButtons}>
+									<Grid item xs={12}>
+										<Typography className={classes.sub} variant="h6">
+											Are you currently taking any medications?
+										</Typography>
+									</Grid>
+									<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
+										<ToggleYesNoButton
+											selected={isTakingMeds}
+											value="is-taking-meds"
+											onClick={() => setIsTakingMeds(!isTakingMeds)}
+										>
+											Yes
+										</ToggleYesNoButton>
+									</Grid>
+									<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
+										<ToggleYesNoButton
+											selected={!isTakingMeds}
+											value="is-not-taking-meds"
+											onClick={() => setIsTakingMeds(!isTakingMeds)}
+										>
+											No
+										</ToggleYesNoButton>
+									</Grid>
 								</Grid>
-								<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
-									<ToggleYesNoButton
-										selected={isTakingMeds}
-										value="is-taking-meds"
-										onClick={() => setIsTakingMeds(!isTakingMeds)}
-									>
-										Yes
-									</ToggleYesNoButton>
+							</PaperCustomShadow>
+							<PaperCustomShadow className={classes.paper}>
+								<Grid container className={classes.yesNoButtons}>
+									<Grid item xs={12}>
+										<Typography className={classes.sub} variant="h6">
+											Do you have any known drug allergies?
+										</Typography>
+									</Grid>
+									<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
+										<ToggleYesNoButton
+											value="has-drug-alergies"
+											selected={hasDrugAllergies}
+											onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
+										>
+											Yes
+										</ToggleYesNoButton>
+									</Grid>
+									<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
+										<ToggleYesNoButton
+											value="doesnt-have-drug-alergies"
+											selected={!hasDrugAllergies}
+											onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
+										>
+											No
+										</ToggleYesNoButton>
+									</Grid>
 								</Grid>
-								<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
-									<ToggleYesNoButton
-										selected={!isTakingMeds}
-										value="is-not-taking-meds"
-										onClick={() => setIsTakingMeds(!isTakingMeds)}
+							</PaperCustomShadow>
+							<FormMedConditions
+								medConditions={medConditions}
+								handleChangeMedCondition={handleChangeMedCondition}
+							/>
+							<Grid container className={classes.buttonWrapper}>
+								<Grid item xs={5} sm={3}>
+									<ButtonNoBorder
+										className={classes.skipButton}
+										onClick={() => {
+											scroll.scrollToTop();
+											nextStep();
+										}}
 									>
-										No
-									</ToggleYesNoButton>
+										<Typography>Skip question</Typography>
+									</ButtonNoBorder>
+								</Grid>
+								<Grid item xs={5} sm={3}>
+									<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+										Next <NavigateNextIcon />
+									</ButtonFilled>
 								</Grid>
 							</Grid>
-						</PaperCustomShadow>
-						<PaperCustomShadow className={classes.paper}>
-							<Grid container className={classes.yesNoButtons}>
-								<Grid item xs={12}>
-									<Typography className={classes.sub} variant="h6">
-										Do you have any known drug allergies?
-									</Typography>
-								</Grid>
-								<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
-									<ToggleYesNoButton
-										value="has-drug-alergies"
-										selected={hasDrugAllergies}
-										onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
-									>
-										Yes
-									</ToggleYesNoButton>
-								</Grid>
-								<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
-									<ToggleYesNoButton
-										value="doesnt-have-drug-alergies"
-										selected={!hasDrugAllergies}
-										onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
-									>
-										No
-									</ToggleYesNoButton>
-								</Grid>
-							</Grid>
-						</PaperCustomShadow>
-						<FormMedConditions
-							medConditions={medConditions}
-							handleChangeMedCondition={handleChangeMedCondition}
-						/>
-						<Grid container className={classes.buttonWrapper}>
-							<Grid item xs={5} sm={3}>
-								<ButtonNoBorder
-									className={classes.skipButton}
-									onClick={() => {
-										scroll.scrollToTop();
-										nextStep();
-									}}
-								>
-									<Typography>Skip question</Typography>
-								</ButtonNoBorder>
-							</Grid>
-							<Grid item xs={5} sm={3}>
-								<ButtonFilled
-									fullWidth
-									className={classes.nextButton}
-									onClick={() => {
-										scroll.scrollToTop();
-										nextStep();
-									}}
-								>
-									Next <NavigateNextIcon />
-								</ButtonFilled>
-							</Grid>
-						</Grid>
+						</form>
 					</Container>
 				</StepWizardContainer>
 			);
@@ -599,7 +629,7 @@ const PatReserveScreen = (props) => {
 					step={6}
 					previousStep={previousStep}
 					title="Add your oxigen saturation level"
-					progress={40}
+					progress={60}
 				>
 					<Typography color="textSecondary" variant="body1">
 						If you have a pulse oximeter, save time by measuring you current oxygen saturation before your
@@ -607,22 +637,85 @@ const PatReserveScreen = (props) => {
 					</Typography>
 
 					<Container maxWidth="sm">
-						<PaperCustomShadow className={classes.paper}>
-							<Grid container className={classes.yesNoButtons}>
-								<Grid item xs={12}>
-									<Typography className={classes.sub} variant="h6">
-										Oxygen Saturation Level
-									</Typography>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+							}}
+						>
+							<PaperCustomShadow className={classes.paper}>
+								<Grid container className={classes.yesNoButtons}>
+									<Grid item xs={12}>
+										<Typography className={classes.sub} variant="h6">
+											Oxygen Saturation Level
+										</Typography>
+									</Grid>
+									<Grid className={classes.buttonOutlined} item xs={9}>
+										<TextField
+											type="number"
+											fullWidth
+											placeholder="Enter value (%)"
+											value={oxygenSaturation}
+											variant="outlined"
+											onChange={(e) => setOxygenStaturation(e.target.value)}
+										/>
+									</Grid>
+									<Grid container className={classes.buttonWrapper}>
+										<Grid item xs={5} sm={3}>
+											<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+												<Typography>Skip question</Typography>
+											</ButtonNoBorder>
+										</Grid>
+										<Grid item xs={5} sm={3}>
+											<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+												Next <NavigateNextIcon />
+											</ButtonFilled>
+										</Grid>
+									</Grid>
 								</Grid>
-								<Grid className={classes.buttonOutlined} item xs={9}>
+							</PaperCustomShadow>
+						</form>
+					</Container>
+				</StepWizardContainer>
+			);
+		case 7:
+			return (
+				<StepWizardContainer step={7} previousStep={previousStep} title="Add your temperature" progress={75}>
+					<Typography color="textSecondary" variant="body1">
+						If you have a thermometer, adding your temperature now will save time during your visit. No
+						guessing please!
+					</Typography>
+					<Container maxWidth="sm">
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+							}}
+						>
+							<Grid className={classes.optionsWrapper} spacing={1} container>
+								<Grid item sm={5} xs={6}>
 									<TextField
 										type="number"
 										fullWidth
-										placeholder="Enter value (%)"
-										value={oxygenSaturation}
+										label="Amount"
+										value={temperature}
 										variant="outlined"
-										onChange={(e) => setOxygenStaturation(parseInt(e.target.value))}
+										onChange={(e) => setTemperature(e.target.value)}
 									/>
+								</Grid>
+								<Grid item sm={5} xs={6}>
+									<TextField
+										type="number"
+										fullWidth
+										label="Unit"
+										select
+										value={tempUnit}
+										variant="outlined"
+										onChange={(e) => setTempUnit(e.target.value)}
+									>
+										<MenuItem value="celsius">Celsius</MenuItem>
+										<MenuItem value="fahrenheit">Fahrenheit</MenuItem>
+									</TextField>
 								</Grid>
 								<Grid container className={classes.buttonWrapper}>
 									<Grid item xs={5} sm={3}>
@@ -631,48 +724,34 @@ const PatReserveScreen = (props) => {
 										</ButtonNoBorder>
 									</Grid>
 									<Grid item xs={5} sm={3}>
-										<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
 											Next <NavigateNextIcon />
 										</ButtonFilled>
 									</Grid>
 								</Grid>
 							</Grid>
-						</PaperCustomShadow>
+						</form>
 					</Container>
 				</StepWizardContainer>
 			);
-		case 7:
+		case 8:
 			return (
-				<StepWizardContainer step={7} previousStep={previousStep} title="Add your temperature" progress={50}>
+				<StepWizardContainer step={8} previousStep={previousStep} title="Add other details" progress={90}>
 					<Typography color="textSecondary" variant="body1">
-						If you have a thermometer, adding your temperature now will save time during your visit. No
-						guessing please!
+						Please incluse any other detail you want to tell the doctor
 					</Typography>
 					<Container maxWidth="sm">
-						<Grid className={classes.optionsWrapper} spacing={1} container>
-							<Grid item sm={5} xs={6}>
+						<form onSubmit={nextStep}>
+							<Grid container className={classes.section}>
 								<TextField
-									type="number"
+									rows={4}
+									multiline
 									fullWidth
-									label="Amount"
-									value={temperature}
+									value={otherInfo}
+									onChange={(e) => setOtherInfo(e.target.value)}
 									variant="outlined"
-									onChange={(e) => setTemperature(parseInt(e.target.value))}
+									placeholder="please type here any extra information that you want the doctor to know..."
 								/>
-							</Grid>
-							<Grid item sm={5} xs={6}>
-								<TextField
-									type="number"
-									fullWidth
-									label="Unit"
-									select
-									value={tempUnit}
-									variant="outlined"
-									onChange={(e) => setTempUnit(e.target.value)}
-								>
-									<MenuItem value="celsius">Celsius</MenuItem>
-									<MenuItem value="fahrenheit">Fahrenheit</MenuItem>
-								</TextField>
 							</Grid>
 							<Grid container className={classes.buttonWrapper}>
 								<Grid item xs={5} sm={3}>
@@ -681,45 +760,12 @@ const PatReserveScreen = (props) => {
 									</ButtonNoBorder>
 								</Grid>
 								<Grid item xs={5} sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
+									<ButtonFilled fullWidth className={classes.nextButton} type="submit">
 										Next <NavigateNextIcon />
 									</ButtonFilled>
 								</Grid>
 							</Grid>
-						</Grid>
-					</Container>
-				</StepWizardContainer>
-			);
-		case 8:
-			return (
-				<StepWizardContainer step={8} previousStep={previousStep} title="Add other details" progress={60}>
-					<Typography color="textSecondary" variant="body1">
-						Please incluse any other detail you want to tell the doctor
-					</Typography>
-					<Container maxWidth="sm">
-						<Grid container className={classes.section}>
-							<TextField
-								rows={4}
-								multiline
-								fullWidth
-								value={otherInfo}
-								onChange={(e) => setOtherInfo(e.target.value)}
-								variant="outlined"
-								placeholder="please type here any extra information that you want the doctor to know..."
-							/>
-						</Grid>
-						<Grid container className={classes.buttonWrapper}>
-							<Grid item xs={5} sm={3}>
-								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
-									<Typography>Skip question</Typography>
-								</ButtonNoBorder>
-							</Grid>
-							<Grid item xs={5} sm={3}>
-								<ButtonFilled fullWidth className={classes.nextButton} onClick={nextStep}>
-									Next <NavigateNextIcon />
-								</ButtonFilled>
-							</Grid>
-						</Grid>
+						</form>
 					</Container>
 				</StepWizardContainer>
 			);
@@ -729,7 +775,7 @@ const PatReserveScreen = (props) => {
 					step={10}
 					previousStep={previousStep}
 					title="Here are your appointment details!"
-					progress={80}
+					progress={100}
 				>
 					<Typography className={classes.sub} variant="h5">
 						Review and confirm
@@ -764,10 +810,12 @@ const PatReserveScreen = (props) => {
 								},
 								name: apDoc.lastName,
 								pic: apDoc.pic,
-								buttonText: 'Pay',
+								buttonText: 'Book',
 								title: 'Doctor'
 							}}
+							showPrice={true}
 							onSubmit={(e) => {
+								e.preventDefault();
 								appointmentAdd();
 								nextStep();
 								setTimeout(() => {
@@ -786,53 +834,66 @@ const PatReserveScreen = (props) => {
 			return (
 				<PatLayoutContainer>
 					{/* <ButtonFilled onClick={() => setConfettiTrigger(true)}>TriggerConfetti</ButtonFilled> */}
-					<Container className={classes.container} maxWidth="md">
-						{/* <ButtonNoBorder onClick={previousStep} className={classes.backButton}>
-							<ArrowBackIcon />
-							<Typography>Back</Typography>
-						</ButtonNoBorder> */}
-						<Typography className={classes.title} color="primary" variant="h3">
-							Completed
-						</Typography>
-						<Confetti
-							className={classes.confetti}
-							active={confettiTrigger}
-							config={{
-								angle: 90,
-								spread: 100,
-								startVelocity: 150,
-								elementCount: 400,
-								dragFriction: 0.5,
-								duration: 4000,
-								stagger: 30,
-								width: '10px',
-								height: '10px',
-								perspective: '1000px',
-								colors: [ '#45B688', '#4360A8', '#31C8E0' ]
-							}}
-						/>
 
-						<CompletedIcon className={classes.completedIcon} />
-						<Typography color="textSecondary" variant="body2">
-							The appointment has been added to your Bookings in your profile.
-						</Typography>
-						<Container maxWidth="sm" className={classes.sectionReview}>
-							<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
-							<Typography color="primary" className={classes.sub} variant="h5">
-								{dateDisplay}
-							</Typography>
-							<CardAppointment
-								state={{
-									appointment: appointment,
-									name: apDoc.lastName,
-									pic: apDoc.pic,
-									buttonText: 'View',
-									title: 'Doctor'
-								}}
-								onSubmit={nextStep}
-							/>
+					{loading && (
+						<Container className={classes.container} maxWidth="md">
+							<Loader type="TailSpin" color="primary" height={80} width={80} />
 						</Container>
-					</Container>
+					)}
+					{error && (
+						<Container className={classes.container} maxWidth="md">
+							<ButtonNoBorder onClick={previousStep} className={classes.backButton}>
+								<ArrowBackIcon />
+								<Typography>Back</Typography>
+							</ButtonNoBorder>
+							<Typography>Something went wrong. Please try again later</Typography>
+						</Container>
+					)}
+					{data && (
+						<Container className={classes.container} maxWidth="md">
+							<Typography className={classes.title} color="primary" variant="h3">
+								Completed
+							</Typography>
+							<Confetti
+								className={classes.confetti}
+								active={confettiTrigger}
+								config={{
+									angle: 90,
+									spread: 100,
+									startVelocity: 150,
+									elementCount: 400,
+									dragFriction: 0.5,
+									duration: 4000,
+									stagger: 30,
+									width: '10px',
+									height: '10px',
+									perspective: '1000px',
+									colors: [ '#45B688', '#4360A8', '#31C8E0' ]
+								}}
+							/>
+
+							<CompletedIcon className={classes.completedIcon} />
+							<Typography color="textSecondary" variant="body2">
+								The appointment has been added to your Bookings in your profile.
+							</Typography>
+							<Container maxWidth="sm" className={classes.sectionReview}>
+								<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
+								<Typography color="primary" className={classes.sub} variant="h5">
+									{dateDisplay}
+								</Typography>
+								<CardAppointment
+									state={{
+										appointment: appointment,
+										name: apDoc.lastName,
+										pic: apDoc.pic,
+										buttonText: 'View',
+										title: 'Doctor'
+									}}
+									onSubmit={nextStep}
+								/>
+							</Container>
+						</Container>
+					)}
 				</PatLayoutContainer>
 			);
 	}

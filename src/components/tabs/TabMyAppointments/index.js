@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner';
 import DialogAppointmentDetail from '../../groups/DialogAppoitmentDetail';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
-import EmptyAppState from './EmptyAppState';
+import EmptyAppState from './emptyState';
 import ShowAppData from './ShowAppData';
 import { useTranslation } from 'react-i18next';
 //CUSTOM UI
@@ -51,6 +51,7 @@ const TabMyAppointments = () => {
 	});
 	// console.log(date);
 	// console.log(formatFormDate(date));
+	// console.log(new Date(`${formatFormDate(date)}T00:00:00`));
 	// console.log(new Date(formatFormDate(date)));
 	console.log(userId);
 	console.log('data', data);
@@ -68,7 +69,7 @@ const TabMyAppointments = () => {
 							variant="filled"
 							className={classes.datePickerMobile}
 							value={formatFormDate(date)}
-							onChange={(e) => setDate(new Date(e.target.value))}
+							onChange={(e) => setDate(new Date(`${e.target.value}T00:00:00`))}
 							InputProps={{
 								disableUnderline: true
 							}}

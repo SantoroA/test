@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -33,13 +34,13 @@ const FormExperience = () => {
 			yearsSpecialist
 		});
 	};
-
+	const { t , i18n} = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
-						<Typography variant="h6">Experience</Typography>
+						<Typography variant="h6">{t("Experience.1")}</Typography>
 						<IconButton onClick={() => setIsDisabled(false)}>
 							<EditIcon />
 						</IconButton>
@@ -60,7 +61,7 @@ const FormExperience = () => {
 									type="number"
 									value={yearsExperience}
 									onChange={(e) => setYearsExperience(e.target.value)}
-									label="Years of experience"
+									label={t("Years_of_experience.1")}
 									variant="outlined"
 									InputProps={{
 										startAdornment: (
@@ -78,7 +79,7 @@ const FormExperience = () => {
 									type="number"
 									value={yearsSpecialist}
 									onChange={(e) => setYearsSpecialist(e.target.value)}
-									label="Years as a specialist"
+									label={t("Years_as_specialist.1")}
 									variant="outlined"
 									InputProps={{
 										startAdornment: (
@@ -103,12 +104,12 @@ const FormExperience = () => {
 										fullWidth
 										variant="outlined"
 									>
-										Cancel
+										{t("Cancel.1")}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-										Update
+									{t("Update.1")}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

@@ -4,6 +4,7 @@ import { Context as PatProfileContext } from '../../../context/PatProfileContext
 import { Context as AuthContext } from '../../../context/AuthContext';
 import ReactPhoneInput from 'react-phone-input-mui';
 import useStyles from './style';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -66,13 +67,13 @@ const FormContactInfo = () => {
 			birthPlace
 		});
 	};
-
+	const { t , i18n} = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
-						<Typography variant="h6">Contact Information</Typography>
+						<Typography variant="h6">{t("Contact_information.1")}</Typography>
 						<IconButton onClick={() => setIsDisabled(false)}>
 							<EditIcon />
 						</IconButton>
@@ -94,7 +95,7 @@ const FormContactInfo = () => {
 									required
 									value={firstName}
 									onChange={(e) => setFirstName(e.target.value)}
-									label="First name"
+									label={t("First_Name.1")}
 									variant="outlined"
 								/>
 							</Grid>
@@ -106,21 +107,21 @@ const FormContactInfo = () => {
 									type="text"
 									value={lastName}
 									onChange={(e) => setLasttName(e.target.value)}
-									label="Last name"
+									label={t("Last_Name.1")}
 									variant="outlined"
 								/>
 							</Grid>
 							{userAmIHCP && (
 								<Grid item xs={12} sm={12} className={classes.input}>
 									<FormControl variant="outlined" fullWidth>
-										<InputLabel id="specialty-label">Specialty</InputLabel>
+										<InputLabel id="specialty-label">{t("Specialty.1")}</InputLabel>
 										<Select
 											disabled={isDisabled}
 											required
 											labelId="specialty-label"
 											value={specialty}
 											onChange={(e) => setSpecialty(e.target.value)}
-											label="Specialty"
+											label={t("Specialty.1")}
 										>
 											{state.allSpecialty !== 'undefined' ? (
 												state.allSpecialty.map((el, i) => {
@@ -137,17 +138,17 @@ const FormContactInfo = () => {
 							)}
 							<Grid item xs={12} sm={6} className={classes.input}>
 								<FormControl variant="outlined" fullWidth>
-									<InputLabel id="gender-label">Gender</InputLabel>
+									<InputLabel id="gender-label">{t("Gender.1")}</InputLabel>
 									<Select
 										disabled={isDisabled}
 										value={gender}
 										onChange={(e) => setGender(parseInt(e.target.value))}
-										label="Gender"
+										label={t("Gender.1")}
 									>
-										<MenuItem value={0}>Male</MenuItem>
-										<MenuItem value={1}>Female</MenuItem>
-										<MenuItem value={2}>Other</MenuItem>
-										<MenuItem value={3}>Prefer not to say</MenuItem>
+										<MenuItem value={0}>{t("Male.1")}</MenuItem>
+										<MenuItem value={1}>{t("Female.1")}</MenuItem>
+										<MenuItem value={2}>{t("Other.1")}</MenuItem>
+										<MenuItem value={3}>{t("Prefer_not_to_say.1")}</MenuItem>
 									</Select>
 								</FormControl>
 							</Grid>
@@ -175,7 +176,7 @@ const FormContactInfo = () => {
 									value={birthday}
 									disabled={isDisabled}
 									onChange={(e) => setBirthday(e.target.value)}
-									label="Birthday"
+									label={t("Birthday.1")}
 									variant="outlined"
 									InputLabelProps={{
 										shrink: true
@@ -189,7 +190,7 @@ const FormContactInfo = () => {
 									disabled={isDisabled}
 									value={birthPlace}
 									onChange={(e) => setbirthPlace(e.target.value)}
-									label="Place of Birth"
+									label={t("Place_of_Birth.1")}
 									variant="outlined"
 								/>
 							</Grid>
@@ -205,12 +206,12 @@ const FormContactInfo = () => {
 										fullWidth
 										variant="outlined"
 									>
-										Cancel
+										{t("Cancel.1")}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-										Update
+									{t("Update.1")}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

@@ -103,7 +103,8 @@ const FormSearchDoctor = () => {
 							type="date"
 							variant="outlined"
 							value={filterState.date}
-							onChange={(e) => setFilterState({ ...filterState, date: e.target.value })}
+							onChange={(e) =>
+								setFilterState({ ...filterState, date: new Date(`${e.target.value}T00:00:00`) })}
 							InputLabelProps={{
 								shrink: true
 							}}

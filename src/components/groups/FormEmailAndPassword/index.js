@@ -4,6 +4,7 @@ import { Context as PatProfileContext } from '../../../context/PatProfileContext
 import { Context as AuthContext } from '../../../context/AuthContext';
 import useStyles from './style';
 import DialogPicture from '../DialogPicture';
+import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -52,7 +53,7 @@ const FormEmailAndPassword = () => {
 			// image
 		});
 	};
-
+	const { t , i18n} = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
@@ -78,7 +79,7 @@ const FormEmailAndPassword = () => {
 					</Box>
 
 					<Grid item className={classes.title}>
-						<Typography variant="h5">Email and Password</Typography>
+						<Typography variant="h5">{t("Email_and_password.1")}</Typography>
 					</Grid>
 					<Grid item className={classes.emailField}>
 						<TextField
@@ -103,7 +104,7 @@ const FormEmailAndPassword = () => {
 									color="primary"
 									className={classes.submit}
 								>
-									Change my password
+									{t("Change_my_password.1")}
 								</ButtonFilled>
 							</Grid>
 						</Grid>
@@ -117,14 +118,14 @@ const FormEmailAndPassword = () => {
 							className={classes.form}
 						>
 							<Grid className={classes.input}>
-								<Typography variant="h6">Change your password</Typography>
+								<Typography variant="h6">{t("Change_your_password.1")}</Typography>
 								<TextValidator
 									fullWidth
 									type="password"
 									required
 									value={oldPassword}
 									onChange={(e) => setOldPassword(e.target.value)}
-									label="Old Password"
+									label={t("Old_password.1")}
 									variant="outlined"
 									validators={[ 'required' ]}
 								/>
@@ -136,7 +137,7 @@ const FormEmailAndPassword = () => {
 									required
 									value={newPassword}
 									onChange={(e) => setNewPassword(e.target.value)}
-									label="New Password"
+									label={t("New_password.1")}
 									variant="outlined"
 									validators={[ 'required' ]}
 								/>
@@ -148,7 +149,7 @@ const FormEmailAndPassword = () => {
 									required
 									value={newPasswordMatch}
 									onChange={(e) => setNewPasswordMatch(e.target.value)}
-									label="Confirm Password"
+									label={t("Confirm_password.1")}
 									variant="outlined"
 									validators={[ 'isPasswordMatch', 'required' ]}
 									errorMessages={[ 'password mismatch', 'this field is required' ]}
@@ -161,7 +162,7 @@ const FormEmailAndPassword = () => {
 										fullWidth
 										variant="outlined"
 									>
-										Cancel
+										{t("Cancel.1")}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
@@ -172,7 +173,7 @@ const FormEmailAndPassword = () => {
 										color="primary"
 										className={classes.submit}
 									>
-										Update
+										{t("Update.1")}
 									</ButtonFilled>
 								</Grid>
 							</Grid>
