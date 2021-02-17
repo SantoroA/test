@@ -17,25 +17,25 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
- const MYAPPOINTMENTS_QUERY = gql`
- 	query GetAppointments($date: String!, $id: ID!) {
- 		patientAppointments(date: $date, id: $id) {
- 			profilePatientid
- 			_id
- 			appointmentTimeStart
- 			appointmentTimeEnd
- 			profileHCPid {
- 				_id
- 				firstName
- 				lastName
- 			}
- 			accountHCPid {
- 				profilePicture
- 			}
- 			amount
- 		}
- 	}
- `;
+const MYAPPOINTMENTS_QUERY = gql`
+	query GetAppointments($date: String!, $id: ID!) {
+		patientAppointments(date: $date, id: $id) {
+			profilePatientid
+			_id
+			appointmentTimeStart
+			appointmentTimeEnd
+			profileHCPid {
+				_id
+				firstName
+				lastName
+			}
+			accountHCPid {
+				profilePicture
+			}
+			amount
+		}
+	}
+`;
 
 const TabPatientAppointments = () => {
 	const classes = useStyles();
@@ -96,7 +96,7 @@ const TabPatientAppointments = () => {
 					]}
 					setAppointmentToView={setAppointmentToView}
 				/> */}
-				 {loading && (
+				{loading && (
 					<Container className={classes.emptyState}>
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
 					</Container>
@@ -127,7 +127,7 @@ const TabPatientAppointments = () => {
 										profileHCPid: {
 											_id: data.patientAppointments[0].profileHCPid._id,
 											firstName: data.patientAppointments[0].profileHCPid.firstName,
-											lastName: data.patientAppointments[0].profileHCPid.lastName,
+											lastName: data.patientAppointments[0].profileHCPid.lastName
 										},
 										amount: data.patientAppointments[0].amount
 									}
@@ -149,21 +149,21 @@ const TabPatientAppointments = () => {
 			{appointmentToView && (
 				<DialogAppointmentDetail
 					//  appointment={appointmentToView}
-					  appointment={{
-					  	profilePatientid: appointmentToView.profilePatientid,
-					  	_id: appointmentToView._id,
-					  	appointmentTimeStart: appointmentToView.appointmentTimeStart,
-					  	appointmentTimeEnd: appointmentToView.appointmentTimeEnd,
-					  	profileHCPid: {
-					  		_id: appointmentToView.profileHCPid._id,
-					  		firstName: appointmentToView.profileHCPid.firstName,
-					  		lastName: appointmentToView.profileHCPid.lastName
-					  	},
-					  	accountHCPid: {
-					  		profilePicture: appointmentToView.accountHCPid.profilePicture		  			
-					  	},
-					  	amount: appointmentToView.amount
-					  }}
+					appointment={{
+						profilePatientid: appointmentToView.profilePatientid,
+						_id: appointmentToView._id,
+						appointmentTimeStart: appointmentToView.appointmentTimeStart,
+						appointmentTimeEnd: appointmentToView.appointmentTimeEnd,
+						profileHCPid: {
+							_id: appointmentToView.profileHCPid._id,
+							firstName: appointmentToView.profileHCPid.firstName,
+							lastName: appointmentToView.profileHCPid.lastName
+						},
+						accountHCPid: {
+							profilePicture: appointmentToView.accountHCPid.profilePicture
+						},
+						amount: appointmentToView.amount
+					}}
 					isOpen={dialogAppDetailOpen}
 					close={() => {
 						setDialogAppDetailOpen(false);
