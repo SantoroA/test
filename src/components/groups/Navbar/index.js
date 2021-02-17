@@ -32,7 +32,7 @@ export default function Navbar() {
   // console.log(isMobile);
   const classes = useStyles();
   const { t, i18n } = useTranslation();
-  const [lang, setLang] = React.useState("en_US");
+  const [lang, setLang] = useState("en_US");
 
   const handleChange = (event) => {
     setLang(event.target.value);
