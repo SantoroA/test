@@ -6,10 +6,8 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import ErrorMessage from '../../groups/ErrorMessage';
-
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
-import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -21,7 +19,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import PublishIcon from '@material-ui/icons/Publish';
 
 const LABTEST_QUERY = gql`
 	query GetAppointments($idPatient: ID!) {
@@ -78,7 +75,7 @@ const TabLabTests = () => {
 			},
 			labTest: {
 				patientResult: [],
-				doctorRequest: [ 2, 3, 4, 5 ]
+				doctorRequest: [ 1, 2 ]
 			},
 			_id: 'sfwefwefadaawef'
 		},
@@ -127,7 +124,7 @@ const TabLabTests = () => {
 			},
 			labTest: {
 				patientResult: [],
-				doctorRequest: [ 2, 3 ]
+				doctorRequest: [ 1, 2 ]
 			},
 
 			_id: 'sfwefwfvfdefawef'
@@ -148,54 +145,57 @@ const TabLabTests = () => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{/* {data && ( */}
-			<div>
-				{/* {data.patientLabTest.length > 0 ? ( */}
-				<TableContainer className={classes.section} component={PaperCustomShadow}>
-					<Table className={classes.table}>
-						<TableHead>
-							<TableRow>
-								<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-								<TableCell className={classes.tableHeader}>Date</TableCell>
-								<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
+			{data && (
+				<div>
+					{data.patientLabTest.length > 0 ? (
+						<TableContainer className={classes.section} component={PaperCustomShadow}>
+							<Table className={classes.table}>
+								<TableHead>
+									<TableRow>
+										<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
+										<TableCell className={classes.tableHeader}>Date</TableCell>
+										<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
 
-								<TableCell />
-							</TableRow>
-						</TableHead>
-						{/* <TableBody>
-							{(rowsPerPage > 0
-								? data.patientLabTest.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								: data.patientLabTest).map((apt) =>
-								apt.labTest.doctorRequest.filter((el) => el !== null).map((test) => {
-									return <Row value={test} appointment={apt} key={test._id} />;
-								})
-							)}
-						</TableBody> */}
-						<TableBody>
-							{(rowsPerPage > 0
-								? appointments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								: appointments).map((apt) =>
-								apt.labTest.doctorRequest.filter((el) => el !== null).map((test, i) => {
-									return <Row value={test} appointment={apt} key={i} />;
-								})
-							)}
-						</TableBody>
-					</Table>
-					{/* <TablePagination
-						rowsPerPageOptions={[ 5, 10, 20 ]}
-						page={page}
-						onChangePage={(e, newPage) => setPage(newPage)}
-						rowsPerPage={rowsPerPage}
-						component="div"
-						count={data.patientLabTest.length}
-						onChangeRowsPerPage={handleChangeRowsPerPage}
-					/> */}
-				</TableContainer>
-				{/* ) : (
+										<TableCell />
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{(rowsPerPage > 0
+										? data.patientLabTest.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+										: data.patientLabTest).map((apt) =>
+										apt.labTest.doctorRequest.filter((el) => el !== null).map((test) => {
+											return <Row value={test} appointment={apt} key={test._id} />;
+										})
+									)}
+								</TableBody>
+								{/* <TableBody>
+									{(rowsPerPage > 0
+										? appointments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+										: appointments).map((apt) =>
+										apt.labTest.doctorRequest.filter((el) => el !== null).map((test, i) => {
+											return <Row value={test} appointment={apt} key={i} />;
+										})
+									)}
+								</TableBody> */}
+							</Table>
+							<TablePagination
+								rowsPerPageOptions={[ 5, 10, 20 ]}
+								page={page}
+								onChangePage={(e, newPage) => setPage(newPage)}
+								rowsPerPage={rowsPerPage}
+								component="div"
+								count={data.patientLabTest.length}
+								onChangeRowsPerPage={handleChangeRowsPerPage}
+							/>
+						</TableContainer>
+					) : (
 						<EmptyLabTestState />
-					)} */}
-			</div>
-			{/* )} */}
+					)}
+				</div>
+			)}
 		</Grid>
 	);
 };

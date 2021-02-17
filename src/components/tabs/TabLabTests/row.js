@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import useStyles from './style';
 import Loader from 'react-loader-spinner';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
-import DialogLabTestResult from '../../groups/DIalogLabTestResult';
-import ErrorMessage from '../../groups/ErrorMessage';
+import DialogLabTestResult from '../../groups/DialogLabTestResult';
+import DialogError from '../../groups/DialogError';
 //CUSTOM UI
 import ButtonOutlined from '../../customUi/ButtonOutlined';
 //MATERIAL UI
@@ -27,6 +27,7 @@ function Row({ value, appointment }) {
 	const classes = useStyles();
 	const [ oldFile, setOldFile ] = useState('');
 	const [ dialogOpen, setDialogOpen ] = useState(false);
+	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid } = appointment;
 	const { doctorRequest, patientResult } = value;
 	const [ patientRemoveLabTest, { error, loading } ] = useMutation(DELETELABTEST_MUTATION, {
@@ -41,9 +42,6 @@ function Row({ value, appointment }) {
 				<Loader type="TailSpin" color="primary" height={80} width={80} />
 			</Container>
 		);
-	}
-	if (error) {
-		return <ErrorMessage />;
 	}
 
 	return (
@@ -83,7 +81,7 @@ function Row({ value, appointment }) {
 						setOldFile(doctorRequest);
 						setTimeout(() => {
 							console.log(oldFile);
-							patientRemoveLabTest();
+							patientRemoveLabTest().catch((err) => setDialogErrorOpen(true));
 						}, 500);
 					}}
 				>
@@ -102,9 +100,11 @@ function Row({ value, appointment }) {
 			<DialogLabTestResult
 				isOpen={dialogOpen}
 				close={() => setDialogOpen(false)}
+				setDialogErrorOpen={setDialogErrorOpen}
 				docName={profileHCPid.firstName}
 				aptId={_id}
 			/>
+			<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
 		</TableRow>
 	);
 }
