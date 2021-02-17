@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { useLocation, NavLink } from 'react-router-dom';
@@ -8,6 +8,8 @@ import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 import ButtonFilled from '../../components/customUi/ButtonFilled';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import ButtonOutlined from '../../components/customUi/ButtonOutlined';
+import { Context as AuthContext } from '../../context/AuthContext';
+import { useQuery, gql } from '@apollo/client';
 //CUSTOM ICONS
 import FolderIcon from '../../components/customIcons/FolderIcon';
 import PrescriptionIcon from '../../components/customIcons/PrescriptionIcon';
@@ -104,9 +106,42 @@ const useStyles = makeStyles({
 	}
 });
 
+const DOCUMENTS_QUERY = gql`
+	query GetAppointments(
+		$idHCP: ID!,
+		$idPatient: ID!
+	) {
+		patientLabTestForDoctors(
+			idHCP: $idHCP,
+			idPatient: $idPatient
+		) {
+
+			accountPatientid
+				{ 
+					profilePicture
+				  },
+			  idApt,
+			  profilePatientid{ 
+				_id,
+				firstName,
+				lastName
+			  },
+			  amount,
+			  reasonForVisit,
+			  patientDoc,
+			  labTest {
+				doctorRequest,  
+				status,      
+				 patientResult,
+			  }
+		}
+	}
+`;
+
 //TAB PANEL
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
+	
 
 	return (
 		<div
@@ -139,6 +174,15 @@ function a11yProps(index) {
 const DocViewPatProfile = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
+	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+		variables: {
+			idHCP: "60116f816913da0029423db5",
+			idPatient: "6011887672a95e0028bcbcd7"
+		}
+	});
+
+	console.log('data', data)
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};

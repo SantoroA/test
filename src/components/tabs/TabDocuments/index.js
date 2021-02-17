@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import useStyles from './style';
 import EmptyDocState from './emptyState';
 import Row from './row';
+import dianurseApi from '../../../api/dianurseApi';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import { useQuery, gql } from '@apollo/client';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 import ButtonFilled from '../../customUi/ButtonFilled';
@@ -60,22 +64,97 @@ const documents = [
 	}
 ];
 
+// no back fazer um if do horario e fazer grater and litle
+
+const DOCUMENTS_QUERY = gql`
+	query GetAppointments(
+		$idHCP: ID!,
+		$idPatient: ID!
+	) {
+		patientDocuments(
+			idHCP: $idHCP,
+			idPatient: $idPatient
+		) {
+			profileHCPid { 
+				_id
+				firstName
+				lastName
+			   },
+			  _id
+			  appointmentTimeStart
+			  appointmentTimeEnd
+			  profilePatientid
+			  accountHCPid { 
+				profilePicture
+			  },
+			  amount,
+			  patientComent,
+			  docStatus,
+			  patientDoc {
+				  name,
+				  document
+			  }
+
+		}
+	}
+`;
+
+
+
 const TabDocuments = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
+	const [ documentSelected, setDocumentSelected ] = useState('');
+	const [ documentPreview, setDocumentPreview ] = useState('');
+	const [ documentName, setDocumentName ] = useState('Teste Documents');
+	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+		variables: {
+			idHCP: "60116f816913da0029423db5",
+			idPatient: userId
+		}
+	});
+
+	console.log('data', data)
 
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
 		setPage(0);
 	};
 	const classes = useStyles();
+
+	const onFileChange = (e) => {
+		let file = e.target.files[0];
+		let reader = new FileReader();
+		reader.onloadend = () => {
+			setDocumentSelected(file);
+			setDocumentPreview(reader.result);
+		};
+		reader.readAsDataURL(file);
+	};
+
+	const onFileUpload = (file) => {
+		let  document = new FormData();
+		let aptId = "60196388539b8800272f3a36"
+		document.append('document', file);
+		document.append('documentName', documentName)
+		try {
+			dianurseApi.post(`download/documents/${aptId}`, document);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Grid className={classes.root} container>
 			<Grid item className={classes.header}>
 				<Typography className={classes.title} variant="h5">
 					Documents
 				</Typography>
-				<ButtonFilled className={classes.uploadButton}>
+				<input type="file" onChange={onFileChange} />
+
+				<ButtonFilled className={classes.uploadButton}
+				onClick={() => {onFileUpload(documentSelected)} }>
 					Upload new document <PublishIcon className={classes.uploadIcon} />
 				</ButtonFilled>
 			</Grid>
@@ -93,6 +172,9 @@ const TabDocuments = () => {
 			)} */}
 
 			{/* IF DATA */}
+			{data && (
+				<div>
+					{data.patientDocuments.length > 0 ? (
 
 			<TableContainer className={classes.section} component={PaperCustomShadow}>
 				<Table className={classes.table}>
@@ -108,9 +190,9 @@ const TabDocuments = () => {
 					</TableHead>
 					<TableBody>
 						{(rowsPerPage > 0
-							? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							: documents).map((doc) => {
-							return <Row value={doc} key={doc.id} />;
+							? data.patientDocuments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+							: data.patientDocuments).map((doc) => {
+							return <Row value={doc} key={doc._id} />;
 						})}
 					</TableBody>
 				</Table>
@@ -123,11 +205,14 @@ const TabDocuments = () => {
 					count={documents.length}
 					onChangeRowsPerPage={handleChangeRowsPerPage}
 				/>
-			</TableContainer>
-
-			{/* IF NO DATA */}
-			<EmptyDocState />
+			</TableContainer> 
+				) : (
+					<EmptyDocState />
+			)}
+		</div>
+	)}
 		</Grid>
+		
 	);
 };
 

@@ -5,29 +5,30 @@ const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToVie
 	console.log(appointments);
 	return appointments.map((apt) => {
 		return (
-			<CardAppointment
-				onSubmit={() => {
-					setDialogAppDetailOpen(true);
-					setAppointmentToView(apt);
-				}}
-				key={apt._id}
-				showPrice={true}
-				state={{
-					appointment: {
-						amount: apt.amount,
-						end: apt.appointmentTimeEnd,
-						id: apt.profilePatientid._id,
-						idApt: apt._id,
-						start: apt.appointmentTimeStart
-					},
-					name: 'Doctor Fulano',
-					pic:
-						'https://images.pexels.com/photos/3985163/pexels-photo-3985163.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-					// apt.accountPatientid.profilePicture
-					buttonText: 'View',
-					title: 'Doctor'
-				}}
-			/>
+			<div>
+				{console.log(apt)}
+				<CardAppointment
+					onSubmit={() => {
+						setDialogAppDetailOpen(true);
+						setAppointmentToView(apt);
+					}}
+					key={apt._id}
+					showPrice={true}
+					state={{
+						appointment: {
+							amount: apt.amount,
+							end: apt.appointmentTimeEnd,
+							id: apt.profilePatientid._id,
+							idApt: apt._id,
+							start: apt.appointmentTimeStart
+						},
+						name: `${apt.profileHCPid.firstName} ${apt.profileHCPid.lastName}`,
+						pic: apt.accountHCPid.profilePicture,
+						buttonText: 'View',
+						title: 'Doctor'
+					}}
+				/>
+			</div>
 		);
 	});
 };

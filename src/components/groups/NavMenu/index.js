@@ -21,7 +21,7 @@ const NavMenu = () => {
 	const classes = useStyles();
 	const [ menuItem, setMenuItem ] = useState(null);
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
-	const { logout, state: { userAmIHCP } } = useContext(AuthContext);
+	const { logout, state: { userAmIHCP, isSocialMedia } } = useContext(AuthContext);
 	const { state: { firstName, image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -37,7 +37,7 @@ const NavMenu = () => {
 	if (isMobile) {
 		return (
 			<div className={classes.drawerIconContainer}>
-				<Avatar alt={firstName} src={image} className={classes.avatar} />
+				<Avatar alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} className={classes.avatar} />
 				<IconButton onClick={() => setDrawerOpen(true)}>
 					<DrawerIcon />
 				</IconButton>
@@ -62,7 +62,7 @@ const NavMenu = () => {
 				color="inherit"
 				className={classes.iconButton}
 			>
-				<Avatar alt={firstName} src={image} className={classes.large} />
+				<Avatar alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} className={classes.large} />
 			</IconButton>
 			<Typography variant="h6" className={classes.loginName}>
 				{firstName}

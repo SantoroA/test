@@ -51,12 +51,12 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 							appointment: {
 								amount: appointment.amount,
 								end: appointment.appointmentTimeEnd,
-								id: appointment.profilePatientid._id,
+								id: appointment.profileHCPid._id,
 								idappointment: appointment._id,
 								start: appointment.appointmentTimeStart
 							},
-							name: `${appointment.profilePatientid.firstName} ${appointment.profilePatientid.lastName}`,
-							pic: appointment.accountPatientid.profilePicture,
+							name: `${appointment.profileHCPid.firstName} ${appointment.profileHCPid.lastName}`,
+							pic: appointment.accountHCPid.profilePicture,
 							// apt.accountPatientid.profilePicture
 							buttonText: 'Start Video',
 							title: 'Patient'
