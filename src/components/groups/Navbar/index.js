@@ -27,7 +27,11 @@ export default function Navbar() {
 	// console.log(isMobile);
 	const classes = useStyles();
 	const { t , i18n} = useTranslation();
-	
+	const [lang, setLang] = React.useState('en_US');
+
+  const handleChange = (event) => {
+    setLang(event.target.value);
+  };
 	const handleClick = (lang) => {
 		// changeLanguage(event.target.value);
 		i18n.changeLanguage(lang);
@@ -58,7 +62,7 @@ export default function Navbar() {
 					{ /*<button onClick={() => handleClick('en')}>English</button>
 					<button onClick={() => handleClick('bg')}>Bulgarian</button> */}
 					 <FormControl variant="outlined" className={classes.formControl}>
-						<Select  >
+						<Select  value={lang} onChange={handleChange}>
 							<MenuItem value={'en_US'} onClick={() => handleClick('en')}>English</MenuItem>
 							<MenuItem value={'bg_BG'} onClick={() => handleClick('bg')}>Bulgarian</MenuItem>
 						</Select>
