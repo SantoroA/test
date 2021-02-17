@@ -27,11 +27,7 @@ export default function Navbar() {
 	// console.log(isMobile);
 	const classes = useStyles();
 	const { t , i18n} = useTranslation();
-	const handleChange = (lang) => {
-		// changeLanguage(event.target.value);
-		i18n.changeLanguage(lang);
-		console.log(" THIS IS THE LANGUAGE", lang);
-	};
+	
 	const handleClick = (lang) => {
 		// changeLanguage(event.target.value);
 		i18n.changeLanguage(lang);
@@ -59,14 +55,14 @@ export default function Navbar() {
 					
 					
 
-					<button onClick={() => handleClick('en')}>English</button>
-					<button onClick={() => handleClick('bg')}>Bulgarian</button>
-					 {/*<FormControl variant="outlined" className={classes.formControl}>
-						<Select value={language} onChange={handleChange}>
-							<MenuItem value={'en_US'}>English</MenuItem>
-							<MenuItem value={'bg_BG'}>Bulgarian</MenuItem>
+					{ /*<button onClick={() => handleClick('en')}>English</button>
+					<button onClick={() => handleClick('bg')}>Bulgarian</button> */}
+					 <FormControl variant="outlined" className={classes.formControl}>
+						<Select  >
+							<MenuItem value={'en_US'} onClick={() => handleClick('en')}>English</MenuItem>
+							<MenuItem value={'bg_BG'} onClick={() => handleClick('bg')}>Bulgarian</MenuItem>
 						</Select>
-					</FormControl> */}
+					</FormControl> 
 					<div className={classes.section}>
 						<FormControl className={classes.formControl}>
 							<Select
