@@ -17,13 +17,13 @@ import { useTheme } from '@material-ui/core/styles';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 
-export default function ButtonAppBar() {
+export default function Navbar() {
 	const { state: { language }, changeLanguage } = useContext(LanguageContext);
 	const { state: { isLoggedIn, userAmIHCP } } = useContext(AuthContext);
 	const [ currency, setCurrency ] = useState('dolar');
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	console.log(isMobile);
+	// console.log(isMobile);
 	const classes = useStyles();
 	const handleChange = (event) => {
 		changeLanguage(event.target.value);

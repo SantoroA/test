@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import EmptyLabTestState from './emptyState';
 import Row from './row';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import { useQuery, gql } from '@apollo/client';
+import Loader from 'react-loader-spinner';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
+import Container from '@material-ui/core/Container';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
@@ -60,9 +64,52 @@ const tests = [
 	}
 ];
 
+
+
+
+const LABTEST_QUERY = gql`
+	query GetAppointments(
+		$idHCP: ID!,
+		$idPatient: ID!
+	) {
+		patientLabTest(
+			idHCP: $idHCP,
+			idPatient: $idPatient
+		) {
+			profileHCPid { 
+				_id
+				firstName
+				lastName
+			   },
+			  _id
+			  appointmentTimeStart
+			  appointmentTimeEnd
+			  profilePatientid
+			  accountHCPid { 
+				profilePicture
+			  },
+			  amount,
+			  labTest{
+				doctorRequest      
+				patientResult
+			  }
+
+		}
+	}
+`;
+
 const TabLabTests = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
+	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const { loading, error, data, fetchMore } = useQuery(LABTEST_QUERY, {
+		variables: {
+			idHCP: "60116f816913da0029423db5",
+			idPatient: userId
+		}
+	});
+
+	console.log('data', data)
 
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
@@ -76,20 +123,23 @@ const TabLabTests = () => {
 					Lab Tests
 				</Typography>
 			</Grid>
-			{/* {loading && (
+			 {loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
-			)} */}
-			{/* {error && (
+			)}
+			{error && (
 				<Container className={classes.emptyState}>
 					<Typography color="textSecondary" variant="h4">
 						Something went wrong, please try again later
 					</Typography>
 				</Container>
-			)} */}
+			)}
 
 			{/* IF DATA */}
+			{data && (
+				<div>
+					{data.patientLabTest.length > 0 ? (
 
 			<TableContainer className={classes.section} component={PaperCustomShadow}>
 				<Table className={classes.table}>
@@ -104,9 +154,9 @@ const TabLabTests = () => {
 					</TableHead>
 					<TableBody>
 						{(rowsPerPage > 0
-							? tests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							: tests).map((test) => {
-							return <Row value={test} key={test.id} />;
+							? data.patientLabTest.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+							: data.patientLabTest).map((test) => {
+							return <Row value={test} key={test._id} />;
 						})}
 					</TableBody>
 				</Table>
@@ -116,13 +166,15 @@ const TabLabTests = () => {
 					onChangePage={(e, newPage) => setPage(newPage)}
 					rowsPerPage={rowsPerPage}
 					component="div"
-					count={tests.length}
+					count={data.patientLabTest.length}
 					onChangeRowsPerPage={handleChangeRowsPerPage}
 				/>
 			</TableContainer>
-
-			{/* IF NO DATA */}
+	) : (			
 			<EmptyLabTestState />
+			)}
+		</div>
+	)}
 		</Grid>
 	);
 };

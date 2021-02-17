@@ -38,9 +38,11 @@ const useStyles = makeStyles({
 		marginTop: '1rem'
 	},
 	name: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center'
+		'&.MuiTableCell-root': {
+			display: 'flex',
+			flexDirection: 'row',
+			alignItems: 'center'
+		}
 	},
 	avatar: {
 		marginRight: '1rem'
@@ -48,6 +50,16 @@ const useStyles = makeStyles({
 	amount: {
 		fontWeight: 'bold',
 		color: 'rgba(82, 87, 92, 1)'
+	},
+	tableHeader: {
+		fontWeight: 'bold'
+	},
+	moreButton: {
+		textDecoration: 'none',
+		paddingRight: '1.2rem',
+		paddingLeft: '1.2rem',
+		paddingTop: '0.6rem',
+		paddingBottom: '0.6rem'
 	}
 });
 

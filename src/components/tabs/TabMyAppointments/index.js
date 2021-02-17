@@ -50,10 +50,11 @@ const TabMyAppointments = () => {
 	});
 	// console.log(date);
 	// console.log(formatFormDate(date));
+	// console.log(new Date(`${formatFormDate(date)}T00:00:00`));
 	// console.log(new Date(formatFormDate(date)));
-	console.log(userId);
-	console.log('data', data);
-	console.log(error);
+	// console.log(userId);
+	// console.log('data', data);
+	// console.log(error);
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -66,7 +67,7 @@ const TabMyAppointments = () => {
 							variant="filled"
 							className={classes.datePickerMobile}
 							value={formatFormDate(date)}
-							onChange={(e) => setDate(new Date(e.target.value))}
+							onChange={(e) => setDate(new Date(`${e.target.value}T00:00:00`))}
 							InputProps={{
 								disableUnderline: true
 							}}

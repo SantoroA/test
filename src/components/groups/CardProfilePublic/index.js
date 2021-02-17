@@ -10,20 +10,43 @@ import Typography from '@material-ui/core/Typography';
 import PhoneIcon from '@material-ui/icons/Phone';
 import MailIcon from '@material-ui/icons/Mail';
 
-import useStyles from './style';
+import { makeStyles } from '@material-ui/core/styles';
 
-const CardMyProfile = () => {
+const useStyles = makeStyles({
+	root: {
+		display: 'flex',
+		height: '12rem',
+		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)'
+	},
+
+	content: {
+		display: 'flex',
+		flexDirection: 'column'
+	},
+	cover: {
+		width: '12rem'
+	},
+	docName: {
+		fontWeight: '700'
+	},
+	subtitle: {
+		display: 'flex',
+		alignItems: 'center',
+		marginTop: '1rem'
+	},
+	icon: {
+		marginRight: '0.5rem'
+	}
+});
+
+const CardProfilePublic = ({ firstName, lastName, phoneNumber, email, isHCP, image, specialty }) => {
 	const classes = useStyles();
-	const { state: { userAmIHCP, isSocialMedia } } = useContext(AuthContext);
-	const { state: { firstName, lastName, image, specialty, phoneNumber, email } } = useContext(
-		userAmIHCP ? DocProfileContext : PatProfileContext
-	);
-	// console.log(specialty);
+
 	return (
 		<Card elevation={0} className={classes.root}>
-			<CardMedia className={classes.cover} image={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} title={lastName} />
+			<CardMedia className={classes.cover} image={image} title={lastName} />
 			<CardContent className={classes.content}>
-				{userAmIHCP ? (
+				{isHCP ? (
 					<div>
 						<Typography variant="h4" className={classes.docName}>
 							Dr. {firstName} {lastName}
@@ -50,4 +73,4 @@ const CardMyProfile = () => {
 	);
 };
 
-export default CardMyProfile;
+export default CardProfilePublic;

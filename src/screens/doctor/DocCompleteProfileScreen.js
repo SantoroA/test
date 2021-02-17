@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 // import { Context as AuthContext } from '../../context/AuthContext';
@@ -22,9 +23,10 @@ import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 //icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -86,20 +88,15 @@ function a11yProps(index) {
 const DocCompleteProfileScreen = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
-	// const { getProfile } = useContext(DocProfileContext);
-	// const {state: {userId}} = useContext(AuthContext)
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { dialogMessage, dialogOpen, firstName, lastName, specialty }, closeDialog } = useContext(
 		DocProfileContext
 	);
-
+	let { path } = useRouteMatch();
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-	// const userId = '5fe8b0c48bef090026e253b7';
-
-	// useEffect(() => {
-	// 	getProfile(userId);
-	// }, []);
 
 	return (
 		<DocLayoutContainer>
@@ -114,56 +111,113 @@ const DocCompleteProfileScreen = () => {
 						Name and specialty must be filled to appear in searches
 					</Alert>
 				) : null}
-				<Tabs
-					value={value}
-					className={classes.tabs}
-					onChange={handleChange}
-					variant="fullWidth"
-					indicatorColor="primary"
-					aria-label="icon label tabs"
-				>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<ProfileIcon className={classes.icons} />}
-						label="My Profile"
-						{...a11yProps(0)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<InfoIcon className={classes.icons} />}
-						label="General Information"
-						{...a11yProps(1)}
-					/>
+				{isMobile ? (
+					<Switch>
+						<Route
+							path={`${path}/general`}
+							render={() => {
+								return (
+									<div>
+										<Typography>Add services treated here</Typography>
+									</div>
+								);
+							}}
+						/>
+						<Route
+							path={`${path}/about`}
+							render={() => {
+								return (
+									<div>
+										<div className={classes.section}>
+											<FormProfile />
+										</div>
+										<div className={classes.section}>
+											<FormExperience />
+										</div>
+										<div className={classes.section}>
+											<FormEducation />
+										</div>
+										<div className={classes.section}>
+											<FormLocation />
+										</div>
+									</div>
+								);
+							}}
+						/>
+						<Route
+							path={`${path}/profile`}
+							render={() => {
+								return (
+									<div>
+										<div className={classes.section}>
+											<FormEmailAndPassword />
+										</div>
+										<div className={classes.section}>
+											<FormContactInfo />
+										</div>
+									</div>
+								);
+							}}
+						/>
 
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<AboutIcon className={classes.icons} />}
-						label="About me"
-						{...a11yProps(2)}
-					/>
-				</Tabs>
-				<TabPanel value={value} index={0}>
-					<div className={classes.section}>
-						<FormEmailAndPassword />
+						<Route path={`${path}/`}>
+							<Redirect to={`${path}/profile`} />
+						</Route>
+					</Switch>
+				) : (
+					<div>
+						<Tabs
+							value={value}
+							className={classes.tabs}
+							onChange={handleChange}
+							variant="fullWidth"
+							indicatorColor="primary"
+							aria-label="icon label tabs"
+						>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<ProfileIcon className={classes.icons} />}
+								label="My Profile"
+								{...a11yProps(0)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<InfoIcon className={classes.icons} />}
+								label="General Information"
+								{...a11yProps(1)}
+							/>
+
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<AboutIcon className={classes.icons} />}
+								label="About me"
+								{...a11yProps(2)}
+							/>
+						</Tabs>
+						<TabPanel value={value} index={0}>
+							<div className={classes.section}>
+								<FormEmailAndPassword />
+							</div>
+							<div className={classes.section}>
+								<FormContactInfo />
+							</div>
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<div className={classes.section}>
+								<FormProfile />
+							</div>
+							<div className={classes.section}>
+								<FormExperience />
+							</div>
+							<div className={classes.section}>
+								<FormEducation />
+							</div>
+							<div className={classes.section}>
+								<FormLocation />
+							</div>
+						</TabPanel>
 					</div>
-					<div className={classes.section}>
-						<FormContactInfo />
-					</div>
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					<div className={classes.section}>
-						<FormProfile />
-					</div>
-					<div className={classes.section}>
-						<FormExperience />
-					</div>
-					<div className={classes.section}>
-						<FormEducation />
-					</div>
-					<div className={classes.section}>
-						<FormLocation />
-					</div>
-				</TabPanel>
+				)}
 			</Container>
 			<DialogMessage open={dialogOpen} message={dialogMessage} close={closeDialog} />
 		</DocLayoutContainer>

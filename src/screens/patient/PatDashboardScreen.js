@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import CardMyProfile from '../../components/groups/CardMyProfile';
 import TabDocuments from '../../components/tabs/TabDocuments';
@@ -21,12 +22,13 @@ import QuestionnaireIcon from '../../components/customIcons/QuestionnaireIcon';
 //MATERIAL UI
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import SearchIcon from '@material-ui/icons/Search';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
 	userInfo: {
@@ -123,6 +125,9 @@ const PatDashboardScreen = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	let { path } = useRouteMatch();
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	return (
 		<PatLayoutContainer>
 			<Grid container className={classes.userInfo}>
@@ -150,59 +155,74 @@ const PatDashboardScreen = () => {
 
 			<Divider variant="middle" />
 			<Container>
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					variant="fullWidth"
-					indicatorColor="primary"
-					aria-label="icon label tabs"
-				>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<CalendarIcon className={classes.icons} />}
-						label="My Appointments"
-						{...a11yProps(0)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<FolderIcon className={classes.icons} />}
-						label="Documents"
-						{...a11yProps(1)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<PrescriptionIcon className={classes.icons} />}
-						label="Prescriptions"
-						{...a11yProps(2)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<LabTestsIcon className={classes.icons} />}
-						label="Lab Tests"
-						{...a11yProps(3)}
-					/>
-					<TabCustom
-						className={classes.wrapperTab}
-						icon={<QuestionnaireIcon className={classes.icons} />}
-						label="Surveys"
-						{...a11yProps(4)}
-					/>
-				</Tabs>
-				<TabPanel value={value} index={0}>
-					<TabPatientAppointments />
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<TabDocuments />
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					<TabPrescriptions />
-				</TabPanel>
-				<TabPanel value={value} index={3}>
-					<TabLabTests />
-				</TabPanel>
-				<TabPanel value={value} index={4}>
-					<TabQuestionnaries />
-				</TabPanel>
+				{isMobile ? (
+					<Switch>
+						<Route path={`${path}/appointments`} component={TabPatientAppointments} />
+						<Route path={`${path}/documents`} component={TabDocuments} />
+						<Route path={`${path}/prescriptions`} component={TabPrescriptions} />
+						<Route path={`${path}/labTests`} component={TabLabTests} />
+						<Route path={`${path}/surveys`} component={TabQuestionnaries} />
+						<Route path={`${path}/`}>
+							<Redirect to={`${path}/appointments`} />
+						</Route>
+					</Switch>
+				) : (
+					<div>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							variant="fullWidth"
+							indicatorColor="primary"
+							aria-label="icon label tabs"
+						>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<CalendarIcon className={classes.icons} />}
+								label="My Appointments"
+								{...a11yProps(0)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<FolderIcon className={classes.icons} />}
+								label="Documents"
+								{...a11yProps(1)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<PrescriptionIcon className={classes.icons} />}
+								label="Prescriptions"
+								{...a11yProps(2)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<LabTestsIcon className={classes.icons} />}
+								label="Lab Tests"
+								{...a11yProps(3)}
+							/>
+							<TabCustom
+								className={classes.wrapperTab}
+								icon={<QuestionnaireIcon className={classes.icons} />}
+								label="Surveys"
+								{...a11yProps(4)}
+							/>
+						</Tabs>
+						<TabPanel value={value} index={0}>
+							<TabPatientAppointments />
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<TabDocuments />
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<TabPrescriptions />
+						</TabPanel>
+						<TabPanel value={value} index={3}>
+							<TabLabTests />
+						</TabPanel>
+						<TabPanel value={value} index={4}>
+							<TabQuestionnaries />
+						</TabPanel>
+					</div>
+				)}
 			</Container>
 		</PatLayoutContainer>
 	);

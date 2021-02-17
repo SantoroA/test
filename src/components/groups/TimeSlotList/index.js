@@ -16,7 +16,7 @@ const TimeSlotList = ({ weekDay, weekDayName }) => {
 	const { state, deleteSlot, setIsEditing } = useContext(AvailabilityContext);
 	const weekDaySlots = state.slots.filter((slot) => slot.weekDay == weekDay);
 	// console.log(state.slots);
-	console.log(weekDaySlots);
+	// console.log(weekDaySlots);
 	return (
 		<div>
 			{weekDaySlots.length > 0 ? (

@@ -146,8 +146,9 @@ const getSlots = (dispatch) => {
 
 const createSlot = (dispatch) => {
 	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, timeZone }) => {
-		let day_1 = new Date(availableStart);
-		let day_2 = new Date(availableEnd);
+		let day_1 = new Date(`${availableStart}T00:00:00`);
+		let day_2 = new Date(`${availableEnd}T00:00:00`);
+		console.log(day_1, day_2);
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;
@@ -240,8 +241,8 @@ const updateSlot = (dispatch) => {
 		key,
 		timeZone
 	}) => {
-		let day_1 = new Date(availableStart);
-		let day_2 = new Date(availableEnd);
+		let day_1 = new Date(`${availableStart}T00:00:00`);
+		let day_2 = new Date(`${availableEnd}T00:00:00`);
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;

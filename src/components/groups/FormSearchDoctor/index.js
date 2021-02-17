@@ -58,6 +58,7 @@ const FormSearchDoctor = () => {
 
 		const today = new Date();
 		const todayFormatted = formatFormDate(today);
+		console.log(todayFormatted);
 		const dateAsString = today.toString();
 		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -103,7 +104,8 @@ const FormSearchDoctor = () => {
 							type="date"
 							variant="outlined"
 							value={filterState.date}
-							onChange={(e) => setFilterState({ ...filterState, date: e.target.value })}
+							onChange={(e) =>
+								setFilterState({ ...filterState, date: new Date(`${e.target.value}T00:00:00`) })}
 							InputLabelProps={{
 								shrink: true
 							}}
@@ -197,10 +199,13 @@ const FormSearchDoctor = () => {
 					</PaperCustomShadow>
 				</Grid>
 			</Grid>
-			<Typography variant="h5">{formatDateNoYear(filterState.date)}</Typography>
+			<Typography variant="h5">{formatDateNoYear(`${filterState.date}T00:00:00`)}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
-					<DoctorList dateFormatted={formatDateNoYear(filterState.date)} filterState={filterState} />
+					<DoctorList
+						dateFormatted={formatDateNoYear(`${filterState.date}T00:00:00`)}
+						filterState={filterState}
+					/>
 				</Grid>
 			</Grid>
 			<DialogFilter

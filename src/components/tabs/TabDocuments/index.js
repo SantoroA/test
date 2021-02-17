@@ -90,7 +90,10 @@ const DOCUMENTS_QUERY = gql`
 			  amount,
 			  patientComent,
 			  docStatus,
-			  patientDoc
+			  patientDoc {
+				  name,
+				  document
+			  }
 
 		}
 	}
@@ -103,6 +106,7 @@ const TabDocuments = () => {
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ documentPreview, setDocumentPreview ] = useState('');
+	const [ documentName, setDocumentName ] = useState('Teste Documents');
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -131,8 +135,9 @@ const TabDocuments = () => {
 
 	const onFileUpload = (file) => {
 		let  document = new FormData();
-		let aptId = "601963bc539b8800272f3a85"
+		let aptId = "60196388539b8800272f3a36"
 		document.append('document', file);
+		document.append('documentName', documentName)
 		try {
 			dianurseApi.post(`download/documents/${aptId}`, document);
 		} catch (error) {

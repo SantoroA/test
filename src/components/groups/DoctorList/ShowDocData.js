@@ -82,7 +82,7 @@ const ShowDocData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) 
 						onClick={() => {
 							setDialogReserveOpen(true);
 							setAppointments(doc.appointments);
-							setApDoc({ lastName: doc.lastname, pic: doc.image, insurance: doc.insurance });
+							setApDoc({ lastName: doc.lastname, pic: doc.image });
 						}}
 					>
 						View

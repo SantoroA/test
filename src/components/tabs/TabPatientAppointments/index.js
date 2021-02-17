@@ -66,7 +66,7 @@ const TabPatientAppointments = () => {
 							variant="filled"
 							className={classes.datePickerMobile}
 							value={formatFormDate(date)}
-							onChange={(e) => setDate(new Date(e.target.value))}
+							onChange={(e) => setDate(new Date(`${e.target.value}T00:00:00`))}
 							InputProps={{
 								disableUnderline: true
 							}}
