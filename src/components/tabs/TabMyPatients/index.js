@@ -4,6 +4,7 @@ import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import useStyles from './style';
 import Row from './row';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import TextInputRounder from '../../customUi/TextInputRounder';
 import ButtonIcon from '../../customUi/ButtonIcon';
@@ -256,18 +257,12 @@ const TabMyPatients = () => {
 							<Loader type="TailSpin" color="primary" height={80} width={80} />
 						</Container>
 					)}
-					{error && (
-						<Container className={classes.emptyState}>
-							<Typography color="textSecondary" variant="h4">
-								Something went wrong, please try again later
-							</Typography>
-						</Container>
-					)}
-					{/* {doctorsPatients && ( */}
-					{data && (
+					{error && <ErrorMessage />}
+					{doctorsPatients && (
+						// {data && (
 						<div>
-							{/* {doctorsPatients.length > 0 ? ( */}
-							{data.doctorsPatients.length > 0 ? (
+							{doctorsPatients.length > 0 ? (
+								// {data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -282,11 +277,11 @@ const TabMyPatients = () => {
 										</TableHead>
 										<TableBody>
 											{(rowsPerPage > 0
-												? data.doctorsPatients.slice(
+												? doctorsPatients.slice(
 														page * rowsPerPage,
 														page * rowsPerPage + rowsPerPage
 													)
-												: data.doctorsPatients).map((patient) => {
+												: doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
 										</TableBody>
@@ -297,8 +292,8 @@ const TabMyPatients = () => {
 										onChangePage={(e, newPage) => setPage(newPage)}
 										rowsPerPage={rowsPerPage}
 										component="div"
-										count={data.doctorsPatients.length}
-										// count={doctorsPatients.length}
+										// count={data.doctorsPatients.length}
+										count={doctorsPatients.length}
 										onChangeRowsPerPage={handleChangeRowsPerPage}
 									/>
 								</TableContainer>
