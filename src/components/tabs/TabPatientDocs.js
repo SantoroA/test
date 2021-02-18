@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
@@ -68,7 +69,6 @@ const DOCUMENTS_QUERY = gql`
 			}
 			labTest {
 				doctorRequest
-				status
 				patientResult
 			}
 		}
@@ -86,6 +86,7 @@ const DELETEDOC_MUTATION = gql`
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const [ idApt, setIdApt] = useState('');
+	const { state: {firstName, image} } = useContext(DocProfileContext);
 	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
 	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -143,8 +144,8 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 								<TableRow key={i}>
 									<TableCell>
 										<div className={classes.name}>
-											<Avatar className={classes.avatar} alt={doc.patientDoc.name} src={doc.accountPatientid.profilePicture.includes("http") ? doc.accountPatientid.profilePicture : `http://localhost:10101/dianurse/v1/profile/static/images/${doc.accountPatientid.profilePicture}`} />
-											{doc.profilePatientid.firstName}
+											<Avatar className={classes.avatar} alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} />
+											{firstName}
 										</div>
 									</TableCell>
 									<TableCell>{formatDateShort(doc.appointmentTimeEnd)}</TableCell>

@@ -36,6 +36,7 @@ function Row({ value, appointment }) {
 			oldFile: oldFile
 		}
 	});
+	console.log(patientResult)
 	if (loading) {
 		return (
 			<Container className={classes.emptyState}>
@@ -69,7 +70,7 @@ function Row({ value, appointment }) {
 
 			<TableCell>
 				<IconButton
-					href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doctorRequest}`}
+					href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${patientResult}`}
 					download
 					target="_blank"
 				>
@@ -78,7 +79,7 @@ function Row({ value, appointment }) {
 				<IconButton
 					onClick={(e) => {
 						e.preventDefault();
-						setOldFile(doctorRequest);
+						setOldFile(patientResult);
 						setTimeout(() => {
 							console.log(oldFile);
 							patientRemoveLabTest().catch((err) => setDialogErrorOpen(true));
@@ -102,6 +103,7 @@ function Row({ value, appointment }) {
 				close={() => setDialogOpen(false)}
 				setDialogErrorOpen={setDialogErrorOpen}
 				docName={profileHCPid.firstName}
+				requestName={doctorRequest}
 				aptId={_id}
 			/>
 			<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />

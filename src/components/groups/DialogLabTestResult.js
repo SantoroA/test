@@ -86,26 +86,27 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen }) => {
+const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen, requestName }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const classes = useStyles();
 
 	const onFileChange = (e) => {
-		let file = e.target.files;
-		console.log(file);
-		setDocumentSelected(file);
+		let file = e.target.files[0];
+		let reader = new FileReader();
+		reader.onloadend = () => {
+			setDocumentSelected(file);
+		};
+		reader.readAsDataURL(file);
 	};
 
 	const onFileUpload = async (file) => {
-		console.log(file);
 		let labTest = new FormData();
-		const files = file;
-		for (let i = 0; i < files.length; i++) {
-			labTest.append(`labTest`, files[i]);
-		}
-		// labTest.append('labTest', file);
+		const files = documentSelected
+		labTest.append(`labTest`, files);
+		labTest.append(`requestName`, requestName);
+
 		try {
 			await dianurseApi.put(`download/labTest/${aptId}`, labTest);
 			close();

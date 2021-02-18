@@ -166,10 +166,9 @@ const TabLabTests = () => {
 												page * rowsPerPage + rowsPerPage
 											)
 										: data.patientLabTest).map((apt) =>
-										console.log(apt.labTest.doctorRequest)
-										// apt.labTest.doctorRequest.filter((el) => el !== null).map((test) => {
-										// 	return <Row value={test} appointment={apt} key={test._id} />;
-										// })
+										apt.labTest.map((test, index) => {
+										 	return <Row value={test} appointment={apt} key={index} />;
+										 })
 									)}
 								</TableBody>
 								{/* <TableBody>
