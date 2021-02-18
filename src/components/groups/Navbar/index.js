@@ -38,9 +38,7 @@ export default function Navbar() {
     setLang(event.target.value);
   };
   const handleClick = (lang) => {
-    // changeLanguage(event.target.value);
     i18n.changeLanguage(lang);
-    console.log(" THIS IS THE LANGUAGE", lang);
   };
   const handleChangeCurrency = (event) => {
     setCurrency(event.target.value);
@@ -70,7 +68,16 @@ export default function Navbar() {
                 English
               </MenuItem>
               <MenuItem value={"bg_BG"} onClick={() => handleClick("bg")}>
-                Bulgarian
+			  Български
+              </MenuItem>
+			  <MenuItem value={"pt_PT"} onClick={() => handleClick("pt")}>
+			  Português
+              </MenuItem>
+			   <MenuItem value={"mk_MK"} onClick={() => handleClick("mk")}>
+			  Македонски
+              </MenuItem>
+			  <MenuItem value={"de_DE"} onClick={() => handleClick("de")}>
+			  Deutsche
               </MenuItem>
             </Select>
           </FormControl>

@@ -1,0 +1,386 @@
+{
+    "Thanks":{
+        "1": "Obrigado"
+    },
+    "Profile_Settings":{
+        "1": "Configurações de perfil"
+    },
+    "Past_Appointments":{
+        "1":"Compromissos anteriores"
+    },
+    "Membership":{
+        "1":"Filiação"
+    },
+    "Help":{
+        "1":"Ajuda"
+    }
+    ,
+    "Logout":{
+        "1":"Sair"
+    },
+    "Reviews":{
+        "1": "avaliações"
+    },
+    "Price_from":{
+        "1": "Preço de"
+    },
+    "Private_profile": {
+        "1": "Perfil privado"
+    },
+    "My_Appointments":{
+        "1": "Meus Compromissos"
+    },
+    "My_Patients":{
+        "1": "Meus Pacientes"
+    },
+    "My_Earnings":{
+        "1": "Meus Ganhos"
+    },
+    "Availability":{
+        "1": "Disponibilidade"
+    },
+    "Showing_appointment_for": {
+        "1": "MOSTRANDO NOMEAÇÃO PARA"
+    },
+    "Something_wrong": {
+        "1": "Algo deu errado, tente novamente mais tarde"
+    },
+    "Service_Availability": {
+        "1": "Serviço Disponível"
+    },
+    "Availability_from":{
+        "1": "Disponibilidade de"
+    }
+    ,
+    "Availability_to":{
+        "1": "Disponibilidade para"
+    },
+    "Sun":{
+        "1": "Dom"
+    },
+    "Mon":{
+        "1": "Seg"
+    },
+    "Tue":{
+        "1": "Ter"
+    },
+    "Wed":{
+        "1": "Qua"
+    },
+    "Thu":{
+        "1": "Qui"
+    },
+    "Fri":{
+        "1": "Sex"
+    },
+    "Sat":{
+        "1": "Sáb"
+    },
+    "Time_slots_Sunday" : {
+        "1": "Slots de tempo para domingo"
+    },
+    "Time_slots_Monday" : {
+        "1": "Horários para segunda-feira"
+    },
+    "Time_slots_Tuesday" : {
+        "1": "Slots de tempo para terça-feira"
+    },
+    "Time_slots_Wednesday" : {
+        "1": "Slots de tempo para quarta-feira"
+    },
+    "Time_slots_Thursday" : {
+        "1": "Horários para quinta-feira"
+    },
+    "Time_slots_Friday" : {
+        "1": "Slots de tempo para sexta-feira"
+    },
+    "Time_slots_Saturday" : {
+        "1": "Slots de tempo para sábado"
+    },
+    "Time_from": {
+        "1": "Tempo de"
+    },
+    "Time_to": {
+        "1": "Hora de"
+    },
+    "Slot_Duration": {
+        "1": "Duração do Slot"
+    },
+    "Min" :{
+        "1": "min"
+    },
+    "Hour" :{
+        "1": "hora"
+    },
+    "Amount": {
+        "1": "Quantia"
+    },
+    "Apply": {
+        "1": "Aplicar"
+    },
+    "Patient_Name": {
+        "1": "Nome do paciente"
+    },
+    "COMPANY" : {
+    "1": "COMPANHIA"
+    },
+    "THERMS_OF_SERVICE":{
+        "1": "Termos do serviço"
+    },
+    "PRIVACY_POLICY":{
+        "1": "Política de Privacidade"
+    },
+    "COOKIE_POLICY":{
+        "1": "Política de Cookies"
+    },
+    "CANCELLATION":{
+        "1": "Política de cancelamento e reembolso"
+    },
+    "SIGN_IN_AS_DOCTOR":{
+        "1": "Cadastre-se como médico"
+    },
+    "MEMBERSHIP":{
+        "1": "Filiação"
+    },
+    "TOOLS":{
+        "1": "Ferramentas"
+    },
+    "PODCASTS":{
+        "1": "PODCASTS"
+    },
+    "ABOUT_US":{
+        "1": "Sobre nós"
+    },
+    "DIANURSE_BLOG":{
+        "1": "Dianurse Blog"
+    },
+    "CAREERS":{
+        "1": "Carreiras"
+    },
+    "CONTACT_US":{
+        "1": "Contate-Nos"
+    },
+    "HELP_CENTER":{
+        "1": "Centro de ajuda e perguntas frequentes"
+    },
+    "EMAIL":{
+        "1": "O email:"
+    },
+    "PRODUCTS":{
+        "1": "PRODUTOS"
+    },
+    "APPLE":{
+        "1": "Apple"
+    },
+    "BREAKER":{
+        "1": "Breaker"
+    },
+    "GOOGLE":{
+        "1": "Google"
+    },
+    "SPOTIFY":{
+        "1": "Spotify"
+    },
+    "RADIOPUBLIC":{
+        "1": "RadioPublic"
+    },
+    "FOOTER_DESC":{
+        "1": "Os serviços de telemedicina disponibilizados através do Dianurse são fornecidos por médicos licenciados que atuam em um grupo de consultórios profissionais de propriedade independente, conhecidos coletivamente como “Dianurse Professionals”. Essas práticas profissionais prestam serviços por meio da plataforma de telessaúde Dianurse. A Dianurse não fornece serviços de médico, saúde mental ou outros profissionais de saúde."
+    },
+    "MY_PROFILE": {
+        "1": "Meu perfil"
+    },
+    "GENERAL_INFORMATION": {
+        "1": "Informações gerais"
+    },
+    "ABOUT_ME": {
+        "1": "Sobre mim"
+    },
+    "DOCUMENTS": {
+        "1": "Documentos"
+    },
+    "PRESCRIPTIONS": {
+        "1": "Prescrições"
+    },
+    "LAB_TESTS": {
+        "1": "Testes de lab"
+    },
+    "SURVEYS": {
+        "1": "Pesquisas"
+    },
+    "Back_to_profile":{
+        "1": "De volta ao meu perfil"
+    },
+    "Name_and_specialty": {
+        "1": "Nome e especialidade devem ser preenchidos para aparecer nas pesquisas"
+    },
+    "Email_and_password": {
+        "1": "Email e senha"
+    },
+    "Change_my_password": {
+        "1": "Mudar minha senha"
+    },
+    "Change_your_password": {
+        "1": "Change your password"
+    },
+    "Old_password": {
+        "1": "Senha Antiga"
+    },
+    "New_password": {
+        "1": "Nova Senha"
+    },
+    "Confirm_password": {
+        "1": "Confirme sua senha"
+    },
+    "Cancel": {
+        "1": "Cancelar"
+    },
+    "Update": {
+        "1": "Atualizar"
+    },
+    "Contact_information":{
+        "1": "Informações de contato"
+    },
+    "Profile": {
+        "1": "Perfil"
+    },
+    "Add_information_about": {
+        "1": "Adicione informações sobre sua prática clínica"
+    },
+    "Website_Url":{
+        "1":"URL do site"
+    },
+    "Experience": {
+        "1": "Experiência"
+    },
+    "Years_of_experience": {
+        "1": "Anos de experiência"
+    },
+    "Years_as_specialist": {
+        "1": "Anos como especialista"
+    },
+    "Education": {
+        "1": "Educação"
+    },
+    "Information_about_studies":{
+        "1": "Adicione informações sobre seus estudos"
+    },
+    "Location": {
+        "1": "Localização"
+    },
+    "Country":{
+        "1": "País"
+    },
+    "City": {
+        "1": "Cidade"
+    },
+    "Zip_Code": {
+        "1": "Código postal"
+    },
+    "Street":{
+        "1": "Rua"
+    },
+    "Apt/Suite/Door": {
+        "1": "Apto / Suíte / Porta"
+    },
+    "First_Name": {
+        "1": "Primeiro nome"
+    },
+    "Last_Name": {
+        "1": "Sobrenome"
+    },
+    "Specialty": {
+        "1": "Especialidade"
+    },
+    "Gender": {
+        "1": "Gênero"
+    },
+    "Male": {
+        "1": "Masculino"
+    },
+    "Female": {
+        "1": "Fêmea"
+    },
+    "Other": {
+        "1": "Outro"
+    },
+    "Prefer_not_to_say": {
+        "1": "Prefiro não dizer"
+    },
+    "Birthday": {
+        "1": "Aniversário"
+    },
+    "Place_of_Birth":{
+        "1": "Local de nascimento"
+    },
+    "Search_Doctor": {
+        "1": "Procure um Médico"
+    },
+    "Meet_assistant": {
+        "1": "Conheça a assistente"
+    },
+    "Doctor": {
+        "1": "Doutora"
+    },
+    "Upload_new_document":{
+        "1": "Carregar novo documento"
+    },
+    "Doctor_Name": {
+        "1": "Nome do Médico"
+    },
+    "Date": {
+        "1": "Encontro"
+    },
+    "Appointment_Time": {
+        "1": "Hora do compromisso"
+    },
+    "Patient_comments":{
+        "1": "Comentários do paciente"
+    },
+    "Document_Status": {
+        "1": "Status do Documento"
+    },
+    "Save_time": {
+        "1": "Economizar tempo! Os documentos carregados para o seu médico aparecerão aqui."
+    },
+    "No_documents_added": {
+        "1": "Nenhum documento adicionado"
+    },
+    "Here_you_will_see_prescriptions": {
+        "1": "Aqui você verá suas prescrições e recomendações de saúde"
+    },
+    "No_Prescriptions_Added":{
+        "1": "Nenhuma receita adicionada"
+    },
+    "Here_you_will_see_LabTests": {
+        "1": "Aqui você verá os resultados dos seus testes de laboratório."
+    },
+    "No_LabTests_Added":{
+        "1": "Nenhum teste de laboratório adicionado"
+    },
+    "Upload_results":{
+        "1": "Resultados de upload"
+    },
+    "Doctor_comments": {
+        "1": "Comentários do médico"
+    },
+    "Here_you_will_see_surveys": {
+        "1": "Aqui você verá questionários e pesquisas de seu médico."
+    },
+    "No_Surveys_Added":{
+        "1": "Nenhuma pesquisa adicionada"
+    },
+    "Take_Survey": {
+        "1": "Responder à pesquisa"
+    },
+    "View": {
+        "1": "Visualizar"
+    }
+
+
+
+
+    
+    
+
+}
