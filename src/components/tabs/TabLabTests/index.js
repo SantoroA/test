@@ -69,11 +69,9 @@ const tests = [
 
 const LABTEST_QUERY = gql`
 	query GetAppointments(
-		$idHCP: ID!,
 		$idPatient: ID!
 	) {
 		patientLabTest(
-			idHCP: $idHCP,
 			idPatient: $idPatient
 		) {
 			profileHCPid { 
@@ -104,7 +102,6 @@ const TabLabTests = () => {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(LABTEST_QUERY, {
 		variables: {
-			idHCP: "60116f816913da0029423db5",
 			idPatient: userId
 		}
 	});

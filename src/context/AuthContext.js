@@ -407,7 +407,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: true,
+		isLoggedIn: false,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,

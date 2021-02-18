@@ -175,20 +175,19 @@ const DocViewPatProfile = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const location = useLocation();
+	const { id, image, firstName, lastName, phoneNumber, email } = location.state;
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
-			idHCP: "60116f816913da0029423db5",
-			idPatient: "6011887672a95e0028bcbcd7"
+			idHCP: userId,
+			idPatient: id
 		}
 	});
-
+	console.log(id, firstName, image);
 	console.log('data', data)
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-	const location = useLocation();
-	// const { id } = location.state;
-	// console.log(id);
 
 	const documents = [
 		{
@@ -250,12 +249,12 @@ const DocViewPatProfile = () => {
 					</Grid>
 					<Grid item className={classes.section}>
 						<CardProfilePublic
-							firstName="Aline"
-							lastName="Santoro"
-							phoneNumber="665985555"
-							email="aline@gamil.com"
+							firstName= {firstName}
+							lastName={lastName}
+							phoneNumber={phoneNumber}
+							email= {email}
 							isHCP={false}
-							image="https://images.pexels.com/photos/1898555/pexels-photo-1898555.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+							image={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`}
 						/>
 					</Grid>
 				</Grid>

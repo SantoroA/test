@@ -34,7 +34,13 @@ function Row({ value, buttonText }) {
 					to={{
 						pathname: '/in/doctor/viewpatientprofile',
 						state: {
-							id: profilePatientid._id
+							id: profilePatientid._id,
+							image: accountPatientid.profilePicture,
+							firstName: profilePatientid.firstName,
+							lastName: profilePatientid.lastName,
+							phoneNumber: profilePatientid.phoneNumber,
+							email: accountPatientid.username
+
 						}
 					}}
 				>

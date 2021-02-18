@@ -70,8 +70,8 @@ const documents = [
 // no back fazer um if do horario e fazer grater and litle
 
 const DOCUMENTS_QUERY = gql`
-	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
-		patientDocuments(idHCP: $idHCP, idPatient: $idPatient) {
+	query GetAppointments($idPatient: ID!) {
+		patientDocuments(idPatient: $idPatient) {
 			profileHCPid {
 				_id
 				firstName
@@ -104,7 +104,6 @@ const TabDocuments = () => {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
-			idHCP: '60116f816913da0029423db5',
 			idPatient: userId
 		}
 	});

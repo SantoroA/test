@@ -81,7 +81,7 @@ const useStyles = makeStyles({
 
 const MYAPPOINTMENTS_QUERY = gql`
 	query GetAppointments($id: ID!) {
-		patientAppointments(id: $id) {
+		patientAppointmentsForUpload(id: $id) {
 			_id
 			appointmentTimeStart
 			profileHCPid {
@@ -102,6 +102,7 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 		variables: { id: userId, cursor: null }
 	});
+	console.log(userId)
 	// const data = [
 	// 	{
 	// 		_id: '60196388539b8sdf800272f3a36',
@@ -171,6 +172,8 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 	// 	}
 	// ];
 
+	console.log(data)
+
 	const classes = useStyles();
 
 	const handleChange = (event) => {
@@ -190,8 +193,10 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 		let document = new FormData();
 		document.append('document', file);
 		document.append('documentName', documentName);
+		let aptId = appointmentSelectedId
+		console.log(aptId)
 		try {
-			dianurseApi.post(`download/documents/${appointmentSelectedId}`, document);
+			dianurseApi.post(`download/documents/${aptId}`, document);
 		} catch (error) {
 			console.log(error);
 		}
@@ -253,7 +258,7 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 											value={appointmentSelectedId}
 											onChange={handleChange}
 										>
-											{data.map((apt) => {
+											{data.patientAppointmentsForUpload.map((apt) => {
 												return (
 													<FormControlLabel
 														value={apt._id}

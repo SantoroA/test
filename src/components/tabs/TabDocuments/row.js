@@ -21,7 +21,7 @@ const DELETEDOC_MUTATION = gql`
 
 function Row({ value }) {
 	const classes = useStyles();
-	const [ documentName, setDocumentName ] = useState('Test New Document');
+	const [ documentName, setDocumentName ] = useState();
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const {
 		profileHCPid,

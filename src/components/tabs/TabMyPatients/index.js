@@ -29,6 +29,7 @@ const MYPATIENTS_QUERY = gql`
 		doctorsPatients(id: $id, offset: $offset, limit: $limit) {
 			accountPatientid {
 				profilePicture
+				username
 			}
 			idApt
 			start
@@ -37,6 +38,7 @@ const MYPATIENTS_QUERY = gql`
 				_id
 				firstName
 				lastName
+				phoneNumber
 			}
 			amount
 			reasonForVisit
