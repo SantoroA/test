@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
-import dianurseApi from '../../../api/dianurseApi';
 import DialogError from '../../groups/DialogError';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +10,6 @@ import Avatar from '@material-ui/core/Avatar';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import Link from '@material-ui/core/Link';
 import { useMutation, gql } from '@apollo/client';
 import DialogEditDocument from '../../groups/DialogEditDocument';
 
@@ -23,9 +21,7 @@ const DELETEDOC_MUTATION = gql`
 
 function Row({ value }) {
 	const classes = useStyles();
-	const [ documentName, setDocumentName ] = useState('Test New Document');
 	const [ dialogOpen, setDialogOpen ] = useState(false);
-	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, docStatus, _id, accountHCPid, patientDoc } = value;
 	const filename = value.patientDoc.document;

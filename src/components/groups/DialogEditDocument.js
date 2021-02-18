@@ -1,8 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { formatDateShort } from '../../helpers/dateHelper';
-import { Context as AuthContext } from '../../context/AuthContext';
-import { useQuery, gql } from '@apollo/client';
-import Loader from 'react-loader-spinner';
+import React, { useState } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import dianurseApi from '../../api/dianurseApi';
 import ErrorMessage from './ErrorMessage';
@@ -10,13 +6,6 @@ import ErrorMessage from './ErrorMessage';
 import ButtonFilled from '../customUi/ButtonFilled';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Container from '@material-ui/core/Container';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -78,23 +67,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments($id: ID!) {
-		patientAppointments(id: $id) {
-			_id
-			appointmentTimeStart
-			profileHCPid {
-				firstName
-			}
-			accountHCPid {
-				profilePicture
-			}
-		}
-	}
-`;
-
-const DialogEditDocument = ({ isOpen, close, title, documentTitle, documentLink, aptId }) => {
-	const { state: { userId } } = useContext(AuthContext);
+const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId }) => {
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const [ documentName, setDocumentName ] = useState(documentTitle);
