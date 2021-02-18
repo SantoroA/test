@@ -24,49 +24,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PublishIcon from '@material-ui/icons/Publish';
 
-const documents = [
-	{
-		docName: 'Gabi',
-		start: '2021-02-10T09:30:00.000Z',
-		end: '2021-02-10T09:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/3053844/pexels-photo-3053844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefwefadaawef'
-	},
-	{
-		docName: 'Aline',
-		start: '2021-02-10T08:30:00.000Z',
-		end: '2021-02-10T08:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/3136340/pexels-photo-3136340.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefasdaswefawef'
-	},
-	{
-		docName: 'Peach',
-		start: '2021-02-10T07:00:00.000Z',
-		end: '2021-02-10T07:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefweaadfeffawef'
-	},
-	{
-		docName: 'Pear',
-		start: '2021-02-05T07:00:00.000Z',
-		end: '2021-02-05T07:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefwfvfdefawef'
-	}
-];
-
 // no back fazer um if do horario e fazer grater and litle
 
 const DOCUMENTS_QUERY = gql`
@@ -109,6 +66,81 @@ const TabDocuments = () => {
 		}
 	});
 
+	const documents = [
+		{
+			profileHCPid: {
+				firstName: 'Gabi'
+			},
+			appointmentTimeStart: '2021-02-10T09:30:00.000Z',
+			appointmentTimeEnd: '2021-02-10T09:30:00.000Z',
+			patComments: '',
+			docStatus: '',
+			accountHCPid: {
+				profilePicture:
+					'https://images.pexels.com/photos/3053844/pexels-photo-3053844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+			},
+			_id: 'sfwefwefadaawef',
+			patientDoc: {
+				document: 'q',
+				name: 'doc2'
+			}
+		},
+		{
+			profileHCPid: {
+				firstName: 'Aline'
+			},
+			appointmentTimeStart: '2021-02-10T08:30:00.000Z',
+			appointmentTimeEnd: '2021-02-10T08:30:00.000Z',
+			patComments: '',
+			docStatus: '',
+			accountHCPid: {
+				profilePicture:
+					'https://images.pexels.com/photos/3136340/pexels-photo-3136340.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+			},
+			_id: 'sfwefasdaswefawef',
+			patientDoc: {
+				document: 'q',
+				name: 'doc2'
+			}
+		},
+		{
+			profileHCPid: {
+				firstName: 'Peach'
+			},
+			appointmentTimeStart: '2021-02-10T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-10T07:30:00.000Z',
+			patComments: '',
+			docStatus: '',
+			accountHCPid: {
+				profilePicture:
+					'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+			},
+			_id: 'sfwefweaadfeffawef',
+			patientDoc: {
+				document: 'q',
+				name: 'doc2'
+			}
+		},
+		{
+			profileHCPid: {
+				firstName: 'Pear'
+			},
+			appointmentTimeStart: '2021-02-05T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-05T07:30:00.000Z',
+			patComments: '',
+			docStatus: '',
+			accountHCPid: {
+				profilePicture:
+					'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+			},
+			_id: 'sfwefwfvfdefawef',
+			patientDoc: {
+				document: 'q',
+				name: 'doc2'
+			}
+		}
+	];
+
 	console.log('data', data);
 
 	const handleChangeRowsPerPage = (event) => {
@@ -138,22 +170,22 @@ const TabDocuments = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
-			{data && (
-				<div>
-					{data.patientDocuments.length > 0 ? (
-						<TableContainer className={classes.section} component={PaperCustomShadow}>
-							<Table className={classes.table}>
-								<TableHead>
-									<TableRow>
-										<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-										<TableCell className={classes.tableHeader}>Date</TableCell>
-										<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
-										<TableCell className={classes.tableHeader}>Patient comments</TableCell>
-										<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
-										<TableCell />
-									</TableRow>
-								</TableHead>
-								<TableBody>
+			{/* {data && ( */}
+			<div>
+				{/* {data.patientDocuments.length > 0 ? ( */}
+				<TableContainer className={classes.section} component={PaperCustomShadow}>
+					<Table className={classes.table}>
+						<TableHead>
+							<TableRow>
+								<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
+								<TableCell className={classes.tableHeader}>Date</TableCell>
+								<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
+								<TableCell className={classes.tableHeader}>Document name</TableCell>
+								<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
+								<TableCell />
+							</TableRow>
+						</TableHead>
+						{/* <TableBody>
 									{(rowsPerPage > 0
 										? data.patientDocuments.slice(
 												page * rowsPerPage,
@@ -162,9 +194,16 @@ const TabDocuments = () => {
 										: data.patientDocuments).map((doc) => {
 										return <Row value={doc} key={doc._id} />;
 									})}
-								</TableBody>
-							</Table>
-							<TablePagination
+								</TableBody> */}
+						<TableBody>
+							{(rowsPerPage > 0
+								? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								: documents).map((doc) => {
+								return <Row value={doc} key={doc._id} />;
+							})}
+						</TableBody>
+					</Table>
+					{/* <TablePagination
 								rowsPerPageOptions={[ 5, 10, 20 ]}
 								page={page}
 								onChangePage={(e, newPage) => setPage(newPage)}
@@ -172,19 +211,14 @@ const TabDocuments = () => {
 								component="div"
 								count={documents.length}
 								onChangeRowsPerPage={handleChangeRowsPerPage}
-							/>
-						</TableContainer>
-					) : (
+							/> */}
+				</TableContainer>
+				{/* ) : (
 						<EmptyDocState />
-					)}
-				</div>
-			)}
-			<DialogUploadDoc
-				isOpen={dialogOpen}
-				title="Upload new document"
-				close={() => setDialogOpen(false)}
-				action="create"
-			/>
+					)} */}
+			</div>
+			{/* )} */}
+			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" close={() => setDialogOpen(false)} />
 		</Grid>
 	);
 };

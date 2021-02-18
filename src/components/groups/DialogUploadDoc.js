@@ -93,7 +93,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 	}
 `;
 
-const DialogUploadDoc = ({ isOpen, close, action, title }) => {
+const DialogUploadDoc = ({ isOpen, close, title }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
