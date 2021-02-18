@@ -2,11 +2,9 @@ import React from 'react';
 import CardAppointment from '../../groups/CardAppointment';
 
 const ShowAppData = ({ appointments, setDialogAppDetailOpen, setAppointmentToView }) => {
-	console.log(appointments);
 	return appointments.map((apt) => {
 		return (
-			<div>
-				{console.log(apt)}
+			<div key={apt._id}>
 				<CardAppointment
 					onSubmit={() => {
 						setDialogAppDetailOpen(true);

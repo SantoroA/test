@@ -32,8 +32,7 @@ const useStyles = makeStyles({
 		flexDirection: 'column',
 		justifycontent: 'center',
 		alignItems: 'center',
-		paddingRight: '1rem',
-		paddingLeft: '1rem',
+		padding: '1rem',
 		textAlign: 'flex-start'
 	},
 	title: {
@@ -97,6 +96,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
+	const [ hasError, setHasError ] = useState(false);
 	const [ documentName, setDocumentName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
@@ -189,16 +189,18 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 		reader.readAsDataURL(file);
 	};
 
-	const onFileUpload = (file) => {
+	const onFileUpload = async (file) => {
 		let document = new FormData();
 		document.append('document', file);
 		document.append('documentName', documentName);
 		let aptId = appointmentSelectedId
 		console.log(aptId)
 		try {
-			dianurseApi.post(`download/documents/${aptId}`, document);
+			await dianurseApi.post(`download/documents/${aptId}`, document);
+			close();
 		} catch (error) {
 			console.log(error);
+			setHasError(true);
 		}
 	};
 
@@ -210,20 +212,20 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 			aria-labelledby="upload-document"
 			aria-describedby="upload-document"
 		>
+			<Grid className={classes.wrapper}>
+				<IconButton className={classes.closeButton} onClick={close} color="primary">
+					<CloseIcon />
+				</IconButton>
+			</Grid>
 			{loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}
-			{error && <ErrorMessage />}
+			{(error || hasError) && <ErrorMessage />}
 			{data && (
 				<div>
-					<Grid className={classes.wrapper}>
-						<IconButton className={classes.closeButton} onClick={close} color="primary">
-							<CloseIcon />
-						</IconButton>
-						<Typography className={classes.title}>{title}</Typography>
-					</Grid>
+					<Typography className={classes.title}>{title}</Typography>
 					<Divider variant="middle" className={classes.divider} />
 					<DialogContent>
 						<form
@@ -231,7 +233,6 @@ const DialogUploadDoc = ({ isOpen, close, action, title }) => {
 							onSubmit={(e) => {
 								e.preventDefault();
 								onFileUpload(documentSelected);
-								close();
 							}}
 						>
 							<Grid container>

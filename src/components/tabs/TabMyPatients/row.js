@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 function Row({ value, buttonText }) {
 	const classes = useStyles();
 	const { profilePatientid, start, reasonForVisit, end, accountPatientid } = value;
+	console.log(profilePatientid)
 	return (
 		<TableRow>
 			<TableCell align="left" className={classes.name}>
