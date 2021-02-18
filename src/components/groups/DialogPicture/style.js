@@ -5,17 +5,16 @@ const useStyles = makeStyles({
 		flexDirection: 'column',
 		justifycontent: 'center',
 		alignItems: 'center',
-		padding: '2rem',
+		padding: '1rem',
 
 		textAlign: 'center'
 	},
 	logo: {
 		width: '8rem',
-		marginBottom: '2rem'
+		marginBottom: '1rem'
 	},
 	divider: {
-		marginTop: '1rem',
-		marginBottom: '1rem'
+		marginTop: '1rem'
 	},
 	closeButton: {
 		alignSelf: 'flex-end'
@@ -25,15 +24,35 @@ const useStyles = makeStyles({
 		justifycontent: 'center',
 		width: '14rem',
 		height: '14rem',
-		marginTop: '1rem',
 		marginBottom: '1rem',
 		boxShadow: '0px 6px 12px 0px rgba(16, 30, 115, 0.06)',
 		backgroundColor: 'rgba(232, 232, 232, 1)',
 		color: 'rgba(160, 164, 168, 1)'
 	},
-	imageContainer: {
+	dialogContent: {
 		display: 'flex',
+		flexDirection: 'row',
 		justifycontent: 'center'
+	},
+	imageInput: {
+		display: 'none'
+	},
+	imageInputLabel: {
+		'&:hover': {
+			cursor: 'pointer'
+		}
+	},
+	buttonContainer: {
+		justifyContent: 'space-around',
+		paddingTop: '1rem',
+		paddingBottom: '1rem',
+		alignItems: 'center'
+	},
+	saveButton: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });
 

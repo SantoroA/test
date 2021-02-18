@@ -5,8 +5,9 @@ import Loader from 'react-loader-spinner';
 import DialogAppointmentDetail from '../../groups/DialogAppoitmentDetail';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
-import EmptyAppState from './EmptyAppState';
-import ShowAppData from './ShowAppData';
+import EmptyAppState from './emptyState';
+import ShowAppData from './showData';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import CalendarApp from '../../customUi/CalendarApp';
 //MATERIAL UI
@@ -102,13 +103,7 @@ const TabPatientAppointments = () => {
 					</Container>
 				)}
 
-				{error && (
-					<Container className={classes.emptyState}>
-						<Typography color="textSecondary" variant="h4">
-							Something went wrong, please try again later
-						</Typography>
-					</Container>
-				)}
+				{error && <ErrorMessage />}
 				{data && (
 					<div>
 						{console.log(data.patientAppointments[0])}

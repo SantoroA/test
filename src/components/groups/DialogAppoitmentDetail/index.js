@@ -73,7 +73,7 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 						</Grid>
 					</PaperCustomShadow>
 					<Typography className={classes.subtitle} variant="h5">
-						Description
+						Patient comments
 					</Typography>
 					<Typography color="textSecondary" variant="body1">
 						Bacon ipsum dolor amet short ribs capicola venison swine flank chislic cow. Pastrami pork loin
@@ -86,11 +86,20 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 						Important Information
 					</Typography>
 					<Typography color="textSecondary" variant="body1">
-						Biltong chislic doner fatback boudin pork belly sirloin beef. Tri-tip burgdoggen spare ribs
-						ground round brisket, pork loin kielbasa jerky pork chop andouille shoulder sirloin pancetta
-						biltong. Turducken beef ribs beef strip steak jerky bacon. Swine tail tenderloin shankle
-						meatloaf sirloin. T-bone pancetta tail chuck porchetta kielbasa short loin turducken pastrami
-						hamburger strip steak tenderloin rump.
+						- This appointment will be held by Dianurse.
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						You will receive an email reminder a few hours before the appointment.
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						- Dianurse is optimized for laptops, tablets, mobiles and pc browsers,no downloads required. For
+						a better experience we recommend log in on a laptop.
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						- The waiting room opens 15 minutes before the appointment begins.
+					</Typography>
+					<Typography color="textSecondary" variant="body1">
+						- Following the appointment you will be asket to provide feedback. Your input help us improve!
 					</Typography>
 				</Grid>
 			</Container>
