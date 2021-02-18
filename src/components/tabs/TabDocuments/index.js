@@ -169,9 +169,9 @@ const TabDocuments = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
-			{/* {data && ( */}
+			{data && ( 
 			<div>
-				{/* {data.patientDocuments.length > 0 ? ( */}
+				{data.patientDocuments.length > 0 ? (
 				<TableContainer className={classes.section} component={PaperCustomShadow}>
 					<Table className={classes.table}>
 						<TableHead>
@@ -184,7 +184,7 @@ const TabDocuments = () => {
 								<TableCell />
 							</TableRow>
 						</TableHead>
-						{/* <TableBody>
+						 <TableBody>
 									{(rowsPerPage > 0
 										? data.patientDocuments.slice(
 												page * rowsPerPage,
@@ -193,14 +193,14 @@ const TabDocuments = () => {
 										: data.patientDocuments).map((doc) => {
 										return <Row value={doc} key={doc._id} />;
 									})}
-								</TableBody> */}
-						<TableBody>
+								</TableBody> 
+						{/* <TableBody>
 							{(rowsPerPage > 0
 								? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								: documents).map((doc) => {
 								return <Row value={doc} key={doc._id} />;
 							})}
-						</TableBody>
+						</TableBody> */}
 					</Table>
 					{/* <TablePagination
 								rowsPerPageOptions={[ 5, 10, 20 ]}
@@ -212,11 +212,11 @@ const TabDocuments = () => {
 								onChangeRowsPerPage={handleChangeRowsPerPage}
 							/> */}
 				</TableContainer>
-				{/* ) : (
+				) : (
 						<EmptyDocState />
-					)} */}
+					)} 
 			</div>
-			{/* )} */}
+			)} 
 			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" close={() => setDialogOpen(false)} />
 		</Grid>
 	);
