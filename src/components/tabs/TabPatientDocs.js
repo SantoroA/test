@@ -85,8 +85,8 @@ const DELETEDOC_MUTATION = gql`
 
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
-	const [ idApt, setIdApt] = useState('');
-	const { state: {firstName, image} } = useContext(DocProfileContext);
+	const [ idApt, setIdApt ] = useState('');
+	const { state: { firstName, image } } = useContext(DocProfileContext);
 	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
 	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -99,7 +99,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			idApt: idApt
 		}
 	});
-	console.log(idHCP, idPatient)
+	console.log(idHCP, idPatient);
 
 	console.log('data', data);
 
@@ -125,63 +125,82 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
 			{data && (
-						<div>
-			<TableContainer className={classes.tableSection} component={PaperCustomShadow}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-							<TableCell className={classes.tableHeader}>Date</TableCell>
-							<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
-							<TableCell className={classes.tableHeader}>Document name</TableCell>
-							<TableCell className={classes.tableHeader}>Document Status</TableCell>
-							<TableCell />
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{data.patientDocsForDoctors.map((doc, i) => {
-							return (
-								<TableRow key={i}>
-									<TableCell>
-										<div className={classes.name}>
-											<Avatar className={classes.avatar} alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} />
-											{firstName}
-										</div>
-									</TableCell>
-									<TableCell>{formatDateShort(doc.appointmentTimeEnd)}</TableCell>
-									<TableCell>
-										{convertTime(doc.appointmentTimeStart)} - {convertTime(doc.appointmentTimeEnd)}
-									</TableCell>
-									<TableCell>{doc.patientDoc.name}</TableCell>
-									<TableCell>{doc.patientDoc.status}</TableCell>
-									<TableCell>
-										<IconButton href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc.patientDoc.document}`} target="_blank">
-											<GetAppIcon />
-										</IconButton>
-										<IconButton href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc.patientDoc.document}`} target="_blank">
-											<VisibilityIcon />
-										</IconButton>
-										<IconButton
-										onClick={(e) => {
-											e.preventDefault();
-											setIdApt(doc._id)
-											setTimeout(() => {
-												patientRemoveDoc().catch((err) => setDialogErrorOpen(true));
-											}, 500);
-											
-										}}>
-											<DeleteOutlineIcon color="secondary" />
-										</IconButton>
-									</TableCell>
+				<div>
+					<TableContainer className={classes.tableSection} component={PaperCustomShadow}>
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
+									<TableCell className={classes.tableHeader}>Date</TableCell>
+									<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
+									<TableCell className={classes.tableHeader}>Document name</TableCell>
+									<TableCell className={classes.tableHeader}>Document Status</TableCell>
+									<TableCell />
 								</TableRow>
-							);
-						})}
-						
-					</TableBody>
-				</Table><DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
-
-			</TableContainer>
-			</div>)}
+							</TableHead>
+							<TableBody>
+								{data.patientDocsForDoctors.map((doc, i) => {
+									return (
+										<TableRow key={i}>
+											<TableCell>
+												<div className={classes.name}>
+													<Avatar
+														className={classes.avatar}
+														alt={firstName}
+														src={
+															image.includes('http') ? (
+																image
+															) : (
+																`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+															)
+														}
+													/>
+													{firstName}
+												</div>
+											</TableCell>
+											<TableCell>{formatDateShort(doc.appointmentTimeEnd)}</TableCell>
+											<TableCell>
+												{convertTime(doc.appointmentTimeStart)} -{' '}
+												{convertTime(doc.appointmentTimeEnd)}
+											</TableCell>
+											<TableCell>{doc.patientDoc.name}</TableCell>
+											<TableCell>{doc.patientDoc.status}</TableCell>
+											<TableCell>
+												<IconButton
+													href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
+														.patientDoc.document}`}
+													target="_blank"
+												>
+													<GetAppIcon />
+												</IconButton>
+												<IconButton
+													href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
+														.patientDoc.document}`}
+													target="_blank"
+												>
+													<VisibilityIcon />
+												</IconButton>
+												<IconButton
+													onClick={(e) => {
+														e.preventDefault();
+														setIdApt(doc._id);
+														setTimeout(() => {
+															patientRemoveDoc().catch((err) => setDialogErrorOpen(true));
+														}, 500);
+													}}
+												>
+													<DeleteOutlineIcon color="secondary" />
+												</IconButton>
+											</TableCell>
+										</TableRow>
+									);
+								})}
+							</TableBody>
+						</Table>
+						<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
+					</TableContainer>
+				</div>
+			)}
 		</div>
 	);
 };

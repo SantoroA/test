@@ -5,13 +5,10 @@ import { useLocation, NavLink } from 'react-router-dom';
 import CardProfilePublic from '../../components/groups/CardProfilePublic';
 import TabCustom from '../../components/customUi/TabCustom';
 import { Context as AuthContext } from '../../context/AuthContext';
-import { useQuery, gql } from '@apollo/client';
 import TabPatientDocs from '../../components/tabs/TabPatientDocs';
 import TabPatientPrescriptions from '../../components/tabs/TabPatientPrescriptions';
 import TabPatientLabTests from '../../components/tabs/TabPatientLabTests';
 import TabPatientSurveys from '../../components/tabs/TabPatientSurveys';
-import ErrorMessage from '../../components/groups/ErrorMessage';
-import Loader from 'react-loader-spinner';
 //CUSTOM ICONS
 import FolderIcon from '../../components/customIcons/FolderIcon';
 import PrescriptionIcon from '../../components/customIcons/PrescriptionIcon';
@@ -67,33 +64,6 @@ const useStyles = makeStyles({
 	}
 });
 
-//QUERY INFO DO PACIENTE - NOME, TELEFONE, EMAIL
-// const DOCUMENTS_QUERY = gql`
-// 	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
-// 		patientLabTestForDoctors(idHCP: $idHCP, idPatient: $idPatient) {
-// 			accountPatientid {
-// 				profilePicture
-// 			}
-// 			idApt
-// 			profilePatientid {
-// 				_id
-// 				firstName
-// 				lastName
-// 			}
-// 			amount
-// 			reasonForVisit
-// 			patientDoc {
-// 				name
-// 			}
-// 			labTest {
-// 				doctorRequest
-// 				status
-// 				patientResult
-// 			}
-// 		}
-// 	}
-// `;
-
 //TAB PANEL
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -130,63 +100,12 @@ const DocViewPatProfile = () => {
 	const classes = useStyles();
 	const [ value, setValue ] = useState(0);
 	const location = useLocation();
-	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	const { id, image, firstName, lastName, phoneNumber, email } = location.state;
-	// const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
-	// 	variables: {
-	// 		idHCP: userId,
-	// 		idPatient: id
-	// 	}
-	// });
-	// console.log(id, firstName, image);
-	// console.log('data', data)
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-
-	// const documents = [
-	// 	{
-	// 		docName: 'Priscilla',
-	// 		docPic:
-	// 			'https://images.pexels.com/photos/773371/pexels-photo-773371.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-	// 		start: '2021-02-01T06:30:00.000Z',
-	// 		end: '2021-02-01T07:00:00.000Z',
-	// 		comments: '',
-	// 		status: ''
-	// 	}
-	// ];
-	// const prescriptions = [
-	// 	{
-	// 		docName: 'Maricella',
-	// 		docPic:
-	// 			'https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-	// 		start: '2021-02-01T08:30:00.000Z',
-	// 		end: '2021-02-01T09:00:00.000Z',
-	// 		comments: '',
-	// 		status: ''
-	// 	}
-	// ];
-	// const tests = [
-	// 	{
-	// 		docName: 'Bianca',
-	// 		docPic:
-	// 			'https://images.pexels.com/photos/1832323/pexels-photo-1832323.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-	// 		start: '2021-02-01T06:30:00.000Z',
-	// 		end: '2021-02-01T07:00:00.000Z',
-	// 		status: ''
-	// 	}
-	// ];
-	// const surveys = [
-	// 	{
-	// 		docName: 'Jeniffer',
-	// 		docPic:
-	// 			'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-	// 		start: '2021-02-01T06:30:00.000Z',
-	// 		end: '2021-02-01T07:00:00.000Z',
-	// 		comments: '',
-	// 		status: ''
-	// 	}
-	// ];
 
 	return (
 		<DocLayoutContainer>
@@ -196,14 +115,6 @@ const DocViewPatProfile = () => {
 					<Typography>Back to my patients</Typography>
 				</NavLink>
 				<Divider />
-				{/* {loading && (
-					<Container className={classes.emptyState}>
-						<Loader type="TailSpin" color="primary" height={80} width={80} />
-					</Container>
-				)}
-				{error && <ErrorMessage />} */}
-
-				{/* IF DATA */}
 				<Grid container className={classes.wrapper}>
 					<Grid item className={classes.section}>
 						<Typography variant="h6" className={classes.subtitle}>
@@ -212,12 +123,18 @@ const DocViewPatProfile = () => {
 					</Grid>
 					<Grid item className={classes.section}>
 						<CardProfilePublic
-							firstName= {firstName}
+							firstName={firstName}
 							lastName={lastName}
 							phoneNumber={phoneNumber}
-							email= {email}
+							email={email}
 							isHCP={false}
-							image={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`}
+							image={
+								image.includes('http') ? (
+									image
+								) : (
+									`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+								)
+							}
 						/>
 					</Grid>
 				</Grid>
@@ -258,10 +175,7 @@ const DocViewPatProfile = () => {
 						<TabPatientDocs idHCP={userId} idPatient={id} />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
-						<TabPatientPrescriptions
-							idHCP={userId}
-							idPatient={id}
-						/>
+						<TabPatientPrescriptions idHCP={userId} idPatient={id} />
 					</TabPanel>
 					<TabPanel value={value} index={2}>
 						<TabPatientLabTests idHCP={userId} idPatient={id} />

@@ -4,6 +4,7 @@ import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import useStyles from './style';
 import Row from './row';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import TextInputRounder from '../../customUi/TextInputRounder';
 import ButtonIcon from '../../customUi/ButtonIcon';
@@ -23,6 +24,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
+import ErrorIcon from '../../customIcons/ErrorIcon';
 
 const MYPATIENTS_QUERY = gql`
 	query GetPatients($id: ID!, $offset: Int, $limit: Int) {
@@ -258,13 +260,7 @@ const TabMyPatients = () => {
 							<Loader type="TailSpin" color="primary" height={80} width={80} />
 						</Container>
 					)}
-					{error && (
-						<Container className={classes.emptyState}>
-							<Typography color="textSecondary" variant="h4">
-								Something went wrong, please try again later
-							</Typography>
-						</Container>
-					)}
+					{error && <ErrorMessage />}
 					{/* {doctorsPatients && ( */}
 					{data && (
 						<div>
