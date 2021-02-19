@@ -15,6 +15,10 @@ const ButtonOutlined = styled(Button)({
 		borderColor: '#D6FBF1',
 		color: '#0BC7E0',
 		backgroundColor: '#D6FBF1'
+	},
+	'&.MuiButton-root.Mui-disabled' : {
+		border: '2px solid',
+		borderColor: "#A0A4A8"
 	}
 });
 

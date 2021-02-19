@@ -19,7 +19,7 @@ function Row({ value, buttonText }) {
 				<Avatar
 					className={classes.avatar}
 					alt={profilePatientid.lastName}
-					src={accountPatientid.profilePicture}
+					src={accountPatientid.profilePicture.includes("http") ? accountPatientid.profilePicture : `http://localhost:10101/dianurse/v1/profile/static/images/${accountPatientid.profilePicture}`}
 				/>
 				{profilePatientid.firstName} {profilePatientid.lastName}
 			</TableCell>
