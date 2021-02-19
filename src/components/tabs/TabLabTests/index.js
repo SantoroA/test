@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import EmptyLabTestState from './emptyState';
 import Row from './row';
 import { useTranslation } from 'react-i18next';
+import { Context as AuthContext } from '../../../context/AuthContext';
+import { useQuery, gql } from '@apollo/client';
+import Loader from 'react-loader-spinner';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
-import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
+import Container from '@material-ui/core/Container';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,54 +20,42 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import PublishIcon from '@material-ui/icons/Publish';
 
-const tests = [
-	{
-		docName: 'Gabi',
-		start: '2021-02-10T09:30:00.000Z',
-		end: '2021-02-10T09:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/3053844/pexels-photo-3053844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefwefadaawef'
-	},
-	{
-		docName: 'Aline',
-		start: '2021-02-10T08:30:00.000Z',
-		end: '2021-02-10T08:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/3136340/pexels-photo-3136340.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefasdaswefawef'
-	},
-	{
-		docName: 'Peach',
-		start: '2021-02-10T07:00:00.000Z',
-		end: '2021-02-10T07:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefweaadfeffawef'
-	},
-	{
-		docName: 'Pear',
-		start: '2021-02-05T07:00:00.000Z',
-		end: '2021-02-05T07:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefwfvfdefawef'
+const LABTEST_QUERY = gql`
+	query GetAppointments($idPatient: ID!) {
+		patientLabTest(idPatient: $idPatient) {
+			profileHCPid {
+				_id
+				firstName
+				lastName
+			}
+			_id
+			appointmentTimeStart
+			appointmentTimeEnd
+			profilePatientid
+			accountHCPid {
+				profilePicture
+			}
+			amount
+			labTest {
+				doctorRequest
+				patientResult
+			}
+		}
 	}
-];
+`;
 
 const TabLabTests = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
+	const { state: { userId } } = useContext(AuthContext);
+	const { loading, error, data, fetchMore } = useQuery(LABTEST_QUERY, {
+		variables: {
+			idPatient: userId
+		}
+	});
+
+	console.log('data', data);
 
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
@@ -78,20 +70,17 @@ const TabLabTests = () => {
 				{t("LAB_TESTS.1")}
 				</Typography>
 			</Grid>
-			{/* {loading && (
+			{loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
-			)} */}
-			{/* {error && (
-				<Container className={classes.emptyState}>
-					<Typography color="textSecondary" variant="h4">
-						Something went wrong, please try again later
-					</Typography>
-				</Container>
-			)} */}
-
+			)}
+			{error && <ErrorMessage />}
 			{/* IF DATA */}
+			{data && (
+				<div>
+					{data.patientLabTest.length > 0 ? (
+						
 
 			<TableContainer className={classes.section} component={PaperCustomShadow}>
 				<Table className={classes.table}>
@@ -105,26 +94,34 @@ const TabLabTests = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{(rowsPerPage > 0
-							? tests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							: tests).map((test) => {
-							return <Row value={test} key={test.id} />;
-						})}
-					</TableBody>
+									{(rowsPerPage > 0
+										? data.patientLabTest.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+										: data.patientLabTest).map((apt) =>
+										apt.labTest.map((test, index) => {
+										 	return <Row value={test} appointment={apt} key={index} />;
+										 })
+									)}
+								</TableBody>
 				</Table>
 				<TablePagination
-					rowsPerPageOptions={[ 5, 10, 20 ]}
-					page={page}
-					onChangePage={(e, newPage) => setPage(newPage)}
-					rowsPerPage={rowsPerPage}
-					component="div"
-					count={tests.length}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
-				/>
-			</TableContainer>
-
-			{/* IF NO DATA */}
+								rowsPerPageOptions={[ 5, 10, 20 ]}
+								page={page}
+								onChangePage={(e, newPage) => setPage(newPage)}
+								rowsPerPage={rowsPerPage}
+								component="div"
+								count={data.patientLabTest.length}
+								onChangeRowsPerPage={handleChangeRowsPerPage}
+							/>
+			</TableContainer>)  :(
+			
 			<EmptyLabTestState />
+			) }
+			</div>
+		)}
+
 		</Grid>
 	);
 };

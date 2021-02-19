@@ -16,6 +16,7 @@ import useStyles from './style';
 const CardAppointment = ({ onSubmit, state, showPrice }) => {
 	const classes = useStyles();
 	const { appointment, name, pic, buttonText, title } = state;
+	let image = pic
 	getTimeDifference(appointment.end, appointment.start);
 
 	return (
@@ -39,7 +40,7 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 			<Grid item xs={7} sm={6}>
 				<Grid container className={classes.docInfo}>
 					<Grid item sm={4} className={classes.avatarWrapper}>
-						<Avatar alt={name} src={pic} />
+						<Avatar alt={name} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} />
 					</Grid>
 					<Grid item sm={8}>
 						<Typography variant="body2">{title}</Typography>

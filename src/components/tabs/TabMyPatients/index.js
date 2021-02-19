@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
 import Row from './row';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import TextInputRounder from '../../customUi/TextInputRounder';
 import ButtonIcon from '../../customUi/ButtonIcon';
@@ -24,12 +25,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
+import ErrorIcon from '../../customIcons/ErrorIcon';
 
 const MYPATIENTS_QUERY = gql`
 	query GetPatients($id: ID!, $offset: Int, $limit: Int) {
 		doctorsPatients(id: $id, offset: $offset, limit: $limit) {
 			accountPatientid {
 				profilePicture
+				username
 			}
 			idApt
 			start
@@ -38,6 +41,7 @@ const MYPATIENTS_QUERY = gql`
 				_id
 				firstName
 				lastName
+				phoneNumber
 			}
 			amount
 			reasonForVisit
@@ -265,6 +269,7 @@ const TabMyPatients = () => {
 							</Typography>
 						</Container>
 					)}
+					{error && <ErrorMessage />}
 					{/* {doctorsPatients && ( */}
 					{data && (
 						<div>
