@@ -147,22 +147,22 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 `;
 
 const PatReserveScreen = (props) => {
-	// const { apDoc, appointment } = props.location.state;
+	const { apDoc, appointment } = props.location.state;
 
-	const appointment = {
-		amount: 95,
-		end: '2021-01-29T06:45:00.000Z',
-		id: '601175526913da0029424025',
-		idApt: '601186c472a95e0028bcb6f5',
-		start: '2021-01-29T06:00:00.000Z'
-	};
+	// const appointment = {
+	// 	amount: 95,
+	// 	end: '2021-01-29T06:45:00.000Z',
+	// 	id: '601175526913da0029424025',
+	// 	idApt: '601186c472a95e0028bcb6f5',
+	// 	start: '2021-01-29T06:00:00.000Z'
+	// };
 	const dateDisplay = formatDateDisplay(appointment.start);
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
-	const apDoc = {
-		lastName: 'Santoro',
-		pic:
-			'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-	};
+	// const apDoc = {
+	// 	lastName: 'Santoro',
+	// 	pic:
+	// 		'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// };
 	const { state: { userId } } = useContext(AuthContext);
 	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();

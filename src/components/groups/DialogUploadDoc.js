@@ -85,6 +85,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 			appointmentTimeStart
 			profileHCPid {
 				firstName
+				lastName
 			}
 			accountHCPid {
 				profilePicture
@@ -281,6 +282,7 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 																		)
 																	}
 																/>
+																{console.log(apt.profileHCPid)}
 																<Typography className={classes.docName}>
 																	Dr. {apt.profileHCPid.lastName}
 																</Typography>
