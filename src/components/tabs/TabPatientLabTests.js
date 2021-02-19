@@ -171,8 +171,8 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 									</TableCell>
 
 									<TableCell>{test.status}</TableCell>
-									<TableCell>
-										<IconButton href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null}>
+									<TableCell >
+										<IconButton href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null} >
 											<VisibilityIcon />
 										</IconButton>
 										<IconButton onClick={(e) => {
@@ -182,7 +182,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 							setTimeout(() => {
 							doctorRemoveLabTest().catch((err) => console.log(err));
 						}, 500);
-					}}>
+					}} disabled={lab.patientResult !==null}>
 											<DeleteOutlineIcon color="secondary" />
 										</IconButton>
 										<ButtonOutlined className={classes.editButton} href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null}>

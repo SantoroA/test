@@ -148,67 +148,77 @@ const TabDocuments = () => {
 		setPage(0);
 	};
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item className={classes.header}>
 				<Typography className={classes.title} variant="h5">
-				{t("DOCUMENTS.1")}
+					{t('DOCUMENTS.1')}
 				</Typography>
-				<ButtonFilled className={classes.uploadButton} onClick={() => {
-					setDialogOpen(true);
-				}}>
-				{t("Upload_new_document.1")} <PublishIcon className={classes.uploadIcon} />
+				<ButtonFilled
+					className={classes.uploadButton}
+					onClick={() => {
+						setDialogOpen(true);
+					}}
+				>
+					{t('Upload_new_document.1')} <PublishIcon className={classes.uploadIcon} />
 				</ButtonFilled>
 			</Grid>
 			{loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
-			)} 
-			{/* {error && (
-				<Container className={classes.emptyState}>
-					<Typography color="textSecondary" variant="h4">
-						Something went wrong, please try again later
-					</Typography>
-				</Container>
-			)} */}
-
-			{/* IF DATA */}
-
-			<TableContainer className={classes.section} component={PaperCustomShadow}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							<TableCell className={classes.tableHeader}>{t("Doctor_Name.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Date.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Appointment_Time.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Patient_comments.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Document_Status.1")}</TableCell>
-							<TableCell />
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{(rowsPerPage > 0
-							? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							: documents).map((doc) => {
-							return <Row value={doc} key={doc.id} />;
-						})}
-					</TableBody>
-				</Table>
-				<TablePagination
-					rowsPerPageOptions={[ 5, 10, 20 ]}
-					page={page}
-					onChangePage={(e, newPage) => setPage(newPage)}
-					rowsPerPage={rowsPerPage}
-					component="div"
-					count={documents.length}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
-				/>
-			</TableContainer>
-
-			{/* IF NO DATA */}
-			<EmptyDocState />
+			)}
+			{error && <ErrorMessage />}
+			{data && (
+				<div>
+					{data.patientDocuments.length > 0 ? (
+						<TableContainer className={classes.section} component={PaperCustomShadow}>
+							<Table className={classes.table}>
+								<TableHead>
+									<TableRow>
+										<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
+										<TableCell className={classes.tableHeader}>Date</TableCell>
+										<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
+										<TableCell className={classes.tableHeader}>Document name</TableCell>
+										<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
+										<TableCell />
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{(rowsPerPage > 0
+										? data.patientDocuments.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+										: data.patientDocuments).map((doc) => {
+										return <Row value={doc} key={doc._id} />;
+									})}
+								</TableBody>
+								{/* <TableBody>
+							{(rowsPerPage > 0
+								? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								: documents).map((doc) => {
+								return <Row value={doc} key={doc._id} />;
+							})}
+						</TableBody> */}
+							</Table>
+							{/* <TablePagination
+								rowsPerPageOptions={[ 5, 10, 20 ]}
+								page={page}
+								onChangePage={(e, newPage) => setPage(newPage)}
+								rowsPerPage={rowsPerPage}
+								component="div"
+								count={documents.length}
+								onChangeRowsPerPage={handleChangeRowsPerPage}
+							/> */}
+						</TableContainer>
+					) : (
+						<EmptyDocState />
+					)}
+				</div>
+			)}
+			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" close={() => setDialogOpen(false)} />
 		</Grid>
 	);
 };

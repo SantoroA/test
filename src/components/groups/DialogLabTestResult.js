@@ -15,6 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 const useStyles = makeStyles({
 	wrapper: {
@@ -83,12 +84,25 @@ const useStyles = makeStyles({
 	},
 	text: {
 		fontWeight: 'bold'
+	},
+	documentInput: {
+		display: 'none'
+	},
+	documentInputLabel: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginBottom: '0.8rem',
+		'&:hover': {
+			cursor: 'pointer'
+		}
 	}
 });
 
 const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen, requestName }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
+	const [ fileName, setFileName ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const classes = useStyles();
 
@@ -97,13 +111,14 @@ const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen
 		let reader = new FileReader();
 		reader.onloadend = () => {
 			setDocumentSelected(file);
+			setFileName(file.name);
 		};
 		reader.readAsDataURL(file);
 	};
 
 	const onFileUpload = async (file) => {
 		let labTest = new FormData();
-		const files = documentSelected
+		const files = documentSelected;
 		labTest.append(`labTest`, files);
 		labTest.append(`requestName`, requestName);
 
@@ -120,13 +135,27 @@ const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen
 		<Dialog
 			open={isOpen}
 			className={classes.root}
-			onClose={close}
+			onClose={() => {
+				close();
+				setFileName('');
+				setHasError(false);
+				setDocumentSelected('');
+			}}
 			aria-labelledby="upload-document"
 			aria-describedby="upload-document"
 		>
 			{hasError ? (
 				<Grid className={classes.layout}>
-					<IconButton className={classes.closeButton} onClick={close} color="secondary">
+					<IconButton
+						className={classes.closeButton}
+						onClick={() => {
+							close();
+							setFileName('');
+							setHasError(false);
+							setDocumentSelected('');
+						}}
+						color="secondary"
+					>
 						<CloseIcon />
 					</IconButton>
 					<ErrorIcon className={classes.icon} />
@@ -153,7 +182,22 @@ const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen
 						>
 							<Grid container>
 								<Grid className={classes.section} item xs={12}>
-									<input type="file" required onChange={onFileChange} multiple />
+									<label className={classes.documentInputLabel} for="document-select">
+										<AttachFileIcon color="primary" />
+										<Typography variant="body1" color="primary">
+											Browse files
+										</Typography>
+									</label>
+									<Typography variant="body2" color="textSecondary">
+										{fileName}
+									</Typography>
+									<input
+										className={classes.documentInput}
+										required
+										id="document-select"
+										type="file"
+										onChange={onFileChange}
+									/>
 								</Grid>
 
 								<Grid className={classes.section} item xs={12}>

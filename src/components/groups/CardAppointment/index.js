@@ -18,7 +18,8 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 	const { appointment, name, pic, buttonText, title } = state;
 	let image = pic
 	getTimeDifference(appointment.end, appointment.start);
-
+	console.log(getTimeDifference(appointment.end, appointment.start))
+	console.log(appointment.end, appointment.start);
 	return (
 		<Grid container className={classes.root}>
 			<Grid item xs={4} sm={2} className={classes.timeWrapper}>

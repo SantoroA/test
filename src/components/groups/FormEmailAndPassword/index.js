@@ -62,7 +62,9 @@ const FormEmailAndPassword = () => {
 						{image !== null ? (
 							<Paper
 								style={{
-									backgroundImage: `url(${image})`,
+									backgroundImage: image.includes('http')
+												? `url(${image})`
+												: `url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`,
 									backgroundSize: 'cover',
 									backgroundRepeat: 'no-repeat',
 									backgroundPosition: 'center'

@@ -62,12 +62,12 @@ const TabLabTests = () => {
 		setPage(0);
 	};
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item className={classes.header}>
 				<Typography className={classes.title} variant="h5">
-				{t("LAB_TESTS.1")}
+					{t('LAB_TESTS.1')}
 				</Typography>
 			</Grid>
 			{loading && (
@@ -77,23 +77,21 @@ const TabLabTests = () => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{data && (
-				<div>
-					{data.patientLabTest.length > 0 ? (
-						
+			{/* {data && ( */}
+			<div>
+				{/* {data.patientLabTest.length > 0 ? ( */}
+				<TableContainer className={classes.section} component={PaperCustomShadow}>
+					<Table className={classes.table}>
+						<TableHead>
+							<TableRow>
+								<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
+								<TableCell className={classes.tableHeader}>Date</TableCell>
+								<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
 
-			<TableContainer className={classes.section} component={PaperCustomShadow}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							<TableCell className={classes.tableHeader}>{t("Doctor_Name.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Date.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Appointment_Time.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Document_Status.1")}</TableCell>
-							<TableCell />
-						</TableRow>
-					</TableHead>
-					<TableBody>
+								<TableCell />
+							</TableRow>
+						</TableHead>
+						{/* <TableBody>
 									{(rowsPerPage > 0
 										? data.patientLabTest.slice(
 												page * rowsPerPage,
@@ -104,9 +102,18 @@ const TabLabTests = () => {
 										 	return <Row value={test} appointment={apt} key={index} />;
 										 })
 									)}
-								</TableBody>
-				</Table>
-				<TablePagination
+								</TableBody> */}
+						<TableBody>
+							{(rowsPerPage > 0
+								? appointments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								: appointments).map((apt) =>
+								apt.labTest.doctorRequest.filter((el) => el !== null).map((test, i) => {
+									return <Row value={test} appointment={apt} key={i} />;
+								})
+							)}
+						</TableBody>
+					</Table>
+					{/* <TablePagination
 								rowsPerPageOptions={[ 5, 10, 20 ]}
 								page={page}
 								onChangePage={(e, newPage) => setPage(newPage)}
@@ -114,14 +121,13 @@ const TabLabTests = () => {
 								component="div"
 								count={data.patientLabTest.length}
 								onChangeRowsPerPage={handleChangeRowsPerPage}
-							/>
-			</TableContainer>)  :(
-			
-			<EmptyLabTestState />
-			) }
+							/> */}
+				</TableContainer>
+				{/* ) : (
+						<EmptyLabTestState />
+					)} */}
 			</div>
-		)}
-
+			{/* )} */}
 		</Grid>
 	);
 };
