@@ -14,6 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 const useStyles = makeStyles({
 	wrapper: {
@@ -64,20 +65,33 @@ const useStyles = makeStyles({
 	docName: {
 		marginRight: '1rem',
 		fontWeight: 'bold'
+	},
+	documentInput: {
+		display: 'none'
+	},
+	documentInputLabel: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginBottom: '0.8rem',
+		'&:hover': {
+			cursor: 'pointer'
+		}
 	}
 });
 
 const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId }) => {
 	const [ documentSelected, setDocumentSelected ] = useState('');
+	const [ fileName, setFileName ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const [ documentName, setDocumentName ] = useState(documentTitle);
 	const classes = useStyles();
-
 	const onFileChange = (e) => {
 		let file = e.target.files[0];
 		let reader = new FileReader();
 		reader.onloadend = () => {
 			setDocumentSelected(file);
+			setFileName(file.name);
 		};
 		reader.readAsDataURL(file);
 	};
@@ -99,12 +113,26 @@ const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId }) => {
 		<Dialog
 			open={isOpen}
 			className={classes.root}
-			onClose={close}
+			onClose={() => {
+				close();
+				setFileName('');
+				setHasError(false);
+				setDocumentSelected('');
+			}}
 			aria-labelledby="upload-document"
 			aria-describedby="upload-document"
 		>
 			<Grid className={classes.wrapper}>
-				<IconButton className={classes.closeButton} onClick={close} color="primary">
+				<IconButton
+					className={classes.closeButton}
+					onClick={() => {
+						close();
+						setFileName('');
+						setHasError(false);
+						setDocumentSelected(false);
+					}}
+					color="primary"
+				>
 					<CloseIcon />
 				</IconButton>
 
@@ -135,7 +163,22 @@ const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId }) => {
 								/>
 							</Grid>
 							<Grid className={classes.section} item xs={12}>
-								<input required type="file" onChange={onFileChange} />
+								<label className={classes.documentInputLabel} for="document-select">
+									<AttachFileIcon color="primary" />
+									<Typography variant="body1" color="primary">
+										Browse files
+									</Typography>
+								</label>
+								<Typography variant="body2" color="textSecondary">
+									{fileName}
+								</Typography>
+								<input
+									className={classes.documentInput}
+									required
+									id="document-select"
+									type="file"
+									onChange={onFileChange}
+								/>
 							</Grid>
 
 							<Grid className={classes.section} item xs={12}>

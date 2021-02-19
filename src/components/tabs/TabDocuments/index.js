@@ -169,22 +169,22 @@ const TabDocuments = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
-			{data && ( 
-			<div>
-				{data.patientDocuments.length > 0 ? (
-				<TableContainer className={classes.section} component={PaperCustomShadow}>
-					<Table className={classes.table}>
-						<TableHead>
-							<TableRow>
-								<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-								<TableCell className={classes.tableHeader}>Date</TableCell>
-								<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
-								<TableCell className={classes.tableHeader}>Document name</TableCell>
-								<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
-								<TableCell />
-							</TableRow>
-						</TableHead>
-						 <TableBody>
+			{data && (
+				<div>
+					{data.patientDocuments.length > 0 ? (
+						<TableContainer className={classes.section} component={PaperCustomShadow}>
+							<Table className={classes.table}>
+								<TableHead>
+									<TableRow>
+										<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
+										<TableCell className={classes.tableHeader}>Date</TableCell>
+										<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
+										<TableCell className={classes.tableHeader}>Document name</TableCell>
+										<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
+										<TableCell />
+									</TableRow>
+								</TableHead>
+								<TableBody>
 									{(rowsPerPage > 0
 										? data.patientDocuments.slice(
 												page * rowsPerPage,
@@ -193,16 +193,16 @@ const TabDocuments = () => {
 										: data.patientDocuments).map((doc) => {
 										return <Row value={doc} key={doc._id} />;
 									})}
-								</TableBody> 
-						{/* <TableBody>
+								</TableBody>
+								{/* <TableBody>
 							{(rowsPerPage > 0
 								? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								: documents).map((doc) => {
 								return <Row value={doc} key={doc._id} />;
 							})}
 						</TableBody> */}
-					</Table>
-					{/* <TablePagination
+							</Table>
+							{/* <TablePagination
 								rowsPerPageOptions={[ 5, 10, 20 ]}
 								page={page}
 								onChangePage={(e, newPage) => setPage(newPage)}
@@ -211,12 +211,12 @@ const TabDocuments = () => {
 								count={documents.length}
 								onChangeRowsPerPage={handleChangeRowsPerPage}
 							/> */}
-				</TableContainer>
-				) : (
+						</TableContainer>
+					) : (
 						<EmptyDocState />
-					)} 
-			</div>
-			)} 
+					)}
+				</div>
+			)}
 			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" close={() => setDialogOpen(false)} />
 		</Grid>
 	);

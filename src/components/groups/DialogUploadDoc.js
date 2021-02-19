@@ -25,6 +25,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 const useStyles = makeStyles({
 	wrapper: {
@@ -75,6 +76,18 @@ const useStyles = makeStyles({
 	docName: {
 		marginRight: '1rem',
 		fontWeight: 'bold'
+	},
+	documentInput: {
+		display: 'none'
+	},
+	documentInputLabel: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginBottom: '0.8rem',
+		'&:hover': {
+			cursor: 'pointer'
+		}
 	}
 });
 
@@ -98,12 +111,13 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
+	const [ fileName, setFileName ] = useState('');
 	const [ documentName, setDocumentName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 		variables: { id: userId, cursor: null }
 	});
-	console.log(userId)
+	console.log(userId);
 	// const data = [
 	// 	{
 	// 		_id: '60196388539b8sdf800272f3a36',
@@ -173,7 +187,7 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 	// 	}
 	// ];
 
-	console.log(data)
+	console.log(data);
 
 	const classes = useStyles();
 
@@ -186,6 +200,7 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 		let reader = new FileReader();
 		reader.onloadend = () => {
 			setDocumentSelected(file);
+			setFileName(file.name);
 		};
 		reader.readAsDataURL(file);
 	};
@@ -194,8 +209,8 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 		let document = new FormData();
 		document.append('document', file);
 		document.append('documentName', documentName);
-		let aptId = appointmentSelectedId
-		console.log(aptId)
+		let aptId = appointmentSelectedId;
+		console.log(aptId);
 		try {
 			await dianurseApi.post(`download/documents/${aptId}`, document);
 			close();
@@ -209,12 +224,26 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 		<Dialog
 			open={isOpen}
 			className={classes.root}
-			onClose={close}
+			onClose={() => {
+				close();
+				setHasError(false);
+				setFileName('');
+				setDocumentSelected('');
+			}}
 			aria-labelledby="upload-document"
 			aria-describedby="upload-document"
 		>
 			<Grid className={classes.wrapper}>
-				<IconButton className={classes.closeButton} onClick={close} color="primary">
+				<IconButton
+					className={classes.closeButton}
+					onClick={() => {
+						close();
+						setHasError(false);
+						setFileName('');
+						setDocumentSelected('');
+					}}
+					color="primary"
+				>
 					<CloseIcon />
 				</IconButton>
 			</Grid>
@@ -249,7 +278,22 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 									/>
 								</Grid>
 								<Grid className={classes.section} item xs={12}>
-									<input required type="file" onChange={onFileChange} />
+									<label className={classes.documentInputLabel} for="document-select">
+										<AttachFileIcon color="primary" />
+										<Typography variant="body1" color="primary">
+											Browse files
+										</Typography>
+									</label>
+									<Typography variant="body2" color="textSecondary">
+										{fileName}
+									</Typography>
+									<input
+										className={classes.documentInput}
+										required
+										id="document-select"
+										type="file"
+										onChange={onFileChange}
+									/>
 								</Grid>
 								<Grid item xs={12}>
 									<FormControl fullWidth className={classes.selector} required>
