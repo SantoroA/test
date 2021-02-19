@@ -6,6 +6,12 @@ import logo from '../../../assets/dianurse-logo.png';
 import NavMenu from '../NavMenu';
 import { NavLink } from 'react-router-dom';
 import useStyles from './style';
+//CUSTOM ICONS
+import FlagUk from '../../customIcons/FlagUk';
+import FlagBg from '../../customIcons/FlagBg';
+import FlagBr from '../../customIcons/FlagBr';
+import FlagMk from '../../customIcons/FlagMk';
+import FlagDe from '../../customIcons/FlagDe';
 //MATERIAL UI
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -53,26 +59,31 @@ export default function Navbar() {
 						</NavLink>
 					)}
 
-					<FormControl variant="outlined" className={classes.formControl}>
-						<Select value={lang} onChange={handleChange}>
-							<MenuItem value={'en_US'} onClick={() => handleClick('en')}>
-								English
-							</MenuItem>
-							<MenuItem value={'bg_BG'} onClick={() => handleClick('bg')}>
-								Български
-							</MenuItem>
-							<MenuItem value={'pt_PT'} onClick={() => handleClick('pt')}>
-								Português
-							</MenuItem>
-							<MenuItem value={'mk_MK'} onClick={() => handleClick('mk')}>
-								Македонски
-							</MenuItem>
-							<MenuItem value={'de_DE'} onClick={() => handleClick('de')}>
-								Deutsche
-							</MenuItem>
-						</Select>
-					</FormControl>
 					<div className={classes.section}>
+						<FormControl className={classes.formControl}>
+							<Select
+								className={classes.countrySelect}
+								disableUnderline
+								value={lang}
+								onChange={handleChange}
+							>
+								<MenuItem value={'en_US'} onClick={() => handleClick('en')}>
+									<FlagUk />
+								</MenuItem>
+								<MenuItem value={'bg_BG'} onClick={() => handleClick('bg')}>
+									<FlagBg />
+								</MenuItem>
+								<MenuItem value={'pt_BR'} onClick={() => handleClick('pt')}>
+									<FlagBr />
+								</MenuItem>
+								<MenuItem value={'mk_MK'} onClick={() => handleClick('mk')}>
+									<FlagMk />
+								</MenuItem>
+								<MenuItem value={'de_DE'} onClick={() => handleClick('de')}>
+									<FlagDe />
+								</MenuItem>
+							</Select>
+						</FormControl>
 						<FormControl className={classes.formControl}>
 							<Select
 								className={classes.currencySelect}

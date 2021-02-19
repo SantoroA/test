@@ -6,7 +6,7 @@ import DialogAppointmentDetail from '../../groups/DialogAppoitmentDetail';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
 import EmptyAppState from './emptyState';
-import ShowAppData from './ShowAppData';
+import ShowAppData from './showData';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI

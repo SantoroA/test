@@ -23,6 +23,11 @@ const useStyles = makeStyles({
 		width: '3rem',
 		marginRight: '1rem'
 	},
+	countrySelect: {
+		width: '3rem',
+		marginRight: '1rem',
+		alignItems: 'center'
+	},
 	section: {
 		display: 'flex',
 		flexDirection: 'row',
