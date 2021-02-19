@@ -36,7 +36,7 @@ function Row({ value, appointment }) {
 			oldFile: oldFile
 		}
 	});
-	console.log(patientResult)
+
 	if (loading) {
 		return (
 			<Container className={classes.emptyState}>

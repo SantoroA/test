@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
+import { Context as DocProfileContext } from '../../context/DocProfileContext';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 import ButtonFilled from '../../components/customUi/ButtonFilled';
@@ -69,21 +70,26 @@ const DOCUMENTS_QUERY = gql`
 			accountPatientid {
 				profilePicture
 			}
-			idApt
+			_id
 			profilePatientid {
 				_id
 				firstName
 				lastName
 			}
 			amount
-			reasonForVisit
-			patientDoc
+			appointmentTimeStart
+			appointmentTimeEnd
 			labTest {
 				doctorRequest
-				status
 				patientResult
 			}
 		}
+	}
+`;
+
+const DELETEDOC_MUTATION = gql`
+	mutation DeleteLabTest($idApt: ID!, $oldFile: String!) {
+		doctorRemoveLabTest(idApt: $idApt, oldFile: $oldFile )
 	}
 `;
 
@@ -91,14 +97,23 @@ const DOCUMENTS_QUERY = gql`
 
 const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
-	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const [oldFile, setOldFile] = useState('');
+	const [idApt, setidApt] = useState('');
+	const { state: {firstName, image} } = useContext(DocProfileContext);
+	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
 		}
 	});
+	const [ doctorRemoveLabTest, { loading } ] = useMutation(DELETEDOC_MUTATION, {
+		variables: {
+			oldFile: oldFile,
+			idApt: idApt
+		}
+	});
 
-	console.log('data', data);
+	console.log('dataDoctorLab', data);
 
 	const tests = [
 		{
@@ -120,6 +135,8 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
+			{data && (
+						<div>
 			<Grid item className={classes.header}>
 				<ButtonFilled className={classes.uploadButton}>
 					<AddIcon className={classes.uploadIcon} /> New Lab Test
@@ -137,38 +154,50 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{tests.map((test, i) => {
+						{data.patientLabTestForDoctors.map((test) => {
+							return	test.labTest.map((lab, i) => {
+									console.log(lab, i)
 							return (
 								<TableRow key={i}>
 									<TableCell>
 										<div className={classes.name}>
-											<Avatar className={classes.avatar} alt={test.docName} src={test.docPic} />
-											{test.docName}
+										<Avatar className={classes.avatar} alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} />
+											{firstName}
 										</div>
 									</TableCell>
-									<TableCell>{formatDateShort(test.start)}</TableCell>
+									<TableCell>{formatDateShort(test.appointmentTimeStart)}</TableCell>
 									<TableCell>
-										{convertTime(test.start)} - {convertTime(test.end)}
+										{convertTime(test.appointmentTimeStart)} - {convertTime(test.appointmentTimeEnd)}
 									</TableCell>
 
 									<TableCell>{test.status}</TableCell>
 									<TableCell>
-										<IconButton>
+										<IconButton href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null}>
 											<VisibilityIcon />
 										</IconButton>
-										<IconButton>
+										<IconButton onClick={(e) => {
+							e.preventDefault();
+							setOldFile(lab.doctorRequest);
+							setidApt(test._id)
+							setTimeout(() => {
+							doctorRemoveLabTest().catch((err) => console.log(err));
+						}, 500);
+					}}>
 											<DeleteOutlineIcon color="secondary" />
 										</IconButton>
-										<ButtonOutlined className={classes.editButton}>
+										<ButtonOutlined className={classes.editButton} href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null}>
 											<GetAppIcon className={classes.editIcon} /> Download results
 										</ButtonOutlined>
 									</TableCell>
 								</TableRow>
 							);
+						})
 						})}
 					</TableBody>
 				</Table>
 			</TableContainer>
+			
+			</div>)}
 		</div>
 	);
 };
