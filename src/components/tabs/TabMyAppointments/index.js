@@ -57,7 +57,7 @@ const TabMyAppointments = () => {
 	console.log(userId);
 	console.log('data', data);
 	console.log(error);
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -88,13 +88,6 @@ const TabMyAppointments = () => {
 					</Container>
 				)}
 
-				{error && (
-					<Container className={classes.emptyState}>
-						<Typography color="textSecondary" variant="h4">
-							{t('Something_wrong.1')}
-						</Typography>
-					</Container>
-				)}
 				{error && <ErrorMessage />}
 				{data && (
 					<div>

@@ -40,7 +40,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 		return location.pathname.indexOf(routeName) > -1 ? true : false;
 	};
 	console.log(location);
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	return (
 		<div onClick={() => setDrawerOpen(false)} onKeyDown={() => setDrawerOpen(false)} className={classes.root}>
 			<List className={classes.menuList}>
@@ -57,7 +57,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<CalendarIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("My_Appointments.1")}</Typography>
+								<Typography className={classes.listText}>{t('My_Appointments.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 						<ListItem
@@ -70,7 +70,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<PeopleIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("My_Patients.1")}</Typography>
+								<Typography className={classes.listText}>{t('My_Patients.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -83,7 +83,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 						>
 							<EarningsIcon className={classes.icons} />
 							<ListItemText>
-								<Typography className={classes.listText}>{t("My_Earnings.1")}</Typography>
+								<Typography className={classes.listText}>{t('My_Earnings.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -96,7 +96,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 						>
 							<ClockIcon className={classes.icons} />
 							<ListItemText>
-								<Typography className={classes.listText}>{t("Availability.1")}</Typography>
+								<Typography className={classes.listText}>{t('Availability.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -109,7 +109,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 								handleClick();
 							}}
 						>
-							<ListItemText primary={t("Profile_Settings.1")} />
+							<ListItemText primary={t('Profile_Settings.1')} />
 							{open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
 						</ListItem>
 						<Collapse in={open} timeout="auto" unmountOnExit>
@@ -123,7 +123,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 								>
 									<ProfileIcon className={classes.icons} />
 									<ListItemText className={classes.items}>
-										<Typography className={classes.listText}>{t("MY_PROFILE.1")}</Typography>
+										<Typography className={classes.listText}>{t('MY_PROFILE.1')}</Typography>
 									</ListItemText>
 								</ListItem>
 								<ListItem
@@ -135,7 +135,9 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 								>
 									<InfoIcon className={classes.icons} />
 									<ListItemText className={classes.items}>
-										<Typography className={classes.listText}>{t("GENERAL_INFORMATION.1")}</Typography>
+										<Typography className={classes.listText}>
+											{t('GENERAL_INFORMATION.1')}
+										</Typography>
 									</ListItemText>
 								</ListItem>
 
@@ -148,7 +150,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 								>
 									<AboutIcon className={classes.icons} />
 									<ListItemText className={classes.items}>
-										<Typography className={classes.listText}>{t("ABOUT_ME.1")}</Typography>
+										<Typography className={classes.listText}>{t('ABOUT_ME.1')}</Typography>
 									</ListItemText>
 								</ListItem>
 							</List>
@@ -160,7 +162,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							component={Link}
 							to="/in/doctor/pastappointments"
 						>
-							<ListItemText>{t("Past_Appointments.1")}</ListItemText>
+							<ListItemText>{t('Past_Appointments.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							className={classes.linkItems}
@@ -168,7 +170,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							component={Link}
 							to="/in/doctor/membership"
 						>
-							<ListItemText>{t("Membership.1")}</ListItemText>
+							<ListItemText>{t('Membership.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							className={classes.linkItems}
@@ -176,7 +178,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							component={Link}
 							to="/in/doctor/help"
 						>
-							<ListItemText>{t("Help.1")}</ListItemText>
+							<ListItemText>{t('Help.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							component={Link}
@@ -185,7 +187,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 								logout();
 							}}
 						>
-							<ListItemText className={classes.linkItems}>{t("Logout.1")}</ListItemText>
+							<ListItemText className={classes.linkItems}>{t('Logout.1')}</ListItemText>
 						</ListItem>
 					</div>
 				) : (
@@ -200,7 +202,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<CalendarIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("My_Appointments.1")}</Typography>
+								<Typography className={classes.listText}>{t('My_Appointments.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -214,7 +216,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<FolderIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("DOCUMENTS.1")}</Typography>
+								<Typography className={classes.listText}>{t('DOCUMENTS.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -228,7 +230,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<PrescriptionIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("PRESCRIPTIONS.1")}</Typography>
+								<Typography className={classes.listText}>{t('PRESCRIPTIONS.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -242,7 +244,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<LabTestsIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("LAB_TESTS.1")}</Typography>
+								<Typography className={classes.listText}>{t('LAB_TESTS.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -256,7 +258,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							<QuestionnaireIcon className={classes.icons} />
 
 							<ListItemText>
-								<Typography className={classes.listText}>{t("SURVEYS.1")}</Typography>
+								<Typography className={classes.listText}>{t('SURVEYS.1')}</Typography>
 							</ListItemText>
 						</ListItem>
 
@@ -266,7 +268,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							to="/in/patient/completeprofile"
 							className={classes.linkItems}
 						>
-							<ListItemText>{t("Profile_Settings.1")}</ListItemText>
+							<ListItemText>{t('Profile_Settings.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							className={classes.linkItems}
@@ -274,7 +276,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							component={Link}
 							to="/in/patient/pastappointments"
 						>
-							<ListItemText>{t("Past_Appointments.1")}</ListItemText>
+							<ListItemText>{t('Past_Appointments.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							className={classes.linkItems}
@@ -282,7 +284,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							component={Link}
 							to="/in/patient/membership"
 						>
-							<ListItemText>{t("Membership.1")}</ListItemText>
+							<ListItemText>{t('Membership.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							className={classes.linkItems}
@@ -290,7 +292,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							component={Link}
 							to="/in/patient/help"
 						>
-							<ListItemText>{t("Help.1")}</ListItemText>
+							<ListItemText>{t('Help.1')}</ListItemText>
 						</ListItem>
 						<ListItem
 							component={Link}
@@ -299,7 +301,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 								logout();
 							}}
 						>
-							<ListItemText className={classes.linkItems}>{t("Logout.1")}</ListItemText>
+							<ListItemText className={classes.linkItems}>{t('Logout.1')}</ListItemText>
 						</ListItem>
 					</div>
 				)}
@@ -310,8 +312,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 
 export default DrawerList;
 
-
-	/* <ListItem component={Link} to="/in/doctor/dashboard/appointments">
+/* <ListItem component={Link} to="/in/doctor/dashboard/appointments">
 <ListItemIcon>
 	<CalendarIcon />
 </ListItemIcon>
@@ -360,4 +361,3 @@ onClick={() => {
 <ListItemText>Logout</ListItemText>
 </ListItem>
 <Divider /> */
-

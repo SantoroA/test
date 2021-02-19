@@ -80,7 +80,7 @@ const TabMyPatients = () => {
 	};
 	console.log(data);
 	console.log(userId);
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	const doctorsPatients = [
 		{
 			accountPatientid: {
@@ -235,7 +235,7 @@ const TabMyPatients = () => {
 									type="search"
 									fullWidth
 									id="search-patient"
-									label={t("Patient_Name.1")}
+									label={t('Patient_Name.1')}
 									variant="outlined"
 									value={patientName}
 									onChange={(e) => setPatientName(e.target.value)}
@@ -260,13 +260,6 @@ const TabMyPatients = () => {
 					{loading && (
 						<Container className={classes.emptyState}>
 							<Loader type="TailSpin" color="primary" height={80} width={80} />
-						</Container>
-					)}
-					{error && (
-						<Container className={classes.emptyState}>
-							<Typography color="textSecondary" variant="h4">
-								{t("Something_wrong.1")}
-							</Typography>
 						</Container>
 					)}
 					{error && <ErrorMessage />}

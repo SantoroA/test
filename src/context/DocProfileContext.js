@@ -2,7 +2,6 @@ import createDataContext from './createDataContext';
 import { formatFormDate } from '../helpers/dateHelper';
 import dianurseApi from '../api/dianurseApi';
 
-
 const docProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
@@ -335,9 +334,7 @@ const closeDialog = (dispatch) => () => {
 	dispatch({ type: 'close_dialog' });
 };
 
-	
 export const { Context, Provider } = createDataContext(
-	
 	docProfileReducer,
 	{
 		getSpeciality,

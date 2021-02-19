@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner';
 import DialogAppointmentDetail from '../../groups/DialogAppoitmentDetail';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
-import EmptyAppState from './EmptyAppState';
+import EmptyAppState from './emptyState';
 import ShowAppData from './ShowAppData';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../groups/ErrorMessage';
@@ -56,7 +56,7 @@ const TabPatientAppointments = () => {
 	console.log(userId);
 	// console.log('data', data);
 	// console.log(error);
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	console.log('data', data);
 	console.log(error);
 	return (
@@ -78,7 +78,7 @@ const TabPatientAppointments = () => {
 						/>
 					</Grid>
 				)}
-				<Typography variant="subtitle1">{t("Showing_appointment_for.1")}</Typography>
+				<Typography variant="subtitle1">{t('Showing_appointment_for.1')}</Typography>
 				<Typography color="primary" className={classes.sub} variant="h5">
 					{formatDateDisplay(date)}
 				</Typography>

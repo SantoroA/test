@@ -34,11 +34,21 @@ const NavMenu = () => {
 	const handleClose = () => {
 		setMenuItem(null);
 	};
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	if (isMobile) {
 		return (
 			<div className={classes.drawerIconContainer}>
-				<Avatar alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} className={classes.avatar} />
+				<Avatar
+					alt={firstName}
+					src={
+						image.includes('http') ? (
+							image
+						) : (
+							`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+						)
+					}
+					className={classes.avatar}
+				/>
 				<IconButton onClick={() => setDrawerOpen(true)}>
 					<DrawerIcon />
 				</IconButton>
@@ -63,7 +73,17 @@ const NavMenu = () => {
 				color="inherit"
 				className={classes.iconButton}
 			>
-				<Avatar alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} className={classes.large} />
+				<Avatar
+					alt={firstName}
+					src={
+						image.includes('http') ? (
+							image
+						) : (
+							`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+						)
+					}
+					className={classes.large}
+				/>
 			</IconButton>
 			<Typography variant="h6" className={classes.loginName}>
 				{firstName}
@@ -110,16 +130,16 @@ const NavMenu = () => {
 					onClose={handleClose}
 				>
 					<MenuItem component={Link} to="/in/patient/completeprofile" onClick={handleClose}>
-					{t('Profile_Settings.1')}
+						{t('Profile_Settings.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/patient/pastappointments" onClick={handleClose}>
-					{t('Past_Appointments.1')}
+						{t('Past_Appointments.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/patient/membership" onClick={handleClose}>
-					{t('Membership.1')}
+						{t('Membership.1')}
 					</MenuItem>
 					<MenuItem component={Link} to="/in/patient/help" onClick={handleClose}>
-					{t('Help.1')}
+						{t('Help.1')}
 					</MenuItem>
 					<MenuItem
 						component={Link}

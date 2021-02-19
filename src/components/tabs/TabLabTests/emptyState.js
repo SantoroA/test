@@ -10,15 +10,15 @@ import Typography from '@material-ui/core/Typography';
 
 const EmptyLabTestState = () => {
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	return (
 		<PaperCustomShadow className={classes.emptyState}>
 			<Typography color="textSecondary" variant="subtitle1">
-			{t("Here_you_will_see_LabTests.1")}
+				{t('Here_you_will_see_LabTests.1')}
 			</Typography>
 			<EmptyLabTestsIcon className={classes.icon} />
 			<Typography className={classes.detail} variant="subtitle1">
-			{t("No_LabTests_Added.1")}
+				{t('No_LabTests_Added.1')}
 			</Typography>
 		</PaperCustomShadow>
 	);
