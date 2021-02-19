@@ -3,6 +3,7 @@ import useStyles from './style';
 import EmptyPrescState from './emptyState';
 import Row from './row';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -81,13 +82,7 @@ const TabPrescriptions = () => {
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)} */}
-			{/* {error && (
-				<Container className={classes.emptyState}>
-					<Typography color="textSecondary" variant="h4">
-						Something went wrong, please try again later
-					</Typography>
-				</Container>
-			)} */}
+			{/* {error && <ErrorMessage />} */}
 
 			{/* IF DATA */}
 

@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 function Row({ value, buttonText }) {
 	const classes = useStyles();
 	const { profilePatientid, start, reasonForVisit, end, accountPatientid } = value;
+	console.log(profilePatientid)
 	return (
 		<TableRow>
 			<TableCell align="left" className={classes.name}>
@@ -34,7 +35,13 @@ function Row({ value, buttonText }) {
 					to={{
 						pathname: '/in/doctor/viewpatientprofile',
 						state: {
-							id: profilePatientid._id
+							id: profilePatientid._id,
+							image: accountPatientid.profilePicture,
+							firstName: profilePatientid.firstName,
+							lastName: profilePatientid.lastName,
+							phoneNumber: profilePatientid.phoneNumber,
+							email: accountPatientid.username
+
 						}
 					}}
 				>

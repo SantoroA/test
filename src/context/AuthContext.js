@@ -303,8 +303,8 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 	console.log('id', id, image);
 
 	let userInfo = {
-		id,
-		image: image,
+		// id,
+		image,
 		form: 1
 	};
 	console.log(userInfo);

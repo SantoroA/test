@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import StepWizardContainer from '../../components/layout/StepWizardContainer';
-import FormPayment from '../../components/groups/FormPayment';
 import FormSymptoms from '../../components/groups/FormSymptoms';
 import FormMedConditions from '../../components/groups/FormMedConditions';
 import CardAppointment from '../../components/groups/CardAppointment';
 import { formatDateDisplay } from '../../helpers/dateHelper';
 import { animateScroll as scroll } from 'react-scroll';
 import Confetti from 'react-dom-confetti';
+import ErrorMessage from '../../components/groups/ErrorMessage';
 import { useMutation, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 //CUSTOM UI
@@ -163,8 +163,8 @@ const PatReserveScreen = (props) => {
 		pic:
 			'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 	};
-	// const { state: { userId } } = useContext(AuthContext);
-	const userId = '5fe8b0c48bef090026e253b7';
+	const { state: { userId } } = useContext(AuthContext);
+	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
 	const [ medArr, setMedArr ] = useState([]);
@@ -816,7 +816,7 @@ const PatReserveScreen = (props) => {
 							showPrice={true}
 							onSubmit={(e) => {
 								e.preventDefault();
-								appointmentAdd();
+								appointmentAdd().catch((err) => console.log(err));
 								nextStep();
 								setTimeout(() => {
 									setConfettiTrigger(true);
@@ -846,7 +846,7 @@ const PatReserveScreen = (props) => {
 								<ArrowBackIcon />
 								<Typography>Back</Typography>
 							</ButtonNoBorder>
-							<Typography>Something went wrong. Please try again later</Typography>
+							<ErrorMessage />
 						</Container>
 					)}
 					{data && (

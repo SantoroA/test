@@ -8,6 +8,7 @@ import useStyles from './style';
 import EmptyAppState from './emptyState';
 import ShowAppData from './ShowAppData';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import CalendarApp from '../../customUi/CalendarApp';
 //MATERIAL UI
@@ -94,6 +95,7 @@ const TabMyAppointments = () => {
 						</Typography>
 					</Container>
 				)}
+				{error && <ErrorMessage />}
 				{data && (
 					<div>
 						{data.doctorsAppointments.length > 0 ? (

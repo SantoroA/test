@@ -98,6 +98,33 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}
+			{/* DUMMY CONTENT  */}
+			<ShowDocData
+				docs={[
+					{
+						id: 'ad',
+						image:
+							'https://images.pexels.com/photos/4590047/pexels-photo-4590047.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+						fistName: 'Bianca',
+						lastName: 'Green',
+						receivedRating: '5',
+						averageRating: 4,
+						description: 'sdfsf',
+						appointments: [
+							{
+								start: new Date(),
+								end: new Date(),
+								idApt: 'asd',
+								amount: 85
+							}
+						],
+						minPrice: 75
+					}
+				]}
+				setDialogReserveOpen={setDialogReserveOpen}
+				setAppointments={setAppointments}
+				setApDoc={setApDoc}
+			/>
 			{data && (
 				<div>
 					{data.doctors.edges.length > 0 ? (
