@@ -5,7 +5,6 @@ import EmptyDocState from './emptyState';
 import ErrorMessage from '../../groups/ErrorMessage';
 import Row from './row';
 import { useTranslation } from 'react-i18next';
-import dianurseApi from '../../../api/dianurseApi';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
@@ -56,10 +55,8 @@ const DOCUMENTS_QUERY = gql`
 const TabDocuments = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
-	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ dialogOpen, setDialogOpen ] = useState(false);
-	const [ documentName, setDocumentName ] = useState('Teste Documents');
-	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
+	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idPatient: userId
@@ -196,12 +193,12 @@ const TabDocuments = () => {
 									})}
 								</TableBody>
 								{/* <TableBody>
-							{(rowsPerPage > 0
-								? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								: documents).map((doc) => {
-								return <Row value={doc} key={doc._id} />;
-							})}
-						</TableBody> */}
+									{(rowsPerPage > 0
+										? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+										: documents).map((doc) => {
+										return <Row value={doc} key={doc._id} />;
+									})}
+								</TableBody> */}
 							</Table>
 							{/* <TablePagination
 								rowsPerPageOptions={[ 5, 10, 20 ]}

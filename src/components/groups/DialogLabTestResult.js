@@ -99,7 +99,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogLabTestResult = ({ isOpen, close, docName, aptId, setDialogErrorOpen, requestName }) => {
+const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ fileName, setFileName ] = useState('');

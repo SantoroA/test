@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import DialogError from '../../groups/DialogError';
+import DialogConfirm from '../../groups/DialogConfirm';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,7 +23,7 @@ const DELETEDOC_MUTATION = gql`
 function Row({ value }) {
 	const classes = useStyles();
 	const [ dialogOpen, setDialogOpen ] = useState(false);
-	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
+	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, docStatus, _id, accountHCPid, patientDoc } = value;
 	const filename = value.patientDoc.document;
 	const [ patientRemoveDoc, { data, error, loading } ] = useMutation(DELETEDOC_MUTATION, {
@@ -56,14 +57,11 @@ function Row({ value }) {
 			<TableCell>
 				{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
 			</TableCell>
-			{/* <TableCell>{patientComent}</TableCell> */}
 			<TableCell>{patientDoc.name}</TableCell>
 			<TableCell>{docStatus}</TableCell>
 			<TableCell>
-				{/* <input type="file" onChange={onFileChange} /> */}
 				<IconButton
 					onClick={() => {
-						// onFileUpload(documentSelected);
 						setDialogOpen(true);
 					}}
 				>
@@ -77,8 +75,7 @@ function Row({ value }) {
 				</IconButton>
 				<IconButton
 					onClick={(e) => {
-						e.preventDefault();
-						patientRemoveDoc().catch((err) => setDialogErrorOpen(true));
+						setDialogConfirmOpen(true);
 					}}
 				>
 					<DeleteOutlineIcon color="secondary" />
@@ -92,7 +89,13 @@ function Row({ value }) {
 				aptId={_id}
 				close={() => setDialogOpen(false)}
 			/>
-			<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
+			<DialogConfirm
+				action={patientRemoveDoc}
+				isOpen={dialogConfirmOpen}
+				close={() => setDialogConfirmOpen(false)}
+				actionText="delete this document"
+				confirmButton="Delete"
+			/>
 		</TableRow>
 	);
 }

@@ -80,7 +80,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId }) => {
+const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId, documentLink }) => {
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ fileName, setFileName ] = useState('');
 	const [ hasError, setHasError ] = useState(false);

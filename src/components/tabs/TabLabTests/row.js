@@ -27,7 +27,7 @@ const DELETELABTEST_MUTATION = gql`
 function Row({ value, appointment }) {
 	const classes = useStyles();
 	const { docName, start, end, docStatus, id, docPic } = value;
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	const [ oldFile, setOldFile ] = useState('');
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
@@ -91,11 +91,13 @@ function Row({ value, appointment }) {
 				>
 					<DeleteOutlineIcon color="secondary" />
 				</IconButton>
-				<ButtonOutlined className={classes.uploadButton}
-				onClick={() => {
-					setDialogOpen(true);
-				}}>
-					<PublishIcon className={classes.uploadIcon} /> {t("Upload_results.1")}
+				<ButtonOutlined
+					className={classes.uploadButton}
+					onClick={() => {
+						setDialogOpen(true);
+					}}
+				>
+					<PublishIcon className={classes.uploadIcon} /> {t('Upload_results.1')}
 				</ButtonOutlined>
 			</TableCell>
 			<DialogLabTestResult
