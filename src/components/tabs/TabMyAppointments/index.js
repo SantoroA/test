@@ -44,7 +44,7 @@ const TabMyAppointments = () => {
 	const theme = useTheme();
 	const [ appointmentToView, setAppointmentToView ] = useState('');
 	const [ date, setDate ] = useState(new Date());
-	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
+	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(true);
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
@@ -110,22 +110,30 @@ const TabMyAppointments = () => {
 			)}
 			{appointmentToView && (
 				<DialogAppointmentDetail
-					appointment={appointmentToView}
+					appointment={{
+						aptId: appointmentToView._id,
+						cardPic: appointmentToView.accountPatientid.profilePicture,
+						cardName: appointmentToView.profilePatientid.firstName,
+						docId: appointmentToView.profileHCPid,
+						patientId: appointmentToView.profilePatientid._id,
+						timeStart: appointmentToView.appointmentTimeStart,
+						timeEnd: appointmentToView.appointmentTimeEnd,
+						amount: appointmentToView.amount,
+						cardTitle: 'Patient',
+						showPrice: false
+					}}
 					// appointment={{
-					// 	profileHCPid: 'asdasd',
-					// 	_id: 'asdasd',
-					// 	appointmentTimeStart: new Date(),
-					// 	appointmentTimeEnd: new Date(),
-					// 	profilePatientid: {
-					// 		_id: 'asd',
-					// 		firstName: 'Aline',
-					// 		lastName: 'Santoro'
-					// 	},
-					// 	accountPatientid: {
-					// 		profilePicture:
-					// 			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-					// 	},
-					// 	amount: 45
+					// 	aptId: '54654',
+					// 	cardPic:
+					// 		'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+					// 	cardName: 'Gabriela',
+					// 	docId: 'dasd',
+					// 	patientId: 'ergef',
+					// 	timeStart: new Date(),
+					// 	timeEnd: new Date(),
+					// 	amount: 45,
+					// 	cardTitle: 'Patient',
+					// 	showPrice: false
 					// }}
 					isOpen={dialogAppDetailOpen}
 					close={() => {

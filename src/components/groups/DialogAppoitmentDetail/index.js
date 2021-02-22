@@ -21,7 +21,9 @@ import useStyles from './style';
 
 const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 	const classes = useStyles();
+	const { aptId, cardPic, cardName, showPrice, timeStart, timeEnd, amount, cardTitle } = appointment;
 	console.log('detail', appointment);
+
 	return (
 		<Dialog
 			fullScreen
@@ -41,24 +43,24 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 				<Grid container className={classes.container}>
 					<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 					<Typography color="primary" className={classes.sub} variant="h5">
-						{formatDateDisplay(appointment.appointmentTimeStart)}
+						{formatDateDisplay(timeStart)}
 					</Typography>
 					<CardAppointment
 						onSubmit={() => {}}
-						key={appointment._id}
+						key={aptId}
 						showPrice={false}
 						state={{
 							appointment: {
-								amount: appointment.amount,
-								end: appointment.appointmentTimeEnd,
-								id: appointment.profilePatientid._id,
-								idappointment: appointment._id,
-								start: appointment.appointmentTimeStart
+								amount: amount,
+								end: timeEnd,
+								idappointment: aptId,
+								start: timeStart
 							},
-							name: `${appointment.profilePatientid.firstName} ${appointment.profilePatientid.lastName}`,
-							pic: appointment.accountPatientid.profilePicture,
+							name: cardName,
+							pic: cardPic,
 							buttonText: 'Start Video',
-							title: 'Patient'
+							title: cardTitle,
+							showPrice: showPrice
 						}}
 					/>
 					<PaperCustomShadow>

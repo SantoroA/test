@@ -149,19 +149,16 @@ const TabPatientAppointments = () => {
 				<DialogAppointmentDetail
 					//  appointment={appointmentToView}
 					appointment={{
-						profilePatientid: appointmentToView.profilePatientid,
-						_id: appointmentToView._id,
-						appointmentTimeStart: appointmentToView.appointmentTimeStart,
-						appointmentTimeEnd: appointmentToView.appointmentTimeEnd,
-						profileHCPid: {
-							_id: appointmentToView.profileHCPid._id,
-							firstName: appointmentToView.profileHCPid.firstName,
-							lastName: appointmentToView.profileHCPid.lastName
-						},
-						accountHCPid: {
-							profilePicture: appointmentToView.accountHCPid.profilePicture
-						},
-						amount: appointmentToView.amount
+						aptId: appointmentToView._id,
+						cardPic: appointmentToView.accountHCPid.profilePicture,
+						cardName: appointmentToView.profileHCPid.lastName,
+						docId: appointmentToView.profileHCPid._id,
+						patientId: appointmentToView.profilePatientid,
+						timeStart: appointmentToView.appointmentTimeStart,
+						timeEnd: appointmentToView.appointmentTimeEnd,
+						amount: appointmentToView.amount,
+						cardTitle: 'Doctor',
+						showPrice: true
 					}}
 					isOpen={dialogAppDetailOpen}
 					close={() => {
