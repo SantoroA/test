@@ -3,8 +3,9 @@ import DialogReserve from '../DialogReserve';
 import Loader from 'react-loader-spinner';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
-import EmptyDocState from './EmptyDocState';
-import ShowDocData from './ShowDocData';
+import EmptyDocState from './emptyState';
+import ShowDocData from './showData';
+import ErrorMessage from '../ErrorMessage';
 //CUSTOM UI
 import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //MATERIAL UI
@@ -175,13 +176,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 					)}
 				</div>
 			)}
-			{error && (
-				<Container className={classes.emptyState}>
-					<Typography color="textSecondary" variant="h4">
-						Something went wrong, please try again later
-					</Typography>
-				</Container>
-			)}
+			{error && <ErrorMessage />}
 			{appointments && (
 				<DialogReserve
 					open={dialogReserveOpen}

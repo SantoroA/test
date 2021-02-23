@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { convertTime } from '../../../helpers/dateHelper';
 import useStyles from './style';
 //CUSTOM UI
@@ -24,7 +24,24 @@ const ShowDocData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) 
 		return (
 			<Card className={classes.card} key={doc.id}>
 				<CardMedia className={classes.media} image={doc.image} title="Doctor">
-					<Button className={classes.viewProfileButton} color="primary" as={NavLink} to={''}>
+					<Button
+						className={classes.viewProfileButton}
+						color="primary"
+						component={Link}
+						to={{
+							pathname: '/in/patient/doctorprofile',
+							state: {
+								id: doc.id,
+								averageRating: doc.averageRating,
+								receivedRating: doc.receivedRating,
+								description: doc.description,
+								firstname: doc.firstname,
+								lastname: doc.lastname,
+								minPrice: doc.minPrice,
+								image: doc.image
+							}
+						}}
+					>
 						View Profile
 					</Button>
 				</CardMedia>

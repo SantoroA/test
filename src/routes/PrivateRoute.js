@@ -19,7 +19,7 @@ import PatAssistantScreen from '../screens/patient/PatAssistantScreen';
 import PatCoachMarkScreen from '../screens/patient/PatCoachMarkScreen';
 import PatCompleteProfileScreen from '../screens/patient/PatCompleteProfileScreen';
 import PatDashboardScreen from '../screens/patient/PatDashboardScreen';
-import PatDoctorSearchDetailScreen from '../screens/patient/PatDoctorSearchDetailScreen';
+import PatViewDocPublicProfile from '../screens/patient/PatViewDocPublicProfile';
 import PatDoctorSearchScreen from '../screens/patient/PatDoctorSearchScreen';
 import PatReserveScreen from '../screens/patient/PatReserveScreen';
 import PatHelpScreen from '../screens/patient/PatHelpScreen';
@@ -59,7 +59,7 @@ const PrivateRoutePatient = () => {
 		<Switch>
 			<Route path="/in/patient/coachmark" exact component={PatCoachMarkScreen} />
 			<Route path="/in/patient/assistant" exact component={PatAssistantScreen} />
-			<Route path="/in/patient/doctorsearchdetail" exact component={PatDoctorSearchDetailScreen} />
+			<Route path="/in/patient/doctorprofile" exact component={PatViewDocPublicProfile} />
 			<Route path="/in/patient/doctorsearch" exact component={PatDoctorSearchScreen} />
 			<Route path="/in/patient/reserve" exact component={PatReserveScreen} />
 			<Route path="/in/patient/help" exact component={PatHelpScreen} />
