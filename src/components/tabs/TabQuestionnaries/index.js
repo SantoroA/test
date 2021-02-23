@@ -68,12 +68,12 @@ const TabQuestionnaries = () => {
 		setPage(0);
 	};
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item className={classes.header}>
 				<Typography className={classes.title} variant="h5">
-				{t("SURVEYS.1")}
+					{t('SURVEYS.1')}
 				</Typography>
 			</Grid>
 			{/* {loading && (
@@ -95,11 +95,11 @@ const TabQuestionnaries = () => {
 				<Table className={classes.table}>
 					<TableHead>
 						<TableRow>
-						<TableCell className={classes.tableHeader}>{t("Doctor_Name.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Date.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Appointment_Time.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Doctor_comments.1")}</TableCell>
-							<TableCell className={classes.tableHeader}>{t("Document_Status.1")}</TableCell>
+							<TableCell className={classes.tableHeader}>{t('Doctor_Name.1')}</TableCell>
+							<TableCell className={classes.tableHeader}>{t('Date.1')}</TableCell>
+							<TableCell className={classes.tableHeader}>{t('Appointment_Time.1')}</TableCell>
+							<TableCell className={classes.tableHeader}>{t('Doctor_comments.1')}</TableCell>
+							<TableCell className={classes.tableHeader}>{t('Document_Status.1')}</TableCell>
 							<TableCell />
 						</TableRow>
 					</TableHead>

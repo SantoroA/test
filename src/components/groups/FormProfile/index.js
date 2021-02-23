@@ -27,7 +27,7 @@ const FormProfile = () => {
 	const handleSubmit = () => {
 		updateProfileInfo({ profileInfo, websiteUrl, id: userId });
 	};
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
@@ -56,7 +56,7 @@ const FormProfile = () => {
 									rows={8}
 									value={profileInfo}
 									onChange={(e) => setProfileInfo(e.target.value)}
-									placeholder={t("Add_information_about.1")}
+									placeholder={t('Add_information_about.1')}
 									variant="outlined"
 								/>
 							</Grid>
@@ -67,7 +67,7 @@ const FormProfile = () => {
 									type="text"
 									value={websiteUrl}
 									onChange={(e) => setWebsiteUrl(e.target.value)}
-									label={t("Website_Url.1")}
+									label={t('Website_Url.1')}
 									variant="outlined"
 								/>
 							</Grid>
@@ -85,12 +85,12 @@ const FormProfile = () => {
 										fullWidth
 										variant="outlined"
 									>
-										{t("Cancel.1")}
+										{t('Cancel.1')}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-										{t("Update.1")}
+										{t('Update.1')}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

@@ -108,7 +108,7 @@ const useStyles = makeStyles({
 const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 	const classes = useStyles();
 	const theme = useTheme();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const [ date, setDate ] = useState(new Date());
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {

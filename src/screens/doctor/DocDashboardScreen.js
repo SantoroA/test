@@ -97,7 +97,7 @@ const DocDashboardScreen = () => {
 		setValue(newValue);
 	};
 	let { path } = useRouteMatch();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 
 	return (
 		<DocLayoutContainer>

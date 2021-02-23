@@ -145,7 +145,7 @@ const TabDocuments = () => {
 		setPage(0);
 	};
 	const classes = useStyles();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item className={classes.header}>

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const EmptyDocState = () => {
 	const classes = useStyles();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<PaperCustomShadow className={classes.emptyState}>
 			<Typography color="textSecondary" variant="subtitle1">

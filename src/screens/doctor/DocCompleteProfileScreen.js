@@ -98,18 +98,18 @@ const DocCompleteProfileScreen = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<DocLayoutContainer>
 			<Container maxWidth="md">
 				<NavLink to="/in/doctor/dashboard" className={classes.backButton}>
 					<ArrowBackIcon />
-					<Typography>{t("Back_to_profile.1")}</Typography>
+					<Typography>{t('Back_to_profile.1')}</Typography>
 				</NavLink>
 				<Divider />
 				{firstName === '' || lastName === '' || specialty === '' ? (
 					<Alert className={classes.warning} severity="warning">
-						{t("Name_and_specialty.1")}
+						{t('Name_and_specialty.1')}
 					</Alert>
 				) : null}
 				{isMobile ? (
@@ -178,20 +178,20 @@ const DocCompleteProfileScreen = () => {
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<ProfileIcon className={classes.icons} />}
-								label={t("MY_PROFILE.1")}
+								label={t('MY_PROFILE.1')}
 								{...a11yProps(0)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<InfoIcon className={classes.icons} />}
-								label={t("GENERAL_INFORMATION.1")}
+								label={t('GENERAL_INFORMATION.1')}
 								{...a11yProps(1)}
 							/>
 
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<AboutIcon className={classes.icons} />}
-								label={t("ABOUT_ME.1")}
+								label={t('ABOUT_ME.1')}
 								{...a11yProps(2)}
 							/>
 						</Tabs>

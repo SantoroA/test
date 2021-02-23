@@ -16,7 +16,7 @@ import Link from '@material-ui/core/Link';
 
 const Footer = () => {
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<footer className={classes.footer}>
 			<Grid container>
@@ -48,40 +48,40 @@ const Footer = () => {
 				</Grid>
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>{t("PRODUCTS.1")}</Typography>
+						<Typography className={classes.title}>{t('PRODUCTS.1')}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t('THERMS_OF_SERVICE.1')}
+								{t('THERMS_OF_SERVICE.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("PRIVACY_POLICY.1")}
+								{t('PRIVACY_POLICY.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("COOKIE_POLICY.1")}
+								{t('COOKIE_POLICY.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("CANCELLATION.1")}
+								{t('CANCELLATION.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("SIGN_IN_AS_DOCTOR.1")}
+								{t('SIGN_IN_AS_DOCTOR.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("MEMBERSHIP.1")}
+								{t('MEMBERSHIP.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("TOOLS.1")}
+								{t('TOOLS.1')}
 							</Link>
 						</Grid>
 					</Grid>
@@ -92,37 +92,34 @@ const Footer = () => {
 						<Typography className={classes.title}>{t('COMPANY.1')} </Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("ABOUT_US.1")}
+								{t('ABOUT_US.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("DIANURSE_BLOG.1")}
+								{t('DIANURSE_BLOG.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("CAREERS.1")}
+								{t('CAREERS.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("CONTACT_US.1")}
+								{t('CONTACT_US.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
-							{t("HELP_CENTER.1")}
+								{t('HELP_CENTER.1')}
 							</Link>
 						</Grid>
 						<Grid item className={classes.services}>
 							<Grid container>
 								<Typography className={classes.email}>
-								{t("EMAIL.1")}<a
-										href="mailto:support@dianurse.com"
-										target="_top"
-										className={classes.emailLink}
-									>
+									{t('EMAIL.1')}
+									<a href="mailto:support@dianurse.com" target="_top" className={classes.emailLink}>
 										support@dianurse.com
 									</a>
 								</Typography>
@@ -133,7 +130,7 @@ const Footer = () => {
 
 				<Grid item xs={12} sm={6} md={3}>
 					<Grid container direction="column">
-						<Typography className={classes.title}>{t("PODCASTS.1")}</Typography>
+						<Typography className={classes.title}>{t('PODCASTS.1')}</Typography>
 						<Grid item className={classes.services}>
 							<Link href="#" className={classes.link}>
 								Apple
@@ -163,9 +160,7 @@ const Footer = () => {
 				</Grid>
 				<Grid item xs={12} className={classes.textFooter}>
 					<Grid container>
-						<Typography variant="body2">
-						{t("FOOTER_DESC.1")}
-						</Typography>
+						<Typography variant="body2">{t('FOOTER_DESC.1')}</Typography>
 					</Grid>
 				</Grid>
 			</Grid>

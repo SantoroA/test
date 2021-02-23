@@ -48,13 +48,13 @@ const FormLocation = () => {
 		setStreet(state.street);
 		setNum(state.num);
 	};
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
-						<Typography variant="h6">{t("Location.1")}</Typography>
+						<Typography variant="h6">{t('Location.1')}</Typography>
 						<IconButton onClick={() => setIsDisabled(false)}>
 							<EditIcon />
 						</IconButton>
@@ -75,7 +75,7 @@ const FormLocation = () => {
 									type="text"
 									value={country}
 									onChange={(e) => setCountry(e.target.value)}
-									label={t("Country.1")}
+									label={t('Country.1')}
 									variant="outlined"
 									InputProps={{
 										endAdornment: (
@@ -93,7 +93,7 @@ const FormLocation = () => {
 									type="text"
 									value={city}
 									onChange={(e) => setCity(e.target.value)}
-									label={t("City.1")}
+									label={t('City.1')}
 									variant="outlined"
 								/>
 							</Grid>
@@ -104,7 +104,7 @@ const FormLocation = () => {
 									type="text"
 									value={zipcode}
 									onChange={(e) => setZipcode(e.target.value)}
-									label={t("Zip_Code.1")}
+									label={t('Zip_Code.1')}
 									variant="outlined"
 								/>
 							</Grid>
@@ -115,7 +115,7 @@ const FormLocation = () => {
 									type="text"
 									value={street}
 									onChange={(e) => setStreet(e.target.value)}
-									label={t("Street.1")}
+									label={t('Street.1')}
 									variant="outlined"
 								/>
 							</Grid>
@@ -126,7 +126,7 @@ const FormLocation = () => {
 									type="number"
 									value={num}
 									onChange={(e) => setNum(e.target.value)}
-									label={t("Apt/Suite/Door.1")}
+									label={t('Apt/Suite/Door.1')}
 									variant="outlined"
 								/>
 							</Grid>
@@ -143,12 +143,12 @@ const FormLocation = () => {
 										fullWidth
 										variant="outlined"
 									>
-										{t("Cancel.1")}
+										{t('Cancel.1')}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-									{t("Update.1")}
+										{t('Update.1')}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

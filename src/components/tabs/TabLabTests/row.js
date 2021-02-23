@@ -27,7 +27,7 @@ const DELETELABTEST_MUTATION = gql`
 function Row({ value, appointment }) {
 	const classes = useStyles();
 	const { docName, start, end, docStatus, id, docPic } = value;
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const [ oldFile, setOldFile ] = useState('');
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);

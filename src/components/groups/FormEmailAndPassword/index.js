@@ -53,7 +53,7 @@ const FormEmailAndPassword = () => {
 			// image
 		});
 	};
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
@@ -63,8 +63,8 @@ const FormEmailAndPassword = () => {
 							<Paper
 								style={{
 									backgroundImage: image.includes('http')
-												? `url(${image})`
-												: `url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`,
+										? `url(${image})`
+										: `url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`,
 									backgroundSize: 'cover',
 									backgroundRepeat: 'no-repeat',
 									backgroundPosition: 'center'
@@ -81,7 +81,7 @@ const FormEmailAndPassword = () => {
 					</Box>
 
 					<Grid item className={classes.title}>
-						<Typography variant="h5">{t("Email_and_password.1")}</Typography>
+						<Typography variant="h5">{t('Email_and_password.1')}</Typography>
 					</Grid>
 					<Grid item className={classes.emailField}>
 						<TextField
@@ -106,7 +106,7 @@ const FormEmailAndPassword = () => {
 									color="primary"
 									className={classes.submit}
 								>
-									{t("Change_my_password.1")}
+									{t('Change_my_password.1')}
 								</ButtonFilled>
 							</Grid>
 						</Grid>
@@ -120,14 +120,14 @@ const FormEmailAndPassword = () => {
 							className={classes.form}
 						>
 							<Grid className={classes.input}>
-								<Typography variant="h6">{t("Change_your_password.1")}</Typography>
+								<Typography variant="h6">{t('Change_your_password.1')}</Typography>
 								<TextValidator
 									fullWidth
 									type="password"
 									required
 									value={oldPassword}
 									onChange={(e) => setOldPassword(e.target.value)}
-									label={t("Old_password.1")}
+									label={t('Old_password.1')}
 									variant="outlined"
 									validators={[ 'required' ]}
 								/>
@@ -139,7 +139,7 @@ const FormEmailAndPassword = () => {
 									required
 									value={newPassword}
 									onChange={(e) => setNewPassword(e.target.value)}
-									label={t("New_password.1")}
+									label={t('New_password.1')}
 									variant="outlined"
 									validators={[ 'required' ]}
 								/>
@@ -151,7 +151,7 @@ const FormEmailAndPassword = () => {
 									required
 									value={newPasswordMatch}
 									onChange={(e) => setNewPasswordMatch(e.target.value)}
-									label={t("Confirm_password.1")}
+									label={t('Confirm_password.1')}
 									variant="outlined"
 									validators={[ 'isPasswordMatch', 'required' ]}
 									errorMessages={[ 'password mismatch', 'this field is required' ]}
@@ -164,7 +164,7 @@ const FormEmailAndPassword = () => {
 										fullWidth
 										variant="outlined"
 									>
-										{t("Cancel.1")}
+										{t('Cancel.1')}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
@@ -175,7 +175,7 @@ const FormEmailAndPassword = () => {
 										color="primary"
 										className={classes.submit}
 									>
-										{t("Update.1")}
+										{t('Update.1')}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

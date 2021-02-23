@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react';
-import { Context as AuthContext } from '../../../context/AuthContext';
+import React from 'react';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
 //CUSTOM UI
@@ -20,7 +19,7 @@ const DocUserOptions = ({ setIsPublic, isPublic }) => {
 	const handleChange = () => {
 		setIsPublic(!isPublic);
 	};
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Paper elevation={0} className={classes.root}>
 			{/* to be dynamic later, the doc should click on reviews */}

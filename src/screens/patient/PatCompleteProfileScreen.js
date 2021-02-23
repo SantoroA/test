@@ -29,13 +29,13 @@ const useStyles = makeStyles({
 
 const PatCompleteProfileScreen = () => {
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<PatLayoutContainer>
 			<Container maxWidth="md">
 				<NavLink to="/in/doctor/dashboard" className={classes.backButton}>
 					<ArrowBackIcon />
-					<Typography>{t("Back_to_profile.1")}</Typography>
+					<Typography>{t('Back_to_profile.1')}</Typography>
 				</NavLink>
 				<Divider />
 				<Grid container className={classes.section}>

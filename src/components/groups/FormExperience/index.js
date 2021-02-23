@@ -34,13 +34,13 @@ const FormExperience = () => {
 			yearsSpecialist
 		});
 	};
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
-						<Typography variant="h6">{t("Experience.1")}</Typography>
+						<Typography variant="h6">{t('Experience.1')}</Typography>
 						<IconButton onClick={() => setIsDisabled(false)}>
 							<EditIcon />
 						</IconButton>
@@ -61,7 +61,7 @@ const FormExperience = () => {
 									type="number"
 									value={yearsExperience}
 									onChange={(e) => setYearsExperience(e.target.value)}
-									label={t("Years_of_experience.1")}
+									label={t('Years_of_experience.1')}
 									variant="outlined"
 									InputProps={{
 										startAdornment: (
@@ -79,7 +79,7 @@ const FormExperience = () => {
 									type="number"
 									value={yearsSpecialist}
 									onChange={(e) => setYearsSpecialist(e.target.value)}
-									label={t("Years_as_specialist.1")}
+									label={t('Years_as_specialist.1')}
 									variant="outlined"
 									InputProps={{
 										startAdornment: (
@@ -104,12 +104,12 @@ const FormExperience = () => {
 										fullWidth
 										variant="outlined"
 									>
-										{t("Cancel.1")}
+										{t('Cancel.1')}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-									{t("Update.1")}
+										{t('Update.1')}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

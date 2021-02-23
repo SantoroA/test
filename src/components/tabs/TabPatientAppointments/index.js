@@ -56,7 +56,7 @@ const TabPatientAppointments = () => {
 	console.log(userId);
 	// console.log('data', data);
 	// console.log(error);
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	console.log('data', data);
 	console.log(error);
 	return (

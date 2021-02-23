@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Context as LanguageContext } from '../../../context/LanguageContext';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import logo from '../../../assets/dianurse-logo.png';
@@ -18,21 +17,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 //MATERIAL UI ICONS
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 
 export default function Navbar() {
-	const { state: { language }, changeLanguage } = useContext(LanguageContext);
 	const { state: { isLoggedIn, userAmIHCP } } = useContext(AuthContext);
 	const [ currency, setCurrency ] = useState('dolar');
-	const theme = useTheme();
-	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	// console.log(isMobile);
 	const classes = useStyles();
-	const { t, i18n } = useTranslation();
+	const { i18n } = useTranslation();
 	const [ lang, setLang ] = useState('en_US');
 
 	const handleChange = (event) => {

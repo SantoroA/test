@@ -29,13 +29,13 @@ const FormEducation = () => {
 			education
 		});
 	};
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Container className={classes.container}>
 			<PaperCustomShadow className={classes.paper}>
 				<Grid container className={classes.gridContainer}>
 					<Grid item className={classes.title}>
-						<Typography variant="h6">{t("Education.1")}</Typography>
+						<Typography variant="h6">{t('Education.1')}</Typography>
 						<IconButton onClick={() => setIsDisabled(false)}>
 							<EditIcon />
 						</IconButton>
@@ -55,7 +55,7 @@ const FormEducation = () => {
 								type="number"
 								value={education}
 								onChange={(e) => setEducation(e.target.value)}
-								placeholder={t("Information_about_studies.1")}
+								placeholder={t('Information_about_studies.1')}
 								variant="outlined"
 								multiline
 								rows={6}
@@ -73,12 +73,12 @@ const FormEducation = () => {
 										fullWidth
 										variant="outlined"
 									>
-										{t("Cancel.1")}
+										{t('Cancel.1')}
 									</ButtonOutlined>
 								</Grid>
 								<Grid item xs={6} className={classes.button}>
 									<ButtonFilled type="submit" variant="contained" color="primary" fullWidth>
-									{t("Update.1")}
+										{t('Update.1')}
 									</ButtonFilled>
 								</Grid>
 							</Grid>

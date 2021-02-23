@@ -75,7 +75,7 @@ const TabAvailability = () => {
 		getSlots(userId);
 		//  eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Grid container className={classes.container}>
 			<Grid item md={8} xs={12}>
@@ -93,7 +93,7 @@ const TabAvailability = () => {
 									type="date"
 									value={availableStart}
 									onChange={(e) => setAvailableStart(e.target.value)}
-									label={t("Availability_from.1")}
+									label={t('Availability_from.1')}
 									variant="outlined"
 									InputLabelProps={{
 										shrink: true
@@ -107,7 +107,7 @@ const TabAvailability = () => {
 									type="date"
 									value={availableEnd}
 									onChange={(e) => setAvailableEnd(e.target.value)}
-									label={t("Availability_to.1")}
+									label={t('Availability_to.1')}
 									variant="outlined"
 									InputLabelProps={{
 										shrink: true
@@ -120,13 +120,13 @@ const TabAvailability = () => {
 						</Grid>
 						<Grid item xs={12}>
 							<Tabs value={value} onChange={handleChange} indicatorColor="primary">
-								<Tab className={classes.tab} label={t("Sun.1")} {...a11yProps(0)} />
-								<Tab className={classes.tab} label={t("Mon.1")}  {...a11yProps(1)} />
-								<Tab className={classes.tab} label={t("Tue.1")}  {...a11yProps(2)} />
-								<Tab className={classes.tab} label={t("Wed.1")}  {...a11yProps(3)} />
-								<Tab className={classes.tab} label={t("Thu.1")}  {...a11yProps(4)} />
-								<Tab className={classes.tab} label={t("Fri.1")}  {...a11yProps(5)} />
-								<Tab className={classes.tab} label={t("Sat.1")}  {...a11yProps(6)} />
+								<Tab className={classes.tab} label={t('Sun.1')} {...a11yProps(0)} />
+								<Tab className={classes.tab} label={t('Mon.1')} {...a11yProps(1)} />
+								<Tab className={classes.tab} label={t('Tue.1')} {...a11yProps(2)} />
+								<Tab className={classes.tab} label={t('Wed.1')} {...a11yProps(3)} />
+								<Tab className={classes.tab} label={t('Thu.1')} {...a11yProps(4)} />
+								<Tab className={classes.tab} label={t('Fri.1')} {...a11yProps(5)} />
+								<Tab className={classes.tab} label={t('Sat.1')} {...a11yProps(6)} />
 							</Tabs>
 							<SwipeableViews
 								axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -146,7 +146,7 @@ const TabAvailability = () => {
 								</TabPanel>
 								<TabPanel value={value} index={1}>
 									<Typography className={classes.subtitle} variant="h6">
-									{t('Time_slots_Monday.1')}
+										{t('Time_slots_Monday.1')}
 									</Typography>
 									<FormTimeSlots
 										weekDay={1}
@@ -157,7 +157,7 @@ const TabAvailability = () => {
 								</TabPanel>
 								<TabPanel value={value} index={2}>
 									<Typography className={classes.subtitle} variant="h6">
-									{t('Time_slots_Tuesday.1')}
+										{t('Time_slots_Tuesday.1')}
 									</Typography>
 									<FormTimeSlots
 										weekDay={2}
@@ -168,7 +168,7 @@ const TabAvailability = () => {
 								</TabPanel>
 								<TabPanel value={value} index={3}>
 									<Typography className={classes.subtitle} variant="h6">
-									{t('Time_slots_Wednesday.1')}
+										{t('Time_slots_Wednesday.1')}
 									</Typography>
 									<FormTimeSlots
 										weekDay={3}
@@ -179,7 +179,7 @@ const TabAvailability = () => {
 								</TabPanel>
 								<TabPanel value={value} index={4}>
 									<Typography className={classes.subtitle} variant="h6">
-									{t('Time_slots_Thursday.1')}
+										{t('Time_slots_Thursday.1')}
 									</Typography>
 									<FormTimeSlots
 										weekDay={4}
@@ -190,7 +190,7 @@ const TabAvailability = () => {
 								</TabPanel>
 								<TabPanel value={value} index={5}>
 									<Typography className={classes.subtitle} variant="h6">
-									{t('Time_slots_Friday.1')}
+										{t('Time_slots_Friday.1')}
 									</Typography>
 									<FormTimeSlots
 										weekDay={5}
@@ -201,7 +201,7 @@ const TabAvailability = () => {
 								</TabPanel>
 								<TabPanel value={value} index={6}>
 									<Typography className={classes.subtitle} variant="h6">
-									{t('Time_slots_Saturday.1')}
+										{t('Time_slots_Saturday.1')}
 									</Typography>
 									<FormTimeSlots
 										weekDay={6}

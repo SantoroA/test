@@ -132,7 +132,7 @@ const TabLabTests = () => {
 		}
 	];
 
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item className={classes.header}>

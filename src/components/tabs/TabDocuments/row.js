@@ -26,7 +26,7 @@ function Row({ value }) {
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, docStatus, _id, accountHCPid, patientDoc } = value;
 	const filename = value.patientDoc.document;
-	const [ patientRemoveDoc, { data, error, loading } ] = useMutation(DELETEDOC_MUTATION, {
+	const [ patientRemoveDoc, { data } ] = useMutation(DELETEDOC_MUTATION, {
 		variables: {
 			idApt: _id
 		}

@@ -14,14 +14,20 @@ import useStyles from './style';
 
 const CardMyProfile = () => {
 	const classes = useStyles();
-	const { state: { userAmIHCP, isSocialMedia } } = useContext(AuthContext);
+	const { state: { userAmIHCP } } = useContext(AuthContext);
 	const { state: { firstName, lastName, image, specialty, phoneNumber, email } } = useContext(
 		userAmIHCP ? DocProfileContext : PatProfileContext
 	);
 	// console.log(specialty);
 	return (
 		<Card elevation={0} className={classes.root}>
-			<CardMedia className={classes.cover} image={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} title={lastName} />
+			<CardMedia
+				className={classes.cover}
+				image={
+					image.includes('http') ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+				}
+				title={lastName}
+			/>
 			<CardContent className={classes.content}>
 				{userAmIHCP ? (
 					<div>

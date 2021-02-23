@@ -13,7 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 function Row({ value }) {
 	const classes = useStyles();
 	const { docName, start, end, docStatus, docComments, id, docPic } = value;
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<TableRow>
 			<TableCell align="left">
@@ -30,7 +30,7 @@ function Row({ value }) {
 			<TableCell>{docComments}</TableCell>
 			<TableCell>
 				<ButtonOutlined className={classes.editButton}>
-					<EditIcon className={classes.editIcon} /> {t("Take_Survey.1")}
+					<EditIcon className={classes.editIcon} /> {t('Take_Survey.1')}
 				</ButtonOutlined>
 			</TableCell>
 		</TableRow>

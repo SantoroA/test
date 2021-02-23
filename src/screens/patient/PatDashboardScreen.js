@@ -129,7 +129,7 @@ const PatDashboardScreen = () => {
 	let { path } = useRouteMatch();
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<PatLayoutContainer>
 			<Grid container className={classes.userInfo}>
@@ -142,13 +142,14 @@ const PatDashboardScreen = () => {
 						<Grid item md={12} sm={6} xs={12} className={classes.buttonWrapper}>
 							<NavLink className={classes.buttonNav} to="/in/patient/doctorsearch">
 								<ButtonFilled className={classes.button} variant="contained">
-									<SearchIcon className={classes.buttonIcon} />{t("Search_Doctor.1")}
+									<SearchIcon className={classes.buttonIcon} />
+									{t('Search_Doctor.1')}
 								</ButtonFilled>
 							</NavLink>
 						</Grid>
 						<Grid item md={12} sm={6} xs={12} className={classes.buttonWrapper}>
 							<ButtonOutlined className={classes.button} variant="outlined" color="primary">
-								<ChatBubbleOutlineIcon className={classes.buttonIcon} /> {t("Meet_assistant.1")}
+								<ChatBubbleOutlineIcon className={classes.buttonIcon} /> {t('Meet_assistant.1')}
 							</ButtonOutlined>
 						</Grid>
 					</Grid>
@@ -180,31 +181,31 @@ const PatDashboardScreen = () => {
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<CalendarIcon className={classes.icons} />}
-								label={t("My_Appointments.1")}
+								label={t('My_Appointments.1')}
 								{...a11yProps(0)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<FolderIcon className={classes.icons} />}
-								label={t("DOCUMENTS.1")}
+								label={t('DOCUMENTS.1')}
 								{...a11yProps(1)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<PrescriptionIcon className={classes.icons} />}
-								label={t("PRESCRIPTIONS.1")}
+								label={t('PRESCRIPTIONS.1')}
 								{...a11yProps(2)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<LabTestsIcon className={classes.icons} />}
-								label={t("LAB_TESTS.1")}
+								label={t('LAB_TESTS.1')}
 								{...a11yProps(3)}
 							/>
 							<TabCustom
 								className={classes.wrapperTab}
 								icon={<QuestionnaireIcon className={classes.icons} />}
-								label={t("SURVEYS.1")}
+								label={t('SURVEYS.1')}
 								{...a11yProps(4)}
 							/>
 						</Tabs>

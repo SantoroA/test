@@ -22,7 +22,7 @@ const NavMenu = () => {
 	const classes = useStyles();
 	const [ menuItem, setMenuItem ] = useState(null);
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
-	const { logout, state: { userAmIHCP, isSocialMedia } } = useContext(AuthContext);
+	const { logout, state: { userAmIHCP } } = useContext(AuthContext);
 	const { state: { firstName, image } } = useContext(userAmIHCP ? DocProfileContext : PatProfileContext);
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -34,7 +34,7 @@ const NavMenu = () => {
 	const handleClose = () => {
 		setMenuItem(null);
 	};
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	if (isMobile) {
 		return (
 			<div className={classes.drawerIconContainer}>

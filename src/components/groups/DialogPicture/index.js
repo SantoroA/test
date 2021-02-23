@@ -1,4 +1,4 @@
-import React, { useState, useContext, createRef, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { Context as PatProfileContext } from '../../../context/PatProfileContext';
@@ -17,10 +17,8 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import CloseIcon from '@material-ui/icons/Close';
-import TextField from '@material-ui/core/TextField';
 
 export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 	const { state: { userId, userAmIHCP } } = useContext(AuthContext);

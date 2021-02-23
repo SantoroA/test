@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
 //CUSTOM ICONS
-import DrawerIcon from '../../customIcons/DrawerIcon';
 import CalendarIcon from '../../customIcons/CalendarIcon';
 import PeopleIcon from '../../customIcons/PeopleIcon';
 import EarningsIcon from '../../customIcons/EarningsIcon';
@@ -20,7 +19,6 @@ import ProfileIcon from '../../customIcons/ProfileIcon';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -40,7 +38,7 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 		return location.pathname.indexOf(routeName) > -1 ? true : false;
 	};
 	console.log(location);
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<div onClick={() => setDrawerOpen(false)} onKeyDown={() => setDrawerOpen(false)} className={classes.root}>
 			<List className={classes.menuList}>

@@ -57,7 +57,7 @@ const TabMyAppointments = () => {
 	console.log(userId);
 	console.log('data', data);
 	console.log(error);
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>

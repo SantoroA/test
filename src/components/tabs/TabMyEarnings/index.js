@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 const TabMyEarnings = () => {
 	const classes = useStyles();
-	const { t , i18n} = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<div>
 			<Grid className={classes.root} container>

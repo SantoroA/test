@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const TabDocPublicAbout = ({ docId }) => {
 	const classes = useStyles();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 	// 	variables: {  id: docId }
 	// });

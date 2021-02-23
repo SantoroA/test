@@ -14,7 +14,6 @@ import DocViewPatProfile from '../screens/doctor/DocViewPatProfile';
 import DocPastAppointmentsScreen from '../screens/doctor/DocPastAppointmentsScreen';
 import DocVideoCallScreen from '../screens/doctor/DocVideoCallScreen';
 import DocVideoPrecallScreen from '../screens/doctor/DocVideoPrecallScreen';
-import DocViewPublicProfileScreen from '../screens/doctor/DocViewPublicProfileScreen';
 //patient screens
 import PatAssistantScreen from '../screens/patient/PatAssistantScreen';
 import PatCoachMarkScreen from '../screens/patient/PatCoachMarkScreen';
@@ -45,7 +44,6 @@ const PrivateRouteDoctor = () => {
 			<Route path="/in/doctor/pastappointments" exact component={DocPastAppointmentsScreen} />
 			<Route path="/in/doctor/videocall" exact component={DocVideoCallScreen} />
 			<Route path="/in/doctor/videoprecall" exact component={DocVideoPrecallScreen} />
-			<Route path="/in/doctor/viewprofile" exact component={DocViewPublicProfileScreen} />
 			<Route path="/in/doctor/completeprofile" component={DocCompleteProfileScreen} />
 			<Route path="/in/doctor/dashboard" component={DocDashboardScreen} />
 			<Route path="/" component={LoadingScreen}>
