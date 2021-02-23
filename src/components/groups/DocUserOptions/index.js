@@ -12,14 +12,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
+//QUERY MIN PRICE AND REVIEWS (NUMBER OF REVIEWS AND RATING)
+
 const DocUserOptions = ({ setIsPublic, isPublic }) => {
 	const classes = useStyles();
-	const [ state, setState ] = useState({
-		checkedPublic: false,
-		checkedPrivate: true
-	});
-
-	const { state: { userName } } = useContext(AuthContext);
 
 	const handleChange = () => {
 		setIsPublic(!isPublic);

@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Context as AuthContext } from '../../context/AuthContext';
+import React, { useState } from 'react';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import Loader from 'react-loader-spinner';
 import { NavLink } from 'react-router-dom';
 import { convertTime } from '../../helpers/dateHelper';
 import { useQuery, gql } from '@apollo/client';
-
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../groups/ErrorMessage';
 //CUSTOM UI
@@ -113,7 +111,6 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 	const { t, i18n } = useTranslation();
 	const [ date, setDate ] = useState(new Date());
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	const { state: { userId, userAmIHCP } } = useContext(AuthContext);
 	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 	// 	variables: { date, id: docId, limit: 2, cursor: null }
 	// });
@@ -230,5 +227,5 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 		</Grid>
 	);
 };
-// message de erro
+
 export default TabDocPublicGeneral;

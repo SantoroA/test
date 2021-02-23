@@ -1,25 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { Context as AuthContext } from '../../context/AuthContext';
-import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
+import React from 'react';
 import Loader from 'react-loader-spinner';
-
 import { useQuery, gql } from '@apollo/client';
-
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../groups/ErrorMessage';
 //CUSTOM UI
-import CalendarApp from '../customUi/CalendarApp';
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
-
 //MATERIAL UI
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { useTheme } from '@material-ui/core/styles';
-
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles({
 	paper: {
 		padding: '1rem',
@@ -50,7 +42,7 @@ const TabDocPublicAbout = ({ docId }) => {
 	// });
 
 	return (
-		<Container container>
+		<Container>
 			{/* {loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
@@ -119,5 +111,5 @@ const TabDocPublicAbout = ({ docId }) => {
 		</Container>
 	);
 };
-// message de erro
+
 export default TabDocPublicAbout;
