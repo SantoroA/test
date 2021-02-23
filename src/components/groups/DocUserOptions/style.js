@@ -4,6 +4,7 @@ const useStyles = makeStyles({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
+
 		height: '12rem',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -12,7 +13,18 @@ const useStyles = makeStyles({
 	button: {
 		justifyContent: 'center',
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		marginRight: '1rem',
+		marginLeft: '1rem'
+	},
+	switchWrapper: {
+		marginTop: '1rem'
+	},
+	reviewWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginBottom: '1rem'
 	}
 });
 

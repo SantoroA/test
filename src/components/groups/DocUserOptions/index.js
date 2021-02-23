@@ -12,7 +12,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
-const DocUserOptions = () => {
+const DocUserOptions = ({ setIsPublic, isPublic }) => {
 	const classes = useStyles();
 	const [ state, setState ] = useState({
 		checkedPublic: false,
@@ -21,16 +21,19 @@ const DocUserOptions = () => {
 
 	const { state: { userName } } = useContext(AuthContext);
 
-	const handleChange = (event) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
+	const handleChange = () => {
+		setIsPublic(!isPublic);
 	};
-	const { t , i18n} = useTranslation();
+	const { t, i18n } = useTranslation();
 	return (
 		<Paper elevation={0} className={classes.root}>
 			{/* to be dynamic later, the doc should click on reviews */}
-
-			<Rating name="read-only" value={0} readOnly />
-			<Typography variant="subtitle1">(0 {t('Reviews.1')})</Typography>
+			<div className={classes.reviewWrapper}>
+				<Rating name="read-only" value={0} readOnly />
+				<Typography color="textSecondary" variant="body2">
+					(0 {t('Reviews.1')})
+				</Typography>
+			</div>
 
 			<ButtonFilled>
 				<div className={classes.button}>
@@ -40,17 +43,24 @@ const DocUserOptions = () => {
 					<Typography variant="h5">LV 00.00</Typography>
 				</div>
 			</ButtonFilled>
-			<FormGroup row>
+			<FormGroup row className={classes.switchWrapper}>
 				<FormControlLabel
 					control={
-						<Switch
-							checked={state.checkedPrivate}
-							onChange={handleChange}
-							name="checkedPrivate"
-							color="primary"
-						/>
+						<Switch checked={isPublic} onChange={handleChange} name="checkedPrivate" color="primary" />
 					}
-					label={t("Private_profile.1")}
+					label={
+						<div>
+							{isPublic ? (
+								<Typography color="textSecondary" variant="body2">
+									Switch to private profile
+								</Typography>
+							) : (
+								<Typography color="textSecondary" variant="body2">
+									Switch to public profile
+								</Typography>
+							)}
+						</div>
+					}
 				/>
 			</FormGroup>
 		</Paper>

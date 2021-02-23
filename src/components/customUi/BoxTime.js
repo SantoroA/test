@@ -7,10 +7,10 @@ const useStyles = makeStyles({
 	root: {
 		borderColor: '#A0A4A8',
 		color: '#A0A4A8',
-		paddingTop: '0.2rem',
-		paddingBottom: '0.2rem',
+		paddingTop: '0.8rem',
+		paddingBottom: '0.8rem',
 		paddingLeft: '0.5rem',
-		paddingRight: '0.8rem',
+		paddingRight: '1.2rem',
 		textTransform: 'none',
 		alignItems: 'center',
 		display: 'flex',
