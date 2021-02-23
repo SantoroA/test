@@ -136,7 +136,7 @@ const DocDashboardScreen = () => {
 						<TabDocPublicGeneral disableBooking={true} docId={userId} />
 					</TabPanel>
 					<TabPanel value={valuePublic} index={1}>
-						<TabDocPublicAbout />
+						<TabDocPublicAbout docId={userId} />
 					</TabPanel>
 				</Container>
 			) : (
