@@ -22,8 +22,7 @@ const prescriptions = [
 		docName: 'Gabi',
 		start: '2021-02-10T09:30:00.000Z',
 		end: '2021-02-10T09:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Test1',
 		docPic:
 			'https://images.pexels.com/photos/3053844/pexels-photo-3053844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
 		id: 'sfwefwefadaawef'
@@ -32,8 +31,7 @@ const prescriptions = [
 		docName: 'Aline',
 		start: '2021-02-10T08:30:00.000Z',
 		end: '2021-02-10T08:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Test2',
 		docPic:
 			'https://images.pexels.com/photos/3136340/pexels-photo-3136340.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
 		id: 'sfwefasdaswefawef'
@@ -42,8 +40,7 @@ const prescriptions = [
 		docName: 'Peach',
 		start: '2021-02-10T07:00:00.000Z',
 		end: '2021-02-10T07:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Test3',
 		docPic:
 			'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 		id: 'sfwefweaadfeffawef'
@@ -52,8 +49,7 @@ const prescriptions = [
 		docName: 'Pear',
 		start: '2021-02-05T07:00:00.000Z',
 		end: '2021-02-05T07:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Test4',
 		docPic:
 			'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 		id: 'sfwefwfvfdefawef'
@@ -93,8 +89,7 @@ const TabPrescriptions = () => {
 							<TableCell className={classes.tableHeader}>{t('Doctor_Name.1')}</TableCell>
 							<TableCell className={classes.tableHeader}>{t('Date.1')}</TableCell>
 							<TableCell className={classes.tableHeader}>{t('Appointment_Time.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Patient_comments.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Document_Status.1')}</TableCell>
+							<TableCell className={classes.tableHeader}>Prescription Name</TableCell>
 							<TableCell />
 						</TableRow>
 					</TableHead>

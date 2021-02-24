@@ -5,14 +5,14 @@ import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 function Row({ value }) {
 	const classes = useStyles();
-	const { docName, start, end, docComments, docStatus, id, docPic } = value;
+	//PASS IN DOCUMENT LINK
+	const { docName, start, end, prescName, id, docPic } = value;
 
 	return (
 		<TableRow>
@@ -26,18 +26,13 @@ function Row({ value }) {
 			<TableCell>
 				{convertTime(start)} - {convertTime(end)}
 			</TableCell>
-			<TableCell>{docComments}</TableCell>
-			<TableCell>{docStatus}</TableCell>
+			<TableCell>{prescName}</TableCell>
 			<TableCell>
-				<IconButton>
-					<GetAppIcon />
-				</IconButton>
-				<IconButton>
-					<VisibilityIcon />
-				</IconButton>
-				<IconButton>
-					<DeleteOutlineIcon color="secondary" />
-				</IconButton>
+				<Tooltip title="Download">
+					<IconButton>
+						<GetAppIcon />
+					</IconButton>
+				</Tooltip>
 			</TableCell>
 		</TableRow>
 	);

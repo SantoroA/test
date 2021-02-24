@@ -1,115 +1,115 @@
 import React, { useState } from 'react';
 import useStyles from './style';
-import Loader from 'react-loader-spinner';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import { useTranslation } from 'react-i18next';
 import DialogLabTestResult from '../../groups/DialogLabTestResult';
 import DialogError from '../../groups/DialogError';
 //CUSTOM UI
-import ButtonOutlined from '../../customUi/ButtonOutlined';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PublishIcon from '@material-ui/icons/Publish';
-import { useMutation, gql } from '@apollo/client';
-
-const DELETELABTEST_MUTATION = gql`
-	mutation DeleteLabTest($idApt: ID!, $oldFile: String!) {
-		patientRemoveLabTest(idApt: $idApt, oldFile: $oldFile)
-	}
-`;
 
 function Row({ value, appointment }) {
 	const classes = useStyles();
-	const { docName, start, end, docStatus, id, docPic } = value;
 	const { t } = useTranslation();
-	const [ oldFile, setOldFile ] = useState('');
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid } = appointment;
-	const { doctorRequest, patientResult } = value;
-	const [ patientRemoveLabTest, { error, loading } ] = useMutation(DELETELABTEST_MUTATION, {
-		variables: {
-			idApt: _id,
-			oldFile: oldFile
-		}
-	});
+	const { name, isNew, hasResult, result } = value;
 
-	if (loading) {
-		return (
-			<Container className={classes.emptyState}>
-				<Loader type="TailSpin" color="primary" height={80} width={80} />
-			</Container>
-		);
-	}
+	// WHEN DOWNLOADED, CHANGE ISNEW TO FALSE. WHEN UPLOADED, CHANGE HASRESULT TO TRUE
 
 	return (
-		<TableRow>
-			<TableCell align="left">
-				<div className={classes.name}>
-					<Avatar
-						className={classes.avatar}
-						alt={profileHCPid.firstName}
-						src={
-							accountHCPid.profilePicture.includes('http') ? (
-								accountHCPid.profilePicture
-							) : (
-								`url(http://localhost:10101/dianurse/v1/profile/static/images/${accountHCPid.profilePicture})`
-							)
-						}
-					/>
-					{profileHCPid.firstName}
-				</div>
-			</TableCell>
-			<TableCell>{formatDateShort(appointmentTimeStart)}</TableCell>
-			<TableCell>
-				{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
-			</TableCell>
+		<PaperCustomShadow className={classes.paper} style={{ backgroundColor: `${isNew && '#D7FEF1'}` }}>
+			<Grid container className={classes.wrapper}>
+				<Grid item md={3} sm={4} xs={12}>
+					<div className={classes.name}>
+						<Avatar
+							className={classes.avatar}
+							alt={profileHCPid.firstName}
+							src={
+								accountHCPid.profilePicture.includes('http') ? (
+									accountHCPid.profilePicture
+								) : (
+									`url(http://localhost:10101/dianurse/v1/profile/static/images/${accountHCPid.profilePicture})`
+								)
+							}
+						/>
+						Dr. {profileHCPid.lastName}
+					</div>
+				</Grid>
 
-			<TableCell>
-				<IconButton
-					href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${patientResult}`}
-					download
-					target="_blank"
-				>
-					<GetAppIcon />
-				</IconButton>
-				<IconButton
-					onClick={(e) => {
-						e.preventDefault();
-						setOldFile(patientResult);
-						setTimeout(() => {
-							console.log(oldFile);
-							patientRemoveLabTest().catch((err) => setDialogErrorOpen(true));
-						}, 500);
-					}}
-				>
-					<DeleteOutlineIcon color="secondary" />
-				</IconButton>
-				<ButtonOutlined
-					className={classes.uploadButton}
-					onClick={() => {
-						setDialogOpen(true);
-					}}
-				>
-					<PublishIcon className={classes.uploadIcon} /> {t('Upload_results.1')}
-				</ButtonOutlined>
-			</TableCell>
-			<DialogLabTestResult
-				isOpen={dialogOpen}
-				close={() => setDialogOpen(false)}
-				setDialogErrorOpen={setDialogErrorOpen}
-				docName={profileHCPid.firstName}
-				requestName={doctorRequest}
-				aptId={_id}
-			/>
-			<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
-		</TableRow>
+				<Grid className={classes.dateTime} item md={2} sm={4} xs={6}>
+					{formatDateShort(appointmentTimeStart)}
+				</Grid>
+				<Grid className={classes.dateTime} item md={2} sm={4} xs={6}>
+					{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
+				</Grid>
+				<Grid item md={3} sm={6} xs={6} className={classes.testName}>
+					{name}
+				</Grid>
+
+				<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
+					<Tooltip title="Download request">
+						<IconButton
+							href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${result}`}
+							download
+							target="_blank"
+							color="primary"
+						>
+							<GetAppIcon />
+						</IconButton>
+					</Tooltip>
+					{hasResult ? (
+						<IconButton
+							onClick={() => {
+								setDialogOpen(true);
+							}}
+							color="primary"
+							disabled
+						>
+							<PublishIcon />
+						</IconButton>
+					) : (
+						<Tooltip title="Upload result">
+							<IconButton
+								onClick={() => {
+									setDialogOpen(true);
+								}}
+								color="primary"
+							>
+								<PublishIcon />
+							</IconButton>
+						</Tooltip>
+					)}
+					{hasResult ? (
+						<Tooltip title="Result sent">
+							<CheckCircleOutlineIcon color="primary" className={classes.checkIcon} />
+						</Tooltip>
+					) : (
+						<Tooltip title="Waiting for result">
+							<ErrorOutlineIcon className={classes.errorIcon} />
+						</Tooltip>
+					)}
+				</Grid>
+				<DialogLabTestResult
+					isOpen={dialogOpen}
+					close={() => setDialogOpen(false)}
+					setDialogErrorOpen={setDialogErrorOpen}
+					docName={profileHCPid.firstName}
+					requestName={name}
+					aptId={_id}
+				/>
+				<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
+			</Grid>
+		</PaperCustomShadow>
 	);
 }
 export default Row;

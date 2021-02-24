@@ -6,6 +6,7 @@ import DialogConfirm from '../../groups/DialogConfirm';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
+import Tooltip from '@material-ui/core/Tooltip';
 import TableRow from '@material-ui/core/TableRow';
 import Avatar from '@material-ui/core/Avatar';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -22,9 +23,8 @@ const DELETEDOC_MUTATION = gql`
 
 function Row({ value }) {
 	const classes = useStyles();
-	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
-	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, docStatus, _id, accountHCPid, patientDoc } = value;
+	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid, patientDoc } = value;
 	const filename = value.patientDoc.document;
 	const [ patientRemoveDoc, { data } ] = useMutation(DELETEDOC_MUTATION, {
 		variables: {
@@ -58,37 +58,25 @@ function Row({ value }) {
 				{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
 			</TableCell>
 			<TableCell>{patientDoc.name}</TableCell>
-			<TableCell>{docStatus}</TableCell>
 			<TableCell>
-				<IconButton
-					onClick={() => {
-						setDialogOpen(true);
-					}}
-				>
-					<EditIcon />
-				</IconButton>
-				<IconButton
-					href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${filename}`}
-					target="_blank"
-				>
-					<VisibilityIcon />
-				</IconButton>
-				<IconButton
-					onClick={(e) => {
-						setDialogConfirmOpen(true);
-					}}
-				>
-					<DeleteOutlineIcon color="secondary" />
-				</IconButton>
+				<Tooltip title="Preview">
+					<IconButton
+						href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${filename}`}
+						target="_blank"
+					>
+						<VisibilityIcon color="primary" />
+					</IconButton>
+				</Tooltip>
+				<Tooltip title="Delete">
+					<IconButton
+						onClick={(e) => {
+							setDialogConfirmOpen(true);
+						}}
+					>
+						<DeleteOutlineIcon color="secondary" />
+					</IconButton>
+				</Tooltip>
 			</TableCell>
-			<DialogEditDocument
-				documentTitle={patientDoc.name}
-				documentLink={`http://localhost:10101/dianurse/v1/download/static/docs/private/${filename}`}
-				isOpen={dialogOpen}
-				title="Edit document"
-				aptId={_id}
-				close={() => setDialogOpen(false)}
-			/>
 			<DialogConfirm
 				action={patientRemoveDoc}
 				isOpen={dialogConfirmOpen}

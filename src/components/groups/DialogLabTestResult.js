@@ -169,7 +169,7 @@ const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName }) => 
 						<IconButton className={classes.closeButton} onClick={close} color="primary">
 							<CloseIcon />
 						</IconButton>
-						<Typography className={classes.title}>Upload Result for Dr. {docName}</Typography>
+						<Typography className={classes.title}>Upload Result for {requestName}</Typography>
 					</Grid>
 					<Divider variant="middle" className={classes.divider} />
 					<DialogContent>
