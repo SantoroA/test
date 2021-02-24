@@ -46,13 +46,13 @@ function Row({ value, appointment }) {
 					</div>
 				</Grid>
 
-				<Grid className={classes.dateTime} item md={2} sm={4} xs={6}>
+				<Grid item md={2} sm={4} xs={6}>
 					{formatDateShort(appointmentTimeStart)}
 				</Grid>
-				<Grid className={classes.dateTime} item md={2} sm={4} xs={6}>
+				<Grid item md={2} sm={4} xs={6}>
 					{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
 				</Grid>
-				<Grid item md={3} sm={6} xs={6} className={classes.testName}>
+				<Grid item md={3} sm={6} xs={6}>
 					{name}
 				</Grid>
 
