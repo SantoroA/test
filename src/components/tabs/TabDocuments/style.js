@@ -61,7 +61,6 @@ const useStyles = makeStyles({
 		flexDirection: 'row',
 		alignItems: 'center',
 		padding: '1rem'
-		// justifyContent: 'space-between'
 	},
 	iconsWrapper: {
 		display: 'flex',

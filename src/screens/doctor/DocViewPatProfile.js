@@ -102,7 +102,7 @@ const DocViewPatProfile = () => {
 	const location = useLocation();
 	const { state: { userId } } = useContext(AuthContext);
 	const { id, image, firstName, lastName, phoneNumber, email } = location.state;
-
+	console.log(location.state);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};

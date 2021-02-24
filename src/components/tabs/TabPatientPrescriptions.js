@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import { useQuery, gql } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
+import DialogNewPrescription from '../groups/DialogNewPrescription';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 import ButtonFilled from '../../components/customUi/ButtonFilled';
@@ -94,6 +95,7 @@ const DOCUMENTS_QUERY = gql`
 
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
+	const [ dialogPrescOpen, setDialogPrescOpen ] = useState(false);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -120,7 +122,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 	return (
 		<div>
 			<Grid item className={classes.header}>
-				<ButtonFilled className={classes.uploadButton}>
+				<ButtonFilled onClick={() => setDialogPrescOpen(true)} className={classes.uploadButton}>
 					<AddIcon /> New Prescription
 				</ButtonFilled>
 			</Grid>
@@ -175,6 +177,12 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 					</PaperCustomShadow>
 				);
 			})}
+			<DialogNewPrescription
+				idHCP={idHCP}
+				idPatient={idPatient}
+				isOpen={dialogPrescOpen}
+				close={() => setDialogPrescOpen(false)}
+			/>
 		</div>
 	);
 };

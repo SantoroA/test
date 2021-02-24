@@ -135,7 +135,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 					{
 						name: 'X-Ray',
 						requestLink: 'filename',
-						hasResult: false,
+						hasResult: true,
 						isNewForDoctor: true,
 						resultLink: 'filename'
 					}
@@ -151,7 +151,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 					{
 						name: 'Blood Test - 1',
 						requestLink: 'filename',
-						hasResult: true,
+						hasResult: false,
 						isNewForDoctor: false,
 						resultLink: 'filename'
 					}
@@ -168,7 +168,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 						name: 'Blood Test - 2',
 						requestLink: 'filename',
 						hasResult: true,
-						isNewForDoctor: true,
+						isNewForDoctor: false,
 						resultLink: 'filename'
 					}
 				]
