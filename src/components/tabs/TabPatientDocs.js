@@ -6,19 +6,13 @@ import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogError from '../groups/DialogError';
 //CUSTOM UI
-import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
-
+import PaperCustomShadow from '../customUi/PaperCustomShadow';
 //MATERIAL UI
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import Table from '@material-ui/core/Table';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import Avatar from '@material-ui/core/Avatar';
-import TableHead from '@material-ui/core/TableHead';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import Tooltip from '@material-ui/core/Tooltip';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/core/styles';
@@ -45,6 +39,21 @@ const useStyles = makeStyles({
 		height: '20rem',
 		flexDirection: 'column',
 		textAlign: 'center'
+	},
+	iconsWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-end'
+	},
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		padding: '1rem'
+	},
+	paper: {
+		marginBottom: '0.5rem'
 	}
 });
 
@@ -86,8 +95,8 @@ const DELETEDOC_MUTATION = gql`
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const [ idApt, setIdApt ] = useState('');
-	const { state: { firstName, image } } = useContext(DocProfileContext);
-	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
+	const { state: { lastName, image } } = useContext(DocProfileContext);
+
 	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idHCP,
@@ -105,13 +114,31 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 
 	const documents = [
 		{
-			docName: 'Priscilla',
-			docPic:
-				'https://images.pexels.com/photos/773371/pexels-photo-773371.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-			start: '2021-02-01T06:30:00.000Z',
-			end: '2021-02-01T07:00:00.000Z',
-			name: '',
-			status: ''
+			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+			patientDoc: {
+				name: 'Bacon',
+				status: 'seen',
+				isNew: true
+			}
+		},
+		{
+			appointmentTimeStart: '2021-02-05T06:30:00.000Z',
+			appointmentTimeEnd: '2021-02-05T07:00:00.000Z',
+			patientDoc: {
+				name: 'See this',
+				status: 'seen',
+				isNew: false
+			}
+		},
+		{
+			appointmentTimeStart: '2021-02-09T06:30:00.000Z',
+			appointmentTimeEnd: '2021-02-09T07:00:00.000Z',
+			patientDoc: {
+				name: 'Wink wink',
+				status: 'seen',
+				isNew: false
+			}
 		}
 	];
 
@@ -124,83 +151,70 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{data && (
-				<div>
-					<TableContainer className={classes.tableSection} component={PaperCustomShadow}>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-									<TableCell className={classes.tableHeader}>Date</TableCell>
-									<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
-									<TableCell className={classes.tableHeader}>Document name</TableCell>
-									<TableCell className={classes.tableHeader}>Document Status</TableCell>
-									<TableCell />
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{data.patientDocsForDoctors.map((doc, i) => {
-									return (
-										<TableRow key={i}>
-											<TableCell>
-												<div className={classes.name}>
-													<Avatar
-														className={classes.avatar}
-														alt={firstName}
-														src={
-															image.includes('http') ? (
-																image
-															) : (
-																`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
-															)
-														}
-													/>
-													{firstName}
-												</div>
-											</TableCell>
-											<TableCell>{formatDateShort(doc.appointmentTimeEnd)}</TableCell>
-											<TableCell>
-												{convertTime(doc.appointmentTimeStart)} -{' '}
-												{convertTime(doc.appointmentTimeEnd)}
-											</TableCell>
-											<TableCell>{doc.patientDoc.name}</TableCell>
-											<TableCell>{doc.patientDoc.status}</TableCell>
-											<TableCell>
-												<IconButton
-													href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
-														.patientDoc.document}`}
-													target="_blank"
-												>
-													<GetAppIcon />
-												</IconButton>
-												<IconButton
-													href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
-														.patientDoc.document}`}
-													target="_blank"
-												>
-													<VisibilityIcon />
-												</IconButton>
-												<IconButton
-													onClick={(e) => {
-														e.preventDefault();
-														setIdApt(doc._id);
-														setTimeout(() => {
-															patientRemoveDoc().catch((err) => setDialogErrorOpen(true));
-														}, 500);
-													}}
-												>
-													<DeleteOutlineIcon color="secondary" />
-												</IconButton>
-											</TableCell>
-										</TableRow>
-									);
-								})}
-							</TableBody>
-						</Table>
-						<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
-					</TableContainer>
-				</div>
-			)}
+			{/* {data && ( */}
+			<div>
+				{/* {data.patientDocsForDoctors.map((doc, i) => { */}
+				{documents.map((doc, i) => {
+					return (
+						<PaperCustomShadow
+							className={classes.paper}
+							style={{ backgroundColor: `${doc.patientDoc.isNew && '#D7FEF1'}` }}
+							key={i}
+						>
+							<Grid container className={classes.wrapper}>
+								<Grid item md={3} sm={4} xs={12}>
+									<div className={classes.name}>
+										<Avatar
+											className={classes.avatar}
+											alt={lastName}
+											src={
+												image.includes('http') ? (
+													image
+												) : (
+													`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+												)
+											}
+										/>
+										Dr. {lastName}
+									</div>
+								</Grid>
+								<Grid item md={2} sm={4} xs={6}>
+									{formatDateShort(doc.appointmentTimeEnd)}
+								</Grid>
+								<Grid item md={2} sm={4} xs={6}>
+									{convertTime(doc.appointmentTimeStart)} - {convertTime(doc.appointmentTimeEnd)}
+								</Grid>
+								<Grid item md={3} sm={6} xs={6}>
+									{doc.patientDoc.name}
+								</Grid>
+								<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
+									<Tooltip title="Download">
+										<IconButton
+											href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
+												.patientDoc.document}`}
+											target="_blank"
+											color="primary"
+										>
+											<GetAppIcon />
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Preview">
+										<IconButton
+											href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
+												.patientDoc.document}`}
+											target="_blank"
+											color="primary"
+										>
+											<VisibilityIcon />
+										</IconButton>
+									</Tooltip>
+								</Grid>
+							</Grid>
+						</PaperCustomShadow>
+					);
+				})}
+			</div>
+			{/* )} */}
 		</div>
 	);
 };
