@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
-import DialogError from '../groups/DialogError';
+
 //CUSTOM UI
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -18,12 +18,6 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-	tableSection: {
-		marginTop: '2em'
-	},
-	tableHeader: {
-		fontWeight: 'bold'
-	},
 	name: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -84,33 +78,18 @@ const DOCUMENTS_QUERY = gql`
 	}
 `;
 
-const DELETEDOC_MUTATION = gql`
-	mutation DeleteDoc($idApt: ID!) {
-		patientRemoveDoc(idApt: $idApt)
-	}
-`;
-
 //MAIN FUNCTION
 
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
-	const [ idApt, setIdApt ] = useState('');
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 
-	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const { error, loading, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
 		}
 	});
-	const [ patientRemoveDoc, { loading } ] = useMutation(DELETEDOC_MUTATION, {
-		variables: {
-			idApt: idApt
-		}
-	});
-	console.log(idHCP, idPatient);
-
-	console.log('data', data);
 
 	const documents = [
 		{

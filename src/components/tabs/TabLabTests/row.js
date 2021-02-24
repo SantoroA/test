@@ -20,7 +20,6 @@ function Row({ value, appointment }) {
 	const classes = useStyles();
 	const { t } = useTranslation();
 	const [ dialogOpen, setDialogOpen ] = useState(false);
-	const [ dialogErrorOpen, setDialogErrorOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid } = appointment;
 	const { name, isNew, hasResult, result } = value;
 
@@ -102,12 +101,10 @@ function Row({ value, appointment }) {
 				<DialogLabTestResult
 					isOpen={dialogOpen}
 					close={() => setDialogOpen(false)}
-					setDialogErrorOpen={setDialogErrorOpen}
 					docName={profileHCPid.firstName}
 					requestName={name}
 					aptId={_id}
 				/>
-				<DialogError isOpen={dialogErrorOpen} close={() => setDialogErrorOpen(false)} />
 			</Grid>
 		</PaperCustomShadow>
 	);

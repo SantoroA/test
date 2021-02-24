@@ -7,32 +7,21 @@ import { Context as DocProfileContext } from '../../context/DocProfileContext';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 import ButtonFilled from '../../components/customUi/ButtonFilled';
-import ButtonOutlined from '../../components/customUi/ButtonOutlined';
 //MATERIAL UI
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import Table from '@material-ui/core/Table';
+import Tooltip from '@material-ui/core/Tooltip';
+import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
-import TableHead from '@material-ui/core/TableHead';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles({
-	tableSection: {
-		marginTop: '2em'
-	},
-	tableHeader: {
-		fontWeight: 'bold'
-	},
 	name: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -61,6 +50,30 @@ const useStyles = makeStyles({
 		height: '20rem',
 		flexDirection: 'column',
 		textAlign: 'center'
+	},
+	paper: {
+		marginBottom: '0.5rem'
+	},
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		padding: '1rem'
+	},
+	iconsWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-end'
+	},
+	errorIcon: {
+		color: '#FF9900',
+		marginLeft: '0.5rem',
+		marginRight: '0.5rem'
+	},
+	checkIcon: {
+		marginLeft: '0.5rem',
+		marginRight: '0.5rem'
 	}
 });
 
@@ -89,7 +102,7 @@ const DOCUMENTS_QUERY = gql`
 
 const DELETEDOC_MUTATION = gql`
 	mutation DeleteLabTest($idApt: ID!, $oldFile: String!) {
-		doctorRemoveLabTest(idApt: $idApt, oldFile: $oldFile )
+		doctorRemoveLabTest(idApt: $idApt, oldFile: $oldFile)
 	}
 `;
 
@@ -97,9 +110,9 @@ const DELETEDOC_MUTATION = gql`
 
 const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
-	const [oldFile, setOldFile] = useState('');
-	const [idApt, setidApt] = useState('');
-	const { state: {firstName, image} } = useContext(DocProfileContext);
+	const [ oldFile, setOldFile ] = useState('');
+	const [ idApt, setidApt ] = useState('');
+	const { state: { lastName, image } } = useContext(DocProfileContext);
 	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idHCP,
@@ -115,19 +128,64 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 
 	console.log('dataDoctorLab', data);
 
-	const tests = [
+	const appointments = [
 		{
-			docName: 'Bianca',
-			docPic:
-				'https://images.pexels.com/photos/1832323/pexels-photo-1832323.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-			start: '2021-02-01T06:30:00.000Z',
-			end: '2021-02-01T07:00:00.000Z',
+			labTest: {
+				doctorRequest: [
+					{
+						name: 'X-Ray',
+						requestLink: 'filename',
+						hasResult: false,
+						isNewForDoctor: true,
+						resultLink: 'filename'
+					}
+				]
+			},
+			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+			status: ''
+		},
+		{
+			labTest: {
+				doctorRequest: [
+					{
+						name: 'Blood Test - 1',
+						requestLink: 'filename',
+						hasResult: true,
+						isNewForDoctor: false,
+						resultLink: 'filename'
+					}
+				]
+			},
+			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+			status: ''
+		},
+		{
+			labTest: {
+				doctorRequest: [
+					{
+						name: 'Blood Test - 2',
+						requestLink: 'filename',
+						hasResult: true,
+						isNewForDoctor: true,
+						resultLink: 'filename'
+					}
+				]
+			},
+			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
 			status: ''
 		}
 	];
 
 	return (
 		<div>
+			<Grid item className={classes.header}>
+				<ButtonFilled className={classes.uploadButton}>
+					<AddIcon className={classes.uploadIcon} /> New Lab Test
+				</ButtonFilled>
+			</Grid>
 			{loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
@@ -135,69 +193,100 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{data && (
-						<div>
-			<Grid item className={classes.header}>
-				<ButtonFilled className={classes.uploadButton}>
-					<AddIcon className={classes.uploadIcon} /> New Lab Test
-				</ButtonFilled>
-			</Grid>
-			<TableContainer className={classes.tableSection} component={PaperCustomShadow}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-							<TableCell className={classes.tableHeader}>Date</TableCell>
-							<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
-							<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
-							<TableCell />
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{data.patientLabTestForDoctors.map((test) => {
-							return	test.labTest.map((lab, i) => {
-									console.log(lab, i)
-							return (
-								<TableRow key={i}>
-									<TableCell>
+			{/* {data && ( */}
+			<div>
+				{/* {data.patientLabTestForDoctors.map((test) => { */}
+				{appointments.map((apt) => {
+					return apt.labTest.doctorRequest.map((lab, i) => {
+						console.log(lab, i);
+						return (
+							<PaperCustomShadow
+								className={classes.paper}
+								style={{ backgroundColor: `${lab.isNewForDoctor && '#D7FEF1'}` }}
+								key={i}
+							>
+								<Grid container className={classes.wrapper}>
+									<Grid item md={3} sm={4} xs={12}>
 										<div className={classes.name}>
-										<Avatar className={classes.avatar} alt={firstName} src={image.includes("http") ? image : `http://localhost:10101/dianurse/v1/profile/static/images/${image}`} />
-											{firstName}
+											<Avatar
+												className={classes.avatar}
+												alt={lastName}
+												src={
+													image.includes('http') ? (
+														image
+													) : (
+														`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
+													)
+												}
+											/>
+											Dr. {lastName}
 										</div>
-									</TableCell>
-									<TableCell>{formatDateShort(test.appointmentTimeStart)}</TableCell>
-									<TableCell>
-										{convertTime(test.appointmentTimeStart)} - {convertTime(test.appointmentTimeEnd)}
-									</TableCell>
+									</Grid>
+									<Grid item md={2} sm={4} xs={6}>
+										{formatDateShort(apt.appointmentTimeStart)}
+									</Grid>
 
-									<TableCell>{test.status}</TableCell>
-									<TableCell >
-										<IconButton href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null} >
-											<VisibilityIcon />
-										</IconButton>
-										<IconButton onClick={(e) => {
-							e.preventDefault();
-							setOldFile(lab.doctorRequest);
-							setidApt(test._id)
-							setTimeout(() => {
-							doctorRemoveLabTest().catch((err) => console.log(err));
-						}, 500);
-					}} disabled={lab.patientResult !==null}>
-											<DeleteOutlineIcon color="secondary" />
-										</IconButton>
-										<ButtonOutlined className={classes.editButton} href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.patientResult}`} target="_blank" disabled={lab.patientResult===null}>
-											<GetAppIcon className={classes.editIcon} /> Download results
-										</ButtonOutlined>
-									</TableCell>
-								</TableRow>
-							);
-						})
-						})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-			
-			</div>)}
+									<Grid item md={2} sm={4} xs={6}>
+										{convertTime(apt.appointmentTimeStart)} - {convertTime(apt.appointmentTimeEnd)}
+									</Grid>
+									<Grid item md={3} sm={6} xs={6}>
+										<Tooltip title="Download Request">
+											<Link
+												href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.requestLink}`}
+												target="_blank"
+												color="primary"
+											>
+												{lab.name}
+											</Link>
+										</Tooltip>
+									</Grid>
+									<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
+										{lab.hasResult ? (
+											<Tooltip title="Download result">
+												<IconButton
+													href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.resultLink}`}
+													target="_blank"
+													color="primary"
+												>
+													<GetAppIcon />
+												</IconButton>
+											</Tooltip>
+										) : (
+											<IconButton disabled>
+												<GetAppIcon />
+											</IconButton>
+										)}
+										{lab.hasResult ? (
+											<Tooltip title="Result received">
+												<CheckCircleOutlineIcon color="primary" className={classes.checkIcon} />
+											</Tooltip>
+										) : (
+											<Tooltip title="Waiting for patient's result">
+												<ErrorOutlineIcon className={classes.errorIcon} />
+											</Tooltip>
+										)}
+										<Tooltip title="Delete request">
+											<IconButton
+												onClick={(e) => {
+													e.preventDefault();
+													setOldFile(lab.requestLink);
+													setidApt(apt._id);
+													setTimeout(() => {
+														doctorRemoveLabTest().catch((err) => console.log(err));
+													}, 500);
+												}}
+											>
+												<DeleteOutlineIcon color="secondary" />
+											</IconButton>
+										</Tooltip>
+									</Grid>
+								</Grid>
+							</PaperCustomShadow>
+						);
+					});
+				})}
+			</div>
+			{/* )} */}
 		</div>
 	);
 };
