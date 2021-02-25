@@ -5,7 +5,6 @@ import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
-import TableCell from '@material-ui/core/TableCell';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';

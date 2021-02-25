@@ -94,7 +94,7 @@ const DOCUMENTS_QUERY = gql`
 	}
 `;
 
-//DELETE PRESCRIPTION MUTATION
+//DELETE PRESCRIPTION MUTATION BASED ON ID OF PRESCRIPTION
 
 //MAIN FUNCTION
 
@@ -102,6 +102,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const [ dialogPrescOpen, setDialogPrescOpen ] = useState(false);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
+	const [ deleteId, setDeleteId ] = useState('');
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -174,7 +175,12 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 									</IconButton>
 								</Tooltip>
 								<Tooltip title="Delete">
-									<IconButton onClick={() => setDialogConfirmOpen(true)}>
+									<IconButton
+										onClick={() => {
+											setDialogConfirmOpen(true);
+											setDeleteId('88888');
+										}}
+									>
 										<DeleteOutlineIcon color="secondary" />
 									</IconButton>
 								</Tooltip>

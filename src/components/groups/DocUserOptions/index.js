@@ -1,8 +1,6 @@
 import React from 'react';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
-//CUSTOM UI
-import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';

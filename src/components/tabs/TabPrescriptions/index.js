@@ -5,15 +5,6 @@ import Row from './row';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
-import PaperCustomShadow from '../../customUi/PaperCustomShadow';
-//MATERIAL UI
-import TablePagination from '@material-ui/core/TablePagination';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
