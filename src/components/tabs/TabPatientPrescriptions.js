@@ -5,6 +5,7 @@ import { useQuery, gql } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogNewPrescription from '../groups/DialogNewPrescription';
+import DialogConfirm from '../groups/DialogConfirm';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 import ButtonFilled from '../../components/customUi/ButtonFilled';
@@ -67,6 +68,8 @@ const useStyles = makeStyles({
 	}
 });
 
+//QUERY ALL PRESCRIPTIONS
+
 const DOCUMENTS_QUERY = gql`
 	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
 		patientLabTestForDoctors(idHCP: $idHCP, idPatient: $idPatient) {
@@ -91,11 +94,14 @@ const DOCUMENTS_QUERY = gql`
 	}
 `;
 
+//DELETE PRESCRIPTION MUTATION
+
 //MAIN FUNCTION
 
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const [ dialogPrescOpen, setDialogPrescOpen ] = useState(false);
+	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -168,7 +174,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 									</IconButton>
 								</Tooltip>
 								<Tooltip title="Delete">
-									<IconButton>
+									<IconButton onClick={() => setDialogConfirmOpen(true)}>
 										<DeleteOutlineIcon color="secondary" />
 									</IconButton>
 								</Tooltip>
@@ -177,6 +183,14 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 					</PaperCustomShadow>
 				);
 			})}
+
+			<DialogConfirm
+				action={() => {}}
+				isOpen={dialogConfirmOpen}
+				close={() => setDialogConfirmOpen(false)}
+				actionText="delete this prescription"
+				confirmButton="Delete"
+			/>
 			<DialogNewPrescription
 				idHCP={idHCP}
 				idPatient={idPatient}

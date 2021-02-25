@@ -92,7 +92,7 @@ const DOCUMENTS_QUERY = gql`
 			amount
 			appointmentTimeStart
 			appointmentTimeEnd
-			labTest {
+			labTestRequests {
 				doctorRequest
 				patientResult
 			}
