@@ -1,18 +1,26 @@
 import React, { useState, useContext } from 'react';
-import { convertTime, formatDateShort } from '../../helpers/dateHelper';
-import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { Context as AuthContext } from '../../context/AuthContext';
+import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
+import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import dianurseApi from '../../api/dianurseApi';
-import ErrorMessage from './ErrorMessage';
+import dianurseApi from '../../../api/dianurseApi';
+import ErrorMessage from '../ErrorMessage';
+import useStyles from './style';
+import Preview from './preview';
 //CUSTOM UI
-import ButtonFilled from '../customUi/ButtonFilled';
-import PaperCustomShadow from '../customUi/PaperCustomShadow';
+import ButtonFilled from '../../customUi/ButtonFilled';
+import ButtonOutlined from '../../customUi/ButtonOutlined';
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
+import Tooltip from '@material-ui/core/Tooltip';
 import Select from '@material-ui/core/Select';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
+import EditIcon from '@material-ui/icons/Edit';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -21,96 +29,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-
-const useStyles = makeStyles({
-	title: {
-		fontWeight: 'bold',
-		marginBottom: '1.5rem',
-		minWidth: '20rem'
-	},
-	wrapper: {
-		display: 'flex',
-		flexDirection: 'column',
-		padding: '1rem'
-	},
-	input: {
-		padding: '0.5rem'
-	},
-	divider: {
-		marginBottom: '1rem'
-	},
-	closeButton: {
-		alignSelf: 'flex-end'
-	},
-	section: {
-		padding: '0.5rem'
-	},
-	selector: {
-		marginBottom: '1rem',
-		overflowY: 'scroll',
-		maxHeight: '13rem'
-	},
-	emptyState: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		height: '20rem',
-		flexDirection: 'column',
-		textAlign: 'center'
-	},
-
-	radioLabel: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	avatar: {
-		marginRight: '1rem'
-	},
-	docName: {
-		marginRight: '1rem',
-		fontWeight: 'bold'
-	},
-	documentInput: {
-		display: 'none'
-	},
-	documentInputLabel: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		marginBottom: '0.8rem',
-		'&:hover': {
-			cursor: 'pointer'
-		}
-	},
-	group: {
-		display: 'flex',
-		flexDirection: 'row'
-	},
-	name: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center'
-	},
-	item: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		padding: '0.5rem'
-	},
-	addIcon: {
-		marginRight: '0.5rem',
-		marginLeft: '0.5rem'
-	},
-	titleWrapper: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		padding: '1rem'
-	}
-});
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
@@ -125,12 +44,28 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 		name: '',
 		directions: ''
 	});
+	const [ medicineList, setMedicineList ] = useState([]);
+
 	const [ prescriptionName, setPrescriptionName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const [ aptSelected, setAptSelected ] = useState('');
-	console.log(aptSelected);
 	const nextStep = () => {
 		setStep(step + 1);
+	};
+
+	const onCancel = () => {
+		close();
+		setPrescriptionName('');
+		setAppointmentSelectedId('');
+		setDiagnosis('');
+		setRecommendation('');
+		setMedication({
+			quantity: '',
+			name: '',
+			directions: ''
+		});
+		setMedicineList([]);
+		setStep(1);
 	};
 
 	const previousStep = () => {
@@ -157,18 +92,12 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 
 	const classes = useStyles();
 
-	const handleChange = (event) => {
-		setAppointmentSelectedId(event.target.value);
-	};
-
 	switch (step) {
 		case 1:
 			return (
 				<Dialog
 					open={isOpen}
-					onClose={() => {
-						close();
-					}}
+					onClose={onCancel}
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
@@ -180,8 +109,11 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 						}}
 					>
 						<Grid container className={classes.wrapper}>
-							<Grid item>
+							<Grid item className={classes.header}>
 								<Typography className={classes.title}>New Prescpription</Typography>
+								<IconButton onClick={onCancel} color="primary">
+									<CloseIcon />
+								</IconButton>
 							</Grid>
 							<Divider className={classes.divider} />
 
@@ -197,7 +129,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 								/>
 							</Grid>
 							<Grid className={classes.section} item>
-								<FormControl fullWidth>
+								<FormControl fullWidth required>
 									<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
 									<Select
 										labelId="apt-select-label"
@@ -239,7 +171,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-describedby="new-prescription"
 				>
 					<Grid container className={classes.titleWrapper}>
-						<Grid item sm={3} xs={6}>
+						<Grid item>
 							<div className={classes.name}>
 								<Avatar
 									className={classes.avatar}
@@ -255,16 +187,15 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 								Dr. {lastName}
 							</div>
 						</Grid>
-						<Grid item sm={3} xs={6}>
-							{formatDateShort(aptSelected[0].appointmentTimeStart)}
-						</Grid>
-						<Grid item sm={3} xs={6}>
+						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
+						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
 							{convertTime(aptSelected[0].appointmentTimeEnd)}
 						</Grid>
-						<Grid item sm={3} xs={6}>
-							{prescriptionName}
-						</Grid>
+						<Grid item>{prescriptionName}</Grid>
+						<IconButton onClick={onCancel} color="primary">
+							<CloseIcon />
+						</IconButton>
 					</Grid>
 					<Divider />
 					<form
@@ -292,6 +223,13 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 											<TextField
 												type="text"
 												fullWidth
+												InputProps={{
+													endAdornment: (
+														<InputAdornment position="end">
+															<EditIcon className={classes.inputIcon} />
+														</InputAdornment>
+													)
+												}}
 												value={medication.quantity}
 												onChange={(e) =>
 													setMedication({ ...medication, quantity: e.target.value })}
@@ -303,6 +241,13 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 											<TextField
 												type="text"
 												fullWidth
+												InputProps={{
+													endAdornment: (
+														<InputAdornment position="end">
+															<EditIcon className={classes.inputIcon} />
+														</InputAdornment>
+													)
+												}}
 												value={medication.name}
 												onChange={(e) => setMedication({ ...medication, name: e.target.value })}
 												label="Medication name"
@@ -313,6 +258,13 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 											<TextField
 												type="text"
 												fullWidth
+												InputProps={{
+													endAdornment: (
+														<InputAdornment position="end">
+															<EditIcon className={classes.inputIcon} />
+														</InputAdornment>
+													)
+												}}
 												value={medication.directions}
 												onChange={(e) =>
 													setMedication({ ...medication, directions: e.target.value })}
@@ -321,8 +273,66 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 											/>
 										</Grid>
 									</Grid>
-									<AddIcon className={classes.addIcon} />
+									<Tooltip title="Add another medication">
+										<IconButton
+											onClick={() => {
+												setMedicineList([
+													...medicineList,
+													{
+														name: medication.name,
+														quantity: medication.quantity,
+														directions: medication.directions
+													}
+												]);
+												setMedication({
+													name: '',
+													quantity: '',
+													directions: ''
+												});
+											}}
+										>
+											<AddIcon className={classes.addIcon} />
+										</IconButton>
+									</Tooltip>
 								</PaperCustomShadow>
+							</Grid>
+							<Grid item xs={12}>
+								{medicineList.length > 0 && (
+									<div className={classes.section}>
+										<PaperCustomShadow className={classes.listTitle}>
+											<Grid container>
+												<Grid item xs={4} sm={3}>
+													<Typography color="textSecondary" className={classes.medInfo}>
+														Quantity
+													</Typography>
+												</Grid>
+												<Grid item xs={8} sm={3}>
+													<Typography className={classes.medInfo}>Medication Name</Typography>
+												</Grid>
+												<Grid item xs={12} sm={6}>
+													<Typography color="textSecondary">Directions for use</Typography>
+												</Grid>
+											</Grid>
+										</PaperCustomShadow>
+										{medicineList.map((item, i) => {
+											return (
+												<Grid container key={i} className={classes.medicineCard}>
+													<Grid item xs={4} sm={3}>
+														<Typography color="textSecondary" className={classes.medInfo}>
+															{item.quantity}
+														</Typography>
+													</Grid>
+													<Grid item xs={8} sm={3}>
+														<Typography className={classes.medInfo}>{item.name}</Typography>
+													</Grid>
+													<Grid item xs={12} sm={6}>
+														<Typography color="textSecondary">{item.directions}</Typography>
+													</Grid>
+												</Grid>
+											);
+										})}
+									</div>
+								)}
 							</Grid>
 							<Grid className={classes.section} item>
 								<TextField
@@ -336,9 +346,78 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 									variant="outlined"
 								/>
 							</Grid>
-							<Grid className={classes.section} item>
-								<ButtonFilled fullWidth type="submit">
+							<Grid className={classes.buttonContainer} item>
+								<ButtonOutlined fullWidth className={classes.backButton} onClick={previousStep}>
+									Back
+								</ButtonOutlined>
+								<ButtonFilled fullWidth className={classes.previewButton} type="submit">
 									Preview
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
+				</Dialog>
+			);
+		case 3:
+			return (
+				<Dialog
+					open={isOpen}
+					onClose={() => {
+						close();
+					}}
+					fullWidth
+					maxWidth={false}
+					aria-labelledby="new-prescription"
+					aria-describedby="new-prescription"
+				>
+					<Grid container className={classes.titleWrapper}>
+						<Grid item>
+							<div className={classes.name}>
+								<Avatar
+									className={classes.avatar}
+									alt={lastName}
+									src={
+										image.includes('http') ? (
+											image
+										) : (
+											`url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`
+										)
+									}
+								/>
+								Dr. {lastName}
+							</div>
+						</Grid>
+						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
+						<Grid item>
+							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
+							{convertTime(aptSelected[0].appointmentTimeEnd)}
+						</Grid>
+						<Grid item>{prescriptionName}</Grid>
+						<IconButton onClick={onCancel} color="primary">
+							<CloseIcon />
+						</IconButton>
+					</Grid>
+					<Divider />
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+						}}
+					>
+						<Grid container className={classes.wrapper}>
+							<Preview
+								prescriptionName={prescriptionName}
+								medicineList={medicineList}
+								diagnosis={diagnosis}
+								idHCP={idHCP}
+								idPatient={idPatient}
+								recommendation={recommendation}
+							/>
+							<Grid className={classes.buttonContainer} item>
+								<ButtonOutlined fullWidth className={classes.backButton} onClick={previousStep}>
+									Back
+								</ButtonOutlined>
+								<ButtonFilled fullWidth className={classes.previewButton} type="submit">
+									Save and send
 								</ButtonFilled>
 							</Grid>
 						</Grid>
