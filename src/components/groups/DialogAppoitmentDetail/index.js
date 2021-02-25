@@ -43,7 +43,7 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 				<Grid container className={classes.container}>
 					<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 					<Typography color="primary" className={classes.sub} variant="h5">
-						{formatDateDisplay(timeStart)}
+						{formatDateDisplay(new Date(timeStart))}
 					</Typography>
 					<CardAppointment
 						onSubmit={() => {}}

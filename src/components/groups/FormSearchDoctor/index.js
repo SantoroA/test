@@ -47,13 +47,6 @@ const FormSearchDoctor = () => {
 	];
 
 	useEffect(() => {
-		// const getdata = async () => {
-		// 	const response = await fetch(`https://ipapi.co/json`)
-		// 	const d = await response.json()
-		// 	console.log(d.country_name)
-		//   }
-		//   getdata()
-
 		const today = new Date();
 		const todayFormatted = formatFormDate(today);
 		console.log(todayFormatted);
@@ -103,7 +96,7 @@ const FormSearchDoctor = () => {
 							variant="outlined"
 							value={filterState.date}
 							onChange={(e) =>
-								setFilterState({ ...filterState, date: new Date(`${e.target.value}T00:00:00`) })}
+								setFilterState({ ...filterState, date: formatFormDate(new Date(`${e.target.value}T00:00:00`)) })}
 							InputLabelProps={{
 								shrink: true
 							}}
@@ -197,7 +190,7 @@ const FormSearchDoctor = () => {
 					</PaperCustomShadow>
 				</Grid>
 			</Grid>
-			<Typography variant="h5">{formatDateNoYear(`${filterState.date}T00:00:00`)}</Typography>
+			<Typography variant="h5">{formatDateNoYear(new Date(`${filterState.date}T00:00:00`))}</Typography>
 			<Grid container className={classes.content}>
 				<Grid item md={9} className={classes.listContainer}>
 					<DoctorList

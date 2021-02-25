@@ -13,9 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// testar a string
-// no back fazer um if do horario e fazer grater and litle
-
 const APPOINTMENTS_QUERY = gql`
 	query GetAppointments(
 		$date: String!
@@ -25,11 +22,10 @@ const APPOINTMENTS_QUERY = gql`
 		$rating: Float!
 		$gender: Int!
 		$time: String!
-		$offset: Int
 		$limit: Int
 		$cursor: ID
 	) {
-		doctors(
+		searchAppointments(
 			date: $date
 			typeOfHCP: $typeOfHCP
 			minPrice: $minPrice
@@ -37,7 +33,6 @@ const APPOINTMENTS_QUERY = gql`
 			gender: $gender
 			rating: $rating
 			time: $time
-			offset: $offset
 			limit: $limit
 			cursor: $cursor
 		) {
@@ -46,8 +41,10 @@ const APPOINTMENTS_QUERY = gql`
 				lastname
 				image
 				description
-				averageRating
-				receivedRating
+				averageRating {
+					averageRating
+					receivedRating
+				}
 				id
 				minPrice
 				appointments {
@@ -83,7 +80,6 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 			maxPrice,
 			rating,
 			gender,
-			offset: 0,
 			limit: 2,
 			cursor: null
 		}
@@ -126,21 +122,22 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				setAppointments={setAppointments}
 				setApDoc={setApDoc}
 			/> */}
+			{console.log('apt data', data)}
 			{data && (
 				<div>
-					{data.doctors.edges.length > 0 ? (
+					{data.searchAppointments.edges.length > 0 ? (
 						<div className={classes.infoContainer}>
 							<ShowDocData
-								docs={data.doctors.edges}
+								docs={data.searchAppointments.edges}
 								setDialogReserveOpen={setDialogReserveOpen}
 								setAppointments={setAppointments}
 								setApDoc={setApDoc}
 							/>
-							{data.doctors.pageInfo.hasNextPage && (
+							{data.searchAppointments.pageInfo.hasNextPage && (
 								<ButtonNoBorder
 									className={classes.buttonLoadMore}
 									onClick={() => {
-										const { endCursor } = data.doctors.pageInfo;
+										const { endCursor } = data.searchAppointments.pageInfo;
 										fetchMore({
 											variables: {
 												date,
@@ -150,16 +147,15 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 												maxPrice,
 												rating,
 												gender,
-												offset: 0,
 												limit: 3,
 												cursor: endCursor
 											},
 											updateQuery: (prevResult, { fetchMoreResult }) => {
 												console.log('prev', prevResult);
 												console.log('fetch', fetchMoreResult);
-												fetchMoreResult.doctors.edges = [
-													...prevResult.doctors.edges,
-													...fetchMoreResult.doctors.edges
+												fetchMoreResult.searchAppointments.edges = [
+													...prevResult.searchAppointments.edges,
+													...fetchMoreResult.searchAppointments.edges
 												];
 												return fetchMoreResult;
 												// if endcursor === false No data
