@@ -21,6 +21,7 @@ import Button from '@material-ui/core/Button';
 const ShowDocData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) => {
 	const classes = useStyles();
 	return docs.map((doc) => {
+		console.log(doc)
 		return (
 			<Card className={classes.card} key={doc.id}>
 				<CardMedia className={classes.media} image={doc.image} title="Doctor">
@@ -32,13 +33,12 @@ const ShowDocData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) 
 							pathname: '/in/patient/doctorprofile',
 							state: {
 								id: doc.id,
-								averageRating: doc.averageRating,
-								receivedRating: doc.receivedRating,
-								description: doc.description,
+								rating: doc.rating,
+								description: doc.profileInfo,
 								firstname: doc.firstname,
 								lastname: doc.lastname,
 								minPrice: doc.minPrice,
-								image: doc.image
+								image: doc.image,
 							}
 						}}
 					>

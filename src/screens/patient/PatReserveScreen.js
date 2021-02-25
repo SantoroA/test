@@ -148,6 +148,8 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 
 const PatReserveScreen = (props) => {
 	const { apDoc, appointment } = props.location.state;
+	console.log(appointment)
+	console.log(apDoc)
 
 	// const appointment = {
 	// 	amount: 95,
@@ -156,8 +158,9 @@ const PatReserveScreen = (props) => {
 	// 	idApt: '601186c472a95e0028bcb6f5',
 	// 	start: '2021-01-29T06:00:00.000Z'
 	// };
-	const dateDisplay = formatDateDisplay(appointment.start);
+	const dateDisplay = !appointment.start ? formatDateDisplay(new Date(appointment.appointmentTimeStart)):  formatDateDisplay(new Date(appointment.start));
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
+	
 	// const apDoc = {
 	// 	lastName: 'Santoro',
 	// 	pic:
@@ -269,25 +272,9 @@ const PatReserveScreen = (props) => {
 		substanceAbuse: false
 	});
 
-	const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
-		variables: {
-			reasonForVisit,
-			symptomTime,
-			symptomTimeUnit,
-			isTakingMeds,
-			hasDrugAllergies,
-			oxygenSaturation,
-			temperature,
-			tempUnit,
-			otherInfo,
-			symptoms: symptomsArr,
-			medCondition: medArr,
-			idPatient: userId,
-			idApt: appointment.idApt
-		}
+		const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
 	});
-	console.log(error);
-	console.log(data);
+
 	const nextStep = () => {
 		setStep(step + 1);
 	};
@@ -312,7 +299,7 @@ const PatReserveScreen = (props) => {
 	};
 
 	console.log(apDoc);
-	console.log('reserve', data);
+	console.log('reserve', appointment);
 	// if (error) {
 	// 	return (
 	// 		<PatLayoutContainer>
@@ -787,7 +774,9 @@ const PatReserveScreen = (props) => {
 						<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 						<Typography color="primary" className={classes.sub} variant="h5">
 							{dateDisplay}
+							{console.log(dateDisplay)}
 						</Typography>
+						{console.log(appointment)}
 						<CardAppointment
 							state={{
 								appointment: {
@@ -802,21 +791,39 @@ const PatReserveScreen = (props) => {
 									// 	'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 									// buttonText: 'Pay',
 									// title: 'Doctor'
-									amount: appointment.amount,
-									end: appointment.end,
-									id: appointment.id,
-									idApt: appointment.idApt,
-									start: appointment.start
+									amount: appointment.amount  ,
+									end: !appointment.end ? appointment.appointmentTimeEnd : appointment.end,
+									id: !appointment.id ? appointment.accountHCPid._id : appointment.id,
+									idApt: !appointment.idApt ? appointment._id : appointment.idApt,
+									start: !appointment.start ? appointment.appointmentTimeStart : appointment.start
 								},
-								name: apDoc.lastName,
-								pic: apDoc.pic,
+								name: !apDoc.lastName ? appointment.profileHCPid.lastName : apDoc.lastName,
+								pic: !apDoc.pic ? appointment.accountHCPid.profilePicture : apDoc.pic,
 								buttonText: 'Book',
 								title: 'Doctor'
 							}}
 							showPrice={true}
 							onSubmit={(e) => {
 								e.preventDefault();
-								appointmentAdd().catch((err) => console.log(err));
+								appointmentAdd(
+									{
+										variables: {
+											reasonForVisit,
+											symptomTime,
+											symptomTimeUnit,
+											isTakingMeds,
+											hasDrugAllergies,
+											oxygenSaturation,
+											temperature,
+											tempUnit,
+											otherInfo,
+											symptoms: symptomsArr,
+											medCondition: medArr,
+											idPatient: userId,
+											idApt: !appointment.idApt ? appointment._id : appointment.idApt
+										}
+									}
+								).catch((err) => console.log(err));
 								nextStep();
 								setTimeout(() => {
 									setConfettiTrigger(true);
@@ -880,12 +887,14 @@ const PatReserveScreen = (props) => {
 								<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 								<Typography color="primary" className={classes.sub} variant="h5">
 									{dateDisplay}
+									{console.log(dateDisplay)}
 								</Typography>
+								{console.log('apt', appointment)}
 								<CardAppointment
 									state={{
-										appointment: appointment,
-										name: apDoc.lastName,
-										pic: apDoc.pic,
+										appointment: appointment ,
+										name: !apDoc.lastName ? appointment.profileHCPid.lastName : apDoc.lastName ,
+										pic: !apDoc.pic ? appointment.accountHCPid.profilePicture : apDoc.pic ,
 										buttonText: 'View',
 										title: 'Doctor'
 									}}

@@ -17,19 +17,18 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 	const classes = useStyles();
 	const { appointment, name, pic, buttonText, title } = state;
 
-	console.log(getTimeDifference(appointment.end, appointment.start));
-	console.log(appointment.end, appointment.start);
+	console.log(appointment);
 	return (
 		<Grid container className={classes.root}>
 			<Grid item xs={4} sm={2} className={classes.timeWrapper}>
 				<Typography className={classes.sub} variant="h5">
-					{convertTime(appointment.start)}
+					{convertTime(!appointment.start ? appointment.appointmentTimeStart : appointment.start)}
 				</Typography>
 				<Typography variant="body2">
-					{getTimeDifference(appointment.end, appointment.start) === 0 ? (
+					{getTimeDifference(!appointment.end ? appointment.appointmentTimeEnd : appointment.end, !appointment.start ? appointment.appointmentTimeStart : appointment.start) === 0 ? (
 						'60'
 					) : (
-						getTimeDifference(appointment.end, appointment.start)
+						getTimeDifference(!appointment.end ? appointment.appointmentTimeEnd : appointment.end, !appointment.start ? appointment.appointmentTimeStart : appointment.start)
 					)}{' '}
 					mins
 				</Typography>
@@ -42,13 +41,7 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 					<Grid item sm={4} className={classes.avatarWrapper}>
 						<Avatar
 							alt={name}
-							src={
-								pic.includes('http') ? (
-									pic
-								) : (
-									`http://localhost:10101/dianurse/v1/profile/static/images/${pic}`
-								)
-							}
+							src={ pic }
 						/>
 					</Grid>
 					<Grid item sm={8}>

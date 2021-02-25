@@ -34,35 +34,57 @@ const useStyles = makeStyles({
 
 //QUERY DOCTOR'S PUBLIC INFORMATION ACCORDING TO DOCID
 
+const MYAPPOINTMENTS_QUERY = gql`
+	query GetAppointments(
+		$id: ID!
+	) {
+		doctorProfile(
+			id: $id
+		) {
+			_id
+			profileInfo
+			yearsExperience
+			yearsSpecialist
+			education
+			country
+			city
+			websiteUrl
+	  }
+	}
+`;
+
 const TabDocPublicAbout = ({ docId }) => {
 	const classes = useStyles();
 	const { t } = useTranslation();
-	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
-	// 	variables: {  id: docId }
-	// });
+	 const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+	 	variables: {  id: docId }
+	 });
 
 	return (
 		<Container>
-			{/* {loading && (
+			{loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}
 
-			{error && <ErrorMessage />} */}
+			{error && <ErrorMessage />} 
 
 			{/* IF DATA */}
+			{data && (
+				<div>
 			<PaperCustomShadow className={classes.paper}>
 				<Typography className={classes.sub} variant="subtitle1">
 					Profile
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography color="textSecondary" variant="body2">
-					Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
+					{/* Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
 					tenderloin tongue shankle qui beef. Swine burgdoggen dolor kevin magna officia quis pancetta anim
 					fatback. Laboris tenderloin drumstick, ea filet mignon est turducken officia short ribs nisi pig
 					shank flank. Occaecat excepteur velit ball tip. Does your lorem ipsum text long for something a
-					little meatier? Give our generator a try… it’s tasty!
+					little meatier? Give our generator a try… it’s tasty! */}
+					{data.doctorProfile.profileInfo}
 				</Typography>
 				<Divider className={classes.divider} />
 				<div className={classes.linkWrapper}>
@@ -73,7 +95,7 @@ const TabDocPublicAbout = ({ docId }) => {
 						color="inherit"
 						variant="body2"
 					>
-						www.doctorLink.com
+						{data.doctorProfile.websiteUrl}
 					</Link>
 				</div>
 			</PaperCustomShadow>
@@ -83,10 +105,10 @@ const TabDocPublicAbout = ({ docId }) => {
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography color="textSecondary" variant="body2">
-					Years of Experience: 5
+					Years of Experience: {data.doctorProfile.yearsExperience}
 				</Typography>
 				<Typography color="textSecondary" variant="body2">
-					Years as Specialist: 5
+					Years as Specialist: {data.doctorProfile.yearsSpecialist}
 				</Typography>
 			</PaperCustomShadow>
 			<PaperCustomShadow className={classes.paper}>
@@ -95,11 +117,12 @@ const TabDocPublicAbout = ({ docId }) => {
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography color="textSecondary" variant="body2">
-					Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
+					{/* Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
 					tenderloin tongue shankle qui beef. Swine burgdoggen dolor kevin magna officia quis pancetta anim
 					fatback. Laboris tenderloin drumstick, ea filet mignon est turducken officia short ribs nisi pig
 					shank flank. Occaecat excepteur velit ball tip. Does your lorem ipsum text long for something a
-					little meatier? Give our generator a try… it’s tasty!
+					little meatier? Give our generator a try… it’s tasty! */}
+					{data.doctorProfile.education}
 				</Typography>
 			</PaperCustomShadow>
 			<PaperCustomShadow className={classes.paper}>
@@ -107,7 +130,12 @@ const TabDocPublicAbout = ({ docId }) => {
 					Location
 				</Typography>
 				<Divider className={classes.divider} />
+				<Typography>
+					{data.doctorProfile.city} , {data.doctorProfile.country}
+				</Typography>
 			</PaperCustomShadow>
+			</div>
+			)}
 		</Container>
 	);
 };

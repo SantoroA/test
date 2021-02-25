@@ -23,7 +23,6 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 	const classes = useStyles();
 	const { aptId, cardPic, cardName, showPrice, timeStart, timeEnd, amount, cardTitle } = appointment;
 	console.log('detail', appointment);
-
 	return (
 		<Dialog
 			fullScreen
@@ -43,6 +42,7 @@ const DialogAppointmentDetail = ({ appointment, isOpen, close }) => {
 				<Grid container className={classes.container}>
 					<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 					<Typography color="primary" className={classes.sub} variant="h5">
+						{console.log(timeStart)}
 						{formatDateDisplay(new Date(timeStart))}
 					</Typography>
 					<CardAppointment

@@ -40,8 +40,8 @@ const APPOINTMENTS_QUERY = gql`
 				firstname
 				lastname
 				image
-				description
-				averageRating {
+				profileInfo
+				rating {
 					averageRating
 					receivedRating
 				}

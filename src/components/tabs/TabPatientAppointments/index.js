@@ -50,12 +50,7 @@ const TabPatientAppointments = () => {
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 		variables: { date, id: userId, limit: 2, cursor: null }
 	});
-	console.log(date);
-	console.log(formatFormDate(date));
-	console.log(new Date(formatFormDate(date)));
-	console.log(userId);
-	// console.log('data', data);
-	// console.log(error);
+
 	const { t } = useTranslation();
 	console.log('data', data);
 	console.log(error);
@@ -110,7 +105,6 @@ const TabPatientAppointments = () => {
 				{error && <ErrorMessage />}
 				{data && (
 					<div>
-						{console.log(data.patientAppointments[0])}
 						{data.patientAppointments.length > 0 ? (
 							<ShowAppData
 								setDialogAppDetailOpen={setDialogAppDetailOpen}

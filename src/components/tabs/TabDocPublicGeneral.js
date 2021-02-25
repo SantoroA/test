@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import Loader from 'react-loader-spinner';
 import { NavLink } from 'react-router-dom';
@@ -13,6 +13,7 @@ import PaperCustomShadow from '../customUi/PaperCustomShadow';
 import ButtonFilled from '../customUi/ButtonFilled';
 //MATERIAL UI
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
@@ -104,6 +105,31 @@ const useStyles = makeStyles({
 });
 
 //QUERY DOCTOR'S AVAILABILITY FOR SPECIFIC DAY
+const MYAPPOINTMENTS_QUERY = gql`
+	query GetAppointments(
+		$date: String!
+		$id: ID!
+	) {
+		doctorsAppointmentsDayAvailability(
+			date: $date
+			id: $id
+		) {
+			accountHCPid {
+				_id
+				profilePicture
+			}
+			_id
+			appointmentTimeStart
+			appointmentTimeEnd
+			amount
+			profileHCPid {
+				services
+				phoneNumber
+				lastName
+			}
+	  }
+	}
+`;
 
 const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 	const classes = useStyles();
@@ -111,9 +137,9 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 	const { t } = useTranslation();
 	const [ date, setDate ] = useState(new Date());
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
-	// 	variables: { date, id: docId, limit: 2, cursor: null }
-	// });
+	 const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+		variables: { date, id: docId, limit: 2, cursor: null }
+	 });
 
 	const appointments = [
 		{
@@ -155,14 +181,16 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 						/>
 					</Grid>
 				)}
-				{/* {loading && (
+				{loading && (
 					<Container className={classes.emptyState}>
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
 					</Container>
 				)}
-				{error && <ErrorMessage />} */}
+				{error && <ErrorMessage />} 
 
 				{/* IF DATA */}
+				{data && (
+				<div>
 				<PaperCustomShadow className={classes.paper}>
 					<Typography className={classes.subtitle} variant="body1">
 						Showing time availability for
@@ -170,11 +198,11 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 					<Typography color="primary" className={classes.dateDisplay} variant="h5">
 						{formatDateDisplay(date)}
 					</Typography>
-					{appointments.map((ap) => {
+					{data.doctorsAppointmentsDayAvailability.map((ap) => {
 						return (
-							<Grid key={ap.idApt} container className={classes.appointment}>
+							<Grid key={ap._id} container className={classes.appointment}>
 								<BoxTime>
-									{convertTime(ap.start)} - {convertTime(ap.end)}
+									{convertTime(ap.appointmentTimeStart)} - {convertTime(ap.appointmentTimeEnd)}
 								</BoxTime>
 								<Box className={classes.priceWrapper}>
 									<Typography className={classes.price}>Price:</Typography>
@@ -206,10 +234,23 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 						);
 					})}
 				</PaperCustomShadow>
+				</div>
+					)}
 				<PaperCustomShadow className={classes.paper}>
 					<Typography className={classes.sub} variant="subtitle1">
 						Services Treated
 					</Typography>
+					{data && (
+						<div>
+							{data.doctorsAppointmentsDayAvailability.length > 0 ? 
+							data.doctorsAppointmentsDayAvailability[0].profileHCPid.services.map((el, index) =>
+								<Typography key={index}>
+								{el}
+							</Typography>
+								)
+							 : null}
+						</div>
+					)}
 					<Divider className={classes.divider} />
 				</PaperCustomShadow>
 				<PaperCustomShadow className={classes.paper}>
@@ -218,6 +259,7 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 					</Typography>
 					<Divider className={classes.divider} />
 				</PaperCustomShadow>
+				
 			</Grid>
 			{!isMobile && (
 				<Grid item sm={5} md={4} className={classes.datePicker}>

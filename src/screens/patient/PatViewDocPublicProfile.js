@@ -112,9 +112,9 @@ const PatViewDocPublicProfile = () => {
 	const location = useLocation();
 	const history = useHistory();
 	const { t } = useTranslation();
-	const { id, averageRating, receivedRating, description, firstname, lastname, minPrice, image } = location.state;
+	const { id, rating, description, firstname, lastname, minPrice, image } = location.state;
 	const [ value, setValue ] = useState(0);
-
+	console.log(rating)
 	return (
 		<PatLayoutContainer>
 			<Button onClick={() => history.goBack()} className={classes.backButton}>
@@ -134,9 +134,9 @@ const PatViewDocPublicProfile = () => {
 				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
 					<Paper elevation={0} className={classes.root}>
 						<div className={classes.reviewWrapper}>
-							<Rating name="read-only" value={averageRating} readOnly />
+							<Rating name="read-only" value={rating.averageRating} readOnly />
 							<Typography color="textSecondary" variant="body2">
-								({receivedRating} {t('Reviews.1')})
+								({rating.receivedRating} {t('Reviews.1')})
 							</Typography>
 						</div>
 
