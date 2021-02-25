@@ -10,21 +10,7 @@ const useStyles = makeStyles({
 		justifyContent: 'space-between',
 		marginTop: '1rem'
 	},
-	section: {
-		marginTop: '2em'
-	},
-	uploadButton: {
-		paddingTop: '0.6rem',
-		paddingBottom: '0.6rem',
-		paddingRight: '1rem',
-		paddingLeft: '0.8rem'
-	},
-	title: {
-		fontWeight: 'bold'
-	},
-	uploadIcon: {
-		marginRight: '0.5rem'
-	},
+
 	emptyState: {
 		display: 'flex',
 		alignItems: 'center',
@@ -41,16 +27,37 @@ const useStyles = makeStyles({
 		fontWeight: 'bold',
 		marginTop: '1rem'
 	},
-	tableHeader: {
-		fontWeight: 'bold'
-	},
+
 	name: {
 		display: 'flex',
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
+		fontWeight: 'bold'
 	},
 	avatar: {
 		marginRight: '1rem'
+	},
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		padding: '1rem'
+	},
+	iconsWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-end'
+	},
+	errorIcon: {
+		color: '#FF9900',
+		marginLeft: '0.5rem'
+	},
+	checkIcon: {
+		marginLeft: '0.5rem'
+	},
+	paper: {
+		marginBottom: '0.5rem'
 	}
 });
 export default useStyles;

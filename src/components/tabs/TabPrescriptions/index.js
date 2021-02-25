@@ -22,41 +22,41 @@ const prescriptions = [
 		docName: 'Gabi',
 		start: '2021-02-10T09:30:00.000Z',
 		end: '2021-02-10T09:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Prescription for Liver Disease',
 		docPic:
 			'https://images.pexels.com/photos/3053844/pexels-photo-3053844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefwefadaawef'
+		id: 'sfwefwefadaawef',
+		isNew: true
 	},
 	{
 		docName: 'Aline',
 		start: '2021-02-10T08:30:00.000Z',
 		end: '2021-02-10T08:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Acne medication',
 		docPic:
 			'https://images.pexels.com/photos/3136340/pexels-photo-3136340.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefasdaswefawef'
+		id: 'sfwefasdaswefawef',
+		isNew: false
 	},
 	{
 		docName: 'Peach',
 		start: '2021-02-10T07:00:00.000Z',
 		end: '2021-02-10T07:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Muscle relaxer',
 		docPic:
 			'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefweaadfeffawef'
+		id: 'sfwefweaadfeffawef',
+		isNew: false
 	},
 	{
 		docName: 'Pear',
 		start: '2021-02-05T07:00:00.000Z',
 		end: '2021-02-05T07:30:00.000Z',
-		docComments: '',
-		docStatus: '',
+		prescName: 'Lamitrigine',
 		docPic:
 			'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefwfvfdefawef'
+		id: 'sfwefwfvfdefawef',
+		isNew: false
 	}
 ];
 
@@ -86,36 +86,9 @@ const TabPrescriptions = () => {
 
 			{/* IF DATA */}
 
-			<TableContainer className={classes.section} component={PaperCustomShadow}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							<TableCell className={classes.tableHeader}>{t('Doctor_Name.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Date.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Appointment_Time.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Patient_comments.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Document_Status.1')}</TableCell>
-							<TableCell />
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{(rowsPerPage > 0
-							? prescriptions.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							: prescriptions).map((presc) => {
-							return <Row value={presc} key={presc.id} />;
-						})}
-					</TableBody>
-				</Table>
-				<TablePagination
-					rowsPerPageOptions={[ 5, 10, 20 ]}
-					page={page}
-					onChangePage={(e, newPage) => setPage(newPage)}
-					rowsPerPage={rowsPerPage}
-					component="div"
-					count={prescriptions.length}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
-				/>
-			</TableContainer>
+			{prescriptions.map((presc) => {
+				return <Row value={presc} key={presc.id} />;
+			})}
 
 			{/* IF NO DATA */}
 			<EmptyPrescState />

@@ -51,6 +51,21 @@ const useStyles = makeStyles({
 	},
 	avatar: {
 		marginRight: '1rem'
+	},
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		padding: '1rem'
+	},
+	iconsWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-end'
+	},
+	paper: {
+		marginBottom: '0.5rem'
 	}
 });
 export default useStyles;

@@ -66,7 +66,8 @@ const TabDocuments = () => {
 	const documents = [
 		{
 			profileHCPid: {
-				firstName: 'Gabi'
+				firstName: 'Gabi',
+				lastName: 'Fruit'
 			},
 			appointmentTimeStart: '2021-02-10T09:30:00.000Z',
 			appointmentTimeEnd: '2021-02-10T09:30:00.000Z',
@@ -84,7 +85,8 @@ const TabDocuments = () => {
 		},
 		{
 			profileHCPid: {
-				firstName: 'Aline'
+				firstName: 'Aline',
+				lastName: 'Fruit'
 			},
 			appointmentTimeStart: '2021-02-10T08:30:00.000Z',
 			appointmentTimeEnd: '2021-02-10T08:30:00.000Z',
@@ -102,7 +104,8 @@ const TabDocuments = () => {
 		},
 		{
 			profileHCPid: {
-				firstName: 'Peach'
+				firstName: 'Peach',
+				lastName: 'Fruit'
 			},
 			appointmentTimeStart: '2021-02-10T07:00:00.000Z',
 			appointmentTimeEnd: '2021-02-10T07:30:00.000Z',
@@ -120,7 +123,8 @@ const TabDocuments = () => {
 		},
 		{
 			profileHCPid: {
-				firstName: 'Pear'
+				firstName: 'Pear',
+				lastName: 'Fruit'
 			},
 			appointmentTimeStart: '2021-02-05T07:00:00.000Z',
 			appointmentTimeEnd: '2021-02-05T07:30:00.000Z',
@@ -167,54 +171,30 @@ const TabDocuments = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
-			{data && (
-				<div>
-					{data.patientDocuments.length > 0 ? (
-						<TableContainer className={classes.section} component={PaperCustomShadow}>
-							<Table className={classes.table}>
-								<TableHead>
-									<TableRow>
-										<TableCell className={classes.tableHeader}>Doctor Name</TableCell>
-										<TableCell className={classes.tableHeader}>Date</TableCell>
-										<TableCell className={classes.tableHeader}>Appointment Time</TableCell>
-										<TableCell className={classes.tableHeader}>Document name</TableCell>
-										<TableCell className={classes.tableHeader}>Doctument Status</TableCell>
-										<TableCell />
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									{(rowsPerPage > 0
+			{/* {data && ( */}
+			<div>
+				{/* {data.patientDocuments.length > 0 ? ( */}
+
+				{/* {(rowsPerPage > 0
 										? data.patientDocuments.slice(
 												page * rowsPerPage,
 												page * rowsPerPage + rowsPerPage
 											)
 										: data.patientDocuments).map((doc) => {
 										return <Row value={doc} key={doc._id} />;
-									})}
-								</TableBody>
-								{/* <TableBody>
-									{(rowsPerPage > 0
-										? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-										: documents).map((doc) => {
-										return <Row value={doc} key={doc._id} />;
-									})}
-								</TableBody> */}
-							</Table>
-							{/* <TablePagination
-								rowsPerPageOptions={[ 5, 10, 20 ]}
-								page={page}
-								onChangePage={(e, newPage) => setPage(newPage)}
-								rowsPerPage={rowsPerPage}
-								component="div"
-								count={documents.length}
-								onChangeRowsPerPage={handleChangeRowsPerPage}
-							/> */}
-						</TableContainer>
-					) : (
-						<EmptyDocState />
-					)}
-				</div>
-			)}
+									})} */}
+
+				{(rowsPerPage > 0
+					? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+					: documents).map((doc) => {
+					return <Row value={doc} key={doc._id} />;
+				})}
+
+				{/* ) : ( */}
+				<EmptyDocState />
+				{/* )} */}
+			</div>
+			{/* )} */}
 			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" close={() => setDialogOpen(false)} />
 		</Grid>
 	);
