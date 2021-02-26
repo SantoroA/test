@@ -21,12 +21,12 @@ function Row({ value, appointment }) {
 	const { t } = useTranslation();
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid } = appointment;
-	const { name, isNew, hasResult, result } = value;
+	const { name, isNewForPatient, hasResult, result } = value;
 
-	// WHEN DOWNLOADED, CHANGE ISNEW TO FALSE. WHEN UPLOADED, CHANGE HASRESULT TO TRUE
+	// WHEN DOWNLOADED, CHANGE ISNEWForPatient TO FALSE. WHEN UPLOADED, CHANGE HASRESULT TO TRUE
 
 	return (
-		<PaperCustomShadow className={classes.paper} style={{ backgroundColor: `${isNew && '#D7FEF1'}` }}>
+		<PaperCustomShadow className={classes.paper} style={{ backgroundColor: `${isNewForPatient && '#D7FEF1'}` }}>
 			<Grid container className={classes.wrapper}>
 				<Grid item md={3} sm={4} xs={12}>
 					<div className={classes.name}>

@@ -9,17 +9,9 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
 //CUSTOM UI
-import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
-import TablePagination from '@material-ui/core/TablePagination';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import Table from '@material-ui/core/Table';
 import Container from '@material-ui/core/Container';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PublishIcon from '@material-ui/icons/Publish';

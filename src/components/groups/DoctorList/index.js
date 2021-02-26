@@ -9,7 +9,6 @@ import ErrorMessage from '../ErrorMessage';
 //CUSTOM UI
 import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //MATERIAL UI
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 

@@ -3,7 +3,9 @@ import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
+import DialogNewLabTest from '../groups/DialogNewLabTest';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
+import DialogConfirm from '../groups/DialogConfirm';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 import ButtonFilled from '../../components/customUi/ButtonFilled';
@@ -92,7 +94,7 @@ const DOCUMENTS_QUERY = gql`
 			amount
 			appointmentTimeStart
 			appointmentTimeEnd
-			labTest {
+			labTestRequests {
 				doctorRequest
 				patientResult
 			}
@@ -112,6 +114,8 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const [ oldFile, setOldFile ] = useState('');
 	const [ idApt, setidApt ] = useState('');
+	const [ dialogTestOpen, setDialogTestOpen ] = useState(false);
+	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
@@ -182,7 +186,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	return (
 		<div>
 			<Grid item className={classes.header}>
-				<ButtonFilled className={classes.uploadButton}>
+				<ButtonFilled onClick={() => setDialogTestOpen(true)} className={classes.uploadButton}>
 					<AddIcon className={classes.uploadIcon} /> New Lab Test
 				</ButtonFilled>
 			</Grid>
@@ -267,13 +271,9 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 										)}
 										<Tooltip title="Delete request">
 											<IconButton
-												onClick={(e) => {
-													e.preventDefault();
+												onClick={() => {
 													setOldFile(lab.requestLink);
-													setidApt(apt._id);
-													setTimeout(() => {
-														doctorRemoveLabTest().catch((err) => console.log(err));
-													}, 500);
+													setDialogConfirmOpen(true);
 												}}
 											>
 												<DeleteOutlineIcon color="secondary" />
@@ -287,6 +287,22 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 				})}
 			</div>
 			{/* )} */}
+			<DialogNewLabTest
+				idHCP={idHCP}
+				idPatient={idPatient}
+				isOpen={dialogTestOpen}
+				close={() => setDialogTestOpen(false)}
+			/>
+			<DialogConfirm
+				action={doctorRemoveLabTest}
+				isOpen={dialogConfirmOpen}
+				close={() => {
+					setDialogConfirmOpen(false);
+					setOldFile('');
+				}}
+				actionText="delete this lab test request"
+				confirmButton="Delete"
+			/>
 		</div>
 	);
 };

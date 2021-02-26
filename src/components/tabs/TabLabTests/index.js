@@ -65,19 +65,19 @@ const TabLabTests = () => {
 				doctorRequest: [
 					{
 						name: 'Request 1',
-						isNew: true,
+						isNewForPatient: true,
 						hasResult: false,
 						result: 'filename'
 					},
 					{
 						name: 'Request 2',
-						isNew: false,
+						isNewForPatient: false,
 						hasResult: true,
 						result: 'filename'
 					},
 					{
 						name: 'Request 3',
-						isNew: false,
+						isNewForPatient: false,
 						hasResult: true,
 						result: 'filename'
 					}
@@ -100,7 +100,7 @@ const TabLabTests = () => {
 				doctorRequest: [
 					{
 						name: 'Request 1',
-						isNew: true,
+						isNewForPatient: true,
 						hasResult: false,
 						result: 'filename'
 					}
@@ -124,7 +124,7 @@ const TabLabTests = () => {
 				doctorRequest: [
 					{
 						name: 'Request 1',
-						isNew: false,
+						isNewForPatient: false,
 						hasResult: false,
 						result: 'filename'
 					}
@@ -147,19 +147,19 @@ const TabLabTests = () => {
 				doctorRequest: [
 					{
 						name: 'Request 1',
-						isNew: true,
+						isNewForPatient: true,
 						hasResult: false,
 						result: 'filename'
 					},
 					{
 						name: 'Request 2',
-						isNew: false,
+						isNewForPatient: false,
 						hasResult: false,
 						result: 'filename'
 					},
 					{
 						name: 'Request 3',
-						isNew: false,
+						isNewForPatient: false,
 						hasResult: true,
 						result: 'filename'
 					}
