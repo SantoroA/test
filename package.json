@@ -53,7 +53,7 @@
 		"react-facebook-login": "^4.1.1",
 		"react-flip-move": "^3.0.4",
 		"react-google-login": "^5.1.23",
-		"react-i18next": "^11.8.6",
+		"react-i18next": "^11.8.7",
 		"react-loader-spinner": "^3.1.14",
 		"react-material-ui-form-validator": "^2.1.1",
 		"react-native-confetti-cannon": "^1.5.1",
