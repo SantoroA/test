@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
@@ -27,24 +27,27 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 
 const MYPATIENTS_QUERY = gql`
-	query GetPatients($id: ID!, $offset: Int, $limit: Int) {
-		doctorsPatients(id: $id, offset: $offset, limit: $limit) {
-			accountPatientid {
-				profilePicture
-				username
-			}
-			idApt
-			start
-			end
+	query GetPatients($id: ID!) {
+		doctorsPatients(id: $id) {
+			profileHCPid
+			_id
+			appointmentTimeStart
+			appointmentTimeEnd
+			amount
+			reasonForVisit
 			profilePatientid {
 				_id
 				firstName
 				lastName
 				phoneNumber
 			}
-			amount
-			reasonForVisit
+			accountPatientid {
+				_id
+				profilePicture
+				username
+			}
 		}
+
 	}
 `;
 
@@ -68,7 +71,7 @@ const TabMyPatients = () => {
 	const [ patientName, setPatientName ] = useState('');
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data } = useQuery(MYPATIENTS_QUERY, {
-		variables: { id: userId, offset: 0, limit: 1 }
+		variables: { id: userId }
 	});
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
@@ -80,6 +83,7 @@ const TabMyPatients = () => {
 	console.log(data);
 	console.log(userId);
 	const { t } = useTranslation();
+
 	const doctorsPatients = [
 		{
 			accountPatientid: {
@@ -278,11 +282,11 @@ const TabMyPatients = () => {
 						</Container>
 					)}
 					{error && <ErrorMessage />}
-					{doctorsPatients && (
-						// {data && (
+					{/* {doctorsPatients && ( */}
+						 {data && (
 						<div>
-							{doctorsPatients.length > 0 ? (
-								// {data.doctorsPatients.length > 0 ? (
+							{/*  {doctorsPatients.length > 0 ? ( */}
+								 {data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -295,7 +299,7 @@ const TabMyPatients = () => {
 												<TableCell />
 											</TableRow>
 										</TableHead>
-										{/* <TableBody>
+										 <TableBody>
 											{(rowsPerPage > 0
 												? data.doctorsPatients.slice(
 														page * rowsPerPage,
@@ -304,8 +308,8 @@ const TabMyPatients = () => {
 												: data.doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody> */}
-										<TableBody>
+										</TableBody> 
+										{/* <TableBody>
 											{(rowsPerPage > 0
 												? doctorsPatients.slice(
 														page * rowsPerPage,
@@ -314,7 +318,7 @@ const TabMyPatients = () => {
 												: doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody>
+										</TableBody> */}
 									</Table>
 									<TablePagination
 										rowsPerPageOptions={[ 5, 10, 20 ]}

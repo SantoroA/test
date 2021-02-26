@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { formatDateShort } from '../../helpers/dateHelper';
 import { Context as AuthContext } from '../../context/AuthContext';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useLazyQuery } from '@apollo/client';
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../tabs/TabDocuments/graphQlQuery'
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import dianurseApi from '../../api/dianurseApi';
@@ -91,32 +92,38 @@ const useStyles = makeStyles({
 	}
 });
 
-const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments($id: ID!) {
-		patientAppointmentsForUpload(id: $id) {
-			_id
-			appointmentTimeStart
-			profileHCPid {
-				firstName
-				lastName
-			}
-			accountHCPid {
-				profilePicture
-			}
-		}
-	}
-`;
+// const MYAPPOINTMENTS_QUERY = gql`
+// 	query GetAppointments($id: ID!) {
+// 		patientAppointmentsForUpload(id: $id) {
+// 			_id
+// 			appointmentTimeStart
+// 			profileHCPid {
+// 				firstName
+// 				lastName
+// 			}
+// 			accountHCPid {
+// 				profilePicture
+// 			}
+// 		}
+// 	}
+// `;
 
-const DialogUploadDoc = ({ isOpen, close, title }) => {
+const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const [ fileName, setFileName ] = useState('');
 	const [ documentName, setDocumentName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
-	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+	const { loading, error, data, refetch } = useQuery(MYAPPOINTMENTS_QUERY, {
 		variables: { id: userId, cursor: null }
 	});
+	// const { refetch } = useQuery(DOCUMENTS_QUERY, {
+	// 	variables: {idPatient: userId}
+	// })
+	
+	// update query appointment and docs 
+	
 	console.log(userId);
 	// const data = [
 	// 	{
@@ -187,8 +194,6 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 	// 	}
 	// ];
 
-	console.log(data);
-
 	const classes = useStyles();
 
 	const handleChange = (event) => {
@@ -210,14 +215,19 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 		document.append('document', file);
 		document.append('documentName', documentName);
 		let aptId = appointmentSelectedId;
-		console.log(aptId);
+		console.log(aptId)
 		try {
-			await dianurseApi.post(`download/documents/${aptId}`, document);
+			await dianurseApi.put(`download/documents/${aptId}`, document);
+			// await refetch({variable: {idPatient: userId}});
+			refetch();
+			updateDoc();
 			close();
+			
 		} catch (error) {
 			console.log(error);
 			setHasError(true);
 		}
+		
 	};
 
 	return (
@@ -315,18 +325,8 @@ const DialogUploadDoc = ({ isOpen, close, title }) => {
 																<Avatar
 																	className={classes.avatar}
 																	alt={apt.profileHCPid.lastName}
-																	src={
-																		apt.accountHCPid.profilePicture.includes(
-																			'http'
-																		) ? (
-																			apt.accountHCPid.profilePicture
-																		) : (
-																			`url(http://localhost:10101/dianurse/v1/profile/static/images/${apt
-																				.accountHCPid.profilePicture})`
-																		)
-																	}
+																	src={ apt.accountHCPid.profilePicture }
 																/>
-																{console.log(apt.profileHCPid)}
 																<Typography className={classes.docName}>
 																	Dr. {apt.profileHCPid.lastName}
 																</Typography>

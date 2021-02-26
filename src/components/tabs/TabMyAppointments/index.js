@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { formatDateDisplay, formatFormDate } from '../../../helpers/dateHelper';
 import Loader from 'react-loader-spinner';
@@ -57,6 +57,7 @@ const TabMyAppointments = () => {
 	console.log(userId);
 	console.log('data', data);
 	console.log(error);
+
 	const { t } = useTranslation();
 	return (
 		<Grid className={classes.root} container>

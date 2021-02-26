@@ -125,16 +125,10 @@ const DocViewPatProfile = () => {
 						<CardProfilePublic
 							firstName={firstName}
 							lastName={lastName}
-							phoneNumber={phoneNumber}
+							phoneNumber={`+${phoneNumber}`}
 							email={email}
 							isHCP={false}
-							image={
-								image.includes('http') ? (
-									image
-								) : (
-									`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
-								)
-							}
+							image={ image }
 						/>
 					</Grid>
 				</Grid>

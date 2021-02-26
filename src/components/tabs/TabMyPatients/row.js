@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 function Row({ value, buttonText }) {
 	const classes = useStyles();
-	const { profilePatientid, start, reasonForVisit, end, accountPatientid } = value;
+	const { profilePatientid, appointmentTimeStart, reasonForVisit, appointmentTimeEnd, accountPatientid } = value;
 	console.log(profilePatientid)
 	return (
 		<TableRow>
@@ -19,13 +19,13 @@ function Row({ value, buttonText }) {
 				<Avatar
 					className={classes.avatar}
 					alt={profilePatientid.lastName}
-					src={accountPatientid.profilePicture.includes("http") ? accountPatientid.profilePicture : `http://localhost:10101/dianurse/v1/profile/static/images/${accountPatientid.profilePicture}`}
+					src={accountPatientid.profilePicture}
 				/>
 				{profilePatientid.firstName} {profilePatientid.lastName}
 			</TableCell>
-			<TableCell>{formatDateShort(start)}</TableCell>
+			<TableCell>{formatDateShort(appointmentTimeStart)}</TableCell>
 			<TableCell>
-				{convertTime(start)} - {convertTime(end)}
+				{convertTime(appointmentTimeStart)} - {convertTime(appointmentTimeEnd)}
 			</TableCell>
 			<TableCell>{reasonForVisit}</TableCell>
 			<TableCell align="left">

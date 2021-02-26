@@ -7,49 +7,33 @@ import Row from './row';
 import { useTranslation } from 'react-i18next';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
+import { DOCUMENTS_QUERY } from './graphQlQuery'
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
 //CUSTOM UI
+import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
+import TablePagination from '@material-ui/core/TablePagination';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableBody from '@material-ui/core/TableBody';
+import Table from '@material-ui/core/Table';
 import Container from '@material-ui/core/Container';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableHead from '@material-ui/core/TableHead';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PublishIcon from '@material-ui/icons/Publish';
 
 // no back fazer um if do horario e fazer grater and litle
 
-const DOCUMENTS_QUERY = gql`
-	query GetAppointments($idPatient: ID!) {
-		patientDocuments(idPatient: $idPatient) {
-			profileHCPid {
-				_id
-				firstName
-				lastName
-			}
-			_id
-			appointmentTimeStart
-			appointmentTimeEnd
-			profilePatientid
-			accountHCPid {
-				profilePicture
-			}
-			amount
-			patientComent
-			docStatus
-			patientDoc {
-				name
-				document
-			}
-		}
-	}
-`;
 
 const TabDocuments = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
-	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const { loading, error, data, fetchMore, refetch } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idPatient: userId
 		}
@@ -163,31 +147,25 @@ const TabDocuments = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
-			{/* {data && ( */}
+			 {data && ( 
 			<div>
-				{/* {data.patientDocuments.length > 0 ? ( */}
-
-				{/* {(rowsPerPage > 0
+			
+				 {data.patientDocuments.length > 0 ? ( 
+					 				 ((rowsPerPage > 0
 										? data.patientDocuments.slice(
 												page * rowsPerPage,
 												page * rowsPerPage + rowsPerPage
 											)
 										: data.patientDocuments).map((doc) => {
 										return <Row value={doc} key={doc._id} />;
-									})} */}
+									})) 
 
-				{(rowsPerPage > 0
-					? documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-					: documents).map((doc) => {
-					return <Row value={doc} key={doc._id} />;
-				})}
-
-				{/* ) : ( */}
+				 ) :( 
 				<EmptyDocState />
-				{/* )} */}
+				 )}
 			</div>
-			{/* )} */}
-			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" close={() => setDialogOpen(false)} />
+			 )} 
+			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" updateDoc={refetch} close={() => setDialogOpen(false)} />
 		</Grid>
 	);
 };

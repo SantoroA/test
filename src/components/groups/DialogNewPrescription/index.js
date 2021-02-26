@@ -15,6 +15,7 @@ import ButtonOutlined from '../../customUi/ButtonOutlined';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import Tooltip from '@material-ui/core/Tooltip';
+import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,6 +34,27 @@ import AddIcon from '@material-ui/icons/Add';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
+const APPOINTMENTS_QUERY = gql`
+	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
+		appointmentDocAndPatient(idHCP: $idHCP, idPatient: $idPatient) {
+			accountPatientid {
+				profilePicture
+				username
+			}
+			_id
+			appointmentTimeEnd
+			appointmentTimeStart
+			profilePatientid {
+				_id
+				firstName
+				lastName
+				phoneNumber
+			}
+			amount
+		}
+	}
+`;
+
 const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ step, setStep ] = useState(1);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
@@ -45,13 +67,18 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 		directions: ''
 	});
 	const [ medicineList, setMedicineList ] = useState([]);
-
+	 const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY, {
+	 	variables: { idPatient, idHCP  }
+	 });
 	const [ prescriptionName, setPrescriptionName ] = useState('');
-	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
+	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('0000000000000000');
 	const [ aptSelected, setAptSelected ] = useState('');
 	const nextStep = () => {
 		setStep(step + 1);
 	};
+	console.log(idPatient)
+	console.log('dataPrescription',data)
+	
 
 	const onCancel = () => {
 		close();
@@ -105,9 +132,15 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 						onSubmit={(e) => {
 							e.preventDefault();
 							nextStep();
-							setAptSelected(appointments.filter((apt) => apt._id === appointmentSelectedId));
+							setAptSelected(data.appointmentDocAndPatient.filter((apt) => apt._id === appointmentSelectedId));
 						}}
 					>
+						{loading && (
+				<Container className={classes.emptyState}>
+					<Loader type="TailSpin" color="primary" height={80} width={80} />
+				</Container>
+			)}
+			{error && <ErrorMessage />}
 						<Grid container className={classes.wrapper}>
 							<Grid item className={classes.header}>
 								<Typography className={classes.title}>New Prescpription</Typography>
@@ -138,7 +171,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 										variant="outlined"
 										label="Select Appointment"
 									>
-										{appointments.map((apt, i) => {
+										{data.appointmentDocAndPatient.map((apt, i) => {
 											return (
 												<MenuItem key={i} value={apt._id}>
 													{formatDateShort(apt.appointmentTimeStart)} -{' '}
@@ -176,13 +209,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 								<Avatar
 									className={classes.avatar}
 									alt={lastName}
-									src={
-										image.includes('http') ? (
-											image
-										) : (
-											`url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`
-										)
-									}
+									src={ image }
 								/>
 								Dr. {lastName}
 							</div>
@@ -376,13 +403,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 								<Avatar
 									className={classes.avatar}
 									alt={lastName}
-									src={
-										image.includes('http') ? (
-											image
-										) : (
-											`url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`
-										)
-									}
+									src={ image }
 								/>
 								Dr. {lastName}
 							</div>
@@ -402,7 +423,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 						onSubmit={(e) => {
 							e.preventDefault();
 						}}
-					>
+					>{console.log(aptSelected[0])}
 						<Grid container className={classes.wrapper}>
 							<Preview
 								prescriptionName={prescriptionName}
@@ -410,6 +431,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 								diagnosis={diagnosis}
 								idHCP={idHCP}
 								idPatient={idPatient}
+								patientInfo={aptSelected[0]}
 								recommendation={recommendation}
 							/>
 							<Grid className={classes.buttonContainer} item>
@@ -424,6 +446,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 					</form>
 				</Dialog>
 			);
+		default: 	
 	}
 };
 

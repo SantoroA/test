@@ -70,13 +70,15 @@ const useStyles = makeStyles({
 
 //QUERY ALL PRESCRIPTIONS
 
-const DOCUMENTS_QUERY = gql`
+const PRESCRIPTION_QUERY = gql`
 	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
-		patientLabTestForDoctors(idHCP: $idHCP, idPatient: $idPatient) {
+		doctorPrescription(idHCP: $idHCP, idPatient: $idPatient) {
 			accountPatientid {
 				profilePicture
 			}
-			idApt
+			_id
+			appointmentTimeEnd
+			appointmentTimeStart
 			profilePatientid {
 				_id
 				firstName
@@ -84,11 +86,9 @@ const DOCUMENTS_QUERY = gql`
 			}
 			amount
 			reasonForVisit
-			patientDoc
-			labTest {
-				doctorRequest
-				status
-				patientResult
+			prescription {
+				name
+				document
 			}
 		}
 	}
@@ -104,7 +104,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const [ deleteId, setDeleteId ] = useState('');
 	const { state: { lastName, image } } = useContext(DocProfileContext);
-	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const { loading, error, data, fetchMore } = useQuery(PRESCRIPTION_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
@@ -141,7 +141,9 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			{error && <ErrorMessage />}
 
 			{/* IF DATA */}
-			{prescriptions.map((presc, i) => {
+			{data && (
+				<div>
+			{data.doctorPrescription.map((presc, i) => {
 				return (
 					<PaperCustomShadow className={classes.paper} key={i}>
 						<Grid container className={classes.wrapper}>
@@ -152,19 +154,19 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 								</div>
 							</Grid>
 							<Grid item md={2} sm={4} xs={6}>
-								{formatDateShort(presc.start)}
+								{formatDateShort(presc.appointmentTimeStart)}
 							</Grid>
 							<Grid item md={2} sm={4} xs={6}>
-								{convertTime(presc.start)} - {convertTime(presc.end)}
+								{convertTime(presc.appointmentTimeStart)} - {convertTime(presc.appointmentTimeEnd)}
 							</Grid>
 							<Grid item md={3} sm={6} xs={6}>
 								<Tooltip title="Download">
 									<Link
-										href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${presc.filename}`}
+										href={presc.prescription.document}
 										target="_blank"
 										color="primary"
 									>
-										{presc.name}
+										{presc.prescription.name}
 									</Link>
 								</Tooltip>
 							</Grid>
@@ -188,7 +190,10 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 						</Grid>
 					</PaperCustomShadow>
 				);
+				
 			})}
+			</div>
+			)}
 
 			<DialogConfirm
 				action={() => {}}

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import DialogError from '../../groups/DialogError';
 import DialogConfirm from '../../groups/DialogConfirm';
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from './graphQlQuery'
+import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -28,11 +30,23 @@ function Row({ value }) {
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid, patientDoc } = value;
 	const filename = value.patientDoc.document;
+	const { state: { userId } } = useContext(AuthContext);
 	const [ patientRemoveDoc, { data } ] = useMutation(DELETEDOC_MUTATION, {
-		variables: {
-			idApt: _id
-		}
-	});
+		refetchQueries: () => [
+		  {
+			query: DOCUMENTS_QUERY,
+			variables: {
+				idPatient: userId
+			}
+		  },
+		  {
+			query: MYAPPOINTMENTS_QUERY,
+			variables: {
+				id: userId
+			}
+		  }
+		]
+	  });
 
 	console.log(data);
 	console.log(_id);
@@ -45,13 +59,7 @@ function Row({ value }) {
 						<Avatar
 							className={classes.avatar}
 							alt={profileHCPid.firstName}
-							src={
-								accountHCPid.profilePicture.includes('http') ? (
-									accountHCPid.profilePicture
-								) : (
-									`url(http://localhost:10101/dianurse/v1/profile/static/images/${accountHCPid.profilePicture})`
-								)
-							}
+							src={ accountHCPid.profilePicture }
 						/>
 						Dr. {profileHCPid.lastName}
 					</div>
@@ -68,7 +76,7 @@ function Row({ value }) {
 				<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
 					<Tooltip title="Preview">
 						<IconButton
-							href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${filename}`}
+							href={ filename }
 							target="_blank"
 						>
 							<VisibilityIcon color="primary" />
@@ -87,6 +95,7 @@ function Row({ value }) {
 
 				<DialogConfirm
 					action={patientRemoveDoc}
+					idApt = {_id}
 					isOpen={dialogConfirmOpen}
 					close={() => setDialogConfirmOpen(false)}
 					actionText="delete this document"

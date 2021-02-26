@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 
@@ -67,6 +67,7 @@ const DOCUMENTS_QUERY = gql`
 			appointmentTimeStart
 			appointmentTimeEnd
 			patientDoc {
+				isNew
 				name
 				document
 			}
@@ -78,18 +79,35 @@ const DOCUMENTS_QUERY = gql`
 	}
 `;
 
+const VIEW_MUTATION = gql`
+mutation UpdateDocView($idApt: ID!) {
+	doctorViewDoc(idApt: $idApt) 
+}
+`;
+
 //MAIN FUNCTION
 
 const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 
-	const { error, loading, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const { error, loading, data, fetchMore, refetch } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
 		}
 	});
+	const [doctorViewDoc] = useMutation(VIEW_MUTATION, {
+		refetchQueries: () => [				{
+			  query: DOCUMENTS_QUERY,
+			  variables: {
+				idHCP,
+				idPatient
+			  }}
+		  ]
+	});
+
+	console.log(data)
 
 	const documents = [
 		{
@@ -130,10 +148,11 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{/* {data && ( */}
+			{data && ( 
 			<div>
-				{/* {data.patientDocsForDoctors.map((doc, i) => { */}
-				{documents.map((doc, i) => {
+				{data.patientDocsForDoctors.map((doc, i) => { 
+				// documents.map((doc, i) => {
+					// CSS color not updating
 					return (
 						<PaperCustomShadow
 							className={classes.paper}
@@ -146,13 +165,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 										<Avatar
 											className={classes.avatar}
 											alt={lastName}
-											src={
-												image.includes('http') ? (
-													image
-												) : (
-													`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
-												)
-											}
+											src={ image }
 										/>
 										Dr. {lastName}
 									</div>
@@ -169,8 +182,16 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 								<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
 									<Tooltip title="Download">
 										<IconButton
-											href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
-												.patientDoc.document}`}
+											href={doc.patientDoc.document}
+											onClick={() => {
+												console.log(doc._id)
+												try {
+													doctorViewDoc({variables: {idApt: doc._id}})
+												} catch(err) {
+													console.log(err)
+												}
+												
+											}}
 											target="_blank"
 											color="primary"
 										>
@@ -179,8 +200,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 									</Tooltip>
 									<Tooltip title="Preview">
 										<IconButton
-											href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${doc
-												.patientDoc.document}`}
+											href={doc.patientDoc.document}
 											target="_blank"
 											color="primary"
 										>
@@ -191,9 +211,10 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 							</Grid>
 						</PaperCustomShadow>
 					);
+					// })
 				})}
 			</div>
-			{/* )} */}
+			)} 
 		</div>
 	);
 };
