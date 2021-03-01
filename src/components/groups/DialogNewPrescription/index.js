@@ -34,7 +34,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
-const APPOINTMENTS_QUERY = gql`
+export const APPOINTMENTS_QUERY = gql`
 	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
 		appointmentDocAndPatient(idHCP: $idHCP, idPatient: $idPatient) {
 			accountPatientid {
@@ -128,6 +128,14 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
+				{loading && (
+					<Container className={classes.emptyState}>
+						<Loader type="TailSpin" color="primary" height={80} width={80} />
+					</Container>
+				)}
+				{error && <ErrorMessage />}
+				{data && (
+											<div>
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
@@ -135,12 +143,6 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 							setAptSelected(data.appointmentDocAndPatient.filter((apt) => apt._id === appointmentSelectedId));
 						}}
 					>
-						{loading && (
-				<Container className={classes.emptyState}>
-					<Loader type="TailSpin" color="primary" height={80} width={80} />
-				</Container>
-			)}
-			{error && <ErrorMessage />}
 						<Grid container className={classes.wrapper}>
 							<Grid item className={classes.header}>
 								<Typography className={classes.title}>New Prescpription</Typography>
@@ -189,6 +191,8 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 							</Grid>
 						</Grid>
 					</form>
+					</div>
+				)}
 				</Dialog>
 			);
 		case 2:

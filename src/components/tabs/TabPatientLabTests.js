@@ -5,6 +5,7 @@ import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogNewLabTest from '../groups/DialogNewLabTest';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
+import { APPOINTMENTS_QUERY } from '../groups/DialogNewLabTest/index'
 import DialogConfirm from '../groups/DialogConfirm';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
@@ -79,7 +80,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DOCUMENTS_QUERY = gql`
+const LABTEST_QUERY = gql`
 	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
 		patientLabTestForDoctors(idHCP: $idHCP, idPatient: $idPatient) {
 			accountPatientid {
@@ -95,8 +96,12 @@ const DOCUMENTS_QUERY = gql`
 			appointmentTimeStart
 			appointmentTimeEnd
 			labTestRequests {
-				doctorRequest
-				patientResult
+				name
+				requestLink
+				isNewForPatient
+				hasResult 
+				isNewForDoctor
+				resultLink
 			}
 		}
 	}
@@ -108,6 +113,12 @@ const DELETEDOC_MUTATION = gql`
 	}
 `;
 
+const VIEW_MUTATION = gql`
+mutation UpdateDocView($idApt: ID!, $file: String!) {
+	doctorViewLabTest(idApt: $idApt, file: $file) 
+}
+`;
+
 //MAIN FUNCTION
 
 const TabPatientLabTests = ({ idHCP, idPatient }) => {
@@ -117,17 +128,38 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	const [ dialogTestOpen, setDialogTestOpen ] = useState(false);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
-	const { error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const { error, data, fetchMore } = useQuery(LABTEST_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
 		}
 	});
+
+	const [ doctorViewLabTest ] = useMutation(VIEW_MUTATION, {
+		refetchQueries: () => [	{
+			query: LABTEST_QUERY,
+			variables: {
+			  idHCP,
+			  idPatient
+			}}	  
+		]
+	});
+
 	const [ doctorRemoveLabTest, { loading } ] = useMutation(DELETEDOC_MUTATION, {
-		variables: {
-			oldFile: oldFile,
-			idApt: idApt
-		}
+		refetchQueries: () => [	{
+			query: LABTEST_QUERY,
+			variables: {
+			  idHCP,
+			  idPatient
+			}},	
+			{
+		    query: APPOINTMENTS_QUERY,
+		 	 variables: {
+		 	   idHCP,
+		 	   idPatient
+		 	 },
+			}		  
+		]
 	});
 
 	console.log('dataDoctorLab', data);
@@ -197,11 +229,12 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{/* {data && ( */}
+			{data && ( 
 			<div>
-				{/* {data.patientLabTestForDoctors.map((test) => { */}
-				{appointments.map((apt) => {
-					return apt.labTest.doctorRequest.map((lab, i) => {
+				{data.patientLabTestForDoctors.map((apt) => { 
+				{/* {appointments.map((apt) => { */}
+				console.log(apt.labTestRequests)
+					return apt.labTestRequests.map((lab, i) => {
 						console.log(lab, i);
 						return (
 							<PaperCustomShadow
@@ -215,13 +248,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 											<Avatar
 												className={classes.avatar}
 												alt={lastName}
-												src={
-													image.includes('http') ? (
-														image
-													) : (
-														`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
-													)
-												}
+												src={ image	}
 											/>
 											Dr. {lastName}
 										</div>
@@ -236,7 +263,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 									<Grid item md={3} sm={6} xs={6}>
 										<Tooltip title="Download Request">
 											<Link
-												href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.requestLink}`}
+												href={lab.requestLink}
 												target="_blank"
 												color="primary"
 											>
@@ -248,9 +275,17 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 										{lab.hasResult ? (
 											<Tooltip title="Download result">
 												<IconButton
-													href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${lab.resultLink}`}
+													href={lab.resultLink}
 													target="_blank"
 													color="primary"
+													onClick={() => {
+														doctorViewLabTest({
+															variables: {
+																idApt: apt._id, 
+																file: lab.resultLink
+															}
+														})
+													}}
 												>
 													<GetAppIcon />
 												</IconButton>
@@ -273,6 +308,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 											<IconButton
 												onClick={() => {
 													setOldFile(lab.requestLink);
+													setidApt(apt._id)
 													setDialogConfirmOpen(true);
 												}}
 											>
@@ -286,7 +322,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 					});
 				})}
 			</div>
-			{/* )} */}
+			 )} 
 			<DialogNewLabTest
 				idHCP={idHCP}
 				idPatient={idPatient}
@@ -295,6 +331,8 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			/>
 			<DialogConfirm
 				action={doctorRemoveLabTest}
+				idApt={idApt}
+				oldFile={oldFile}
 				isOpen={dialogConfirmOpen}
 				close={() => {
 					setDialogConfirmOpen(false);

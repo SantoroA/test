@@ -29,9 +29,31 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
 import AddIcon from '@material-ui/icons/Add';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
+
+export const APPOINTMENTS_QUERY = gql`
+	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
+		appointmentDocUploadLabTest(idHCP: $idHCP, idPatient: $idPatient) {
+			accountPatientid {
+				profilePicture
+				username
+			}
+			_id
+			appointmentTimeEnd
+			appointmentTimeStart
+			profilePatientid {
+				_id
+				firstName
+				lastName
+				phoneNumber
+			}
+			amount
+		}
+	}
+`;
 
 const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ step, setStep ] = useState(1);
@@ -42,6 +64,9 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ testName, setTestName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const [ aptSelected, setAptSelected ] = useState('');
+	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY, {
+		variables: { idPatient, idHCP  }
+	});
 	const nextStep = () => {
 		setStep(step + 1);
 	};
@@ -88,13 +113,22 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
+											{loading && (
+				<Container className={classes.emptyState}>
+					<Loader type="TailSpin" color="primary" height={80} width={80} />
+				</Container>
+			)}
+			{error && <ErrorMessage />}
+			{data && (
+											<div>
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
 							nextStep();
-							setAptSelected(appointments.filter((apt) => apt._id === appointmentSelectedId));
+							setAptSelected(data.appointmentDocUploadLabTest.filter((apt) => apt._id === appointmentSelectedId));
 						}}
 					>
+
 						<Grid container className={classes.wrapper}>
 							<Grid item className={classes.header}>
 								<Typography className={classes.title}>New Lab Test Request</Typography>
@@ -121,11 +155,16 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 									<Select
 										labelId="apt-select-label"
 										value={appointmentSelectedId}
-										onChange={(e) => setAppointmentSelectedId(e.target.value)}
+										onChange={(e) => 
+											{setAppointmentSelectedId(e.target.value)
+											console.log(e.target)}
+										}
 										variant="outlined"
 										label="Select Appointment"
 									>
-										{appointments.map((apt, i) => {
+										{data.appointmentDocUploadLabTest.map((apt, i) => {
+										{/* {appointments.map((apt, i) => { */}
+										console.log(apt._id)
 											return (
 												<MenuItem key={i} value={apt._id}>
 													{formatDateShort(apt.appointmentTimeStart)} -{' '}
@@ -133,6 +172,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 												</MenuItem>
 											);
 										})}
+
 									</Select>
 								</FormControl>
 							</Grid>
@@ -143,6 +183,8 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 							</Grid>
 						</Grid>
 					</form>
+					</div>
+										)}
 				</Dialog>
 			);
 		case 2:
@@ -163,13 +205,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 								<Avatar
 									className={classes.avatar}
 									alt={lastName}
-									src={
-										image.includes('http') ? (
-											image
-										) : (
-											`url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`
-										)
-									}
+									src={ image }
 								/>
 								Dr. {lastName}
 							</div>
@@ -246,13 +282,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 								<Avatar
 									className={classes.avatar}
 									alt={lastName}
-									src={
-										image.includes('http') ? (
-											image
-										) : (
-											`url(http://localhost:10101/dianurse/v1/profile/static/images/${image})`
-										)
-									}
+									src={ image }
 								/>
 								Dr. {lastName}
 							</div>
@@ -274,7 +304,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 						}}
 					>
 						<Grid container className={classes.wrapper}>
-							<Preview diagnosis={diagnosis} idHCP={idHCP} idPatient={idPatient} exams={exams} />
+							<Preview diagnosis={diagnosis} idHCP={idHCP} idPatient={idPatient} exams={exams} patientInfo={aptSelected[0]} />
 							<Grid className={classes.buttonContainer} item>
 								<ButtonOutlined fullWidth className={classes.backButton} onClick={previousStep}>
 									Back
@@ -287,6 +317,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					</form>
 				</Dialog>
 			);
+			default: 
 	}
 };
 

@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { APPOINTMENTS_QUERY } from '../groups/DialogNewPrescription/index'
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogNewPrescription from '../groups/DialogNewPrescription';
@@ -96,6 +97,12 @@ const PRESCRIPTION_QUERY = gql`
 
 //DELETE PRESCRIPTION MUTATION BASED ON ID OF PRESCRIPTION
 
+const REMOVEPRESCRIPTION_MUTATION = gql`
+	mutation DeletePresc($idApt: ID!) {
+		removePrescription(idApt: $idApt)
+	}
+`;
+
 //MAIN FUNCTION
 
 const TabPatientDocs = ({ idHCP, idPatient }) => {
@@ -109,6 +116,22 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			idHCP,
 			idPatient
 		}
+	});
+	const [ removePrescription ] = useMutation(REMOVEPRESCRIPTION_MUTATION, {
+		refetchQueries: () => [	{
+			  query: PRESCRIPTION_QUERY,
+			  variables: {
+				idHCP,
+				idPatient
+			  }},	
+			  {
+			 query: APPOINTMENTS_QUERY,
+			   variables: {
+			 	idHCP,
+			 	idPatient
+			   },
+			  }		  
+		  ]
 	});
 
 	console.log('data', data);
@@ -172,15 +195,16 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 							</Grid>
 							<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
 								<Tooltip title="View Prescription">
-									<IconButton>
+									<IconButton href={presc.prescription.document}>
 										<VisibilityIcon color="primary" />
 									</IconButton>
 								</Tooltip>
 								<Tooltip title="Delete">
 									<IconButton
 										onClick={() => {
+											console.log('click prescription')
 											setDialogConfirmOpen(true);
-											setDeleteId('88888');
+											setDeleteId(presc._id);
 										}}
 									>
 										<DeleteOutlineIcon color="secondary" />
@@ -196,8 +220,9 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			)}
 
 			<DialogConfirm
-				action={() => {}}
-				isOpen={dialogConfirmOpen}
+				action={ removePrescription }
+				isOpen={ dialogConfirmOpen }
+				idApt={ deleteId }
 				close={() => setDialogConfirmOpen(false)}
 				actionText="delete this prescription"
 				confirmButton="Delete"

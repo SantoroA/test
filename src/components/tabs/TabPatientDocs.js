@@ -71,10 +71,6 @@ const DOCUMENTS_QUERY = gql`
 				name
 				document
 			}
-			labTest {
-				doctorRequest
-				patientResult
-			}
 		}
 	}
 `;

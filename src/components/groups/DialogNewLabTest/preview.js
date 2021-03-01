@@ -15,18 +15,20 @@ import Link from '@material-ui/core/Link';
 
 //QUERY DOCTOR AND PATIENT INFORMATION
 
-const Preview = ({ patientId, diagnosis, recommendation, exams }) => {
+const Preview = ({ patientId, diagnosis, recommendation, exams, patientInfo }) => {
 	const { state: { firstName, lastName, email, phoneNumber, country, city, zipcode, street, num } } = useContext(
 		DocProfileContext
 	);
 	const classes = useStyles();
-	const patientInfo = {
-		patientFirstName: 'Peach',
-		patientLastName: 'Nintendo',
-		patientPhone: '2424545432',
-		patientEmail: 'peach@nintendo.com',
-		patientAdress: '1 Mario Street, Kart, 78.584-99, Nintendo.'
-	};
+	// const patientInfo = {
+	// 	patientFirstName: 'Peach',
+	// 	patientLastName: 'Nintendo',
+	// 	patientPhone: '2424545432',
+	// 	patientEmail: 'peach@nintendo.com',
+	// 	patientAdress: '1 Mario Street, Kart, 78.584-99, Nintendo.'
+	// };
+	console.log('patientIno',patientInfo)
+	console.log(patientId)
 	return (
 		<PaperCustomShadow className={classes.prescriptionPaper}>
 			<Typography className={classes.bold} variant="h5" color="primary">
@@ -46,16 +48,18 @@ const Preview = ({ patientId, diagnosis, recommendation, exams }) => {
 				<Grid container>
 					<Grid item xs={6}>
 						<Typography className={classes.bold} variant="subtitle1">
-							Patient Information: {patientInfo.patientFirstName} {patientInfo.patientLastName}
+							{console.log(patientInfo.profilePatientid.firstName)}
+							Patient Information: {patientInfo.profilePatientid.firstName} {patientInfo.profilePatientid.lastName}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
-							Phone: {patientInfo.patientPhone}
+							Phone: {patientInfo.profilePatientid.phoneNumber}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
-							Email: {patientInfo.patientEmail}
+							Email: {patientInfo.accountPatientid.username}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
-							Address: {patientInfo.patientAdress}
+							Address: 
+							{/* {patientInfo.profilePatientid.adress} */}
 						</Typography>
 					</Grid>
 					<Grid item xs={6}>
