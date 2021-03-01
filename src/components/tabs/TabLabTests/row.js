@@ -67,15 +67,19 @@ function Row({ value, appointment }) {
 						</IconButton>
 					</Tooltip>
 					{hasResult ? (
-						<IconButton
-							onClick={() => {
-								setDialogOpen(true);
-							}}
-							color="primary"
-							disabled
-						>
-							<PublishIcon />
-						</IconButton>
+						<Tooltip title="You already uploaded the result">
+							<span>
+								<IconButton
+									onClick={() => {
+										setDialogOpen(true);
+									}}
+									color="primary"
+									disabled
+								>
+									<PublishIcon />
+								</IconButton>
+							</span>
+						</Tooltip>
 					) : (
 						<Tooltip title="Upload result">
 							<IconButton

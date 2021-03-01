@@ -4,45 +4,8 @@ const useStyles = makeStyles({
 		display: 'flex',
 		flexDirection: 'column'
 	},
-	header: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		marginTop: '1rem'
-	},
-	section: {
-		marginTop: '2em'
-	},
 
-	editButton: {
-		paddingTop: '0.6rem',
-		paddingBottom: '0.6rem',
-		paddingRight: '1rem',
-		paddingLeft: '0.8rem'
-	},
 	title: {
-		fontWeight: 'bold'
-	},
-	editIcon: {
-		marginRight: '0.5rem'
-	},
-	emptyState: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		height: '20rem',
-		flexDirection: 'column',
-		textAlign: 'center'
-	},
-	icon: {
-		fontSize: '5rem',
-		marginTop: '1rem'
-	},
-	detail: {
-		fontWeight: 'bold',
-		marginTop: '1rem'
-	},
-	tableHeader: {
 		fontWeight: 'bold'
 	},
 	name: {
@@ -52,6 +15,59 @@ const useStyles = makeStyles({
 	},
 	avatar: {
 		marginRight: '1rem'
+	},
+	header: {
+		display: 'flex',
+		flexDirection: 'row',
+		marginTop: '1rem',
+		marginBottom: '1rem',
+		alignItems: 'center'
+	},
+	uploadButton: {
+		paddingTop: '0.6rem',
+		paddingBottom: '0.6rem',
+		paddingRight: '1rem',
+		paddingLeft: '1rem'
+	},
+	emptyState: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '20rem',
+		flexDirection: 'column',
+		textAlign: 'center'
+	},
+	detail: {
+		fontWeight: 'bold',
+		marginTop: '1rem'
+	},
+	icon: {
+		fontSize: '5rem',
+		marginTop: '1rem'
+	},
+	paper: {
+		marginBottom: '0.5rem'
+	},
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		padding: '1rem'
+	},
+	iconsWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-end'
+	},
+	errorIcon: {
+		color: '#FF9900',
+		marginLeft: '0.5rem',
+		marginRight: '0.5rem'
+	},
+	checkIcon: {
+		marginLeft: '0.5rem',
+		marginRight: '0.5rem'
 	}
 });
 export default useStyles;

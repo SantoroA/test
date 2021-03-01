@@ -14,11 +14,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
-import TableHead from '@material-ui/core/TableHead';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { makeStyles } from '@material-ui/core/styles';
@@ -149,7 +147,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 						medConditions: []
 					},
 					hasResult: true,
-					resultLink: 'sda',
+
 					isNewForDoctor: true,
 					isNewForPatient: false
 				},
@@ -175,7 +173,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 						medConditions: []
 					},
 					hasResult: true,
-					resultLink: 'sdassa',
+
 					isNewForDoctor: false,
 					isNewForPatient: false
 				}
@@ -208,7 +206,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 						medConditions: []
 					},
 					hasResult: false,
-					resultLink: 'sda',
+
 					isNewForDoctor: false,
 					isNewForPatient: true
 				},
@@ -234,7 +232,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 						medConditions: []
 					},
 					hasResult: false,
-					resultLink: 'sdassa',
+
 					isNewForDoctor: false,
 					isNewForPatient: true
 				}
@@ -292,22 +290,28 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 									{convertTime(apt.appointmentTimeStart)} - {convertTime(apt.appointmentTimeEnd)}
 								</Grid>
 								<Grid item md={3} sm={6} xs={6}>
-									{survey.name}
+									<Typography>
+										{survey.selected.reason && 'Reason for visit'}{' '}
+										{survey.selected.symptoms && 'Symptoms'}{' '}
+										{survey.selected.healthProfile && 'Health Profile'}{' '}
+										{survey.selected.oxygen && 'Oxygen'}{' '}
+										{survey.selected.temperature && 'Temperature'}
+									</Typography>
 								</Grid>
 								<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
 									{survey.hasResult ? (
-										<Tooltip title="Download result">
+										<Tooltip title="View result">
 											<IconButton
 												href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${survey.resultLink}`}
 												target="_blank"
 												color="primary"
 											>
-												<GetAppIcon />
+												<VisibilityIcon />
 											</IconButton>
 										</Tooltip>
 									) : (
 										<IconButton disabled>
-											<GetAppIcon />
+											<VisibilityIcon />
 										</IconButton>
 									)}
 									{survey.hasResult ? (
@@ -340,7 +344,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 				action={() => {}}
 				isOpen={dialogConfirmOpen}
 				close={() => setDialogConfirmOpen(false)}
-				actionText="delete this survey"
+				actionText="Delete this survey"
 				confirmButton="Delete"
 			/>
 			<DialogNewSurvey

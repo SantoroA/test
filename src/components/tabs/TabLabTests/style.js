@@ -27,7 +27,9 @@ const useStyles = makeStyles({
 		fontWeight: 'bold',
 		marginTop: '1rem'
 	},
-
+	title: {
+		fontWeight: 'bold'
+	},
 	name: {
 		display: 'flex',
 		flexDirection: 'row',

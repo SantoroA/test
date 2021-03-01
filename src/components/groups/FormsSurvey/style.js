@@ -28,7 +28,8 @@ const useStyles = makeStyles({
 	},
 
 	yesNoButtons: {
-		justifyContent: 'center'
+		justifyContent: 'center',
+		textAlign: 'center'
 	},
 	buttonOutlined: {
 		paddingRight: '1rem',
@@ -36,7 +37,8 @@ const useStyles = makeStyles({
 	},
 	paper: {
 		marginBottom: '2rem',
-		padding: '1rem'
+		padding: '1rem',
+		textAlign: 'center'
 	},
 	section: {
 		marginTop: '2rem'
@@ -51,6 +53,11 @@ const useStyles = makeStyles({
 	},
 	confetti: {
 		marginLeft: '50%'
+	},
+	sub: {
+		fontWeight: 'bold',
+		marginTop: '1rem',
+		marginBottom: '1rem'
 	},
 	root: {
 		display: 'flex',

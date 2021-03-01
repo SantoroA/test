@@ -95,7 +95,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 `;
 
 //MUTATION TO SEND SURVEY REQUEST
-//SEND APPOINTMENT ID, SURVEYSSELECTED ARRAY, isNewForPatient = true, isNewForDoctor = false, hasResult = false
+//PUSH INTO SURVEYS ARRAY > selected = surveysSelected, isNewForPatient = true, isNewForDoctor = false, hasResult = false
 
 const DialogNewSurvey = ({ isOpen, close, title }) => {
 	const { state: { userId } } = useContext(AuthContext);

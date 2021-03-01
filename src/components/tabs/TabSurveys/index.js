@@ -1,72 +1,139 @@
 import React, { useState } from 'react';
 import useStyles from './style';
 import EmptySurveyState from './emptyState';
+import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import Row from './row';
 import { useTranslation } from 'react-i18next';
+import DialogCompleteSurvey from '../../groups/DialogCompleteSurvey';
+import ErrorMessage from '../../groups/ErrorMessage';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
-import TablePagination from '@material-ui/core/TablePagination';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
-import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import Tooltip from '@material-ui/core/Tooltip';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-
-const surveys = [
-	{
-		docName: 'Gabi',
-		start: '2021-02-10T09:30:00.000Z',
-		end: '2021-02-10T09:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/3053844/pexels-photo-3053844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefwefadaawef'
-	},
-	{
-		docName: 'Aline',
-		start: '2021-02-10T08:30:00.000Z',
-		end: '2021-02-10T08:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/3136340/pexels-photo-3136340.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		id: 'sfwefasdaswefawef'
-	},
-	{
-		docName: 'Peach',
-		start: '2021-02-10T07:00:00.000Z',
-		end: '2021-02-10T07:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefweaadfeffawef'
-	},
-	{
-		docName: 'Pear',
-		start: '2021-02-05T07:00:00.000Z',
-		end: '2021-02-05T07:30:00.000Z',
-		patComments: '',
-		docStatus: '',
-		docPic:
-			'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		id: 'sfwefwfvfdefawef'
-	}
-];
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Grid from '@material-ui/core/Grid';
 
 const TabSurveys = () => {
 	const [ page, setPage ] = useState(0);
-	const [ rowsPerPage, setRowsPerPage ] = useState(5);
+	const [ isDialogCompleteOpen, setIsDialogCompleteOpen ] = useState(false);
+	const [ selectedSurvey, setSelectedSurvey ] = useState({});
+	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
+	const [ oldFile, setOldFile ] = useState('');
 
-	const handleChangeRowsPerPage = (event) => {
-		setRowsPerPage(parseInt(event.target.value, 10));
-		setPage(0);
-	};
+	const appointments = [
+		{
+			surveys: [
+				{
+					selected: {
+						reason: true,
+						healthProfile: true,
+						oxygen: true,
+						symptoms: true,
+						temperature: true
+					},
+					results: {
+						reasonForVisit: 'acne',
+						symptomTime: 5,
+						symptomTimeUnit: 'weeks',
+						isTakingMeds: false,
+						hasDrugAllergies: true,
+						oxygenSaturation: 90,
+						temperature: 36,
+						tempUnit: 'celsius',
+						otherInfo: 'lorem ipsum',
+						symptoms: [],
+						medConditions: []
+					},
+					hasResult: false,
+					id: 'sadas',
+					isNewForDoctor: false
+				},
+				{
+					selected: {
+						reason: false,
+						healthProfile: false,
+						oxygen: false,
+						symptoms: true,
+						temperature: true
+					},
+					results: {
+						reasonForVisit: 'acne',
+						symptomTime: 5,
+						symptomTimeUnit: 'weeks',
+						isTakingMeds: false,
+						hasDrugAllergies: true,
+						oxygenSaturation: 90,
+						temperature: 36,
+						tempUnit: 'celsius',
+						otherInfo: 'lorem ipsum',
+						symptoms: [],
+						medConditions: []
+					},
+					hasResult: true,
+					id: 'sadasdfg',
+					isNewForDoctor: false
+				}
+			],
+			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+			profileHCPid: {
+				firstName: 'Peach',
+				lastName: 'Pizza'
+			},
+			accountHCPid: {
+				profilePicture:
+					'https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+			},
+			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+			status: ''
+		},
+		{
+			surveys: [
+				{
+					selected: {
+						reason: false,
+						healthProfile: true,
+						oxygen: false,
+						symptoms: false,
+						temperature: false
+					},
+					results: {
+						reasonForVisit: 'acne',
+						symptomTime: 5,
+						symptomTimeUnit: 'weeks',
+						isTakingMeds: false,
+						hasDrugAllergies: true,
+						oxygenSaturation: 90,
+						temperature: 36,
+						tempUnit: 'celsius',
+						otherInfo: 'lorem ipsum',
+						symptoms: [],
+						medConditions: []
+					},
+					hasResult: false,
+					id: 'sasadas',
+					isNewForDoctor: false
+				}
+			],
+			appointmentTimeStart: '2021-02-08T06:30:00.000Z',
+			profileHCPid: {
+				firstName: 'Pear',
+				lastName: 'Fruit'
+			},
+			accountHCPid: {
+				profilePicture:
+					'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+			},
+			appointmentTimeEnd: '2021-02-08T07:00:00.000Z',
+			status: ''
+		}
+	];
+
 	const classes = useStyles();
 	const { t } = useTranslation();
 	return (
@@ -82,48 +149,100 @@ const TabSurveys = () => {
 				</Container>
 			)} */}
 			{/* {error && (
-				<Container className={classes.emptyState}>
-					<Typography color="textSecondary" variant="h4">
-						Something went wrong, please try again later
-					</Typography>
-				</Container>
+				<ErrorMessage/>
 			)} */}
 
 			{/* IF DATA */}
 
-			<TableContainer className={classes.section} component={PaperCustomShadow}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							<TableCell className={classes.tableHeader}>{t('Doctor_Name.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Date.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Appointment_Time.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Doctor_comments.1')}</TableCell>
-							<TableCell className={classes.tableHeader}>{t('Document_Status.1')}</TableCell>
-							<TableCell />
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{(rowsPerPage > 0
-							? surveys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							: surveys).map((survey) => {
-							return <Row value={survey} key={survey.id} />;
-						})}
-					</TableBody>
-				</Table>
-				<TablePagination
-					rowsPerPageOptions={[ 5, 10, 20 ]}
-					page={page}
-					onChangePage={(e, newPage) => setPage(newPage)}
-					rowsPerPage={rowsPerPage}
-					component="div"
-					count={surveys.length}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
-				/>
-			</TableContainer>
-
+			{appointments.map((apt) => {
+				return apt.surveys.map((survey, i) => {
+					return (
+						<PaperCustomShadow
+							style={{ backgroundColor: `${!survey.hasResult && '#D7FEF1'}` }}
+							className={classes.paper}
+							key={i}
+						>
+							<Grid container className={classes.wrapper}>
+								<Grid item md={3} sm={4} xs={12}>
+									<div className={classes.name}>
+										<Avatar
+											className={classes.avatar}
+											alt={apt.profileHCPid.lastName}
+											src={
+												apt.accountHCPid.profilePicture.includes('http') ? (
+													apt.accountHCPid.profilePicture
+												) : (
+													`http://localhost:10101/dianurse/v1/profile/static/images/${apt
+														.accountHCPid.profilePicture}`
+												)
+											}
+										/>
+										Dr. {apt.profileHCPid.lastName}
+									</div>
+								</Grid>
+								<Grid item md={2} sm={4} xs={6}>
+									{formatDateShort(apt.appointmentTimeStart)}
+								</Grid>
+								<Grid item md={2} sm={4} xs={6}>
+									{convertTime(apt.appointmentTimeStart)} - {convertTime(apt.appointmentTimeEnd)}
+								</Grid>
+								<Grid item md={3} sm={6} xs={6}>
+									<Typography>
+										{survey.selected.reason && 'Reason for visit'}{' '}
+										{survey.selected.symptoms && 'Symptoms'}{' '}
+										{survey.selected.healthProfile && 'Health Profile'}{' '}
+										{survey.selected.oxygen && 'Oxygen'}{' '}
+										{survey.selected.temperature && 'Temperature'}
+									</Typography>
+								</Grid>
+								<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
+									{survey.hasResult ? (
+										<Tooltip title="You already answered this survey">
+											<span>
+												<IconButton disabled>
+													<EditIcon />
+												</IconButton>
+											</span>
+										</Tooltip>
+									) : (
+										<Tooltip title="Answer survey">
+											<IconButton
+												onClick={() => {
+													setIsDialogCompleteOpen(true);
+													setSelectedSurvey(survey);
+												}}
+												target="_blank"
+												color="primary"
+											>
+												<EditIcon />
+											</IconButton>
+										</Tooltip>
+									)}
+									{survey.hasResult ? (
+										<Tooltip title="Result sent">
+											<CheckCircleOutlineIcon color="primary" className={classes.checkIcon} />
+										</Tooltip>
+									) : (
+										<Tooltip title="Please answer this survey">
+											<ErrorOutlineIcon className={classes.errorIcon} />
+										</Tooltip>
+									)}
+								</Grid>
+							</Grid>
+						</PaperCustomShadow>
+					);
+				});
+			})}
 			{/* IF NO DATA */}
 			<EmptySurveyState />
+			<DialogCompleteSurvey
+				isOpen={isDialogCompleteOpen}
+				selectedSurvey={selectedSurvey}
+				close={() => {
+					setIsDialogCompleteOpen(false);
+					setSelectedSurvey({});
+				}}
+			/>
 		</Grid>
 	);
 };
