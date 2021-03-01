@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
-import DialogError from '../../groups/DialogError';
 import DialogConfirm from '../../groups/DialogConfirm';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
@@ -12,10 +11,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useMutation, gql } from '@apollo/client';
-import DialogEditDocument from '../../groups/DialogEditDocument';
 
 const DELETEDOC_MUTATION = gql`
 	mutation DeleteDoc($idApt: ID!) {

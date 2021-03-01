@@ -59,7 +59,7 @@ const surveys = [
 	}
 ];
 
-const TabQuestionnaries = () => {
+const TabSurveys = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
 
@@ -128,4 +128,4 @@ const TabQuestionnaries = () => {
 	);
 };
 
-export default TabQuestionnaries;
+export default TabSurveys;

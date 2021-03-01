@@ -115,10 +115,6 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 
 	const prescriptions = [
 		{
-			docName: 'Maricella',
-			docPic:
-				'https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-			start: '2021-02-01T08:30:00.000Z',
 			end: '2021-02-01T09:00:00.000Z',
 			comments: '',
 			name: 'May 2021',
