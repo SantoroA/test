@@ -74,9 +74,12 @@ const PatPastAppointmentScreen = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
+
+			{/* MOCK DATA */}
+
 			{data && (
 				<div>
-					{data.lastAppointmentsPatient.edges.length > 0 ? (
+					{data.lastAppointmentsPatient.edges &&
 						data.lastAppointmentsPatient.edges.map((el, i) => {
 							return (
 								<div key={i}>
@@ -84,8 +87,7 @@ const PatPastAppointmentScreen = () => {
 									<br />
 								</div>
 							);
-						})
-					) : null}
+						})}
 					{data.lastAppointmentsPatient.pageInfo.hasNextPage && (
 						<button
 							onClick={() => {
