@@ -29,18 +29,22 @@ const useStyles = makeStyles({
 	},
 	link: {
 		fontWeight: 'bold'
+	},
+	emptyState: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '20rem',
+		flexDirection: 'column',
+		textAlign: 'center'
 	}
 });
 
 //QUERY DOCTOR'S PUBLIC INFORMATION ACCORDING TO DOCID
 
 const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments(
-		$id: ID!
-	) {
-		doctorProfile(
-			id: $id
-		) {
+	query GetAppointments($id: ID!) {
+		doctorProfile(id: $id) {
 			_id
 			profileInfo
 			yearsExperience
@@ -49,16 +53,16 @@ const MYAPPOINTMENTS_QUERY = gql`
 			country
 			city
 			websiteUrl
-	  }
+		}
 	}
 `;
 
 const TabDocPublicAbout = ({ docId }) => {
 	const classes = useStyles();
 	const { t } = useTranslation();
-	 const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
-	 	variables: {  id: docId }
-	 });
+	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+		variables: { id: docId }
+	});
 
 	return (
 		<Container>
@@ -68,73 +72,68 @@ const TabDocPublicAbout = ({ docId }) => {
 				</Container>
 			)}
 
-			{error && <ErrorMessage />} 
+			{error && <ErrorMessage />}
 
 			{/* IF DATA */}
 			{data && (
 				<div>
-			<PaperCustomShadow className={classes.paper}>
-				<Typography className={classes.sub} variant="subtitle1">
-					Profile
-				</Typography>
-				<Divider className={classes.divider} />
-				<Typography color="textSecondary" variant="body2">
-					{/* Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
+					<PaperCustomShadow className={classes.paper}>
+						<Typography className={classes.sub} variant="subtitle1">
+							Profile
+						</Typography>
+						<Divider className={classes.divider} />
+						<Typography color="textSecondary" variant="body2">
+							{/* Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
 					tenderloin tongue shankle qui beef. Swine burgdoggen dolor kevin magna officia quis pancetta anim
 					fatback. Laboris tenderloin drumstick, ea filet mignon est turducken officia short ribs nisi pig
 					shank flank. Occaecat excepteur velit ball tip. Does your lorem ipsum text long for something a
 					little meatier? Give our generator a try… it’s tasty! */}
-					{data.doctorProfile.profileInfo}
-				</Typography>
-				<Divider className={classes.divider} />
-				<div className={classes.linkWrapper}>
-					<Link
-						className={classes.link}
-						href="#"
-						onClick={(e) => e.preventDefault}
-						color="inherit"
-						variant="body2"
-					>
-						{data.doctorProfile.websiteUrl}
-					</Link>
+							{data.doctorProfile.profileInfo}
+						</Typography>
+						<Divider className={classes.divider} />
+						<div className={classes.linkWrapper}>
+							<Link
+								className={classes.link}
+								href="#"
+								onClick={(e) => e.preventDefault}
+								color="inherit"
+								variant="body2"
+							>
+								{data.doctorProfile.websiteUrl}
+							</Link>
+						</div>
+					</PaperCustomShadow>
+					<PaperCustomShadow className={classes.paper}>
+						<Typography className={classes.sub} variant="subtitle1">
+							Experience
+						</Typography>
+						<Divider className={classes.divider} />
+						<Typography color="textSecondary" variant="body2">
+							Years of Experience: {data.doctorProfile.yearsExperience}
+						</Typography>
+						<Typography color="textSecondary" variant="body2">
+							Years as Specialist: {data.doctorProfile.yearsSpecialist}
+						</Typography>
+					</PaperCustomShadow>
+					<PaperCustomShadow className={classes.paper}>
+						<Typography className={classes.sub} variant="subtitle1">
+							Education
+						</Typography>
+						<Divider className={classes.divider} />
+						<Typography color="textSecondary" variant="body2">
+							{data.doctorProfile.education}
+						</Typography>
+					</PaperCustomShadow>
+					<PaperCustomShadow className={classes.paper}>
+						<Typography className={classes.sub} variant="subtitle1">
+							Location
+						</Typography>
+						<Divider className={classes.divider} />
+						<Typography>
+							{data.doctorProfile.city} , {data.doctorProfile.country}
+						</Typography>
+					</PaperCustomShadow>
 				</div>
-			</PaperCustomShadow>
-			<PaperCustomShadow className={classes.paper}>
-				<Typography className={classes.sub} variant="subtitle1">
-					Experience
-				</Typography>
-				<Divider className={classes.divider} />
-				<Typography color="textSecondary" variant="body2">
-					Years of Experience: {data.doctorProfile.yearsExperience}
-				</Typography>
-				<Typography color="textSecondary" variant="body2">
-					Years as Specialist: {data.doctorProfile.yearsSpecialist}
-				</Typography>
-			</PaperCustomShadow>
-			<PaperCustomShadow className={classes.paper}>
-				<Typography className={classes.sub} variant="subtitle1">
-					Education
-				</Typography>
-				<Divider className={classes.divider} />
-				<Typography color="textSecondary" variant="body2">
-					{/* Chuck tenderloin kielbasa, pariatur drumstick pancetta sirloin non ex. Eiusmod leberkas burgdoggen,
-					tenderloin tongue shankle qui beef. Swine burgdoggen dolor kevin magna officia quis pancetta anim
-					fatback. Laboris tenderloin drumstick, ea filet mignon est turducken officia short ribs nisi pig
-					shank flank. Occaecat excepteur velit ball tip. Does your lorem ipsum text long for something a
-					little meatier? Give our generator a try… it’s tasty! */}
-					{data.doctorProfile.education}
-				</Typography>
-			</PaperCustomShadow>
-			<PaperCustomShadow className={classes.paper}>
-				<Typography className={classes.sub} variant="subtitle1">
-					Location
-				</Typography>
-				<Divider className={classes.divider} />
-				<Typography>
-					{data.doctorProfile.city} , {data.doctorProfile.country}
-				</Typography>
-			</PaperCustomShadow>
-			</div>
 			)}
 		</Container>
 	);

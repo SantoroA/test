@@ -4,6 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import CardProfilePublic from '../../components/groups/CardProfilePublic';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import DocUserOptions from '../../components/groups/DocUserOptions';
 import TabDocPublicGeneral from '../../components/tabs/TabDocPublicGeneral';
 import TabDocPublicAbout from '../../components/tabs/TabDocPublicAbout';
 //CUSTOM UI
@@ -112,9 +113,9 @@ const PatViewDocPublicProfile = () => {
 	const location = useLocation();
 	const history = useHistory();
 	const { t } = useTranslation();
-	const { id, rating, description, firstname, lastname, minPrice, image } = location.state;
+	const { id, description, firstname, lastname, image } = location.state;
 	const [ value, setValue ] = useState(0);
-	console.log(rating)
+	console.log(location.state);
 	return (
 		<PatLayoutContainer>
 			<Button onClick={() => history.goBack()} className={classes.backButton}>
@@ -132,23 +133,7 @@ const PatViewDocPublicProfile = () => {
 					/>
 				</Grid>
 				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
-					<Paper elevation={0} className={classes.root}>
-						<div className={classes.reviewWrapper}>
-							<Rating name="read-only" value={rating.averageRating} readOnly />
-							<Typography color="textSecondary" variant="body2">
-								({rating.receivedRating} {t('Reviews.1')})
-							</Typography>
-						</div>
-
-						<ButtonFilled>
-							<div className={classes.button}>
-								<Typography variant="body1" className={classes.price}>
-									{t('Price_from.1')}
-								</Typography>
-								<Typography variant="h5">LV {minPrice}.00</Typography>
-							</div>
-						</ButtonFilled>
-					</Paper>
+					<DocUserOptions docId={id} isHCP={false} />
 				</Grid>
 			</Grid>
 			<Container>

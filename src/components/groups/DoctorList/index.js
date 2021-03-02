@@ -101,11 +101,14 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 						id: 'ad',
 						image:
 							'https://images.pexels.com/photos/4590047/pexels-photo-4590047.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-						fistName: 'Bianca',
-						lastName: 'Green',
-						receivedRating: '5',
-						averageRating: 4,
-						description: 'sdfsf',
+						firstname: 'Bianca',
+						lastname: 'Green',
+						rating: {
+							averageRating: 4,
+							receivedRating: '50'
+						},
+
+						profileInfo: 'sdfsf',
 						appointments: [
 							{
 								start: new Date(),

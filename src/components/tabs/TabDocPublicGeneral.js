@@ -106,14 +106,8 @@ const useStyles = makeStyles({
 
 //QUERY DOCTOR'S AVAILABILITY FOR SPECIFIC DAY
 const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments(
-		$date: String!
-		$id: ID!
-	) {
-		doctorsAppointmentsDayAvailability(
-			date: $date
-			id: $id
-		) {
+	query GetAppointments($date: String!, $id: ID!) {
+		doctorsAppointmentsDayAvailability(date: $date, id: $id) {
 			accountHCPid {
 				_id
 				profilePicture
@@ -127,7 +121,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 				phoneNumber
 				lastName
 			}
-	  }
+		}
 	}
 `;
 
@@ -137,9 +131,9 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 	const { t } = useTranslation();
 	const [ date, setDate ] = useState(new Date());
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	 const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 		variables: { date, id: docId, limit: 2, cursor: null }
-	 });
+	});
 
 	const appointments = [
 		{
@@ -186,69 +180,68 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 						<Loader type="TailSpin" color="primary" height={80} width={80} />
 					</Container>
 				)}
-				{error && <ErrorMessage />} 
+				{error && <ErrorMessage />}
 
 				{/* IF DATA */}
 				{data && (
-				<div>
-				<PaperCustomShadow className={classes.paper}>
-					<Typography className={classes.subtitle} variant="body1">
-						Showing time availability for
-					</Typography>
-					<Typography color="primary" className={classes.dateDisplay} variant="h5">
-						{formatDateDisplay(date)}
-					</Typography>
-					{data.doctorsAppointmentsDayAvailability.map((ap) => {
-						return (
-							<Grid key={ap._id} container className={classes.appointment}>
-								<BoxTime>
-									{convertTime(ap.appointmentTimeStart)} - {convertTime(ap.appointmentTimeEnd)}
-								</BoxTime>
-								<Box className={classes.priceWrapper}>
-									<Typography className={classes.price}>Price:</Typography>
-									<Typography className={classes.price}>$ {ap.amount}.00</Typography>
-								</Box>
-								{disableBooking ? (
-									<ButtonFilled
-										disabled
-										className={classes.bookButton}
-										onClick={(e) => e.preventDefault}
-									>
-										Book
-									</ButtonFilled>
-								) : (
-									<ButtonFilled
-										disabled
-										to={{
-											pathname: '/in/patient/reserve',
-											state: { appointment: ap, apDoc: docId }
-										}}
-										component={NavLink}
-										className={classes.bookButton}
-										onClick={(e) => e.preventDefault}
-									>
-										Book
-									</ButtonFilled>
-								)}
-							</Grid>
-						);
-					})}
-				</PaperCustomShadow>
-				</div>
-					)}
+					<div>
+						<PaperCustomShadow className={classes.paper}>
+							<Typography className={classes.subtitle} variant="body1">
+								Showing time availability for
+							</Typography>
+							<Typography color="primary" className={classes.dateDisplay} variant="h5">
+								{formatDateDisplay(date)}
+							</Typography>
+							{data.doctorsAppointmentsDayAvailability.map((ap) => {
+								return (
+									<Grid key={ap._id} container className={classes.appointment}>
+										<BoxTime>
+											{convertTime(ap.appointmentTimeStart)} -{' '}
+											{convertTime(ap.appointmentTimeEnd)}
+										</BoxTime>
+										<Box className={classes.priceWrapper}>
+											<Typography className={classes.price}>Price:</Typography>
+											<Typography className={classes.price}>$ {ap.amount}.00</Typography>
+										</Box>
+										{disableBooking ? (
+											<ButtonFilled
+												disabled
+												className={classes.bookButton}
+												onClick={(e) => e.preventDefault}
+											>
+												Book
+											</ButtonFilled>
+										) : (
+											<ButtonFilled
+												disabled
+												to={{
+													pathname: '/in/patient/reserve',
+													state: { appointment: ap, apDoc: docId }
+												}}
+												component={NavLink}
+												className={classes.bookButton}
+												onClick={(e) => e.preventDefault}
+											>
+												Book
+											</ButtonFilled>
+										)}
+									</Grid>
+								);
+							})}
+						</PaperCustomShadow>
+					</div>
+				)}
 				<PaperCustomShadow className={classes.paper}>
 					<Typography className={classes.sub} variant="subtitle1">
 						Services Treated
 					</Typography>
 					{data && (
 						<div>
-							{data.doctorsAppointmentsDayAvailability.length > 0 ? 
-							data.doctorsAppointmentsDayAvailability[0].profileHCPid.services.map((el, index) =>
-								<Typography key={index}>
-								{el}
-							</Typography>
-								)
-							 : null}
+							{data.doctorsAppointmentsDayAvailability.length > 0 ? (
+								data.doctorsAppointmentsDayAvailability[0].profileHCPid.services.map((el, index) => (
+									<Typography key={index}>{el}</Typography>
+								))
+							) : null}
 						</div>
 					)}
 					<Divider className={classes.divider} />
@@ -259,7 +252,6 @@ const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 					</Typography>
 					<Divider className={classes.divider} />
 				</PaperCustomShadow>
-				
 			</Grid>
 			{!isMobile && (
 				<Grid item sm={5} md={4} className={classes.datePicker}>
