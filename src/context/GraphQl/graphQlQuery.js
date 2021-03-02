@@ -81,9 +81,7 @@ const LASTAPPOINTMENT_PATIENT_QUERY = gql`
 	query GetAppointments($id: ID!, $cursor: String, $limit: Int) {
 		lastAppointmentsPatient(id: $id, cursor: $cursor, limit: $limit) {
 			edges {
-				profilePatientid {
-					_id
-				}
+				profilePatientid
 				_id
 				appointmentTimeStart
 				appointmentTimeEnd

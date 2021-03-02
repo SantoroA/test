@@ -58,9 +58,8 @@ const PatPastAppointmentScreen = () => {
 	const lastAppointmentsPatient = {
 		edges: [
 			{
-				profilePatientid: {
-					_id: 'sdf'
-				},
+				profilePatientid: 'sdf',
+
 				_id: 'ssf',
 				appointmentTimeStart: new Date(),
 				appointmentTimeEnd: new Date(),
@@ -140,7 +139,7 @@ const PatPastAppointmentScreen = () => {
 											appointment: {
 												amount: ap.amount,
 												end: ap.appointmentTimeEnd,
-												id: ap.profilePatientid._id,
+												id: ap.profilePatientid,
 												idap: ap._id,
 												start: ap.appointmentTimeStart
 											},

@@ -25,10 +25,16 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 					{convertTime(!appointment.start ? appointment.appointmentTimeStart : appointment.start)}
 				</Typography>
 				<Typography variant="body2">
-					{getTimeDifference(!appointment.end ? appointment.appointmentTimeEnd : appointment.end, !appointment.start ? appointment.appointmentTimeStart : appointment.start) === 0 ? (
+					{getTimeDifference(
+						!appointment.end ? appointment.appointmentTimeEnd : appointment.end,
+						!appointment.start ? appointment.appointmentTimeStart : appointment.start
+					) === 0 ? (
 						'60'
 					) : (
-						getTimeDifference(!appointment.end ? appointment.appointmentTimeEnd : appointment.end, !appointment.start ? appointment.appointmentTimeStart : appointment.start)
+						getTimeDifference(
+							!appointment.end ? appointment.appointmentTimeEnd : appointment.end,
+							!appointment.start ? appointment.appointmentTimeStart : appointment.start
+						)
 					)}{' '}
 					mins
 				</Typography>
@@ -39,10 +45,7 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 			<Grid item xs={7} sm={6}>
 				<Grid container className={classes.docInfo}>
 					<Grid item sm={4} className={classes.avatarWrapper}>
-						<Avatar
-							alt={name}
-							src={ pic }
-						/>
+						<Avatar alt={name} src={pic} />
 					</Grid>
 					<Grid item sm={8}>
 						<Typography variant="body2">{title}</Typography>
