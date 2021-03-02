@@ -8,7 +8,6 @@ import DocUserOptions from '../../components/groups/DocUserOptions';
 import TabDocPublicGeneral from '../../components/tabs/TabDocPublicGeneral';
 import TabDocPublicAbout from '../../components/tabs/TabDocPublicAbout';
 //CUSTOM UI
-import ButtonFilled from '../../components/customUi/ButtonFilled';
 import TabCustom from '../../components/customUi/TabCustom';
 //CUSTOM ICONS
 import InfoIcon from '../../components/customIcons/InfoIcon';
@@ -22,8 +21,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Grid from '@material-ui/core/Grid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles({
 	backButton: {

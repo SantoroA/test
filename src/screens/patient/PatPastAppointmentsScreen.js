@@ -7,6 +7,7 @@ import ErrorMessage from '../../components/groups/ErrorMessage';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
 
 const LASTAPPOINTMENT_QUERY = gql`
 	query GetAppointments($id: ID!, $cursor: String, $limit: Int) {
@@ -42,6 +43,17 @@ const LASTAPPOINTMENT_QUERY = gql`
 	}
 `;
 
+const useStyles = makeStyles({
+	emptyState: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '20rem',
+		flexDirection: 'column',
+		textAlign: 'center'
+	}
+});
+
 const PatPastAppointmentScreen = () => {
 	const { state: { userId } } = useContext(AuthContext);
 	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_QUERY, {
@@ -51,12 +63,13 @@ const PatPastAppointmentScreen = () => {
 			limit: 3
 		}
 	});
+	const classes = useStyles();
 	console.log('data', data);
 	return (
 		<PatLayoutContainer>
 			<Typography variant="h4">Past Appointments</Typography>
 			{loading && (
-				<Container>
+				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}

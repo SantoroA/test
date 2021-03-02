@@ -48,7 +48,7 @@ const TabPatientAppointments = () => {
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
-		variables: { date, id: userId, limit: 2, cursor: null }
+		variables: { date: formatFormDate(date), id: userId, limit: 2, cursor: null }
 	});
 
 	const { t } = useTranslation();
