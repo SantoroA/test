@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
 import { gql, useQuery } from '@apollo/client';
-import { Context as AuthContext } from '../../../context/AuthContext';
+import { REVIEW_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
 import ErrorMessage from '../ErrorMessage';
+//CUSTOM ICONS
+import ErrorIcon from '../../customIcons/ErrorIcon';
 //MATERIAL UI
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -14,22 +16,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Container from '@material-ui/core/Container';
-
-//QUERY MIN PRICE AND REVIEWS (NUMBER OF REVIEWS AND RATING)
-
-const REVIEW_QUERY = gql`
-	query GetReview($id: ID!) {
-		doctorReviewCard(id: $id) {
-			profileHCPid {
-				rating {
-					averageRating
-					receivedRating
-				}
-			}
-			amount
-		}
-	}
-`;
 
 const DocUserOptions = ({ setIsPublic, isPublic, docId, isHCP }) => {
 	const classes = useStyles();
@@ -56,7 +42,14 @@ const DocUserOptions = ({ setIsPublic, isPublic, docId, isHCP }) => {
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
 			)}
-			{error && <ErrorMessage />}
+			{error && (
+				<div className={classes.errorContainer}>
+					<ErrorIcon className={classes.icon} />
+					<Typography className={classes.text} color="textSecondary" variant="body1">
+						This information is not available. Please try again later.
+					</Typography>
+				</div>
+			)}
 			{data && (
 				<div>
 					<div className={classes.reviewWrapper}>

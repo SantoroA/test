@@ -3,6 +3,7 @@ import DialogReserve from '../DialogReserve';
 import Loader from 'react-loader-spinner';
 import { useQuery, gql } from '@apollo/client';
 import useStyles from './style';
+import { APPOINTMENTS_QUERY_DOCLIST } from '../../../context/GraphQl/graphQlQuery';
 import EmptyDocState from './emptyState';
 import ShowDocData from './showData';
 import ErrorMessage from '../ErrorMessage';
@@ -12,57 +13,6 @@ import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 import Container from '@material-ui/core/Container';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const APPOINTMENTS_QUERY = gql`
-	query GetAppointments(
-		$date: String!
-		$typeOfHCP: String!
-		$maxPrice: Float!
-		$minPrice: Float!
-		$rating: Float!
-		$gender: Int!
-		$time: String!
-		$limit: Int
-		$cursor: ID
-	) {
-		searchAppointments(
-			date: $date
-			typeOfHCP: $typeOfHCP
-			minPrice: $minPrice
-			maxPrice: $maxPrice
-			gender: $gender
-			rating: $rating
-			time: $time
-			limit: $limit
-			cursor: $cursor
-		) {
-			edges {
-				firstname
-				lastname
-				image
-				profileInfo
-				rating {
-					averageRating
-					receivedRating
-				}
-				id
-				minPrice
-				appointments {
-					amount
-					idApt
-					start
-					end
-					id
-				}
-			}
-			totalCount
-			pageInfo {
-				endCursor
-				hasNextPage
-			}
-		}
-	}
-`;
-
 const DoctorList = ({ filterState, dateFormatted }) => {
 	const { gender, time, minPrice, maxPrice, rating, date, typeOfHCP } = filterState;
 
@@ -70,7 +20,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 	const [ apDoc, setApDoc ] = useState('');
 	const [ appointments, setAppointments ] = useState([]);
 
-	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY, {
+	const { loading, error, data, fetchMore } = useQuery(APPOINTMENTS_QUERY_DOCLIST, {
 		variables: {
 			date,
 			typeOfHCP,

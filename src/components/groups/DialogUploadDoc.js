@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { formatDateShort } from '../../helpers/dateHelper';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { useQuery, gql, useLazyQuery } from '@apollo/client';
-import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../tabs/GraphQl/graphQlQuery'
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import dianurseApi from '../../api/dianurseApi';
@@ -121,9 +121,9 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 	// const { refetch } = useQuery(DOCUMENTS_QUERY, {
 	// 	variables: {idPatient: userId}
 	// })
-	
-	// update query appointment and docs 
-	
+
+	// update query appointment and docs
+
 	console.log(userId);
 	// const data = [
 	// 	{
@@ -215,19 +215,17 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 		document.append('document', file);
 		document.append('documentName', documentName);
 		let aptId = appointmentSelectedId;
-		console.log(aptId)
+		console.log(aptId);
 		try {
 			await dianurseApi.put(`download/documents/${aptId}`, document);
 			// await refetch({variable: {idPatient: userId}});
 			refetch();
 			updateDoc();
 			close();
-			
 		} catch (error) {
 			console.log(error);
 			setHasError(true);
 		}
-		
 	};
 
 	return (
@@ -325,7 +323,7 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 																<Avatar
 																	className={classes.avatar}
 																	alt={apt.profileHCPid.lastName}
-																	src={ apt.accountHCPid.profilePicture }
+																	src={apt.accountHCPid.profilePicture}
 																/>
 																<Typography className={classes.docName}>
 																	Dr. {apt.profileHCPid.lastName}

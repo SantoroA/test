@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { useQuery, gql } from '@apollo/client';
+import { APPOINTMENTS_QUERY_TESTDIALOG } from '../../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import ErrorMessage from '../ErrorMessage';
@@ -27,27 +28,6 @@ import Container from '@material-ui/core/Container';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
-export const APPOINTMENTS_QUERY = gql`
-	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
-		appointmentDocUploadLabTest(idHCP: $idHCP, idPatient: $idPatient) {
-			accountPatientid {
-				profilePicture
-				username
-			}
-			_id
-			appointmentTimeEnd
-			appointmentTimeStart
-			profilePatientid {
-				_id
-				firstName
-				lastName
-				phoneNumber
-			}
-			amount
-		}
-	}
-`;
-
 const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ step, setStep ] = useState(1);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
@@ -57,7 +37,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ testName, setTestName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const [ aptSelected, setAptSelected ] = useState('');
-	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY, {
+	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_TESTDIALOG, {
 		variables: { idPatient, idHCP }
 	});
 	const nextStep = () => {

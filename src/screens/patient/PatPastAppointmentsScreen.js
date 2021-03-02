@@ -4,44 +4,11 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { Context as AuthContext } from '../../context/AuthContext';
 import Loader from 'react-loader-spinner';
 import ErrorMessage from '../../components/groups/ErrorMessage';
+import { LASTAPPOINTMENT_PATIENT_QUERY } from '../../context/GraphQl/graphQlQuery';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-
-const LASTAPPOINTMENT_QUERY = gql`
-	query GetAppointments($id: ID!, $cursor: String, $limit: Int) {
-		lastAppointmentsPatient(id: $id, cursor: $cursor, limit: $limit) {
-			edges {
-				profilePatientid
-				_id
-				appointmentTimeStart
-				appointmentTimeEnd
-				amount
-				reasonForVisit
-				profileHCPid {
-					_id
-					firstName
-					lastName
-					rating {
-						averageRating
-						receivedRating
-					}
-				}
-				accountHCPid {
-					_id
-					profilePicture
-					username
-				}
-			}
-			pageInfo {
-				endCursor
-				hasNextPage
-			}
-			totalCount
-		}
-	}
-`;
 
 const useStyles = makeStyles({
 	emptyState: {
@@ -56,7 +23,7 @@ const useStyles = makeStyles({
 
 const PatPastAppointmentScreen = () => {
 	const { state: { userId } } = useContext(AuthContext);
-	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_QUERY, {
+	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_PATIENT_QUERY, {
 		variables: {
 			id: userId,
 			cursor: null,

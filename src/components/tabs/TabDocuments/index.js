@@ -7,7 +7,7 @@ import Row from './row';
 import { useTranslation } from 'react-i18next';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
-import { DOCUMENTS_QUERY } from '../GraphQl/graphQlQuery';
+import { DOCUMENTS_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';

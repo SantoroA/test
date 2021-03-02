@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 //CUSTOM ICONS
 import ErrorIcon from '../customIcons/ErrorIcon';
-import { DOCUMENTS_QUERY } from '../tabs/GraphQl/graphQlQuery';
+import { DOCUMENTS_QUERY } from '../../context/GraphQl/graphQlQuery';
 import { Context as AuthContext } from '../../context/AuthContext';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
@@ -100,11 +100,10 @@ const DialogConfirm = ({ isOpen, close, action, actionText, confirmButton, idApt
 							onClick={async (e) => {
 								e.preventDefault();
 								try {
-									await action({ variables: { idApt, oldFile }}
-									);
+									await action({ variables: { idApt, oldFile } });
 									close();
 								} catch (err) {
-									console.log(err)
+									console.log(err);
 									setHasError(true);
 								}
 							}}
