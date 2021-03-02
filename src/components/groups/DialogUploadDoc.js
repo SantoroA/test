@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { formatDateShort } from '../../helpers/dateHelper';
 import { Context as AuthContext } from '../../context/AuthContext';
 import { useQuery, gql, useLazyQuery } from '@apollo/client';
-import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../tabs/TabDocuments/graphQlQuery'
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../tabs/GraphQl/graphQlQuery'
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import dianurseApi from '../../api/dianurseApi';

@@ -12,28 +12,41 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const LABTEST_QUERY = gql`
-	query GetAppointments($idPatient: ID!) {
-		patientLabTest(idPatient: $idPatient) {
-			profileHCPid {
-				_id
-				firstName
-				lastName
-			}
-			_id
-			appointmentTimeStart
-			appointmentTimeEnd
-			profilePatientid
-			accountHCPid {
-				profilePicture
-			}
-			amount
-			labTest {
-				doctorRequest
-				patientResult
-			}
-		}
-	}
+
+export const LABTEST_QUERY = gql`
+query GetLabTest($idPatient: ID!, $cursor: String, $limit: Int) {
+    patientLabTest(idPatient: $idPatient, cursor: $cursor, limit: $limit) {
+        edges {
+            profileHCPid {
+            _id
+            firstName
+            lastName
+        }
+        _id
+        appointmentTimeStart
+        appointmentTimeEnd
+        profilePatientid
+        accountHCPid {
+            profilePicture
+        }
+        amount
+        labTestRequests {
+            name
+			requestLink
+			isNewForPatient
+			hasResult
+			isNewForDoctor
+			resultLink
+	        }
+        }
+        pageInfo {
+              endCursor,
+              hasNextPage,
+            },
+        totalCount
+        
+    }
+}
 `;
 
 // !!!! EACH REQUEST HAS TO HAVE 'HAS BEEN DOWNLOADED' (TO SHOW IF IT IS NEW) AND 'HAS RESULT UPLOADED'
@@ -42,7 +55,9 @@ const TabLabTests = () => {
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore } = useQuery(LABTEST_QUERY, {
 		variables: {
-			idPatient: userId
+			idPatient: userId,
+			cursor: null,
+			limit: 3
 		}
 	});
 
@@ -185,19 +200,19 @@ const TabLabTests = () => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{/* {data && ( */}
+			 {data && ( 
 			<div>
-				{appointments.map((apt) =>
-					apt.labTest.doctorRequest.filter((el) => el !== null).map((request, i) => {
-						return <Row value={request} appointment={apt} key={i} />;
-					})
+				{data.patientLabTest.edges.length > 0 ? ( 
+					data.patientLabTest.edges.map((apt) => 
+						 apt.labTestRequests.map((request, i) => {
+						 return <Row value={request} appointment={apt} key={i} />;
+						 })
+					)
+				): (
+			<EmptyLabTestState />
 				)}
-
-				{/* ) : ( */}
-				<EmptyLabTestState />
-				{/* )}  */}
 			</div>
-			{/* )} */}
+			 )} 
 		</Grid>
 	);
 };

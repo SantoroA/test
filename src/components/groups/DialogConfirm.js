@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 //CUSTOM ICONS
 import ErrorIcon from '../customIcons/ErrorIcon';
-import { DOCUMENTS_QUERY } from '../tabs/TabDocuments/graphQlQuery';
+import { DOCUMENTS_QUERY } from '../tabs/GraphQl/graphQlQuery';
 import { Context as AuthContext } from '../../context/AuthContext';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';

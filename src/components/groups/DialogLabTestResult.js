@@ -99,7 +99,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName }) => {
+const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName, requestLink }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ fileName, setFileName ] = useState('');
@@ -120,7 +120,7 @@ const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName }) => 
 		let labTest = new FormData();
 		const files = documentSelected;
 		labTest.append(`labTest`, files);
-		labTest.append(`requestName`, requestName);
+		labTest.append(`requestName`, requestLink);
 
 		try {
 			await dianurseApi.put(`download/labTest/${aptId}`, labTest);

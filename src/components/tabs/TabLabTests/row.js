@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
+import { Context as AuthContext } from '../../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import DialogLabTestResult from '../../groups/DialogLabTestResult';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { LABTEST_QUERY } from './index';
 import DialogError from '../../groups/DialogError';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
@@ -16,13 +19,31 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PublishIcon from '@material-ui/icons/Publish';
 
+const VIEW_MUTATION = gql`
+mutation UpdateLabTEstViewView($idApt: ID!, $file: String) {
+	patientViewLabTest(idApt: $idApt, file: $file) 
+}
+`;
+
 function Row({ value, appointment }) {
 	const classes = useStyles();
 	const { t } = useTranslation();
 	const [ dialogOpen, setDialogOpen ] = useState(false);
+	const { state: { userId } } = useContext(AuthContext);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid } = appointment;
-	const { name, isNewForPatient, hasResult, result } = value;
+	const { name, isNewForPatient, hasResult, requestLink } = value;
+	const [patientViewLabTest] = useMutation(VIEW_MUTATION, {
+		refetchQueries: () => [				{
+			  query: LABTEST_QUERY,
+			  variables: {
+				idPatient: userId,
+				cursor: null,
+				limit: 3
+			  }}
+		  ]
+	});
 
+	console.log(value)
 	// WHEN DOWNLOADED, CHANGE ISNEWForPatient TO FALSE. WHEN UPLOADED, CHANGE HASRESULT TO TRUE
 
 	return (
@@ -33,13 +54,7 @@ function Row({ value, appointment }) {
 						<Avatar
 							className={classes.avatar}
 							alt={profileHCPid.firstName}
-							src={
-								accountHCPid.profilePicture.includes('http') ? (
-									accountHCPid.profilePicture
-								) : (
-									`url(http://localhost:10101/dianurse/v1/profile/static/images/${accountHCPid.profilePicture})`
-								)
-							}
+							src={ accountHCPid.profilePicture }
 						/>
 						Dr. {profileHCPid.lastName}
 					</div>
@@ -58,10 +73,16 @@ function Row({ value, appointment }) {
 				<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
 					<Tooltip title="Download request">
 						<IconButton
-							href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${result}`}
+							href={requestLink}
 							download
 							target="_blank"
 							color="primary"
+							onClick={() => {
+								patientViewLabTest({variables: {
+									idApt: _id,
+									file: requestLink
+								}})
+							}}
 						>
 							<GetAppIcon />
 						</IconButton>
@@ -102,6 +123,7 @@ function Row({ value, appointment }) {
 					isOpen={dialogOpen}
 					close={() => setDialogOpen(false)}
 					docName={profileHCPid.firstName}
+					requestLink={requestLink}
 					requestName={name}
 					aptId={_id}
 				/>

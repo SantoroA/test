@@ -1,9 +1,10 @@
 import { gql } from '@apollo/client';
 
 export const DOCUMENTS_QUERY = gql`
-query GetAppointments($idPatient: ID!) {
-    patientDocuments(idPatient: $idPatient) {
-        profileHCPid {
+query GetAppointments($idPatient: ID!, $cursor: String, $limit: Int) {
+    patientDocuments(idPatient: $idPatient, cursor: $cursor, limit: $limit) {
+        edges {
+            profileHCPid {
             _id
             firstName
             lastName
@@ -20,6 +21,13 @@ query GetAppointments($idPatient: ID!) {
             name
             document
         }
+        }
+        pageInfo {
+              endCursor,
+              hasNextPage,
+            },
+        totalCount
+        
     }
 }
 `;

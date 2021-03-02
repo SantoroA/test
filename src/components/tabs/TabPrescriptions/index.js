@@ -1,12 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import EmptyPrescState from './emptyState';
 import Row from './row';
+import Loader from 'react-loader-spinner';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../groups/ErrorMessage';
+import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+
+export const PRESCRIPTION_QUERY = gql`
+query GetPrescription($idPatient: ID!, $cursor: String, $limit: Int) {
+    patientPrescription(idPatient: $idPatient, cursor: $cursor, limit: $limit) {
+        edges {
+            profileHCPid {
+            _id
+            firstName
+            lastName
+        }
+        _id
+        appointmentTimeStart
+        appointmentTimeEnd
+        profilePatientid
+        accountHCPid {
+            profilePicture
+        }
+        amount
+        prescription {
+            name
+			document
+			isNew
+        }
+        }
+        pageInfo {
+              endCursor,
+              hasNextPage,
+            },
+        totalCount
+        
+    }
+}
+`;
 
 const prescriptions = [
 	{
@@ -54,6 +91,14 @@ const prescriptions = [
 const TabPrescriptions = () => {
 	const [ page, setPage ] = useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = useState(5);
+	const { state: { userId } } = useContext(AuthContext);
+	const { error, loading, data, fetchMore } = useQuery(PRESCRIPTION_QUERY, {
+		variables: {
+			idPatient: userId,
+			cursor: null,
+			limit: 3
+		}
+	});
 
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
@@ -68,21 +113,26 @@ const TabPrescriptions = () => {
 					{t('PRESCRIPTIONS.1')}
 				</Typography>
 			</Grid>
-			{/* {loading && (
+			 {loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
-			)} */}
-			{/* {error && <ErrorMessage />} */}
+			)} 
+			 {error && <ErrorMessage />}
 
 			{/* IF DATA */}
-
-			{prescriptions.map((presc) => {
-				return <Row value={presc} key={presc.id} />;
-			})}
-
-			{/* IF NO DATA */}
+			{data && (
+				<div>
+				{data.patientPrescription.edges.length > 0 ? ( 
+					data.patientPrescription.edges.map((presc) => {
+						return <Row value={presc} key={presc._id} />;
+					})
+				): (
 			<EmptyPrescState />
+				)
+				}
+			</div>	
+			 )} 		
 		</Grid>
 	);
 };

@@ -3,7 +3,7 @@ import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import DialogError from '../../groups/DialogError';
 import DialogConfirm from '../../groups/DialogConfirm';
-import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from './graphQlQuery'
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../GraphQl/graphQlQuery'
 import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';

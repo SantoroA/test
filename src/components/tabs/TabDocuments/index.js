@@ -7,7 +7,7 @@ import Row from './row';
 import { useTranslation } from 'react-i18next';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
-import { DOCUMENTS_QUERY } from './graphQlQuery'
+import { DOCUMENTS_QUERY } from '../GraphQl/graphQlQuery'
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
@@ -35,7 +35,9 @@ const TabDocuments = () => {
 	const { state: { userId } } = useContext(AuthContext);
 	const { loading, error, data, fetchMore, refetch } = useQuery(DOCUMENTS_QUERY, {
 		variables: {
-			idPatient: userId
+			idPatient: userId,
+			cursor: null,
+			limit: 3
 		}
 	});
 
@@ -150,13 +152,13 @@ const TabDocuments = () => {
 			 {data && ( 
 			<div>
 			
-				 {data.patientDocuments.length > 0 ? ( 
+				 {data.patientDocuments.edges.length > 0 ? ( 
 					 				 ((rowsPerPage > 0
-										? data.patientDocuments.slice(
+										? data.patientDocuments.edges.slice(
 												page * rowsPerPage,
 												page * rowsPerPage + rowsPerPage
 											)
-										: data.patientDocuments).map((doc) => {
+										: data.patientDocuments.edges).map((doc) => {
 										return <Row value={doc} key={doc._id} />;
 									})) 
 
