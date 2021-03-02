@@ -2,28 +2,28 @@ import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../context/AuthContext';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import StepWizardContainer from '../../components/layout/StepWizardContainer';
-import FormSymptoms from '../../components/groups/FormSymptoms';
-import FormMedConditions from '../../components/groups/FormMedConditions';
 import CardAppointment from '../../components/groups/CardAppointment';
 import { formatDateDisplay } from '../../helpers/dateHelper';
-import { animateScroll as scroll } from 'react-scroll';
 import Confetti from 'react-dom-confetti';
 import ErrorMessage from '../../components/groups/ErrorMessage';
 import { useMutation, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
+import FormReason from '../../components/groups/FormsSurvey/reason';
+import { animateScroll as scroll } from 'react-scroll';
+import FormSymptoms from '../../components/groups/FormsSurvey/symptoms';
+import FormDuration from '../../components/groups/FormsSurvey/duration';
+import FormHealthProfile from '../../components/groups/FormsSurvey/healthProfile';
+import FormOxygen from '../../components/groups/FormsSurvey/oxygen';
+import FormTemperature from '../../components/groups/FormsSurvey/temperature';
 //CUSTOM UI
 import ButtonFilled from '../../components/customUi/ButtonFilled';
-import ToggleYesNoButton from '../../components/customUi/ToggleYesNoButton';
 import ButtonNoBorder from '../../components/customUi/ButtonNoBorder';
-import TextInputRounder from '../../components/customUi/TextInputRounder';
-import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
 //CUSTOM ICONS
 import CompletedIcon from '../../components/customIcons/CompletedIcon';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -73,28 +73,9 @@ const useStyles = makeStyles({
 		marginBottom: '1rem',
 		alignItems: 'center'
 	},
-	optionsWrapper: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-around',
-		marginTop: '1rem'
-	},
 	nextButton: {
 		paddingTop: '0.7rem',
 		paddingBottom: '0.7rem'
-	},
-
-	yesNoButtons: {
-		justifyContent: 'center'
-	},
-	buttonOutlined: {
-		paddingRight: '1rem',
-		paddingLeft: '1rem'
-	},
-	paper: {
-		marginBottom: '2rem',
-		padding: '1rem'
 	},
 	section: {
 		marginTop: '2rem'
@@ -109,6 +90,11 @@ const useStyles = makeStyles({
 	},
 	confetti: {
 		marginLeft: '50%'
+	},
+	submitText: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center'
 	}
 });
 
@@ -148,6 +134,7 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 
 const PatReserveScreen = (props) => {
 	const { apDoc, appointment } = props.location.state;
+<<<<<<< HEAD
 	console.log(appointment)
 	console.log(apDoc)
 
@@ -166,8 +153,11 @@ const PatReserveScreen = (props) => {
 	// 	pic:
 	// 		'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 	// };
+=======
+	const dateDisplay = formatDateDisplay(appointment.start);
+	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
+>>>>>>> 45298c9c62559cfcdb0050847b5fd3cf72b474b3
 	const { state: { userId } } = useContext(AuthContext);
-	// const userId = '5fe8b0c48bef090026e253b7';
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
 	const [ medArr, setMedArr ] = useState([]);
@@ -272,7 +262,26 @@ const PatReserveScreen = (props) => {
 		substanceAbuse: false
 	});
 
+<<<<<<< HEAD
 		const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
+=======
+	const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
+		variables: {
+			reasonForVisit,
+			symptomTime,
+			symptomTimeUnit,
+			isTakingMeds,
+			hasDrugAllergies,
+			oxygenSaturation,
+			temperature,
+			tempUnit,
+			otherInfo,
+			symptoms,
+			medCondition: medConditions,
+			idPatient: userId,
+			idApt: appointment.idApt
+		}
+>>>>>>> 45298c9c62559cfcdb0050847b5fd3cf72b474b3
 	});
 
 	const nextStep = () => {
@@ -284,17 +293,9 @@ const PatReserveScreen = (props) => {
 	};
 
 	const handleChange = (event) => {
-		let newSymptom = symptomsArr.indexOf(event.target.name);
-		newSymptom > -1
-			? setSymptomsArr(symptomsArr.filter((el) => el !== event.target.name))
-			: setSymptomsArr([ ...symptomsArr, event.target.name ]);
 		setSymptoms({ ...symptoms, [event.target.name]: event.target.checked });
 	};
 	const handleChangeMedCondition = (event) => {
-		let newCondition = medArr.indexOf(event.target.name);
-		newCondition > -1
-			? setMedArr(medArr.filter((el) => el !== event.target.name))
-			: setMedArr([ ...medArr, event.target.name ]);
 		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
 	};
 
@@ -342,65 +343,24 @@ const PatReserveScreen = (props) => {
 					title="What is the reason for the visit?"
 					progress={1}
 				>
-					<Container maxWidth="sm">
-						<form
-							onSubmit={(e) => {
-								e.preventDefault();
-								nextStep();
-							}}
-						>
-							<Grid className={classes.optionsWrapper} container>
-								<Grid item xs={8}>
-									<TextInputRounder
-										fullWidth
-										required
-										id="reason"
-										placeholder="Search for a Reason"
-										select
-										variant="outlined"
-										value={reasonForVisit}
-										onChange={(e) => setReasonForVisit(e.target.value)}
-										InputLabelProps={{
-											shrink: true
-										}}
-									>
-										<MenuItem value="check-up">Check-up</MenuItem>
-										<MenuItem value="emergency">Emergency</MenuItem>
-										<MenuItem value="headache">Headache</MenuItem>
-										<MenuItem value="acne">Acne</MenuItem>
-										<MenuItem value="allergies">Acid Reflux</MenuItem>
-										<MenuItem value="anxiety">Anxiety</MenuItem>
-										<MenuItem value="animal-bite">Animal bite</MenuItem>
-										<MenuItem value="asthma">Asthma</MenuItem>
-										<MenuItem value="cold">Cold</MenuItem>
-										<MenuItem value="covid">Coronavirus (Covid 19) Evaliation</MenuItem>
-										<MenuItem value="cough">Cough</MenuItem>
-										<MenuItem value="depression">Depression</MenuItem>
-										<MenuItem value="high-colesterol">High Cholesterol</MenuItem>
-										<MenuItem value="nasal-congestion">Nasal congestion</MenuItem>
-									</TextInputRounder>
-								</Grid>
-								<Grid container className={classes.buttonWrapper}>
-									{/* <Grid item xs={5} sm={3}>
-										<ButtonNoBorder
-											className={classes.skipButton}
-											onClick={() => {
-												setReasonForVisit('');
-												nextStep();
-											}}
-										>
-											<Typography>Skip question</Typography>
-										</ButtonNoBorder>
-									</Grid> */}
-									<Grid item xs={5} sm={3}>
-										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
-											Next <NavigateNextIcon />
-										</ButtonFilled>
-									</Grid>
-								</Grid>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							nextStep();
+						}}
+					>
+						<FormReason reasonForVisit={reasonForVisit} setReasonForVisit={setReasonForVisit} />
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									<div className={classes.submitText}>
+										<Typography>Next</Typography>
+										<NavigateNextIcon />
+									</div>
+								</ButtonFilled>
 							</Grid>
-						</form>
-					</Container>
+						</Grid>
+					</form>
 				</StepWizardContainer>
 			);
 		case 3:
@@ -411,65 +371,41 @@ const PatReserveScreen = (props) => {
 					title="How long have you felt this way?"
 					progress={15}
 				>
-					<Container maxWidth="sm">
-						<form
-							onSubmit={(e) => {
-								e.preventDefault();
-								nextStep();
-							}}
-						>
-							<Grid className={classes.optionsWrapper} container>
-								<Grid item xs={5}>
-									<TextField
-										type="number"
-										fullWidth
-										required
-										label="Amount"
-										value={symptomTime}
-										variant="outlined"
-										onChange={(e) => setSymptomTime(e.target.value)}
-									/>
-								</Grid>
-								<Grid item xs={5}>
-									<TextField
-										type="number"
-										fullWidth
-										required
-										label="Unit"
-										select
-										value={symptomTimeUnit}
-										variant="outlined"
-										onChange={(e) => setSymptomTimeUnit(e.target.value)}
-									>
-										<MenuItem value="hours">Hours</MenuItem>
-										<MenuItem value="days">Days</MenuItem>
-										<MenuItem value="weeks">Weeks</MenuItem>
-										<MenuItem value="months">Months</MenuItem>
-										<MenuItem value="years">Years</MenuItem>
-									</TextField>
-								</Grid>
-								<Grid container className={classes.buttonWrapper}>
-									<Grid item xs={5} sm={3}>
-										<ButtonNoBorder
-											className={classes.skipButton}
-											onClick={() => {
-												setSymptomTime('');
-												setSymptomTimeUnit('');
-												nextStep();
-											}}
-										>
-											<Typography>Skip question</Typography>
-										</ButtonNoBorder>
-									</Grid>
-									<Grid item xs={5} sm={3}>
-										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
-											Next <NavigateNextIcon />
-										</ButtonFilled>
-									</Grid>
-								</Grid>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							nextStep();
+						}}
+					>
+						<FormDuration
+							symptomTime={symptomTime}
+							symptomTimeUnit={symptomTimeUnit}
+							setSymptomTime={setSymptomTime}
+							setSymptomTimeUnit={setSymptomTimeUnit}
+						/>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder
+									className={classes.skipButton}
+									onClick={() => {
+										setSymptomTime('');
+										setSymptomTimeUnit('');
+										nextStep();
+									}}
+								>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
 							</Grid>
-						</form>
-					</Container>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									<div className={classes.submitText}>
+										<Typography>Next</Typography>
+										<NavigateNextIcon />
+									</div>
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
 				</StepWizardContainer>
 			);
 		case 4:
@@ -480,38 +416,36 @@ const PatReserveScreen = (props) => {
 					title="Do you have any of these symptoms?"
 					progress={30}
 				>
-					<Typography color="textSecondary" variant="body1">
-						Please select all that apply
-					</Typography>
-					<Container maxWidth="sm">
-						<form
-							onSubmit={(e) => {
-								e.preventDefault();
-								nextStep();
-								scroll.scrollToTop({ delay: 0, duration: 400 });
-							}}
-						>
-							<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={5} sm={3}>
-									<ButtonNoBorder
-										className={classes.skipButton}
-										onClick={() => {
-											scroll.scrollToTop({ delay: 0, duration: 400 });
-											nextStep();
-										}}
-									>
-										<Typography>Skip question</Typography>
-									</ButtonNoBorder>
-								</Grid>
-								<Grid item xs={5} sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} type="submit">
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							nextStep();
+							scroll.scrollToTop({ delay: 0, duration: 400 });
+						}}
+					>
+						<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder
+									className={classes.skipButton}
+									onClick={() => {
+										scroll.scrollToTop({ delay: 0, duration: 400 });
+										nextStep();
+									}}
+								>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
 							</Grid>
-						</form>
-					</Container>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									<div className={classes.submitText}>
+										<Typography>Next</Typography>
+										<NavigateNextIcon />
+									</div>
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
 				</StepWizardContainer>
 			);
 		case 5:
@@ -522,92 +456,43 @@ const PatReserveScreen = (props) => {
 					title="Complete your health profile"
 					progress={45}
 				>
-					<Container maxWidth="sm">
-						<form
-							onSubmit={(e) => {
-								e.preventDefault();
-								nextStep();
-								scroll.scrollToTop();
-							}}
-						>
-							<PaperCustomShadow className={classes.paper}>
-								<Grid container className={classes.yesNoButtons}>
-									<Grid item xs={12}>
-										<Typography className={classes.sub} variant="h6">
-											Are you currently taking any medications?
-										</Typography>
-									</Grid>
-									<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
-										<ToggleYesNoButton
-											selected={isTakingMeds}
-											value="is-taking-meds"
-											onClick={() => setIsTakingMeds(!isTakingMeds)}
-										>
-											Yes
-										</ToggleYesNoButton>
-									</Grid>
-									<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
-										<ToggleYesNoButton
-											selected={!isTakingMeds}
-											value="is-not-taking-meds"
-											onClick={() => setIsTakingMeds(!isTakingMeds)}
-										>
-											No
-										</ToggleYesNoButton>
-									</Grid>
-								</Grid>
-							</PaperCustomShadow>
-							<PaperCustomShadow className={classes.paper}>
-								<Grid container className={classes.yesNoButtons}>
-									<Grid item xs={12}>
-										<Typography className={classes.sub} variant="h6">
-											Do you have any known drug allergies?
-										</Typography>
-									</Grid>
-									<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
-										<ToggleYesNoButton
-											value="has-drug-alergies"
-											selected={hasDrugAllergies}
-											onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
-										>
-											Yes
-										</ToggleYesNoButton>
-									</Grid>
-									<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
-										<ToggleYesNoButton
-											value="doesnt-have-drug-alergies"
-											selected={!hasDrugAllergies}
-											onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
-										>
-											No
-										</ToggleYesNoButton>
-									</Grid>
-								</Grid>
-							</PaperCustomShadow>
-							<FormMedConditions
-								medConditions={medConditions}
-								handleChangeMedCondition={handleChangeMedCondition}
-							/>
-							<Grid container className={classes.buttonWrapper}>
-								<Grid item xs={5} sm={3}>
-									<ButtonNoBorder
-										className={classes.skipButton}
-										onClick={() => {
-											scroll.scrollToTop();
-											nextStep();
-										}}
-									>
-										<Typography>Skip question</Typography>
-									</ButtonNoBorder>
-								</Grid>
-								<Grid item xs={5} sm={3}>
-									<ButtonFilled fullWidth className={classes.nextButton} type="submit">
-										Next <NavigateNextIcon />
-									</ButtonFilled>
-								</Grid>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							nextStep();
+							scroll.scrollToTop();
+						}}
+					>
+						<FormHealthProfile
+							isTakingMeds={isTakingMeds}
+							setIsTakingMeds={setIsTakingMeds}
+							hasDrugAllergies={hasDrugAllergies}
+							setHasDrugAllergies={setHasDrugAllergies}
+							medConditions={medConditions}
+							handleChangeMedCondition={handleChangeMedCondition}
+						/>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder
+									className={classes.skipButton}
+									onClick={() => {
+										scroll.scrollToTop();
+										nextStep();
+									}}
+								>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
 							</Grid>
-						</form>
-					</Container>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									<div className={classes.submitText}>
+										<Typography>Next</Typography>
+										<NavigateNextIcon />
+									</div>
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
 				</StepWizardContainer>
 			);
 		case 6:
@@ -615,110 +500,65 @@ const PatReserveScreen = (props) => {
 				<StepWizardContainer
 					step={6}
 					previousStep={previousStep}
-					title="Add your oxigen saturation level"
+					title="Add your oxygen saturation level"
 					progress={60}
 				>
-					<Typography color="textSecondary" variant="body1">
-						If you have a pulse oximeter, save time by measuring you current oxygen saturation before your
-						visit
-					</Typography>
-
-					<Container maxWidth="sm">
-						<form
-							onSubmit={(e) => {
-								e.preventDefault();
-								nextStep();
-							}}
-						>
-							<PaperCustomShadow className={classes.paper}>
-								<Grid container className={classes.yesNoButtons}>
-									<Grid item xs={12}>
-										<Typography className={classes.sub} variant="h6">
-											Oxygen Saturation Level
-										</Typography>
-									</Grid>
-									<Grid className={classes.buttonOutlined} item xs={9}>
-										<TextField
-											type="number"
-											fullWidth
-											placeholder="Enter value (%)"
-											value={oxygenSaturation}
-											variant="outlined"
-											onChange={(e) => setOxygenStaturation(e.target.value)}
-										/>
-									</Grid>
-									<Grid container className={classes.buttonWrapper}>
-										<Grid item xs={5} sm={3}>
-											<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
-												<Typography>Skip question</Typography>
-											</ButtonNoBorder>
-										</Grid>
-										<Grid item xs={5} sm={3}>
-											<ButtonFilled fullWidth className={classes.nextButton} type="submit">
-												Next <NavigateNextIcon />
-											</ButtonFilled>
-										</Grid>
-									</Grid>
-								</Grid>
-							</PaperCustomShadow>
-						</form>
-					</Container>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							nextStep();
+						}}
+					>
+						<FormOxygen oxygenSaturation={oxygenSaturation} setOxygenStaturation={setOxygenStaturation} />
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
+							</Grid>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									<div className={classes.submitText}>
+										<Typography>Next</Typography>
+										<NavigateNextIcon />
+									</div>
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
 				</StepWizardContainer>
 			);
 		case 7:
 			return (
 				<StepWizardContainer step={7} previousStep={previousStep} title="Add your temperature" progress={75}>
-					<Typography color="textSecondary" variant="body1">
-						If you have a thermometer, adding your temperature now will save time during your visit. No
-						guessing please!
-					</Typography>
-					<Container maxWidth="sm">
-						<form
-							onSubmit={(e) => {
-								e.preventDefault();
-								nextStep();
-							}}
-						>
-							<Grid className={classes.optionsWrapper} spacing={1} container>
-								<Grid item sm={5} xs={6}>
-									<TextField
-										type="number"
-										fullWidth
-										label="Amount"
-										value={temperature}
-										variant="outlined"
-										onChange={(e) => setTemperature(e.target.value)}
-									/>
-								</Grid>
-								<Grid item sm={5} xs={6}>
-									<TextField
-										type="number"
-										fullWidth
-										label="Unit"
-										select
-										value={tempUnit}
-										variant="outlined"
-										onChange={(e) => setTempUnit(e.target.value)}
-									>
-										<MenuItem value="celsius">Celsius</MenuItem>
-										<MenuItem value="fahrenheit">Fahrenheit</MenuItem>
-									</TextField>
-								</Grid>
-								<Grid container className={classes.buttonWrapper}>
-									<Grid item xs={5} sm={3}>
-										<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
-											<Typography>Skip question</Typography>
-										</ButtonNoBorder>
-									</Grid>
-									<Grid item xs={5} sm={3}>
-										<ButtonFilled fullWidth className={classes.nextButton} type="submit">
-											Next <NavigateNextIcon />
-										</ButtonFilled>
-									</Grid>
-								</Grid>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							nextStep();
+						}}
+					>
+						<FormTemperature
+							temperature={temperature}
+							tempUnit={tempUnit}
+							setTemperature={setTemperature}
+							setTempUnit={setTempUnit}
+						/>
+						<Grid container className={classes.buttonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonNoBorder className={classes.skipButton} onClick={nextStep}>
+									<Typography>Skip question</Typography>
+								</ButtonNoBorder>
 							</Grid>
-						</form>
-					</Container>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									<div className={classes.submitText}>
+										<Typography>Next</Typography>
+										<NavigateNextIcon />
+									</div>
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
 				</StepWizardContainer>
 			);
 		case 8:
@@ -840,8 +680,6 @@ const PatReserveScreen = (props) => {
 		default:
 			return (
 				<PatLayoutContainer>
-					{/* <ButtonFilled onClick={() => setConfettiTrigger(true)}>TriggerConfetti</ButtonFilled> */}
-
 					{loading && (
 						<Container className={classes.container} maxWidth="md">
 							<Loader type="TailSpin" color="primary" height={80} width={80} />

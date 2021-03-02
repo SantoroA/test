@@ -150,16 +150,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 								/>
 							</Grid>
 							<Grid className={classes.section} item>
-								<FormControl fullWidth required>
+								<FormControl variant="outlined" fullWidth required>
 									<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
 									<Select
 										labelId="apt-select-label"
 										value={appointmentSelectedId}
-										onChange={(e) => 
-											{setAppointmentSelectedId(e.target.value)
-											console.log(e.target)}
-										}
-										variant="outlined"
+										onChange={(e) => setAppointmentSelectedId(e.target.value)}
 										label="Select Appointment"
 									>
 										{data.appointmentDocUploadLabTest.map((apt, i) => {

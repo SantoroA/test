@@ -164,13 +164,12 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 								/>
 							</Grid>
 							<Grid className={classes.section} item>
-								<FormControl fullWidth required>
+								<FormControl variant="outlined" fullWidth required>
 									<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
 									<Select
 										labelId="apt-select-label"
 										value={appointmentSelectedId}
 										onChange={(e) => setAppointmentSelectedId(e.target.value)}
-										variant="outlined"
 										label="Select Appointment"
 									>
 										{data.appointmentDocAndPatient.map((apt, i) => {

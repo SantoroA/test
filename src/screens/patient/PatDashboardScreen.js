@@ -3,7 +3,7 @@ import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import CardMyProfile from '../../components/groups/CardMyProfile';
 import TabDocuments from '../../components/tabs/TabDocuments';
-import TabQuestionnaries from '../../components/tabs/TabQuestionnaries';
+import TabSurveys from '../../components/tabs/TabSurveys';
 import TabPatientAppointments from '../../components/tabs/TabPatientAppointments';
 import TabPrescriptions from '../../components/tabs/TabPrescriptions';
 import TabLabTests from '../../components/tabs/TabLabTests';
@@ -164,7 +164,7 @@ const PatDashboardScreen = () => {
 						<Route path={`${path}/documents`} component={TabDocuments} />
 						<Route path={`${path}/prescriptions`} component={TabPrescriptions} />
 						<Route path={`${path}/labTests`} component={TabLabTests} />
-						<Route path={`${path}/surveys`} component={TabQuestionnaries} />
+						<Route path={`${path}/surveys`} component={TabSurveys} />
 						<Route path={`${path}/`}>
 							<Redirect to={`${path}/appointments`} />
 						</Route>
@@ -222,7 +222,7 @@ const PatDashboardScreen = () => {
 							<TabLabTests />
 						</TabPanel>
 						<TabPanel value={value} index={4}>
-							<TabQuestionnaries />
+							<TabSurveys />
 						</TabPanel>
 					</div>
 				)}
