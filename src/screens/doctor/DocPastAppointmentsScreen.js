@@ -50,7 +50,8 @@ const DocPastAppointmentsScreen = () => {
 			<Typography variant="h4">Doctor Past Appointments</Typography>
 			{
 				data && (
-					data.lastAppointmentsDoctor.edges.length > 0 ? (
+					<div>
+					{ data.lastAppointmentsDoctor.edges.length > 0 ? (
 						data.lastAppointmentsDoctor.edges.map((el, i) => {
 							return <div key={i}>
 								{el.profilePatientid.firstName} - {" "}
@@ -58,30 +59,32 @@ const DocPastAppointmentsScreen = () => {
 								end:{el.appointmentTimeEnd} <br></br>
 							</div>
 						})
-				) : null
+				) : null }
+				{data.lastAppointmentsDoctor.pageInfo.hasNextPage && (
+					<button onClick={() => {
+						const { endCursor } = data.lastAppointmentsDoctor.pageInfo;
+												fetchMore({
+													variables: {
+														id: userId,
+														limit: 3,
+														cursor: endCursor
+													},
+													updateQuery: (prevResult, { fetchMoreResult }) => {
+														console.log('prev', prevResult);
+														console.log('fetch', fetchMoreResult);
+														fetchMoreResult.lastAppointmentsDoctor.edges = [
+															...prevResult.lastAppointmentsDoctor.edges,
+															...fetchMoreResult.lastAppointmentsDoctor.edges
+														];
+														return fetchMoreResult;
+													}
+												});
+		
+					}}>Load More</button>
+					)}
+						</div>
 			)}
-			{data.lastAppointmentsDoctor.pageInfo.hasNextPage && (
-			<button onClick={() => {
-				const { endCursor } = data.lastAppointmentsDoctor.pageInfo;
-										fetchMore({
-											variables: {
-												id: userId,
-												limit: 3,
-												cursor: endCursor
-											},
-											updateQuery: (prevResult, { fetchMoreResult }) => {
-												console.log('prev', prevResult);
-												console.log('fetch', fetchMoreResult);
-												fetchMoreResult.lastAppointmentsDoctor.edges = [
-													...prevResult.lastAppointmentsDoctor.edges,
-													...fetchMoreResult.lastAppointmentsDoctor.edges
-												];
-												return fetchMoreResult;
-											}
-										});
-
-			}}>Load More</button>
-			)}
+		
 		</DocLayoutContainer>
 	);
 };

@@ -55,6 +55,12 @@ const PatPastAppointmentScreen = () => {
 	return (
 		<PatLayoutContainer>
 			<Typography variant="h4">Past Appointments</Typography>
+			{loading && (
+				<Container>
+					<Loader type="TailSpin" color="primary" height={80} width={80} />
+				</Container>
+			)}
+			{error && <ErrorMessage />}
 			{ data && (
 					<div>
 					{data.lastAppointmentsPatient.edges.length > 0 ? (
@@ -66,9 +72,7 @@ const PatPastAppointmentScreen = () => {
 							</div>
 						})
 				) : null }
-				</div>
-			)}
-			{data.lastAppointmentsPatient.pageInfo.hasNextPage && (
+				{data.lastAppointmentsPatient.pageInfo.hasNextPage && (
 			<button onClick={() => {
 				const { endCursor } = data.lastAppointmentsPatient.pageInfo;
 										fetchMore({
@@ -90,6 +94,9 @@ const PatPastAppointmentScreen = () => {
 
 			}}>Load More</button>
 			)}
+				</div>
+			)}
+			
 		</PatLayoutContainer>
 	);
 };
