@@ -134,29 +134,8 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 
 const PatReserveScreen = (props) => {
 	const { apDoc, appointment } = props.location.state;
-<<<<<<< HEAD
-	console.log(appointment)
-	console.log(apDoc)
-
-	// const appointment = {
-	// 	amount: 95,
-	// 	end: '2021-01-29T06:45:00.000Z',
-	// 	id: '601175526913da0029424025',
-	// 	idApt: '601186c472a95e0028bcb6f5',
-	// 	start: '2021-01-29T06:00:00.000Z'
-	// };
-	const dateDisplay = !appointment.start ? formatDateDisplay(new Date(appointment.appointmentTimeStart)):  formatDateDisplay(new Date(appointment.start));
-	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
-	
-	// const apDoc = {
-	// 	lastName: 'Santoro',
-	// 	pic:
-	// 		'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-	// };
-=======
 	const dateDisplay = formatDateDisplay(appointment.start);
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
->>>>>>> 45298c9c62559cfcdb0050847b5fd3cf72b474b3
 	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
@@ -262,9 +241,6 @@ const PatReserveScreen = (props) => {
 		substanceAbuse: false
 	});
 
-<<<<<<< HEAD
-		const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
-=======
 	const [ appointmentAdd, { data, error, loading } ] = useMutation(APPOINTMENTSRESERVE_MUTATION, {
 		variables: {
 			reasonForVisit,
@@ -281,7 +257,6 @@ const PatReserveScreen = (props) => {
 			idPatient: userId,
 			idApt: appointment.idApt
 		}
->>>>>>> 45298c9c62559cfcdb0050847b5fd3cf72b474b3
 	});
 
 	const nextStep = () => {
