@@ -147,9 +147,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 						medConditions: []
 					},
 					hasResult: true,
-
-					isNewForDoctor: true,
-					isNewForPatient: false
+					isNewForDoctor: true
 				},
 				{
 					selected: {
@@ -174,8 +172,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 					},
 					hasResult: true,
 
-					isNewForDoctor: false,
-					isNewForPatient: false
+					isNewForDoctor: false
 				}
 			],
 			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
@@ -207,8 +204,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 					},
 					hasResult: false,
 
-					isNewForDoctor: false,
-					isNewForPatient: true
+					isNewForDoctor: false
 				},
 				{
 					selected: {
@@ -233,8 +229,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 					},
 					hasResult: false,
 
-					isNewForDoctor: false,
-					isNewForPatient: true
+					isNewForDoctor: false
 				}
 			],
 			appointmentTimeStart: '2021-02-08T06:30:00.000Z',

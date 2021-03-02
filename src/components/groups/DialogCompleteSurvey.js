@@ -7,6 +7,7 @@ import FormDuration from './FormsSurvey/duration';
 import FormOxygen from './FormsSurvey/oxygen';
 import FormTemperature from './FormsSurvey/temperature';
 //CUSTOM UI
+import ButtonFilled from '../customUi/ButtonFilled';
 import ButtonNoBorder from '../customUi/ButtonNoBorder';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
@@ -26,7 +27,8 @@ const useStyles = makeStyles({
 	},
 	container: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		textAlign: 'center'
 	},
 	closeButton: {
 		alignSelf: 'flex-end'
@@ -35,10 +37,6 @@ const useStyles = makeStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-around'
-	},
-	divider: {
-		marginBottom: '1rem',
-		marginTop: '1rem'
 	},
 
 	skipButton: {
@@ -49,12 +47,13 @@ const useStyles = makeStyles({
 	},
 	title: {
 		marginBottom: '2rem',
+		marginTop: '3rem',
 		fontWeight: 700
 	},
 	subtitle: {
 		fontWeight: 700,
 		marginBottom: '1rem',
-		marginTop: '1.5em'
+		marginTop: '3rem'
 	},
 	startButton: {
 		marginTop: '2rem',
@@ -68,7 +67,15 @@ const useStyles = makeStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
-		marginTop: '1.5rem',
+		// marginTop: '1rem',
+		marginBottom: '1rem',
+		alignItems: 'center'
+	},
+	submitButtonWrapper: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		marginTop: '3rem',
 		marginBottom: '1rem',
 		alignItems: 'center'
 	},
@@ -97,15 +104,18 @@ const useStyles = makeStyles({
 	}
 });
 
+//MUTATION: IF RESULT.X => SEND RESULT BASED ON ID
+
 const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close }) => {
+	const { id, hasResult, isNewForDoctor, selected, results } = selectedSurvey;
 	const classes = useStyles();
-	console.log(selectedSurvey);
-	const [ reasonForVisit, setReasonForVisit ] = useState('');
-	const [ symptomTime, setSymptomTime ] = useState('');
-	const [ oxygenSaturation, setOxygenStaturation ] = useState('');
-	const [ temperature, setTemperature ] = useState('');
-	const [ tempUnit, setTempUnit ] = useState('');
-	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState('');
+	console.log(id, selected);
+	const [ reasonForVisit, setReasonForVisit ] = useState(null);
+	const [ symptomTime, setSymptomTime ] = useState(null);
+	const [ oxygenSaturation, setOxygenStaturation ] = useState(null);
+	const [ temperature, setTemperature ] = useState(null);
+	const [ tempUnit, setTempUnit ] = useState(null);
+	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState(null);
 	const [ isTakingMeds, setIsTakingMeds ] = useState(false);
 	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(false);
 	const [ symptoms, setSymptoms ] = useState({
@@ -205,7 +215,13 @@ const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close }) => {
 	const handleChangeMedCondition = (event) => {
 		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
 	};
-
+	const submitForm = (e) => {
+		e.preventDefault();
+		//ISNEWFORDOCTOR = TRUE
+		//HASRESULT = TRUE
+		//IF RESULT EXISTS => SEND RESULT
+	};
+	console.log(hasDrugAllergies);
 	return (
 		<Dialog
 			fullScreen
@@ -223,75 +239,90 @@ const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close }) => {
 				</div>
 				<Divider className={classes.divider} />
 				<Grid container className={classes.container}>
-					{selectedSurvey.selected && (
-						<div>
-							{selectedSurvey.selected.reason && (
-								<Container maxWidth="sm" className={classes.section}>
-									<Typography className={classes.subtitle} variant="h5" color="primary">
-										What is the reason for your visit?
-									</Typography>
-									<FormReason reasonForVisit={reasonForVisit} setReasonForVisit={setReasonForVisit} />
-									<Typography className={classes.subtitle} variant="h5" color="primary">
-										How long have you felt this way?
-									</Typography>
-									<FormDuration
-										symptomTime={symptomTime}
-										symptomTimeUnit={symptomTimeUnit}
-										setSymptomTime={setSymptomTime}
-										setSymptomTimeUnit={setSymptomTimeUnit}
-									/>
-								</Container>
-							)}
-							{selectedSurvey.selected.symptoms && (
-								<Container maxWidth="sm" className={classes.section}>
-									<Typography className={classes.subtitle} variant="h5" color="primary">
-										Do you have any of these symptoms?
-									</Typography>
-									<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
-								</Container>
-							)}
-							{selectedSurvey.selected.healthProfile && (
-								<Container maxWidth="sm" className={classes.section}>
-									<Typography className={classes.subtitle} variant="h5" color="primary">
-										Complete your health profile
-									</Typography>
+					<Typography className={classes.title} variant="h5">
+						Please respond to a few questions to get you the best care!
+					</Typography>
+					<form onSubmit={submitForm}>
+						{selected && (
+							<div>
+								{selected.reason && (
+									<Container maxWidth="sm" className={classes.section}>
+										<Typography className={classes.subtitle} variant="h5" color="primary">
+											What is the reason for your visit?
+										</Typography>
+										<FormReason
+											reasonForVisit={reasonForVisit}
+											setReasonForVisit={setReasonForVisit}
+										/>
+										<Typography className={classes.subtitle} variant="h5" color="primary">
+											How long have you felt this way?
+										</Typography>
+										<FormDuration
+											symptomTime={symptomTime}
+											symptomTimeUnit={symptomTimeUnit}
+											setSymptomTime={setSymptomTime}
+											setSymptomTimeUnit={setSymptomTimeUnit}
+										/>
+									</Container>
+								)}
+								{selected.symptoms && (
+									<Container maxWidth="sm" className={classes.section}>
+										<Typography className={classes.subtitle} variant="h5" color="primary">
+											Do you have any of these symptoms?
+										</Typography>
+										<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
+									</Container>
+								)}
+								{selected.healthProfile && (
+									<Container maxWidth="sm" className={classes.section}>
+										<Typography className={classes.subtitle} variant="h5" color="primary">
+											Complete your health profile
+										</Typography>
 
-									<FormHealthProfile
-										isTakingMeds={isTakingMeds}
-										setIsTakingMeds={setIsTakingMeds}
-										hasDrugAllergies={hasDrugAllergies}
-										setHasDrugAllergies={setHasDrugAllergies}
-										medConditions={medConditions}
-										handleChangeMedCondition={handleChangeMedCondition}
-									/>
-								</Container>
-							)}
-							{selectedSurvey.selected.oxygen && (
-								<Container maxWidth="sm" className={classes.section}>
-									<Typography className={classes.subtitle} variant="h5" color="primary">
-										Add your oxygen level
-									</Typography>
-									<FormOxygen
-										oxygenSaturation={oxygenSaturation}
-										setOxygenStaturation={setOxygenStaturation}
-									/>
-								</Container>
-							)}
-							{selectedSurvey.selected.temperature && (
-								<Container maxWidth="sm" className={classes.section}>
-									<Typography className={classes.subtitle} variant="h5" color="primary">
-										Add your temperature
-									</Typography>
-									<FormTemperature
-										temperature={temperature}
-										tempUnit={tempUnit}
-										setTemperature={setTemperature}
-										setTempUnit={setTempUnit}
-									/>
-								</Container>
-							)}
-						</div>
-					)}
+										<FormHealthProfile
+											isTakingMeds={isTakingMeds}
+											setIsTakingMeds={setIsTakingMeds}
+											hasDrugAllergies={hasDrugAllergies}
+											setHasDrugAllergies={setHasDrugAllergies}
+											medConditions={medConditions}
+											handleChangeMedCondition={handleChangeMedCondition}
+										/>
+									</Container>
+								)}
+								{selected.oxygen && (
+									<Container maxWidth="sm" className={classes.section}>
+										<Typography className={classes.subtitle} variant="h5" color="primary">
+											Add your oxygen level
+										</Typography>
+										<FormOxygen
+											oxygenSaturation={oxygenSaturation}
+											setOxygenStaturation={setOxygenStaturation}
+										/>
+									</Container>
+								)}
+								{selected.temperature && (
+									<Container maxWidth="sm" className={classes.section}>
+										<Typography className={classes.subtitle} variant="h5" color="primary">
+											Add your temperature
+										</Typography>
+										<FormTemperature
+											temperature={temperature}
+											tempUnit={tempUnit}
+											setTemperature={setTemperature}
+											setTempUnit={setTempUnit}
+										/>
+									</Container>
+								)}
+							</div>
+						)}
+						<Grid container className={classes.submitButtonWrapper}>
+							<Grid item xs={5} sm={3}>
+								<ButtonFilled fullWidth className={classes.nextButton} type="submit">
+									Submit
+								</ButtonFilled>
+							</Grid>
+						</Grid>
+					</form>
 				</Grid>
 			</Container>
 		</Dialog>

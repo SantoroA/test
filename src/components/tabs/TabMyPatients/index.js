@@ -47,7 +47,6 @@ const MYPATIENTS_QUERY = gql`
 				username
 			}
 		}
-
 	}
 `;
 
@@ -99,8 +98,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'headache',
 			idApt: '6019638853gre9b8800272f3a35',
-			end: '2021-02-10T07:30:00.000Z',
-			start: '2021-02-10T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-10T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-10T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -118,8 +117,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'covid',
 			idApt: '60196388539asdb8800272f3a35',
-			end: '2021-02-05T07:30:00.000Z',
-			start: '2021-02-05T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-05T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-05T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -137,8 +136,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'allergies',
 			idApt: '60196388gf539b8800272f3a35',
-			end: '2021-02-04T07:30:00.000Z',
-			start: '2021-02-04T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-04T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-04T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -156,8 +155,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'cold',
 			idApt: '601963rgw88539b8800272f3a35',
-			end: '2021-02-09T07:30:00.000Z',
-			start: '2021-02-09T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-09T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-09T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -175,8 +174,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'cardiac palpitations',
 			idApt: '60196388539rgbaa8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -194,8 +193,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'neck pain',
 			idApt: '601963gr8s8539baa8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -213,8 +212,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'nausea',
 			idApt: '60196ff38s8539baa8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
 			amount: '$45.56'
 		},
@@ -232,8 +231,8 @@ const TabMyPatients = () => {
 			},
 			reasonForVisit: 'acne',
 			idApt: '601963asd8s8539baa8800272f3a35',
-			end: '2021-02-01T07:30:00.000Z',
-			start: '2021-02-01T07:00:00.000Z',
+			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
 			amount: '$45.55'
 		}
@@ -282,11 +281,11 @@ const TabMyPatients = () => {
 						</Container>
 					)}
 					{error && <ErrorMessage />}
-					{/* {doctorsPatients && ( */}
-						 {data && (
+					{doctorsPatients && (
+						//  {data && (
 						<div>
-							{/*  {doctorsPatients.length > 0 ? ( */}
-								 {data.doctorsPatients.length > 0 ? (
+							{doctorsPatients.length > 0 ? (
+								//  {data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -299,7 +298,7 @@ const TabMyPatients = () => {
 												<TableCell />
 											</TableRow>
 										</TableHead>
-										 <TableBody>
+										{/* <TableBody>
 											{(rowsPerPage > 0
 												? data.doctorsPatients.slice(
 														page * rowsPerPage,
@@ -308,8 +307,8 @@ const TabMyPatients = () => {
 												: data.doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody> 
-										{/* <TableBody>
+										</TableBody> */}
+										<TableBody>
 											{(rowsPerPage > 0
 												? doctorsPatients.slice(
 														page * rowsPerPage,
@@ -318,7 +317,7 @@ const TabMyPatients = () => {
 												: doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody> */}
+										</TableBody>
 									</Table>
 									<TablePagination
 										rowsPerPageOptions={[ 5, 10, 20 ]}

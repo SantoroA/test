@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import useStyles from './style';
 import EmptySurveyState from './emptyState';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
-import Row from './row';
 import { useTranslation } from 'react-i18next';
 import DialogCompleteSurvey from '../../groups/DialogCompleteSurvey';
 import ErrorMessage from '../../groups/ErrorMessage';
@@ -16,7 +15,6 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import Grid from '@material-ui/core/Grid';
 
 const TabSurveys = () => {
@@ -38,15 +36,15 @@ const TabSurveys = () => {
 						temperature: true
 					},
 					results: {
-						reasonForVisit: 'acne',
-						symptomTime: 5,
-						symptomTimeUnit: 'weeks',
-						isTakingMeds: false,
-						hasDrugAllergies: true,
-						oxygenSaturation: 90,
-						temperature: 36,
-						tempUnit: 'celsius',
-						otherInfo: 'lorem ipsum',
+						reasonForVisit: '',
+						symptomTime: '',
+						symptomTimeUnit: '',
+						isTakingMeds: '',
+						hasDrugAllergies: '',
+						oxygenSaturation: '',
+						temperature: '',
+						tempUnit: '',
+						otherInfo: '',
 						symptoms: [],
 						medConditions: []
 					},
@@ -63,15 +61,15 @@ const TabSurveys = () => {
 						temperature: true
 					},
 					results: {
-						reasonForVisit: 'acne',
-						symptomTime: 5,
-						symptomTimeUnit: 'weeks',
-						isTakingMeds: false,
-						hasDrugAllergies: true,
-						oxygenSaturation: 90,
-						temperature: 36,
-						tempUnit: 'celsius',
-						otherInfo: 'lorem ipsum',
+						reasonForVisit: '',
+						symptomTime: '',
+						symptomTimeUnit: '',
+						isTakingMeds: '',
+						hasDrugAllergies: '',
+						oxygenSaturation: '',
+						temperature: '',
+						tempUnit: '',
+						otherInfo: '',
 						symptoms: [],
 						medConditions: []
 					},
@@ -103,15 +101,15 @@ const TabSurveys = () => {
 						temperature: false
 					},
 					results: {
-						reasonForVisit: 'acne',
-						symptomTime: 5,
-						symptomTimeUnit: 'weeks',
-						isTakingMeds: false,
-						hasDrugAllergies: true,
-						oxygenSaturation: 90,
-						temperature: 36,
-						tempUnit: 'celsius',
-						otherInfo: 'lorem ipsum',
+						reasonForVisit: '',
+						symptomTime: '',
+						symptomTimeUnit: '',
+						isTakingMeds: '',
+						hasDrugAllergies: '',
+						oxygenSaturation: '',
+						temperature: '',
+						tempUnit: '',
+						otherInfo: '',
 						symptoms: [],
 						medConditions: []
 					},

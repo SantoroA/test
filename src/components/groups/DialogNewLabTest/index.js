@@ -1,26 +1,20 @@
 import React, { useState, useContext } from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
-import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import dianurseApi from '../../../api/dianurseApi';
 import ErrorMessage from '../ErrorMessage';
 import useStyles from './style';
 import Preview from './preview';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
-import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
-import Tooltip from '@material-ui/core/Tooltip';
 import Select from '@material-ui/core/Select';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import EditIcon from '@material-ui/icons/Edit';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Avatar from '@material-ui/core/Avatar';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -30,7 +24,6 @@ import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
-import AddIcon from '@material-ui/icons/Add';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
@@ -65,7 +58,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const [ aptSelected, setAptSelected ] = useState('');
 	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY, {
-		variables: { idPatient, idHCP  }
+		variables: { idPatient, idHCP }
 	});
 	const nextStep = () => {
 		setStep(step + 1);
@@ -113,74 +106,78 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
-											{loading && (
-				<Container className={classes.emptyState}>
-					<Loader type="TailSpin" color="primary" height={80} width={80} />
-				</Container>
-			)}
-			{error && <ErrorMessage />}
-			{data && (
-											<div>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							nextStep();
-							setAptSelected(data.appointmentDocUploadLabTest.filter((apt) => apt._id === appointmentSelectedId));
-						}}
-					>
+					{loading && (
+						<Container className={classes.emptyState}>
+							<Loader type="TailSpin" color="primary" height={80} width={80} />
+						</Container>
+					)}
+					{error && <ErrorMessage />}
+					{data && (
+						<div>
+							<form
+								onSubmit={(e) => {
+									e.preventDefault();
+									nextStep();
+									setAptSelected(
+										data.appointmentDocUploadLabTest.filter(
+											(apt) => apt._id === appointmentSelectedId
+										)
+									);
+								}}
+							>
+								<Grid container className={classes.wrapper}>
+									<Grid item className={classes.header}>
+										<Typography className={classes.title}>New Lab Test Request</Typography>
+										<IconButton onClick={onCancel} color="primary">
+											<CloseIcon />
+										</IconButton>
+									</Grid>
+									<Divider className={classes.divider} />
 
-						<Grid container className={classes.wrapper}>
-							<Grid item className={classes.header}>
-								<Typography className={classes.title}>New Lab Test Request</Typography>
-								<IconButton onClick={onCancel} color="primary">
-									<CloseIcon />
-								</IconButton>
-							</Grid>
-							<Divider className={classes.divider} />
-
-							<Grid className={classes.section} item>
-								<TextField
-									fullWidth
-									type="text"
-									required
-									value={testName}
-									onChange={(e) => setTestName(e.target.value)}
-									label="Test Name"
-									variant="outlined"
-								/>
-							</Grid>
-							<Grid className={classes.section} item>
-								<FormControl variant="outlined" fullWidth required>
-									<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
-									<Select
-										labelId="apt-select-label"
-										value={appointmentSelectedId}
-										onChange={(e) => setAppointmentSelectedId(e.target.value)}
-										label="Select Appointment"
-									>
-										{data.appointmentDocUploadLabTest.map((apt, i) => {
-										{/* {appointments.map((apt, i) => { */}
-										console.log(apt._id)
-											return (
-												<MenuItem key={i} value={apt._id}>
-													{formatDateShort(apt.appointmentTimeStart)} -{' '}
-													{convertTime(apt.appointmentTimeStart)}
-												</MenuItem>
-											);
-										})}
-
-									</Select>
-								</FormControl>
-							</Grid>
-							<Grid className={classes.section} item>
-								<ButtonFilled fullWidth type="submit">
-									Next
-								</ButtonFilled>
-							</Grid>
-						</Grid>
-					</form>
-					</div>
-										)}
+									<Grid className={classes.section} item>
+										<TextField
+											fullWidth
+											type="text"
+											required
+											value={testName}
+											onChange={(e) => setTestName(e.target.value)}
+											label="Test Name"
+											variant="outlined"
+										/>
+									</Grid>
+									<Grid className={classes.section} item>
+										<FormControl variant="outlined" fullWidth required>
+											<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
+											<Select
+												labelId="apt-select-label"
+												value={appointmentSelectedId}
+												onChange={(e) => setAppointmentSelectedId(e.target.value)}
+												label="Select Appointment"
+											>
+												{data.appointmentDocUploadLabTest.map((apt, i) => {
+													{
+														/* {appointments.map((apt, i) => { */
+													}
+													console.log(apt._id);
+													return (
+														<MenuItem key={i} value={apt._id}>
+															{formatDateShort(apt.appointmentTimeStart)} -{' '}
+															{convertTime(apt.appointmentTimeStart)}
+														</MenuItem>
+													);
+												})}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid className={classes.section} item>
+										<ButtonFilled fullWidth type="submit">
+											Next
+										</ButtonFilled>
+									</Grid>
+								</Grid>
+							</form>
+						</div>
+					)}
 				</Dialog>
 			);
 		case 2:
@@ -198,11 +195,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					<Grid container className={classes.titleWrapper}>
 						<Grid item>
 							<div className={classes.name}>
-								<Avatar
-									className={classes.avatar}
-									alt={lastName}
-									src={ image }
-								/>
+								<Avatar className={classes.avatar} alt={lastName} src={image} />
 								Dr. {lastName}
 							</div>
 						</Grid>
@@ -275,11 +268,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					<Grid container className={classes.titleWrapper}>
 						<Grid item>
 							<div className={classes.name}>
-								<Avatar
-									className={classes.avatar}
-									alt={lastName}
-									src={ image }
-								/>
+								<Avatar className={classes.avatar} alt={lastName} src={image} />
 								Dr. {lastName}
 							</div>
 						</Grid>
@@ -300,7 +289,13 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 						}}
 					>
 						<Grid container className={classes.wrapper}>
-							<Preview diagnosis={diagnosis} idHCP={idHCP} idPatient={idPatient} exams={exams} patientInfo={aptSelected[0]} />
+							<Preview
+								diagnosis={diagnosis}
+								idHCP={idHCP}
+								idPatient={idPatient}
+								exams={exams}
+								patientInfo={aptSelected[0]}
+							/>
 							<Grid className={classes.buttonContainer} item>
 								<ButtonOutlined fullWidth className={classes.backButton} onClick={previousStep}>
 									Back
@@ -313,7 +308,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					</form>
 				</Dialog>
 			);
-			default: 
+		default:
 	}
 };
 
