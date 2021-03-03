@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DialogReserve from '../DialogReserve';
 import Loader from 'react-loader-spinner';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import useStyles from './style';
 import { APPOINTMENTS_QUERY_DOCLIST } from '../../../context/GraphQl/graphQlQuery';
 import EmptyDocState from './emptyState';

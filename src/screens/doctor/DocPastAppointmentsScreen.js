@@ -48,7 +48,7 @@ const DocPastAppointmentsScreen = () => {
 	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const history = useHistory();
-	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_DOCTOR_QUERY, {
+	const { error, loading, data, fetchMore } = useQuery(LASTAPPOINTMENT_DOCTOR_QUERY, {
 		variables: {
 			id: userId,
 			cursor: null,

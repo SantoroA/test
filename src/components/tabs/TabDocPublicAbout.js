@@ -1,7 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { useQuery, gql } from '@apollo/client';
-import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../groups/ErrorMessage';
 //CUSTOM UI
 import PaperCustomShadow from '../customUi/PaperCustomShadow';
@@ -59,7 +58,6 @@ const MYAPPOINTMENTS_QUERY = gql`
 
 const TabDocPublicAbout = ({ docId }) => {
 	const classes = useStyles();
-	const { t } = useTranslation();
 	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
 		variables: { id: docId }
 	});

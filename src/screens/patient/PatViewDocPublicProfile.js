@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProfilePublic from '../../components/groups/CardProfilePublic';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import DocUserOptions from '../../components/groups/DocUserOptions';
 import TabDocPublicGeneral from '../../components/tabs/TabDocPublicGeneral';
@@ -109,7 +108,6 @@ const PatViewDocPublicProfile = () => {
 	const classes = useStyles();
 	const location = useLocation();
 	const history = useHistory();
-	const { t } = useTranslation();
 	const { id, description, firstname, lastname, image } = location.state;
 	const [ value, setValue ] = useState(0);
 	console.log(location.state);

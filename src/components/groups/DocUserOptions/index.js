@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { REVIEW_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
-import ErrorMessage from '../ErrorMessage';
 //CUSTOM ICONS
 import ErrorIcon from '../../customIcons/ErrorIcon';
 //MATERIAL UI
@@ -27,12 +26,6 @@ const DocUserOptions = ({ setIsPublic, isPublic, docId, isHCP }) => {
 		setIsPublic(!isPublic);
 	};
 	const { t } = useTranslation();
-
-	const info = {
-		averageRating: 4,
-		numberOfRatings: '45',
-		minPrice: '75'
-	};
 
 	return (
 		<Paper elevation={0} className={classes.root}>

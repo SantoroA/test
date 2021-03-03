@@ -98,34 +98,21 @@ const useStyles = makeStyles({
 	}
 });
 
-
-
 const APPOINTMENTSRESERVE_MUTATION = gql`
-
-	mutation AppointmentAdd(
-		$idApt: ID!
-		$idPatient: ID!
-		$selected: Selected,
-		$results: Result,
-	) {
-		appointmentAdd(
-			idApt: $idApt
-			idPatient: $idPatient
-			selected: $selected
-			results: $results
-		)
+	mutation AppointmentAdd($idApt: ID!, $idPatient: ID!, $selected: Selected, $results: Result) {
+		appointmentAdd(idApt: $idApt, idPatient: $idPatient, selected: $selected, results: $results)
 	}
 `;
 
 const PatReserveScreen = (props) => {
 	const { apDoc, appointment } = props.location.state;
-	const dateDisplay = formatDateDisplay(new Date(!appointment.start ? appointment.appointmentTimeStart : appointment.start));
+	const dateDisplay = formatDateDisplay(
+		new Date(!appointment.start ? appointment.appointmentTimeStart : appointment.start)
+	);
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
-	const [ medArr, setMedArr ] = useState([]);
-	const [ symptomsArr, setSymptomsArr ] = useState([]); // não funciona
 	const [ reasonForVisit, setReasonForVisit ] = useState('');
 	const [ symptomTime, setSymptomTime ] = useState('');
 	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState('');
@@ -605,32 +592,31 @@ const PatReserveScreen = (props) => {
 							showPrice={true}
 							onSubmit={(e) => {
 								e.preventDefault();
-								appointmentAdd(
-									{
-										variables: {
-											idPatient: userId,
-											selected: {
-												reason: true,
-												healthProfile: true,
-												oxygen: true,
-												symptoms: true,
-												temperature: true
-											},
-											results: {
+								appointmentAdd({
+									variables: {
+										idPatient: userId,
+										selected: {
+											reason: true,
+											healthProfile: true,
+											oxygen: true,
+											symptoms: true,
+											temperature: true
+										},
+										results: {
 											reasonForVisit,
-												symptomTime,
-												symptomTimeUnit,
-												isTakingMeds,
-												hasDrugAllergies,
-												oxygenSaturation,
-												temperature,
-												tempUnit,
-												otherInfo,
-												symptoms,
-												medConditions,
-											},
-											idApt: !appointment.idApt ? appointment._id : appointment.idApt
-										}
+											symptomTime,
+											symptomTimeUnit,
+											isTakingMeds,
+											hasDrugAllergies,
+											oxygenSaturation,
+											temperature,
+											tempUnit,
+											otherInfo,
+											symptoms,
+											medConditions
+										},
+										idApt: !appointment.idApt ? appointment._id : appointment.idApt
+									}
 								}).catch((err) => console.log(err));
 								nextStep();
 								setTimeout(() => {

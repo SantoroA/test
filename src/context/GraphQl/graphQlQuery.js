@@ -218,6 +218,26 @@ const REVIEW_QUERY = gql`
 	}
 `;
 
+const MYAPPOINTMENTS_QUERY_DOCPUBLIC = gql`
+	query GetAppointments($date: String!, $id: ID!) {
+		doctorsAppointmentsDayAvailability(date: $date, id: $id) {
+			accountHCPid {
+				_id
+				profilePicture
+			}
+			_id
+			appointmentTimeStart
+			appointmentTimeEnd
+			amount
+			profileHCPid {
+				services
+				phoneNumber
+				lastName
+			}
+		}
+	}
+`;
+
 export {
 	LASTAPPOINTMENT_DOCTOR_QUERY,
 	MYAPPOINTMENTS_QUERY,
@@ -226,5 +246,6 @@ export {
 	APPOINTMENTS_QUERY_TESTDIALOG,
 	APPOINTMENTS_QUERY_PRESCDIALOG,
 	APPOINTMENTS_QUERY_DOCLIST,
-	REVIEW_QUERY
+	REVIEW_QUERY,
+	MYAPPOINTMENTS_QUERY_DOCPUBLIC
 };
