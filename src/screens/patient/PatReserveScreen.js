@@ -98,49 +98,34 @@ const useStyles = makeStyles({
 	}
 });
 
+
+
 const APPOINTMENTSRESERVE_MUTATION = gql`
+
 	mutation AppointmentAdd(
 		$idApt: ID!
 		$idPatient: ID!
-		$reasonForVisit: String!
-		$symptomTime: String
-		$symptomTimeUnit: String
-		$isTakingMeds: Boolean
-		$hasDrugAllergies: Boolean
-		$oxygenSaturation: String
-		$temperature: String
-		$tempUnit: String
-		$otherInfo: String
-		$medCondition: [String]
-		$symptoms: [String]
+		$selected: Selected,
+		$results: Result,
 	) {
 		appointmentAdd(
 			idApt: $idApt
 			idPatient: $idPatient
-			reasonForVisit: $reasonForVisit
-			symptomTime: $symptomTime
-			symptomTimeUnit: $symptomTimeUnit
-			isTakingMeds: $isTakingMeds
-			hasDrugAllergies: $hasDrugAllergies
-			oxygenSaturation: $oxygenSaturation
-			temperature: $temperature
-			tempUnit: $tempUnit
-			otherInfo: $otherInfo
-			medCondition: $medCondition
-			symptoms: $symptoms
+			selected: $selected
+			results: $results
 		)
 	}
 `;
 
 const PatReserveScreen = (props) => {
 	const { apDoc, appointment } = props.location.state;
-	const dateDisplay = formatDateDisplay(appointment.start);
+	const dateDisplay = formatDateDisplay(new Date(appointment.start));
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
 	const [ step, setStep ] = useState(1);
 	const [ medArr, setMedArr ] = useState([]);
-	const [ symptomsArr, setSymptomsArr ] = useState([]);
+	const [ symptomsArr, setSymptomsArr ] = useState([]); // não funciona
 	const [ reasonForVisit, setReasonForVisit ] = useState('');
 	const [ symptomTime, setSymptomTime ] = useState('');
 	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState('');
@@ -274,7 +259,7 @@ const PatReserveScreen = (props) => {
 		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
 	};
 
-	console.log(apDoc);
+	console.log(dateDisplay);
 	console.log('reserve', appointment);
 	// if (error) {
 	// 	return (
@@ -620,21 +605,31 @@ const PatReserveScreen = (props) => {
 							showPrice={true}
 							onSubmit={(e) => {
 								e.preventDefault();
+								console.log(symptomsArr)
 								appointmentAdd(
 									{
 										variables: {
-											reasonForVisit,
-											symptomTime,
-											symptomTimeUnit,
-											isTakingMeds,
-											hasDrugAllergies,
-											oxygenSaturation,
-											temperature,
-											tempUnit,
-											otherInfo,
-											symptoms: symptomsArr,
-											medCondition: medArr,
 											idPatient: userId,
+											selected: {
+												reason: true,
+												healthProfile: true,
+												oxygen: true,
+												symptoms: true,
+												temperature: true
+											},
+											results: {
+											reasonForVisit,
+												symptomTime,
+												symptomTimeUnit,
+												isTakingMeds,
+												hasDrugAllergies,
+												oxygenSaturation,
+												temperature,
+												tempUnit,
+												otherInfo,
+												symptoms,
+												medConditions,
+											},
 											idApt: !appointment.idApt ? appointment._id : appointment.idApt
 										}
 									}
@@ -700,9 +695,7 @@ const PatReserveScreen = (props) => {
 								<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 								<Typography color="primary" className={classes.sub} variant="h5">
 									{dateDisplay}
-									{console.log(dateDisplay)}
 								</Typography>
-								{console.log('apt', appointment)}
 								<CardAppointment
 									state={{
 										appointment: appointment ,
