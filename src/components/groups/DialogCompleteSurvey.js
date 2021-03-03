@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import { formatDateDisplay } from '../../helpers/dateHelper';
 import FormSymptoms from './FormsSurvey/symptoms';
 import FormReason from './FormsSurvey/reason';
@@ -106,18 +107,26 @@ const useStyles = makeStyles({
 
 //MUTATION: IF RESULT.X => SEND RESULT BASED ON ID
 
-const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close }) => {
-	const { id, hasResult, isNewForDoctor, selected, results } = selectedSurvey;
+const ADDSURVEYRESULT_MUTATION = gql`
+mutation UpdateSurveyResult($idApt: ID!, $idSurvey: ID!, $results: Result) {
+	patientAnswerSurvey(idApt: $idApt, idSurvey: $idSurvey, results: $results) 
+}
+`;
+
+
+const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close, refetch, idApt }) => {
+	const { _id, hasResult, isNewForDoctor, selected, results } = selectedSurvey;
+	const [patientAnswerSurvey] = useMutation(ADDSURVEYRESULT_MUTATION);
 	const classes = useStyles();
-	console.log(id, selected);
+	console.log(_id, selected);
 	const [ reasonForVisit, setReasonForVisit ] = useState(null);
 	const [ symptomTime, setSymptomTime ] = useState(null);
 	const [ oxygenSaturation, setOxygenStaturation ] = useState(null);
 	const [ temperature, setTemperature ] = useState(null);
 	const [ tempUnit, setTempUnit ] = useState(null);
 	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState(null);
-	const [ isTakingMeds, setIsTakingMeds ] = useState(false);
-	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(false);
+	const [ isTakingMeds, setIsTakingMeds ] = useState(null);
+	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(null);
 	const [ symptoms, setSymptoms ] = useState({
 		difficultySleeping: false,
 		fatigue: false,
@@ -206,7 +215,7 @@ const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close }) => {
 		pregnant: false,
 		rheumatoidArthritis: false,
 		seasonalAllergies: false,
-		titlestanceAbuse: false
+		substanceAbuse: false
 	});
 
 	const handleChange = (event) => {
@@ -217,6 +226,26 @@ const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close }) => {
 	};
 	const submitForm = (e) => {
 		e.preventDefault();
+		patientAnswerSurvey({
+			variables: {
+				idApt,
+				idSurvey: _id,
+				results: {
+					reasonForVisit,
+						symptomTime,
+						symptomTimeUnit,
+						isTakingMeds,
+						hasDrugAllergies,
+						oxygenSaturation,
+						temperature,
+						tempUnit,
+						symptoms,
+						medConditions,
+					},
+			}
+		});
+		refetch();
+		close()
 		//ISNEWFORDOCTOR = TRUE
 		//HASRESULT = TRUE
 		//IF RESULT EXISTS => SEND RESULT

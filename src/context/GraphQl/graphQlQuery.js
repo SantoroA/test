@@ -234,7 +234,7 @@ const SURVEY_QUERY = gql`
 			accountPatientid {
 				profilePicture
 			},
-			survey {
+			surveys {
 				_id
 				selected {
 					reason,
@@ -351,8 +351,9 @@ const SURVEY_QUERY = gql`
 	}
 `;
 const SURVEYPATIENT_QUERY = gql`
-	query GetAppointments($idPatient: ID!) {
-		patientSurvey(idPatient: $idPatient) {
+	query GetAppointments($idPatient: ID!, $cursor: String, $limit: Int) {
+		patientSurvey(idPatient: $idPatient, cursor: $cursor, limit: $limit) {
+			edges {
 			profilePatientid,
 			_id,
 			appointmentTimeStart,
@@ -366,7 +367,7 @@ const SURVEYPATIENT_QUERY = gql`
 			accountHCPid {
 				profilePicture
 			},
-			survey {
+			surveys {
 				_id
 				selected {
 					reason,
@@ -479,6 +480,12 @@ const SURVEYPATIENT_QUERY = gql`
 				hasResult,
 				isNewForDoctor
 			}
+		}
+		pageInfo {
+			hasNextPage
+			endCursor
+		},
+  		totalCount,
 		}
 	}
 `;

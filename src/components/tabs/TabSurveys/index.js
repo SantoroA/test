@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import EmptySurveyState from './emptyState';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { useTranslation } from 'react-i18next';
 import DialogCompleteSurvey from '../../groups/DialogCompleteSurvey';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { SURVEYPATIENT_QUERY } from '../../../context/GraphQl/graphQlQuery'
+import { Context as AuthContext } from '../../../context/AuthContext';
 import ErrorMessage from '../../groups/ErrorMessage';
+import Loader from 'react-loader-spinner';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -16,14 +20,26 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+
 
 const TabSurveys = () => {
 	const [ page, setPage ] = useState(0);
 	const [ isDialogCompleteOpen, setIsDialogCompleteOpen ] = useState(false);
 	const [ selectedSurvey, setSelectedSurvey ] = useState({});
+	const [ idApt, setIdApt ] = useState();
+	const { state: { userId } } = useContext(AuthContext);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const [ oldFile, setOldFile ] = useState('');
+	const { loading, error, data, refetch } = useQuery(SURVEYPATIENT_QUERY, {
+		variables: {
+			idPatient: userId,
+			cursor: null,
+			limit: 3
+		}
+	});
 
+	console.log('data', data)
 	const appointments = [
 		{
 			surveys: [
@@ -141,18 +157,19 @@ const TabSurveys = () => {
 					{t('SURVEYS.1')}
 				</Typography>
 			</Grid>
-			{/* {loading && (
+			 {loading && (
 				<Container className={classes.emptyState}>
 					<Loader type="TailSpin" color="primary" height={80} width={80} />
 				</Container>
-			)} */}
-			{/* {error && (
+			)} 
+			 {error && (
 				<ErrorMessage/>
-			)} */}
+			)} 
 
 			{/* IF DATA */}
-
-			{appointments.map((apt) => {
+			{ data ? (	
+			<div>
+			{data.patientSurvey.edges.map((apt) => {
 				return apt.surveys.map((survey, i) => {
 					return (
 						<PaperCustomShadow
@@ -166,14 +183,7 @@ const TabSurveys = () => {
 										<Avatar
 											className={classes.avatar}
 											alt={apt.profileHCPid.lastName}
-											src={
-												apt.accountHCPid.profilePicture.includes('http') ? (
-													apt.accountHCPid.profilePicture
-												) : (
-													`http://localhost:10101/dianurse/v1/profile/static/images/${apt
-														.accountHCPid.profilePicture}`
-												)
-											}
+											src={apt.accountHCPid.profilePicture}
 										/>
 										Dr. {apt.profileHCPid.lastName}
 									</div>
@@ -208,6 +218,7 @@ const TabSurveys = () => {
 												onClick={() => {
 													setIsDialogCompleteOpen(true);
 													setSelectedSurvey(survey);
+													setIdApt(apt._id)
 												}}
 												target="_blank"
 												color="primary"
@@ -232,10 +243,15 @@ const TabSurveys = () => {
 				});
 			})}
 			{/* IF NO DATA */}
-			<EmptySurveyState />
+			
+			
+			</div>
+			): <EmptySurveyState />}
 			<DialogCompleteSurvey
 				isOpen={isDialogCompleteOpen}
+				refetch={refetch}
 				selectedSurvey={selectedSurvey}
+				idApt={idApt}
 				close={() => {
 					setIsDialogCompleteOpen(false);
 					setSelectedSurvey({});

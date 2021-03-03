@@ -263,10 +263,10 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 			{/* IF DATA */}
 		{ data && (
 			data.doctorSurvey.map((apt) => {
-				return apt.survey.map((surveis, i) => {
+				return apt.surveys.map((survey, i) => {
 					return (
 						<PaperCustomShadow
-							style={{ backgroundColor: `${surveis.isNewForDoctor && '#D7FEF1'}` }}
+							style={{ backgroundColor: `${survey.isNewForDoctor && '#D7FEF1'}` }}
 							className={classes.paper}
 							key={i}
 						>
@@ -289,25 +289,25 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 								</Grid>
 								<Grid item md={3} sm={6} xs={6}>
 									<Typography>
-										{surveis.selected.reason && 'Reason for visit'}{' '}
-										{surveis.selected.symptoms && 'Symptoms'}{' '}
-										{surveis.selected.healthProfile && 'Health Profile'}{' '}
-										{surveis.selected.oxygen && 'Oxygen'}{' '}
-										{surveis.selected.temperature && 'Temperature'}
+										{survey.selected.reason && 'Reason for visit'}{' '}
+										{survey.selected.symptoms && 'Symptoms'}{' '}
+										{survey.selected.healthProfile && 'Health Profile'}{' '}
+										{survey.selected.oxygen && 'Oxygen'}{' '}
+										{survey.selected.temperature && 'Temperature'}
 									</Typography>
 								</Grid>
 								<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
-									{surveis.hasResult ? (
+									{survey.hasResult ? (
 										<Tooltip title="View result">
 											<IconButton
-												href={surveis.resultLink}
+												href={survey.resultLink}
 												target="_blank"
 												color="primary"
 												onClick={() => {
 													doctorViewSurvey({
 														variables: {
 															idApt: apt._id,
-															idSurvey: surveis._id
+															idSurvey: survey._id
 														}
 													})
 												}}
@@ -320,7 +320,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 											<VisibilityIcon />
 										</IconButton>
 									)}
-									{surveis.hasResult ? (
+									{survey.hasResult ? (
 										<Tooltip title="Result received">
 											<CheckCircleOutlineIcon color="primary" className={classes.checkIcon} />
 										</Tooltip>
@@ -332,8 +332,8 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 									<Tooltip title="Delete request">
 										<IconButton
 											onClick={() => {
-												// setOldFile(surveis.requestLink);
-												setSurveyId(surveis._id)
+												// setOldFile(surveys.requestLink);
+												setSurveyId(survey._id)
 												setDeleteId(apt._id)
 												setDialogConfirmOpen(true);
 													// doctorRemoveSurvey({
