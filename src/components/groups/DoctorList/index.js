@@ -95,7 +95,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				</Container>
 			)}
 			{/* DUMMY CONTENT  */}
-			<ShowDocData
+			{/* <ShowDocData
 				docs={[
 					{
 						id: 'ad',
@@ -120,7 +120,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 				setDialogReserveOpen={setDialogReserveOpen}
 				setAppointments={setAppointments}
 				setApDoc={setApDoc}
-			/>
+			/> */}
 			{data && (
 				<div>
 					{data.searchAppointments.edges.length > 0 ? (
