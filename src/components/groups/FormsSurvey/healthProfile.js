@@ -32,18 +32,18 @@ const FormHealthProfile = ({
 					</Grid>
 					<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
 						<ToggleYesNoButton
-							selected={isTakingMeds}
+							selected={isTakingMeds === 'yes'}
 							value="is-taking-meds"
-							onClick={() => setIsTakingMeds(!isTakingMeds)}
+							onClick={() => setIsTakingMeds('yes')}
 						>
 							Yes
 						</ToggleYesNoButton>
 					</Grid>
 					<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
 						<ToggleYesNoButton
-							selected={!isTakingMeds}
+							selected={isTakingMeds === 'no'}
 							value="is-not-taking-meds"
-							onClick={() => setIsTakingMeds(!isTakingMeds)}
+							onClick={() => setIsTakingMeds('no')}
 						>
 							No
 						</ToggleYesNoButton>
@@ -60,8 +60,8 @@ const FormHealthProfile = ({
 					<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
 						<ToggleYesNoButton
 							value="has-drug-alergies"
-							selected={hasDrugAllergies}
-							onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
+							selected={hasDrugAllergies === 'yes'}
+							onClick={() => setHasDrugAllergies('yes')}
 						>
 							Yes
 						</ToggleYesNoButton>
@@ -69,8 +69,8 @@ const FormHealthProfile = ({
 					<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
 						<ToggleYesNoButton
 							value="doesnt-have-drug-alergies"
-							selected={!hasDrugAllergies}
-							onClick={() => setHasDrugAllergies(!hasDrugAllergies)}
+							selected={hasDrugAllergies === 'no'}
+							onClick={() => setHasDrugAllergies('no')}
 						>
 							No
 						</ToggleYesNoButton>

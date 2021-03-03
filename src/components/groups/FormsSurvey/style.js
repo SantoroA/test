@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 	},
 	sub: {
 		fontWeight: 'bold',
-		marginTop: '1rem',
+
 		marginBottom: '1rem'
 	},
 	root: {

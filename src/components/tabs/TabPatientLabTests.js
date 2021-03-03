@@ -5,7 +5,7 @@ import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogNewLabTest from '../groups/DialogNewLabTest';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { APPOINTMENTS_QUERY } from '../groups/DialogNewLabTest/index'
+import { APPOINTMENTS_QUERY_TESTDIALOG } from '../../context/GraphQl/graphQlQuery';
 import DialogConfirm from '../groups/DialogConfirm';
 //CUSTOM UI
 import PaperCustomShadow from '../../components/customUi/PaperCustomShadow';
@@ -99,7 +99,7 @@ const LABTEST_QUERY = gql`
 				name
 				requestLink
 				isNewForPatient
-				hasResult 
+				hasResult
 				isNewForDoctor
 				resultLink
 			}
@@ -114,9 +114,9 @@ const DELETEDOC_MUTATION = gql`
 `;
 
 const VIEW_MUTATION = gql`
-mutation UpdateDocView($idApt: ID!, $file: String!) {
-	doctorViewLabTest(idApt: $idApt, file: $file) 
-}
+	mutation UpdateDocView($idApt: ID!, $file: String!) {
+		doctorViewLabTest(idApt: $idApt, file: $file)
+	}
 `;
 
 //MAIN FUNCTION
@@ -136,29 +136,33 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	});
 
 	const [ doctorViewLabTest ] = useMutation(VIEW_MUTATION, {
-		refetchQueries: () => [	{
-			query: LABTEST_QUERY,
-			variables: {
-			  idHCP,
-			  idPatient
-			}}	  
+		refetchQueries: () => [
+			{
+				query: LABTEST_QUERY,
+				variables: {
+					idHCP,
+					idPatient
+				}
+			}
 		]
 	});
 
 	const [ doctorRemoveLabTest, { loading } ] = useMutation(DELETEDOC_MUTATION, {
-		refetchQueries: () => [	{
-			query: LABTEST_QUERY,
-			variables: {
-			  idHCP,
-			  idPatient
-			}},	
+		refetchQueries: () => [
 			{
-		    query: APPOINTMENTS_QUERY,
-		 	 variables: {
-		 	   idHCP,
-		 	   idPatient
-		 	 },
-			}		  
+				query: LABTEST_QUERY,
+				variables: {
+					idHCP,
+					idPatient
+				}
+			},
+			{
+				query: APPOINTMENTS_QUERY_TESTDIALOG,
+				variables: {
+					idHCP,
+					idPatient
+				}
+			}
 		]
 	});
 
@@ -229,100 +233,98 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			{data && ( 
-			<div>
-				{data.patientLabTestForDoctors.map((apt) => { 
-				{/* {appointments.map((apt) => { */}
-				console.log(apt.labTestRequests)
-					return apt.labTestRequests.map((lab, i) => {
-						console.log(lab, i);
-						return (
-							<PaperCustomShadow
-								className={classes.paper}
-								style={{ backgroundColor: `${lab.isNewForDoctor && '#D7FEF1'}` }}
-								key={i}
-							>
-								<Grid container className={classes.wrapper}>
-									<Grid item md={3} sm={4} xs={12}>
-										<div className={classes.name}>
-											<Avatar
-												className={classes.avatar}
-												alt={lastName}
-												src={ image	}
-											/>
-											Dr. {lastName}
-										</div>
-									</Grid>
-									<Grid item md={2} sm={4} xs={6}>
-										{formatDateShort(apt.appointmentTimeStart)}
-									</Grid>
+			{data && (
+				<div>
+					{data.patientLabTestForDoctors.map((apt) => {
+						{
+							/* {appointments.map((apt) => { */
+						}
+						console.log(apt.labTestRequests);
+						return apt.labTestRequests.map((lab, i) => {
+							console.log(lab, i);
+							return (
+								<PaperCustomShadow
+									className={classes.paper}
+									style={{ backgroundColor: `${lab.isNewForDoctor && '#D7FEF1'}` }}
+									key={i}
+								>
+									<Grid container className={classes.wrapper}>
+										<Grid item md={3} sm={4} xs={12}>
+											<div className={classes.name}>
+												<Avatar className={classes.avatar} alt={lastName} src={image} />
+												Dr. {lastName}
+											</div>
+										</Grid>
+										<Grid item md={2} sm={4} xs={6}>
+											{formatDateShort(apt.appointmentTimeStart)}
+										</Grid>
 
-									<Grid item md={2} sm={4} xs={6}>
-										{convertTime(apt.appointmentTimeStart)} - {convertTime(apt.appointmentTimeEnd)}
-									</Grid>
-									<Grid item md={3} sm={6} xs={6}>
-										<Tooltip title="Download Request">
-											<Link
-												href={lab.requestLink}
-												target="_blank"
-												color="primary"
-											>
-												{lab.name}
-											</Link>
-										</Tooltip>
-									</Grid>
-									<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
-										{lab.hasResult ? (
-											<Tooltip title="Download result">
-												<IconButton
-													href={lab.resultLink}
-													target="_blank"
-													color="primary"
-													onClick={() => {
-														doctorViewLabTest({
-															variables: {
-																idApt: apt._id, 
-																file: lab.resultLink
-															}
-														})
-													}}
-												>
+										<Grid item md={2} sm={4} xs={6}>
+											{convertTime(apt.appointmentTimeStart)} -{' '}
+											{convertTime(apt.appointmentTimeEnd)}
+										</Grid>
+										<Grid item md={3} sm={6} xs={6}>
+											<Tooltip title="Download Request">
+												<Link href={lab.requestLink} target="_blank" color="primary">
+													{lab.name}
+												</Link>
+											</Tooltip>
+										</Grid>
+										<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
+											{lab.hasResult ? (
+												<Tooltip title="Download result">
+													<IconButton
+														href={lab.resultLink}
+														target="_blank"
+														color="primary"
+														onClick={() => {
+															doctorViewLabTest({
+																variables: {
+																	idApt: apt._id,
+																	file: lab.resultLink
+																}
+															});
+														}}
+													>
+														<GetAppIcon />
+													</IconButton>
+												</Tooltip>
+											) : (
+												<IconButton disabled>
 													<GetAppIcon />
 												</IconButton>
+											)}
+											{lab.hasResult ? (
+												<Tooltip title="Result received">
+													<CheckCircleOutlineIcon
+														color="primary"
+														className={classes.checkIcon}
+													/>
+												</Tooltip>
+											) : (
+												<Tooltip title="Waiting for patient's result">
+													<ErrorOutlineIcon className={classes.errorIcon} />
+												</Tooltip>
+											)}
+											<Tooltip title="Delete request">
+												<IconButton
+													onClick={() => {
+														setOldFile(lab.requestLink);
+														setidApt(apt._id);
+														setDialogConfirmOpen(true);
+													}}
+												>
+													<DeleteOutlineIcon color="secondary" />
+												</IconButton>
 											</Tooltip>
-										) : (
-											<IconButton disabled>
-												<GetAppIcon />
-											</IconButton>
-										)}
-										{lab.hasResult ? (
-											<Tooltip title="Result received">
-												<CheckCircleOutlineIcon color="primary" className={classes.checkIcon} />
-											</Tooltip>
-										) : (
-											<Tooltip title="Waiting for patient's result">
-												<ErrorOutlineIcon className={classes.errorIcon} />
-											</Tooltip>
-										)}
-										<Tooltip title="Delete request">
-											<IconButton
-												onClick={() => {
-													setOldFile(lab.requestLink);
-													setidApt(apt._id)
-													setDialogConfirmOpen(true);
-												}}
-											>
-												<DeleteOutlineIcon color="secondary" />
-											</IconButton>
-										</Tooltip>
+										</Grid>
 									</Grid>
-								</Grid>
-							</PaperCustomShadow>
-						);
-					});
-				})}
-			</div>
-			 )} 
+								</PaperCustomShadow>
+							);
+						});
+					})}
+				</div>
+			)}
 			<DialogNewLabTest
 				idHCP={idHCP}
 				idPatient={idPatient}

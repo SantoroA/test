@@ -1,102 +1,186 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PatLayoutContainer from '../../components/layout/PatLayoutContainer';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { Context as AuthContext } from '../../context/AuthContext';
 import Loader from 'react-loader-spinner';
 import ErrorMessage from '../../components/groups/ErrorMessage';
+import { LASTAPPOINTMENT_PATIENT_QUERY } from '../../context/GraphQl/graphQlQuery';
+import CardAppointment from '../../components/groups/CardAppointment';
+//CUSTOM UI
+import ButtonNoBorder from '../../components/customUi/ButtonNoBorder';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles } from '@material-ui/core/styles';
 
-const LASTAPPOINTMENT_QUERY = gql`
-	query GetAppointments($id: ID!, $cursor: String, $limit: Int ) {
-		lastAppointmentsPatient(id: $id, cursor: $cursor, limit: $limit) {
-			edges {
-				profilePatientid
-				_id
-				appointmentTimeStart
-				appointmentTimeEnd
-				amount
-				reasonForVisit
-				profileHCPid {
-					_id
-					firstName
-					lastName
-					rating {
-						averageRating
-  						receivedRating
-					}
-				}
-				accountHCPid {
-					_id
-					profilePicture
-					username
-				}
-			},
-			pageInfo {
-				endCursor
-  				hasNextPage
-			},
-			totalCount,
-		}
+const useStyles = makeStyles({
+	emptyState: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '20rem',
+		flexDirection: 'column',
+		textAlign: 'center'
+	},
+
+	backButton: {
+		textTransform: 'none',
+		display: 'flex',
+		flexDirection: 'row',
+		color: '#07B597',
+		marginTop: '2rem',
+		marginBottom: '1rem',
+		alignSelf: 'flex-start'
+	},
+	buttonLoadMore: {
+		alignSelf: 'center'
 	}
-`;
+});
 
 const PatPastAppointmentScreen = () => {
 	const { state: { userId } } = useContext(AuthContext);
-	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_QUERY, {
+	const history = useHistory();
+	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_PATIENT_QUERY, {
 		variables: {
 			id: userId,
 			cursor: null,
 			limit: 3
 		}
 	});
-	console.log('data', data)
+	const classes = useStyles();
+	console.log('data', data);
+
+	const lastAppointmentsPatient = {
+		edges: [
+			{
+				profilePatientid: 'sdf',
+
+				_id: 'ssf',
+				appointmentTimeStart: new Date(),
+				appointmentTimeEnd: new Date(),
+				amount: 85,
+				reasonForVisit: 'Headache',
+				profileHCPid: {
+					_id: 'asda',
+					firstName: 'Bugs',
+					lastName: 'Bunny',
+					rating: {
+						averageRating: 4.5,
+						receivedRating: '45'
+					}
+				},
+				accountHCPid: {
+					_id: 'adefewf',
+					profilePicture:
+						'https://images.pexels.com/photos/5414814/pexels-photo-5414814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+					username: 'docemail@test.com'
+				}
+			}
+		]
+	};
+
 	return (
 		<PatLayoutContainer>
-			<Typography variant="h4">Past Appointments</Typography>
-			{loading && (
-				<Container>
-					<Loader type="TailSpin" color="primary" height={80} width={80} />
-				</Container>
-			)}
-			{error && <ErrorMessage />}
-			{ data && (
-					<div>
-					{data.lastAppointmentsPatient.edges.length > 0 ? (
-						data.lastAppointmentsPatient.edges.map((el, i) => {
-							return <div key={i}>
-								{el.profilePatientid.firstName} - {" "}
-								start:{el.appointmentTimeStart} - {" "}
-								end:{el.appointmentTimeEnd} <br></br>
-							</div>
-						})
-				) : null }
-				{data.lastAppointmentsPatient.pageInfo.hasNextPage && (
-			<button onClick={() => {
-				const { endCursor } = data.lastAppointmentsPatient.pageInfo;
-										fetchMore({
-											variables: {
-												id: userId,
-												limit: 3,
-												cursor: endCursor
-											},
-											updateQuery: (prevResult, { fetchMoreResult }) => {
-												console.log('prev', prevResult);
-												console.log('fetch', fetchMoreResult);
-												fetchMoreResult.lastAppointmentsPatient.edges = [
-													...prevResult.lastAppointmentsPatient.edges,
-													...fetchMoreResult.lastAppointmentsPatient.edges
-												];
-												return fetchMoreResult;
-											}
-										});
+			<Container maxWidth="md">
+				<Button onClick={() => history.goBack()} className={classes.backButton}>
+					<ArrowBackIcon />
+					<Typography>Back to my profile</Typography>
+				</Button>
+				<Divider />
 
-			}}>Load More</button>
-			)}
-				</div>
-			)}
-			
+				{loading && (
+					<Container className={classes.emptyState}>
+						<Loader type="TailSpin" color="primary" height={80} width={80} />
+					</Container>
+				)}
+				{error && <ErrorMessage />}
+
+				{/* MOCK DATA */}
+
+				{/* {lastAppointmentsPatient.edges.map((ap) => {
+					return (
+						<CardAppointment
+							onSubmit={() => {}}
+							key={ap._id}
+							showPrice={false}
+							state={{
+								appointment: {
+									amount: ap.amount,
+									end: ap.appointmentTimeEnd,
+									id: ap.profilePatientid._id,
+									idap: ap._id,
+									start: ap.appointmentTimeStart
+								},
+								name: `${ap.profileHCPid.firstName} ${ap.profileHCPid.lastName}`,
+								pic: ap.accountHCPid.profilePicture,
+								// ap.accountHCPid.profilePicture
+								buttonText: 'View',
+								title: 'Doctor'
+							}}
+						/>
+					);
+				})} */}
+
+				{data && (
+					<div>
+						{data.lastAppointmentsPatient.edges &&
+							data.lastAppointmentsPatient.edges.map((ap, i) => {
+								return (
+									<CardAppointment
+										onSubmit={() => {}}
+										key={ap._id}
+										showPrice={false}
+										state={{
+											appointment: {
+												amount: ap.amount,
+												end: ap.appointmentTimeEnd,
+												id: ap.profilePatientid,
+												idap: ap._id,
+												start: ap.appointmentTimeStart
+											},
+											name: `${ap.profileHCPid.firstName} ${ap.profileHCPid.lastName}`,
+											pic: ap.accountHCPid.profilePicture,
+											// ap.accountHCPid.profilePicture
+											buttonText: 'View',
+											title: 'Doctor'
+										}}
+									/>
+								);
+							})}
+						{data.lastAppointmentsPatient.pageInfo.hasNextPage && (
+							<ButtonNoBorder
+								className={classes.buttonLoadMore}
+								onClick={() => {
+									const { endCursor } = data.lastAppointmentsPatient.pageInfo;
+									fetchMore({
+										variables: {
+											id: userId,
+											limit: 3,
+											cursor: endCursor
+										},
+										updateQuery: (prevResult, { fetchMoreResult }) => {
+											console.log('prev', prevResult);
+											console.log('fetch', fetchMoreResult);
+											fetchMoreResult.lastAppointmentsPatient.edges = [
+												...prevResult.lastAppointmentsPatient.edges,
+												...fetchMoreResult.lastAppointmentsPatient.edges
+											];
+											return fetchMoreResult;
+										}
+									});
+								}}
+							>
+								Load More <ExpandMoreIcon />
+							</ButtonNoBorder>
+						)}
+					</div>
+				)}
+			</Container>
 		</PatLayoutContainer>
 	);
 };

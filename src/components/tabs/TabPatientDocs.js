@@ -199,6 +199,15 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 											href={doc.patientDoc.document}
 											target="_blank"
 											color="primary"
+											onClick={() => {
+												console.log(doc._id)
+												try {
+													doctorViewDoc({variables: {idApt: doc._id}})
+												} catch(err) {
+													console.log(err)
+												}
+												
+											}}
 										>
 											<VisibilityIcon />
 										</IconButton>

@@ -119,7 +119,7 @@ const APPOINTMENTSRESERVE_MUTATION = gql`
 
 const PatReserveScreen = (props) => {
 	const { apDoc, appointment } = props.location.state;
-	const dateDisplay = formatDateDisplay(new Date(appointment.start));
+	const dateDisplay = formatDateDisplay(new Date(!appointment.start ? appointment.appointmentTimeStart : appointment.start));
 	const [ confettiTrigger, setConfettiTrigger ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
@@ -129,8 +129,8 @@ const PatReserveScreen = (props) => {
 	const [ reasonForVisit, setReasonForVisit ] = useState('');
 	const [ symptomTime, setSymptomTime ] = useState('');
 	const [ symptomTimeUnit, setSymptomTimeUnit ] = useState('');
-	const [ isTakingMeds, setIsTakingMeds ] = useState(false);
-	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(false);
+	const [ isTakingMeds, setIsTakingMeds ] = useState(null);
+	const [ hasDrugAllergies, setHasDrugAllergies ] = useState(null);
 	const [ oxygenSaturation, setOxygenStaturation ] = useState('');
 	const [ temperature, setTemperature ] = useState('');
 	const [ tempUnit, setTempUnit ] = useState('');
@@ -591,7 +591,7 @@ const PatReserveScreen = (props) => {
 									// 	'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 									// buttonText: 'Pay',
 									// title: 'Doctor'
-									amount: appointment.amount  ,
+									amount: appointment.amount,
 									end: !appointment.end ? appointment.appointmentTimeEnd : appointment.end,
 									id: !appointment.id ? appointment.accountHCPid._id : appointment.id,
 									idApt: !appointment.idApt ? appointment._id : appointment.idApt,
@@ -605,7 +605,6 @@ const PatReserveScreen = (props) => {
 							showPrice={true}
 							onSubmit={(e) => {
 								e.preventDefault();
-								console.log(symptomsArr)
 								appointmentAdd(
 									{
 										variables: {
@@ -632,8 +631,7 @@ const PatReserveScreen = (props) => {
 											},
 											idApt: !appointment.idApt ? appointment._id : appointment.idApt
 										}
-									}
-								).catch((err) => console.log(err));
+								}).catch((err) => console.log(err));
 								nextStep();
 								setTimeout(() => {
 									setConfettiTrigger(true);
@@ -698,9 +696,9 @@ const PatReserveScreen = (props) => {
 								</Typography>
 								<CardAppointment
 									state={{
-										appointment: appointment ,
-										name: !apDoc.lastName ? appointment.profileHCPid.lastName : apDoc.lastName ,
-										pic: !apDoc.pic ? appointment.accountHCPid.profilePicture : apDoc.pic ,
+										appointment: appointment,
+										name: !apDoc.lastName ? appointment.profileHCPid.lastName : apDoc.lastName,
+										pic: !apDoc.pic ? appointment.accountHCPid.profilePicture : apDoc.pic,
 										buttonText: 'View',
 										title: 'Doctor'
 									}}

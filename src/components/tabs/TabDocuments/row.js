@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import DialogConfirm from '../../groups/DialogConfirm';
-import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../GraphQl/graphQlQuery'
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
@@ -30,20 +30,20 @@ function Row({ value }) {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ patientRemoveDoc, { data } ] = useMutation(DELETEDOC_MUTATION, {
 		refetchQueries: () => [
-		  {
-			query: DOCUMENTS_QUERY,
-			variables: {
-				idPatient: userId
+			{
+				query: DOCUMENTS_QUERY,
+				variables: {
+					idPatient: userId
+				}
+			},
+			{
+				query: MYAPPOINTMENTS_QUERY,
+				variables: {
+					id: userId
+				}
 			}
-		  },
-		  {
-			query: MYAPPOINTMENTS_QUERY,
-			variables: {
-				id: userId
-			}
-		  }
 		]
-	  });
+	});
 
 	console.log(data);
 	console.log(_id);
@@ -56,7 +56,7 @@ function Row({ value }) {
 						<Avatar
 							className={classes.avatar}
 							alt={profileHCPid.firstName}
-							src={ accountHCPid.profilePicture }
+							src={accountHCPid.profilePicture}
 						/>
 						Dr. {profileHCPid.lastName}
 					</div>
@@ -72,10 +72,7 @@ function Row({ value }) {
 				</Grid>
 				<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
 					<Tooltip title="Preview">
-						<IconButton
-							href={ filename }
-							target="_blank"
-						>
+						<IconButton href={filename} target="_blank">
 							<VisibilityIcon color="primary" />
 						</IconButton>
 					</Tooltip>
@@ -92,7 +89,7 @@ function Row({ value }) {
 
 				<DialogConfirm
 					action={patientRemoveDoc}
-					idApt = {_id}
+					idApt={_id}
 					isOpen={dialogConfirmOpen}
 					close={() => setDialogConfirmOpen(false)}
 					actionText="delete this document"

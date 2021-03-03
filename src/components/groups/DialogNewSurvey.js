@@ -97,7 +97,7 @@ const MYAPPOINTMENTS_QUERY = gql`
 //MUTATION TO SEND SURVEY REQUEST
 //PUSH INTO SURVEYS ARRAY > selected = surveysSelected, isNewForPatient = true, isNewForDoctor = false, hasResult = false
 
-const DialogNewSurvey = ({ isOpen, close, title }) => {
+const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ hasError, setHasError ] = useState(false);
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');

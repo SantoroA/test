@@ -7,26 +7,17 @@ import Row from './row';
 import { useTranslation } from 'react-i18next';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
-import { DOCUMENTS_QUERY } from '../GraphQl/graphQlQuery'
+import { DOCUMENTS_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
 //CUSTOM UI
-import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 import ButtonFilled from '../../customUi/ButtonFilled';
 //MATERIAL UI
-import TablePagination from '@material-ui/core/TablePagination';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import Table from '@material-ui/core/Table';
 import Container from '@material-ui/core/Container';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PublishIcon from '@material-ui/icons/Publish';
 
 // no back fazer um if do horario e fazer grater and litle
-
 
 const TabDocuments = () => {
 	const [ page, setPage ] = useState(0);
@@ -149,25 +140,25 @@ const TabDocuments = () => {
 				</Container>
 			)}
 			{error && <ErrorMessage />}
-			 {data && ( 
-			<div>
-			
-				 {data.patientDocuments.edges.length > 0 ? ( 
-					 				 ((rowsPerPage > 0
-										? data.patientDocuments.edges.slice(
-												page * rowsPerPage,
-												page * rowsPerPage + rowsPerPage
-											)
-										: data.patientDocuments.edges).map((doc) => {
-										return <Row value={doc} key={doc._id} />;
-									})) 
-
-				 ) :( 
-				<EmptyDocState />
-				 )}
-			</div>
-			 )} 
-			<DialogUploadDoc isOpen={dialogOpen} title="Upload new document" updateDoc={refetch} close={() => setDialogOpen(false)} />
+			{data && (
+				<div>
+					{data.patientDocuments.edges.length > 0 ? (
+						(rowsPerPage > 0
+							? data.patientDocuments.edges.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+							: data.patientDocuments.edges).map((doc) => {
+							return <Row value={doc} key={doc._id} />;
+						})
+					) : (
+						<EmptyDocState />
+					)}
+				</div>
+			)}
+			<DialogUploadDoc
+				isOpen={dialogOpen}
+				title="Upload new document"
+				updateDoc={refetch}
+				close={() => setDialogOpen(false)}
+			/>
 		</Grid>
 	);
 };

@@ -26,13 +26,29 @@ const useStyles = makeStyles({
 		paddingBottom: '0.5rem'
 	},
 	switchWrapper: {
-		marginTop: '1rem'
+		marginTop: '0.5rem'
 	},
 	reviewWrapper: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
 		marginBottom: '1rem'
+	},
+	errorContainer: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		// height: '20rem',
+		flexDirection: 'column',
+		textAlign: 'center',
+		margin: '0.5rem'
+	},
+	icon: {
+		fontSize: '2rem',
+		marginBottom: '0.5rem'
+	},
+	text: {
+		fontWeight: 'bold'
 	}
 });
 

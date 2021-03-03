@@ -106,7 +106,7 @@ const DocDashboardScreen = () => {
 					<CardMyProfile />
 				</Grid>
 				<Grid item lg={3} md={4} xs={12} className={classes.userOptions}>
-					<DocUserOptions setIsPublic={setIsPublic} isPublic={isPublic} />
+					<DocUserOptions docId={userId} isHCP={true} setIsPublic={setIsPublic} isPublic={isPublic} />
 				</Grid>
 			</Grid>
 			<Divider variant="middle" className={classes.divider} />

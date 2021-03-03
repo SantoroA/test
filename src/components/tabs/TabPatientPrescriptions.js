@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { APPOINTMENTS_QUERY } from '../groups/DialogNewPrescription/index'
+import { APPOINTMENTS_QUERY_PRESCDIALOG } from '../../context/GraphQl/graphQlQuery';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogNewPrescription from '../groups/DialogNewPrescription';
@@ -118,20 +118,22 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 		}
 	});
 	const [ removePrescription ] = useMutation(REMOVEPRESCRIPTION_MUTATION, {
-		refetchQueries: () => [	{
-			  query: PRESCRIPTION_QUERY,
-			  variables: {
-				idHCP,
-				idPatient
-			  }},	
-			  {
-			 query: APPOINTMENTS_QUERY,
-			   variables: {
-			 	idHCP,
-			 	idPatient
-			   },
-			  }		  
-		  ]
+		refetchQueries: () => [
+			{
+				query: PRESCRIPTION_QUERY,
+				variables: {
+					idHCP,
+					idPatient
+				}
+			},
+			{
+				query: APPOINTMENTS_QUERY_PRESCDIALOG,
+				variables: {
+					idHCP,
+					idPatient
+				}
+			}
+		]
 	});
 
 	console.log('data', data);
@@ -162,63 +164,59 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 			{/* IF DATA */}
 			{data && (
 				<div>
-			{data.doctorPrescription.map((presc, i) => {
-				return (
-					<PaperCustomShadow className={classes.paper} key={i}>
-						<Grid container className={classes.wrapper}>
-							<Grid item md={3} sm={4} xs={12}>
-								<div className={classes.name}>
-									<Avatar className={classes.avatar} alt={lastName} src={image} />
-									Dr. {lastName}
-								</div>
-							</Grid>
-							<Grid item md={2} sm={4} xs={6}>
-								{formatDateShort(presc.appointmentTimeStart)}
-							</Grid>
-							<Grid item md={2} sm={4} xs={6}>
-								{convertTime(presc.appointmentTimeStart)} - {convertTime(presc.appointmentTimeEnd)}
-							</Grid>
-							<Grid item md={3} sm={6} xs={6}>
-								<Tooltip title="Download">
-									<Link
-										href={presc.prescription.document}
-										target="_blank"
-										color="primary"
-									>
-										{presc.prescription.name}
-									</Link>
-								</Tooltip>
-							</Grid>
-							<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
-								<Tooltip title="View Prescription">
-									<IconButton href={presc.prescription.document}>
-										<VisibilityIcon color="primary" />
-									</IconButton>
-								</Tooltip>
-								<Tooltip title="Delete">
-									<IconButton
-										onClick={() => {
-											console.log('click prescription')
-											setDialogConfirmOpen(true);
-											setDeleteId(presc._id);
-										}}
-									>
-										<DeleteOutlineIcon color="secondary" />
-									</IconButton>
-								</Tooltip>
-							</Grid>
-						</Grid>
-					</PaperCustomShadow>
-				);
-				
-			})}
-			</div>
+					{data.doctorPrescription.map((presc, i) => {
+						return (
+							<PaperCustomShadow className={classes.paper} key={i}>
+								<Grid container className={classes.wrapper}>
+									<Grid item md={3} sm={4} xs={12}>
+										<div className={classes.name}>
+											<Avatar className={classes.avatar} alt={lastName} src={image} />
+											Dr. {lastName}
+										</div>
+									</Grid>
+									<Grid item md={2} sm={4} xs={6}>
+										{formatDateShort(presc.appointmentTimeStart)}
+									</Grid>
+									<Grid item md={2} sm={4} xs={6}>
+										{convertTime(presc.appointmentTimeStart)} -{' '}
+										{convertTime(presc.appointmentTimeEnd)}
+									</Grid>
+									<Grid item md={3} sm={6} xs={6}>
+										<Tooltip title="Download">
+											<Link href={presc.prescription.document} target="_blank" color="primary">
+												{presc.prescription.name}
+											</Link>
+										</Tooltip>
+									</Grid>
+									<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
+										<Tooltip title="View Prescription">
+											<IconButton href={presc.prescription.document}>
+												<VisibilityIcon color="primary" />
+											</IconButton>
+										</Tooltip>
+										<Tooltip title="Delete">
+											<IconButton
+												onClick={() => {
+													console.log('click prescription');
+													setDialogConfirmOpen(true);
+													setDeleteId(presc._id);
+												}}
+											>
+												<DeleteOutlineIcon color="secondary" />
+											</IconButton>
+										</Tooltip>
+									</Grid>
+								</Grid>
+							</PaperCustomShadow>
+						);
+					})}
+				</div>
 			)}
 
 			<DialogConfirm
-				action={ removePrescription }
-				isOpen={ dialogConfirmOpen }
-				idApt={ deleteId }
+				action={removePrescription}
+				isOpen={dialogConfirmOpen}
+				idApt={deleteId}
 				close={() => setDialogConfirmOpen(false)}
 				actionText="delete this prescription"
 				confirmButton="Delete"
