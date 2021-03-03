@@ -27,10 +27,10 @@ const Preview = ({ patientId, diagnosis, recommendation, exams, patientInfo }) =
 	// 	patientEmail: 'peach@nintendo.com',
 	// 	patientAdress: '1 Mario Street, Kart, 78.584-99, Nintendo.'
 	// };
-	console.log('patientIno',patientInfo)
-	console.log(patientId)
+	console.log('patientIno', patientInfo);
+	console.log(patientId);
 	return (
-		<PaperCustomShadow className={classes.prescriptionPaper}>
+		<PaperCustomShadow className={classes.requestPaper}>
 			<Typography className={classes.bold} variant="h5" color="primary">
 				Dr. {firstName} {lastName}
 			</Typography>
@@ -49,7 +49,8 @@ const Preview = ({ patientId, diagnosis, recommendation, exams, patientInfo }) =
 					<Grid item xs={6}>
 						<Typography className={classes.bold} variant="subtitle1">
 							{console.log(patientInfo.profilePatientid.firstName)}
-							Patient Information: {patientInfo.profilePatientid.firstName} {patientInfo.profilePatientid.lastName}
+							Patient Information: {patientInfo.profilePatientid.firstName}{' '}
+							{patientInfo.profilePatientid.lastName}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
 							Phone: {patientInfo.profilePatientid.phoneNumber}
@@ -58,7 +59,7 @@ const Preview = ({ patientId, diagnosis, recommendation, exams, patientInfo }) =
 							Email: {patientInfo.accountPatientid.username}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
-							Address: 
+							Address:
 							{/* {patientInfo.profilePatientid.adress} */}
 						</Typography>
 					</Grid>

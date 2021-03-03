@@ -2,16 +2,16 @@ import React from 'react';
 import useStyles from './style';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
+import CheckboxStyled from '../../customUi/CheckboxStyled';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 
-const FormSymptoms = ({ symptoms, handleChange }) => {
+const FormSymptoms = ({ symptoms, handleChange, isDisabled }) => {
 	const classes = useStyles();
 
 	return (
@@ -28,11 +28,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 						</Typography>
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.difficultySleeping}
 													onChange={handleChange}
@@ -44,7 +44,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.fatigue}
 													onChange={handleChange}
@@ -56,7 +56,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.fever}
 													onChange={handleChange}
@@ -68,7 +68,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.lossOfAppetite}
 													onChange={handleChange}
@@ -82,11 +82,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.moodChanges}
 													onChange={handleChange}
@@ -98,7 +98,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.nightSweats}
 													onChange={handleChange}
@@ -110,7 +110,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.weightChange}
 													onChange={handleChange}
@@ -133,11 +133,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 						</Typography>
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.congestion}
 													onChange={handleChange}
@@ -149,7 +149,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.difficultySwallowing}
 													onChange={handleChange}
@@ -161,7 +161,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.earDrainage}
 													onChange={handleChange}
@@ -173,7 +173,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.earPain}
 													onChange={handleChange}
@@ -185,7 +185,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.eyeRedness}
 													onChange={handleChange}
@@ -199,11 +199,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.headache}
 													onChange={handleChange}
@@ -216,7 +216,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.hearingLoss}
 													onChange={handleChange}
@@ -228,7 +228,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.nasalDischarge}
 													onChange={handleChange}
@@ -240,7 +240,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.noseBleed}
 													onChange={handleChange}
@@ -252,7 +252,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.soreThroat}
 													onChange={handleChange}
@@ -275,11 +275,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 						</Typography>
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.chestiPain}
 													onChange={handleChange}
@@ -291,7 +291,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.cough}
 													onChange={handleChange}
@@ -303,7 +303,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.decreasedExerciseTolerance}
 													onChange={handleChange}
@@ -315,7 +315,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.wheezing}
 													onChange={handleChange}
@@ -329,11 +329,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.shortnessOfBreath}
 													onChange={handleChange}
@@ -346,7 +346,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.phlegm}
 													onChange={handleChange}
@@ -358,7 +358,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.nasalDischarge}
 													onChange={handleChange}
@@ -381,11 +381,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 						</Typography>
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.abdominalPain}
 													onChange={handleChange}
@@ -397,7 +397,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.bloofInStool}
 													onChange={handleChange}
@@ -409,7 +409,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.constipation}
 													onChange={handleChange}
@@ -423,11 +423,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.diarrhea}
 													onChange={handleChange}
@@ -440,7 +440,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.heartburn}
 													onChange={handleChange}
@@ -452,7 +452,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.nausea}
 													onChange={handleChange}
@@ -476,11 +476,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.bloodInUrine}
 													onChange={handleChange}
@@ -492,7 +492,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.discomfortUrination}
 													onChange={handleChange}
@@ -504,7 +504,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.frequentUrination}
 													onChange={handleChange}
@@ -518,11 +518,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.irregularPeriods}
 													onChange={handleChange}
@@ -535,7 +535,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.vaginalBleeding}
 													onChange={handleChange}
@@ -547,7 +547,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.vaginalDischarge}
 													onChange={handleChange}
@@ -571,11 +571,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.dizzy}
 													onChange={handleChange}
@@ -587,7 +587,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.lossOfConsciousness}
 													onChange={handleChange}
@@ -599,7 +599,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.memoryLoss}
 													onChange={handleChange}
@@ -613,11 +613,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.numbness}
 													onChange={handleChange}
@@ -630,7 +630,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.tremors}
 													onChange={handleChange}
@@ -642,7 +642,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.visionChanges}
 													onChange={handleChange}
@@ -666,11 +666,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.bites}
 													onChange={handleChange}
@@ -682,7 +682,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.bleeding}
 													onChange={handleChange}
@@ -694,7 +694,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.bruising}
 													onChange={handleChange}
@@ -706,7 +706,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.itching}
 													onChange={handleChange}
@@ -720,11 +720,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.skinRashes}
 													onChange={handleChange}
@@ -737,7 +737,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.sores}
 													onChange={handleChange}
@@ -749,7 +749,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.swelling}
 													onChange={handleChange}
@@ -773,11 +773,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.backPain}
 													onChange={handleChange}
@@ -789,7 +789,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.jointStiffness}
 													onChange={handleChange}
@@ -801,7 +801,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.limitedMobility}
 													onChange={handleChange}
@@ -815,11 +815,11 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.musclePain}
 													onChange={handleChange}
@@ -832,7 +832,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.muscleWeakness}
 													onChange={handleChange}
@@ -844,7 +844,7 @@ const FormSymptoms = ({ symptoms, handleChange }) => {
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={symptoms.muscleSwelling}
 													onChange={handleChange}

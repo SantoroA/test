@@ -370,7 +370,7 @@ const PatReserveScreen = (props) => {
 							scroll.scrollToTop({ delay: 0, duration: 400 });
 						}}
 					>
-						<FormSymptoms symptoms={symptoms} handleChange={handleChange} />
+						<FormSymptoms isDisabled={false} symptoms={symptoms} handleChange={handleChange} />
 						<Grid container className={classes.buttonWrapper}>
 							<Grid item xs={5} sm={3}>
 								<ButtonNoBorder
@@ -411,6 +411,7 @@ const PatReserveScreen = (props) => {
 						}}
 					>
 						<FormHealthProfile
+							isDisabled={false}
 							isTakingMeds={isTakingMeds}
 							setIsTakingMeds={setIsTakingMeds}
 							hasDrugAllergies={hasDrugAllergies}

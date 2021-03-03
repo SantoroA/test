@@ -74,6 +74,9 @@ const useStyles = makeStyles({
 	label: {
 		'& .MuiFormControlLabel-label': {
 			textAlign: 'start'
+		},
+		'& .Mui-disabled': {
+			color: '#717171'
 		}
 	}
 });

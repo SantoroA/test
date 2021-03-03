@@ -3,16 +3,17 @@ import useStyles from './style';
 //CUSTOM UI
 import ToggleYesNoButton from '../../customUi/ToggleYesNoButton';
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
+import CheckboxStyled from '../../customUi/CheckboxStyled';
 //MATERIAL UI
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const FormHealthProfile = ({
+	isDisabled,
 	isTakingMeds,
 	setIsTakingMeds,
 	hasDrugAllergies,
@@ -32,6 +33,7 @@ const FormHealthProfile = ({
 					</Grid>
 					<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
 						<ToggleYesNoButton
+							disabled={isDisabled}
 							selected={isTakingMeds === 'yes'}
 							value="is-taking-meds"
 							onClick={() => setIsTakingMeds('yes')}
@@ -41,6 +43,7 @@ const FormHealthProfile = ({
 					</Grid>
 					<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
 						<ToggleYesNoButton
+							disabled={isDisabled}
 							selected={isTakingMeds === 'no'}
 							value="is-not-taking-meds"
 							onClick={() => setIsTakingMeds('no')}
@@ -59,6 +62,7 @@ const FormHealthProfile = ({
 					</Grid>
 					<Grid className={classes.buttonOutlined} item xs={5} sm={4}>
 						<ToggleYesNoButton
+							disabled={isDisabled}
 							value="has-drug-alergies"
 							selected={hasDrugAllergies === 'yes'}
 							onClick={() => setHasDrugAllergies('yes')}
@@ -68,6 +72,7 @@ const FormHealthProfile = ({
 					</Grid>
 					<Grid item className={classes.buttonOutlined} xs={5} sm={4}>
 						<ToggleYesNoButton
+							disabled={isDisabled}
 							value="doesnt-have-drug-alergies"
 							selected={hasDrugAllergies === 'no'}
 							onClick={() => setHasDrugAllergies('no')}
@@ -85,11 +90,11 @@ const FormHealthProfile = ({
 						</Typography>
 						<Grid container>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.abnormalThyroid}
 													onChange={handleChangeMedCondition}
@@ -101,7 +106,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.anxiety}
 													onChange={handleChangeMedCondition}
@@ -113,7 +118,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.arthritis}
 													onChange={handleChangeMedCondition}
@@ -125,7 +130,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.asthma}
 													onChange={handleChangeMedCondition}
@@ -137,7 +142,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.cronicKidneyDisease}
 													onChange={handleChangeMedCondition}
@@ -149,7 +154,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.chronicPain}
 													onChange={handleChangeMedCondition}
@@ -161,7 +166,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.COPD}
 													onChange={handleChangeMedCondition}
@@ -173,7 +178,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.depression}
 													onChange={handleChangeMedCondition}
@@ -185,7 +190,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.diabetes}
 													onChange={handleChangeMedCondition}
@@ -197,7 +202,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.foreignTravel}
 													onChange={handleChangeMedCondition}
@@ -209,7 +214,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.heartDisease}
 													onChange={handleChangeMedCondition}
@@ -221,7 +226,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.hemophilia}
 													onChange={handleChangeMedCondition}
@@ -233,7 +238,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.highBloodPressure}
 													onChange={handleChangeMedCondition}
@@ -245,7 +250,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.highCholesterol}
 													onChange={handleChangeMedCondition}
@@ -257,7 +262,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.historyOfFainting}
 													onChange={handleChangeMedCondition}
@@ -271,11 +276,11 @@ const FormHealthProfile = ({
 								</FormControl>
 							</Grid>
 							<Grid sm={6} className={classes.column} item>
-								<FormControl component="fieldset">
+								<FormControl disabled={isDisabled} component="fieldset">
 									<FormGroup>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.historyOfFalls}
 													onChange={handleChangeMedCondition}
@@ -287,7 +292,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.historyOfSkinCancer}
 													onChange={handleChangeMedCondition}
@@ -299,7 +304,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.historyOfSTD}
 													onChange={handleChangeMedCondition}
@@ -311,7 +316,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.historyOfStroke}
 													onChange={handleChangeMedCondition}
@@ -323,7 +328,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.hospitalized}
 													onChange={handleChangeMedCondition}
@@ -335,7 +340,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.insomnia}
 													onChange={handleChangeMedCondition}
@@ -347,7 +352,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.ironDeficiency}
 													onChange={handleChangeMedCondition}
@@ -359,7 +364,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.jointReplacement}
 													onChange={handleChangeMedCondition}
@@ -371,7 +376,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.nicotineDependance}
 													onChange={handleChangeMedCondition}
@@ -383,7 +388,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.obesity}
 													onChange={handleChangeMedCondition}
@@ -395,7 +400,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.prediabetes}
 													onChange={handleChangeMedCondition}
@@ -407,7 +412,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.pregnant}
 													onChange={handleChangeMedCondition}
@@ -419,7 +424,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.rheumatoidArthritis}
 													onChange={handleChangeMedCondition}
@@ -431,7 +436,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.seasonalAllergies}
 													onChange={handleChangeMedCondition}
@@ -443,7 +448,7 @@ const FormHealthProfile = ({
 										/>
 										<FormControlLabel
 											control={
-												<Checkbox
+												<CheckboxStyled
 													color="primary"
 													checked={medConditions.substanceAbuse}
 													onChange={handleChangeMedCondition}

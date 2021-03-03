@@ -3,9 +3,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const CheckboxStyled = withStyles({
 	root: {
-		color: '#00A99D',
-		'&$checked': {
-			color: '#00A99D'
+		'&.Mui-disabled': {
+			'&.Mui-checked': {
+				color: '#07B597'
+			}
 		}
 	}
 })((props) => <Checkbox color="default" {...props} />);

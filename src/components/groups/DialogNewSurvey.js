@@ -100,10 +100,7 @@ const SURVEYDOCTORADD_MUTATION = gql`
 	mutation AddSurvey($idApt: ID!, $selected: Selected) {
 		doctorAddNewSurvey(idApt: $idApt, selected: $selected)
 	}
-`; 
-
-
-
+`;
 
 //MUTATION TO SEND SURVEY REQUEST
 //PUSH INTO SURVEYS ARRAY > selected = surveysSelected, isNewForPatient = true, isNewForDoctor = false, hasResult = false
@@ -114,10 +111,8 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const { loading, error, data } = useQuery(SURVEY_QUERY, {
 		variables: { idHCP: userId, idPatient }
-	 });
-	 const [doctorAddNewSurvey] = useMutation(SURVEYDOCTORADD_MUTATION, {
-
-	 });
+	});
+	const [ doctorAddNewSurvey ] = useMutation(SURVEYDOCTORADD_MUTATION, {});
 
 	const [ surveysSelected, setSurveysSelected ] = useState({
 		reason: false,
@@ -214,24 +209,22 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 			aria-labelledby="upload-document"
 			aria-describedby="upload-document"
 		>
-				{loading && (
-				<Container className={classes.emptyState}>
-					<Loader type="TailSpin" color="primary" height={80} width={80} />
-				</Container>
-			)}
-			{error && <ErrorMessage />}
-			{data && (
 			<form
-				onSubmit={(e) => {
+				onSubmit={async (e) => {
 					e.preventDefault();
-					doctorAddNewSurvey({
-						variables: {
-							idApt: appointmentSelectedId,
-							selected: surveysSelected}
-					})
-					refetch();
-					close()
-
+					try {
+						await doctorAddNewSurvey({
+							variables: {
+								idApt: appointmentSelectedId,
+								selected: surveysSelected
+							}
+						});
+						refetch();
+						close();
+					} catch (err) {
+						console.log(err);
+						setHasError(true);
+					}
 				}}
 			>
 				<Grid container className={classes.wrapper}>
@@ -242,114 +235,123 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 						</IconButton>
 					</Grid>
 					<Divider className={classes.divider} />
-					<Grid className={classes.section} item>
-						<FormControl variant="outlined" fullWidth required>
-							<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
-							<Select
-								labelId="apt-select-label"
-								value={appointmentSelectedId}
-								onChange={(e) => setAppointmentSelectedId(e.target.value)}
-								label="Select Appointment"
-							>
-								{data.doctorSurvey.map((apt, i) => {
-									return (
-										<MenuItem key={i} value={apt._id}>
-											{formatDateShort(apt.appointmentTimeStart)} -{' '}
-											{convertTime(apt.appointmentTimeStart)}
-										</MenuItem>
-									);
-								})}
-							</Select>
-						</FormControl>
-					</Grid>
-
-					<Grid className={classes.section} item>
-						<Typography color="textSecondary">Select all that apply*</Typography>
-						<PaperCustomShadow className={classes.surveySection}>
-							<Grid container>
-								<Grid sm={6} className={classes.column} item>
-									<FormControl component="fieldset">
-										<FormGroup>
-											<FormControlLabel
-												control={
-													<Checkbox
-														color="primary"
-														checked={surveysSelected.symptoms}
-														onChange={handleCheck}
-														name="symptoms"
-													/>
-												}
-												className={classes.label}
-												label="Symptoms"
-											/>
-											<FormControlLabel
-												control={
-													<Checkbox
-														color="primary"
-														checked={surveysSelected.oxygen}
-														onChange={handleCheck}
-														name="oxygen"
-													/>
-												}
-												className={classes.label}
-												label="Saturation level"
-											/>
-											<FormControlLabel
-												control={
-													<Checkbox
-														color="primary"
-														checked={surveysSelected.temperature}
-														onChange={handleCheck}
-														name="temperature"
-													/>
-												}
-												className={classes.label}
-												label="Temperature"
-											/>
-										</FormGroup>
-									</FormControl>
-								</Grid>
-								<Grid sm={6} className={classes.column} item>
-									<FormControl component="fieldset">
-										<FormGroup>
-											<FormControlLabel
-												control={
-													<Checkbox
-														color="primary"
-														checked={surveysSelected.reason}
-														onChange={handleCheck}
-														name="reason"
-													/>
-												}
-												className={classes.label}
-												label="Reason for visit"
-											/>
-											<FormControlLabel
-												control={
-													<Checkbox
-														color="primary"
-														checked={surveysSelected.healthProfile}
-														onChange={handleCheck}
-														name="healthProfile"
-													/>
-												}
-												className={classes.label}
-												label="Health Profile"
-											/>
-										</FormGroup>
-									</FormControl>
-								</Grid>
+					{loading && (
+						<Container className={classes.emptyState}>
+							<Loader type="TailSpin" color="primary" height={80} width={80} />
+						</Container>
+					)}
+					{(error || hasError) && <ErrorMessage />}
+					{data && (
+						<div>
+							<Grid className={classes.section} item>
+								<FormControl variant="outlined" fullWidth required>
+									<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
+									<Select
+										labelId="apt-select-label"
+										value={appointmentSelectedId}
+										onChange={(e) => setAppointmentSelectedId(e.target.value)}
+										label="Select Appointment"
+									>
+										{data.doctorSurvey.map((apt, i) => {
+											return (
+												<MenuItem key={i} value={apt._id}>
+													{formatDateShort(apt.appointmentTimeStart)} -{' '}
+													{convertTime(apt.appointmentTimeStart)}
+												</MenuItem>
+											);
+										})}
+									</Select>
+								</FormControl>
 							</Grid>
-						</PaperCustomShadow>
-					</Grid>
-					<Grid className={classes.section} item>
-						<ButtonFilled fullWidth type="submit">
-							Request
-						</ButtonFilled>
-					</Grid>
+
+							<Grid className={classes.section} item>
+								<Typography color="textSecondary">Select all that apply*</Typography>
+								<PaperCustomShadow className={classes.surveySection}>
+									<Grid container>
+										<Grid sm={6} className={classes.column} item>
+											<FormControl component="fieldset">
+												<FormGroup>
+													<FormControlLabel
+														control={
+															<Checkbox
+																color="primary"
+																checked={surveysSelected.symptoms}
+																onChange={handleCheck}
+																name="symptoms"
+															/>
+														}
+														className={classes.label}
+														label="Symptoms"
+													/>
+													<FormControlLabel
+														control={
+															<Checkbox
+																color="primary"
+																checked={surveysSelected.oxygen}
+																onChange={handleCheck}
+																name="oxygen"
+															/>
+														}
+														className={classes.label}
+														label="Saturation level"
+													/>
+													<FormControlLabel
+														control={
+															<Checkbox
+																color="primary"
+																checked={surveysSelected.temperature}
+																onChange={handleCheck}
+																name="temperature"
+															/>
+														}
+														className={classes.label}
+														label="Temperature"
+													/>
+												</FormGroup>
+											</FormControl>
+										</Grid>
+										<Grid sm={6} className={classes.column} item>
+											<FormControl component="fieldset">
+												<FormGroup>
+													<FormControlLabel
+														control={
+															<Checkbox
+																color="primary"
+																checked={surveysSelected.reason}
+																onChange={handleCheck}
+																name="reason"
+															/>
+														}
+														className={classes.label}
+														label="Reason for visit"
+													/>
+													<FormControlLabel
+														control={
+															<Checkbox
+																color="primary"
+																checked={surveysSelected.healthProfile}
+																onChange={handleCheck}
+																name="healthProfile"
+															/>
+														}
+														className={classes.label}
+														label="Health Profile"
+													/>
+												</FormGroup>
+											</FormControl>
+										</Grid>
+									</Grid>
+								</PaperCustomShadow>
+							</Grid>
+							<Grid className={classes.section} item>
+								<ButtonFilled fullWidth type="submit">
+									Request
+								</ButtonFilled>
+							</Grid>
+						</div>
+					)}
 				</Grid>
 			</form>
-			)}
 		</Dialog>
 	);
 };

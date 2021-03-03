@@ -323,6 +323,23 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 							);
 						});
 					})}
+					<DialogConfirm
+						action={doctorRemoveLabTest({
+							variables: {
+								idApt,
+								oldFile
+							}
+						})}
+						idApt={idApt}
+						oldFile={oldFile}
+						isOpen={dialogConfirmOpen}
+						close={() => {
+							setDialogConfirmOpen(false);
+							setOldFile('');
+						}}
+						actionText="delete this lab test request"
+						confirmButton="Delete"
+					/>
 				</div>
 			)}
 			<DialogNewLabTest
@@ -330,20 +347,6 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 				idPatient={idPatient}
 				isOpen={dialogTestOpen}
 				close={() => setDialogTestOpen(false)}
-			/>
-			<DialogConfirm
-				action={doctorRemoveLabTest({variables: {
-					idApt, oldFile 
-				}})}
-				idApt={idApt}
-				oldFile={oldFile}
-				isOpen={dialogConfirmOpen}
-				close={() => {
-					setDialogConfirmOpen(false);
-					setOldFile('');
-				}}
-				actionText="delete this lab test request"
-				confirmButton="Delete"
 			/>
 		</div>
 	);

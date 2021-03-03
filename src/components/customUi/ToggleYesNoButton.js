@@ -13,6 +13,16 @@ const ToggleYesNoButton = styled(ToggleButton)({
 		background: '#07B597',
 		color: 'white'
 	},
+	'&.Mui-disabled': {
+		'&.Mui-selected': {
+			background: '#96ccbd',
+			borderColor: '#96ccbd',
+			color: 'white'
+		},
+		borderColor: '#A0A4A8'
+		// background: '#07B597',
+		// color: 'white'
+	},
 
 	'&:hover': {
 		background: '#D7FEF1',

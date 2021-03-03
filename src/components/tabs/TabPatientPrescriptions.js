@@ -210,19 +210,18 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 							</PaperCustomShadow>
 						);
 					})}
+					<DialogConfirm
+						action={removePrescription({
+							variables: { idApt: deleteId }
+						})}
+						isOpen={dialogConfirmOpen}
+						idApt={deleteId}
+						close={() => setDialogConfirmOpen(false)}
+						actionText="delete this prescription"
+						confirmButton="Delete"
+					/>
 				</div>
 			)}
-
-			<DialogConfirm
-				action={removePrescription({
-					variables: {idApt: deleteId}
-				})}
-				isOpen={dialogConfirmOpen}
-				idApt={deleteId}
-				close={() => setDialogConfirmOpen(false)}
-				actionText="delete this prescription"
-				confirmButton="Delete"
-			/>
 			<DialogNewPrescription
 				idHCP={idHCP}
 				idPatient={idPatient}

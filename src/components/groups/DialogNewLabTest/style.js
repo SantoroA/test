@@ -116,9 +116,10 @@ const useStyles = makeStyles({
 	medInfo: {
 		fontWeight: 'bold'
 	},
-	prescriptionPaper: {
+	requestPaper: {
 		padding: '1rem',
-		margin: '0.5rem'
+		margin: '0.5rem',
+		width: '210mm'
 	},
 	patientBox: {
 		padding: '1rem',

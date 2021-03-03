@@ -202,10 +202,6 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 
 	const classes = useStyles();
 
-	const handleChange = (event) => {
-		setAppointmentSelectedId(event.target.value);
-	};
-
 	const onFileChange = (e) => {
 		let file = e.target.files[0];
 		let reader = new FileReader();

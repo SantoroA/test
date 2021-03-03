@@ -18,9 +18,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Container from '@material-ui/core/Container';
 
-//QUERY DOCTOR AND PATIENT INFORMATION
-
-const Preview = ({ patientId, diagnosis, recommendation, medicineList, patientInfo }) => {
+const Preview = ({ diagnosis, recommendation, medicineList, patientInfo }) => {
 	const { state: { firstName, lastName, email, phoneNumber, country, city, zipcode, street, num } } = useContext(
 		DocProfileContext
 	);
