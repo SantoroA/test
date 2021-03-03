@@ -332,7 +332,9 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 				close={() => setDialogTestOpen(false)}
 			/>
 			<DialogConfirm
-				action={doctorRemoveLabTest}
+				action={doctorRemoveLabTest({variables: {
+					idApt, oldFile 
+				}})}
 				idApt={idApt}
 				oldFile={oldFile}
 				isOpen={dialogConfirmOpen}

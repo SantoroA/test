@@ -106,27 +106,29 @@ const TabPatientAppointments = () => {
 				{data && (
 					<div>
 						{data.patientAppointments.length > 0 ? (
-							<ShowAppData
+							data.patientAppointments.map((apt) => {
+								return <ShowAppData
 								setDialogAppDetailOpen={setDialogAppDetailOpen}
 								appointments={[
 									{
-										profilePatientid: data.patientAppointments[0].profilePatientid,
-										_id: data.patientAppointments[0]._id,
-										appointmentTimeStart: data.patientAppointments[0].appointmentTimeStart,
-										appointmentTimeEnd: data.patientAppointments[0].appointmentTimeEnd,
+										profilePatientid: apt.profilePatientid,
+										_id: apt._id,
+										appointmentTimeStart: apt.appointmentTimeStart,
+										appointmentTimeEnd: apt.appointmentTimeEnd,
 										accountHCPid: {
-											profilePicture: data.patientAppointments[0].accountHCPid.profilePicture
+											profilePicture: apt.accountHCPid.profilePicture
 										},
 										profileHCPid: {
-											_id: data.patientAppointments[0].profileHCPid._id,
-											firstName: data.patientAppointments[0].profileHCPid.firstName,
-											lastName: data.patientAppointments[0].profileHCPid.lastName
+											_id: apt.profileHCPid._id,
+											firstName: apt.profileHCPid.firstName,
+											lastName: apt.profileHCPid.lastName
 										},
-										amount: data.patientAppointments[0].amount
+										amount: apt.amount
 									}
 								]}
 								setAppointmentToView={setAppointmentToView}
 							/>
+							})
 						) : (
 							<EmptyAppState />
 						)}

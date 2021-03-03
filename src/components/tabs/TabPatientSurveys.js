@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { convertTime, formatDateShort } from '../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../context/DocProfileContext';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { SURVEY_QUERY } from '../../context/GraphQl/graphQlQuery';
 import ErrorMessage from '../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 import DialogNewSurvey from '../groups/DialogNewSurvey';
@@ -80,29 +81,18 @@ const useStyles = makeStyles({
 	}
 });
 
-const DOCUMENTS_QUERY = gql`
-	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
-		patientLabTestForDoctors(idHCP: $idHCP, idPatient: $idPatient) {
-			accountPatientid {
-				profilePicture
-			}
-			idApt
-			profilePatientid {
-				_id
-				firstName
-				lastName
-			}
-			amount
-			reasonForVisit
-			patientDoc
-			labTest {
-				doctorRequest
-				status
-				patientResult
-			}
-		}
-	}
+const VIEW_MUTATION = gql`
+mutation UpdateSurveyView($idApt: ID!, $idSurvey: ID!) {
+	doctorViewSurvey(idApt: $idApt, idSurvey: $idSurvey) 
+}
 `;
+
+const DELETE_MUTATION = gql`
+mutation DeleteSurvey($idApt: ID!, $idSurvey: ID!) {
+	doctorRemoveSurvey(idApt: $idApt, idSurvey: $idSurvey) 
+}
+`;
+
 
 //MAIN FUNCTION
 
@@ -111,14 +101,33 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const [ deleteId, setDeleteId ] = useState('');
-	const [ oldFile, setOldFile ] = useState('');
+	const [ surveyId, setSurveyId ] = useState('');
 	const classes = useStyles();
-	const { loading, error, data, fetchMore } = useQuery(DOCUMENTS_QUERY, {
+	const { loading, error, data, refetch } = useQuery(SURVEY_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
 		}
 	});
+	const [doctorViewSurvey] = useMutation(VIEW_MUTATION, {
+		refetchQueries: () => [				{
+			query: SURVEY_QUERY,
+			variables: {
+			  idHCP,
+			  idPatient
+			}}
+		]
+	});
+	const [doctorRemoveSurvey] = useMutation(DELETE_MUTATION, {
+		refetchQueries: () => [				{
+			query: SURVEY_QUERY,
+			variables: {
+			  idHCP,
+			  idPatient
+			}}
+		]
+	})
+	
 
 	console.log('data', data);
 
@@ -252,12 +261,12 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-
-			{appointments.map((apt) => {
-				return apt.surveys.map((survey, i) => {
+		{ data && (
+			data.doctorSurvey.map((apt) => {
+				return apt.survey.map((surveis, i) => {
 					return (
 						<PaperCustomShadow
-							style={{ backgroundColor: `${survey.isNewForDoctor && '#D7FEF1'}` }}
+							style={{ backgroundColor: `${surveis.isNewForDoctor && '#D7FEF1'}` }}
 							className={classes.paper}
 							key={i}
 						>
@@ -267,13 +276,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 										<Avatar
 											className={classes.avatar}
 											alt={lastName}
-											src={
-												image.includes('http') ? (
-													image
-												) : (
-													`http://localhost:10101/dianurse/v1/profile/static/images/${image}`
-												)
-											}
+											src={ image }
 										/>
 										Dr. {lastName}
 									</div>
@@ -286,20 +289,28 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 								</Grid>
 								<Grid item md={3} sm={6} xs={6}>
 									<Typography>
-										{survey.selected.reason && 'Reason for visit'}{' '}
-										{survey.selected.symptoms && 'Symptoms'}{' '}
-										{survey.selected.healthProfile && 'Health Profile'}{' '}
-										{survey.selected.oxygen && 'Oxygen'}{' '}
-										{survey.selected.temperature && 'Temperature'}
+										{surveis.selected.reason && 'Reason for visit'}{' '}
+										{surveis.selected.symptoms && 'Symptoms'}{' '}
+										{surveis.selected.healthProfile && 'Health Profile'}{' '}
+										{surveis.selected.oxygen && 'Oxygen'}{' '}
+										{surveis.selected.temperature && 'Temperature'}
 									</Typography>
 								</Grid>
 								<Grid item md={2} sm={6} xs={6} className={classes.iconsWrapper}>
-									{survey.hasResult ? (
+									{surveis.hasResult ? (
 										<Tooltip title="View result">
 											<IconButton
-												href={`http://localhost:10101/dianurse/v1/download/static/docs/private/${survey.resultLink}`}
+												href={surveis.resultLink}
 												target="_blank"
 												color="primary"
+												onClick={() => {
+													doctorViewSurvey({
+														variables: {
+															idApt: apt._id,
+															idSurvey: surveis._id
+														}
+													})
+												}}
 											>
 												<VisibilityIcon />
 											</IconButton>
@@ -309,7 +320,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 											<VisibilityIcon />
 										</IconButton>
 									)}
-									{survey.hasResult ? (
+									{surveis.hasResult ? (
 										<Tooltip title="Result received">
 											<CheckCircleOutlineIcon color="primary" className={classes.checkIcon} />
 										</Tooltip>
@@ -321,8 +332,17 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 									<Tooltip title="Delete request">
 										<IconButton
 											onClick={() => {
-												setOldFile(survey.requestLink);
+												// setOldFile(surveis.requestLink);
+												setSurveyId(surveis._id)
+												setDeleteId(apt._id)
 												setDialogConfirmOpen(true);
+													// doctorRemoveSurvey({
+													// 	variables: {
+													// 		idApt: apt._id,
+													// 		idSurvey: surveis._id
+													// 	}
+													// })
+											
 											}}
 										>
 											<DeleteOutlineIcon color="secondary" />
@@ -331,22 +351,31 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 								</Grid>
 							</Grid>
 						</PaperCustomShadow>
+						
 					);
 				});
-			})}
+				
+			})
+			)}
 
 			<DialogConfirm
-				action={() => {}}
+				action={() => {doctorRemoveSurvey({
+					variables: {
+						idApt: deleteId,
+						idSurvey: surveyId}
+				})}}
 				isOpen={dialogConfirmOpen}
 				close={() => setDialogConfirmOpen(false)}
 				actionText="Delete this survey"
 				confirmButton="Delete"
+				
 			/>
 			<DialogNewSurvey
 				idHCP={idHCP}
 				idPatient={idPatient}
 				isOpen={dialogSurveyOpen}
 				close={() => setDialogSurveyOpen(false)}
+				refetch={refetch}
 			/>
 		</div>
 	);

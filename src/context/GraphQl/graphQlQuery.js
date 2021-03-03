@@ -218,6 +218,271 @@ const REVIEW_QUERY = gql`
 	}
 `;
 
+const SURVEY_QUERY = gql`
+	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
+		doctorSurvey(idHCP: $idHCP, idPatient: $idPatient) {
+			profileHCPid,
+			_id,
+			appointmentTimeStart,
+			appointmentTimeEnd,
+			amount,
+			reasonForVisit,
+			profilePatientid {
+				firstName
+				lastName
+			},
+			accountPatientid {
+				profilePicture
+			},
+			survey {
+				_id
+				selected {
+					reason,
+					healthProfile,
+					oxygen,
+					symptoms,
+					temperature
+				},
+				results {
+					reasonForVisit,
+					symptomTime,
+					symptomTimeUnit,
+					isTakingMeds,
+					hasDrugAllergies,
+					oxygenSaturation,
+					temperature,
+					tempUnit,
+					otherInfo,
+					symptoms {
+						difficultySleeping,
+						fatigue,
+						fever,
+						lossOfAppetite,
+						moodChanges,
+						nightSweats,
+						weightChange,
+						congestion,
+						difficultySwallowing,
+						earDrainage,
+						earPain,
+						eyeRedness,
+						noseBleed,
+						soreThroat,
+						headache,
+						hearingLoss,
+						nasalDischarge,
+						chestPain,
+						cough,
+						decreasedExerciseTolerance,
+						palpitations,
+						shortnessOfBreath,
+						phlegm,
+						wheezing,
+						abdominalPain,
+						bloodInStool,
+						constipation,
+						diarrhea,
+						heartburn,
+						nausea,
+						bloodInUrine,
+						discomfortUrination,
+						frequentUrination,
+						irregularPeriods,
+						vaginalBleeding,
+						vaginalDischarge,
+						dizzy,
+						lossOfConsciousness,
+						memoryLoss,
+						numbness,
+						tremors,
+						visionChanges,
+						bites,
+						bleeding,
+						bruising,
+						itching,
+						skinRashes,
+						sores,
+						swelling,
+						backPain,
+						jointStiffness,
+						limitedMobility,
+						musclePain,
+						muscleWeakness,
+						muscleSwelling
+					},
+					medConditions {
+						abnormalThyroid,
+						anxiety,
+						arthritis,
+						asthma,
+						cancer,
+						cronicKidneyDisease,
+						chronicPain,
+						COPD,
+						depression,
+						diabetes,
+						foreignTravel,
+						heartDisease,
+						hemophilia,
+						highBloodPressure,
+						highCholesterol,
+						historyOfFainting,
+						historyOfFalls,
+						historyOfSkinCancer,
+						historyOfSTD,
+						historyOfStroke,
+						hospitalized,
+						insomnia,
+						ironDeficiency,
+						jointReplacement,
+						nicotineDependance,
+						obesity,
+						prediabetes,
+						pregnant,
+						rheumatoidArthritis,
+						seasonalAllergies,
+						substanceAbuse
+					}
+				},
+				hasResult,
+				isNewForDoctor
+			}
+		}
+	}
+`;
+const SURVEYPATIENT_QUERY = gql`
+	query GetAppointments($idPatient: ID!) {
+		patientSurvey(idPatient: $idPatient) {
+			profilePatientid,
+			_id,
+			appointmentTimeStart,
+			appointmentTimeEnd,
+			amount,
+			reasonForVisit,
+			profileHCPid {
+				firstName
+				lastName
+			},
+			accountHCPid {
+				profilePicture
+			},
+			survey {
+				_id
+				selected {
+					reason,
+					healthProfile,
+					oxygen,
+					symptoms,
+					temperature
+				},
+				results {
+					reasonForVisit,
+					symptomTime,
+					symptomTimeUnit,
+					isTakingMeds,
+					hasDrugAllergies,
+					oxygenSaturation,
+					temperature,
+					tempUnit,
+					otherInfo,
+					symptoms {
+						difficultySleeping,
+						fatigue,
+						fever,
+						lossOfAppetite,
+						moodChanges,
+						nightSweats,
+						weightChange,
+						congestion,
+						difficultySwallowing,
+						earDrainage,
+						earPain,
+						eyeRedness,
+						noseBleed,
+						soreThroat,
+						headache,
+						hearingLoss,
+						nasalDischarge,
+						chestPain,
+						cough,
+						decreasedExerciseTolerance,
+						palpitations,
+						shortnessOfBreath,
+						phlegm,
+						wheezing,
+						abdominalPain,
+						bloodInStool,
+						constipation,
+						diarrhea,
+						heartburn,
+						nausea,
+						bloodInUrine,
+						discomfortUrination,
+						frequentUrination,
+						irregularPeriods,
+						vaginalBleeding,
+						vaginalDischarge,
+						dizzy,
+						lossOfConsciousness,
+						memoryLoss,
+						numbness,
+						tremors,
+						visionChanges,
+						bites,
+						bleeding,
+						bruising,
+						itching,
+						skinRashes,
+						sores,
+						swelling,
+						backPain,
+						jointStiffness,
+						limitedMobility,
+						musclePain,
+						muscleWeakness,
+						muscleSwelling
+					},
+					medConditions {
+						abnormalThyroid,
+						anxiety,
+						arthritis,
+						asthma,
+						cancer,
+						cronicKidneyDisease,
+						chronicPain,
+						COPD,
+						depression,
+						diabetes,
+						foreignTravel,
+						heartDisease,
+						hemophilia,
+						highBloodPressure,
+						highCholesterol,
+						historyOfFainting,
+						historyOfFalls,
+						historyOfSkinCancer,
+						historyOfSTD,
+						historyOfStroke,
+						hospitalized,
+						insomnia,
+						ironDeficiency,
+						jointReplacement,
+						nicotineDependance,
+						obesity,
+						prediabetes,
+						pregnant,
+						rheumatoidArthritis,
+						seasonalAllergies,
+						substanceAbuse
+					}
+				},
+				hasResult,
+				isNewForDoctor
+			}
+		}
+	}
+`;
+
 export {
 	LASTAPPOINTMENT_DOCTOR_QUERY,
 	MYAPPOINTMENTS_QUERY,
@@ -226,5 +491,7 @@ export {
 	APPOINTMENTS_QUERY_TESTDIALOG,
 	APPOINTMENTS_QUERY_PRESCDIALOG,
 	APPOINTMENTS_QUERY_DOCLIST,
-	REVIEW_QUERY
+	REVIEW_QUERY,
+	SURVEY_QUERY,
+	SURVEYPATIENT_QUERY
 };

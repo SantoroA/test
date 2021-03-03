@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { formatDateShort, convertTime } from '../../helpers/dateHelper';
 import { Context as AuthContext } from '../../context/AuthContext';
-import { useQuery, gql } from '@apollo/client';
+import { SURVEY_QUERY } from '../../context/GraphQl/graphQlQuery';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import dianurseApi from '../../api/dianurseApi';
@@ -27,6 +28,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles({
 	wrapper: {
@@ -94,16 +96,28 @@ const MYAPPOINTMENTS_QUERY = gql`
 	}
 `;
 
+const SURVEYDOCTORADD_MUTATION = gql`
+	mutation AddSurvey($idApt: ID!, $selected: Selected) {
+		doctorAddNewSurvey(idApt: $idApt, selected: $selected)
+	}
+`; 
+
+
+
+
 //MUTATION TO SEND SURVEY REQUEST
 //PUSH INTO SURVEYS ARRAY > selected = surveysSelected, isNewForPatient = true, isNewForDoctor = false, hasResult = false
 
-const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient }) => {
+const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ hasError, setHasError ] = useState(false);
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
-	// const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
-	// 	variables: { id: userId, cursor: null }
-	// });
+	const { loading, error, data } = useQuery(SURVEY_QUERY, {
+		variables: { idHCP: userId, idPatient }
+	 });
+	 const [doctorAddNewSurvey] = useMutation(SURVEYDOCTORADD_MUTATION, {
+
+	 });
 
 	const [ surveysSelected, setSurveysSelected ] = useState({
 		reason: false,
@@ -200,9 +214,24 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient }) => {
 			aria-labelledby="upload-document"
 			aria-describedby="upload-document"
 		>
+				{loading && (
+				<Container className={classes.emptyState}>
+					<Loader type="TailSpin" color="primary" height={80} width={80} />
+				</Container>
+			)}
+			{error && <ErrorMessage />}
+			{data && (
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
+					doctorAddNewSurvey({
+						variables: {
+							idApt: appointmentSelectedId,
+							selected: surveysSelected}
+					})
+					refetch();
+					close()
+
 				}}
 			>
 				<Grid container className={classes.wrapper}>
@@ -222,7 +251,7 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient }) => {
 								onChange={(e) => setAppointmentSelectedId(e.target.value)}
 								label="Select Appointment"
 							>
-								{appointments.map((apt, i) => {
+								{data.doctorSurvey.map((apt, i) => {
 									return (
 										<MenuItem key={i} value={apt._id}>
 											{formatDateShort(apt.appointmentTimeStart)} -{' '}
@@ -320,6 +349,7 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient }) => {
 					</Grid>
 				</Grid>
 			</form>
+			)}
 		</Dialog>
 	);
 };

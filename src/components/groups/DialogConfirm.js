@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogConfirm = ({ isOpen, close, action, actionText, confirmButton, idApt, oldFile }) => {
+const DialogConfirm = ({ isOpen, close, action, actionText, confirmButton, idApt, oldFile, refetch }) => {
 	const [ hasError, setHasError ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
@@ -100,7 +100,7 @@ const DialogConfirm = ({ isOpen, close, action, actionText, confirmButton, idApt
 							onClick={async (e) => {
 								e.preventDefault();
 								try {
-									await action({ variables: { idApt, oldFile } });
+									await action();
 									close();
 								} catch (err) {
 									console.log(err);
