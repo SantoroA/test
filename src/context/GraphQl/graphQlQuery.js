@@ -238,6 +238,42 @@ const MYAPPOINTMENTS_QUERY_DOCPUBLIC = gql`
 	}
 `;
 
+const DOCUMENTS_QUERY_DOCVIEW = gql`
+	query GetAppointments($idHCP: ID!, $idPatient: ID!) {
+		patientDocsForDoctors(idHCP: $idHCP, idPatient: $idPatient) {
+			accountPatientid {
+				profilePicture
+			}
+			_id
+			profilePatientid {
+				_id
+				firstName
+				lastName
+			}
+			amount
+			appointmentTimeStart
+			appointmentTimeEnd
+			patientDoc {
+				isNew
+				name
+				document
+			}
+		}
+	}
+`;
+
+const VIEW_DOC_MUTATION = gql`
+	mutation UpdateDocView($idApt: ID!) {
+		doctorViewDoc(idApt: $idApt)
+	}
+`;
+
+const DELETEDOC_MUTATION = gql`
+	mutation DeleteDoc($idApt: ID!) {
+		patientRemoveDoc(idApt: $idApt)
+	}
+`;
+
 export {
 	LASTAPPOINTMENT_DOCTOR_QUERY,
 	MYAPPOINTMENTS_QUERY,
@@ -247,5 +283,8 @@ export {
 	APPOINTMENTS_QUERY_PRESCDIALOG,
 	APPOINTMENTS_QUERY_DOCLIST,
 	REVIEW_QUERY,
-	MYAPPOINTMENTS_QUERY_DOCPUBLIC
+	MYAPPOINTMENTS_QUERY_DOCPUBLIC,
+	DOCUMENTS_QUERY_DOCVIEW,
+	VIEW_DOC_MUTATION,
+	DELETEDOC_MUTATION
 };
