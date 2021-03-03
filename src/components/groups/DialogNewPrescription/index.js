@@ -45,9 +45,30 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 		directions: ''
 	});
 	const [ medicineList, setMedicineList ] = useState([]);
-	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_PRESCDIALOG, {
-		variables: { idPatient, idHCP }
-	});
+	// const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_PRESCDIALOG, {
+	// 	variables: { idPatient, idHCP }
+	// });
+
+	const data = {
+		appointmentDocAndPatient: [
+			{
+				_id: '60196388539b8thrtsdf800272f3a36',
+				appointmentTimeStart: new Date(),
+				appointmentTimeEnd: new Date()
+			},
+			{
+				_id: '601963885rtmhj39b8sdf800272f3a36',
+				appointmentTimeStart: new Date(),
+				appointmentTimeEnd: new Date()
+			},
+			{
+				_id: '60196388539b8sdf800272f3a36',
+				appointmentTimeStart: new Date(),
+				appointmentTimeEnd: new Date()
+			}
+		]
+	};
+
 	const [ prescriptionName, setPrescriptionName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('0000000000000000');
 	const [ aptSelected, setAptSelected ] = useState('');
@@ -76,24 +97,6 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 		setStep(step - 1);
 	};
 
-	const appointments = [
-		{
-			_id: '60196388539b8thrtsdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			appointmentTimeEnd: new Date()
-		},
-		{
-			_id: '601963885rtmhj39b8sdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			appointmentTimeEnd: new Date()
-		},
-		{
-			_id: '60196388539b8sdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			appointmentTimeEnd: new Date()
-		}
-	];
-
 	const classes = useStyles();
 
 	switch (step) {
@@ -105,72 +108,73 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
-					{loading && (
-						<Container className={classes.emptyState}>
-							<Loader type="TailSpin" color="primary" height={80} width={80} />
-						</Container>
-					)}
-					{error && <ErrorMessage />}
-					{data && (
-						<div>
-							<form
-								onSubmit={(e) => {
-									e.preventDefault();
-									nextStep();
-									setAptSelected(
-										data.appointmentDocAndPatient.filter((apt) => apt._id === appointmentSelectedId)
-									);
-								}}
-							>
-								<Grid container className={classes.wrapper}>
-									<Grid item className={classes.header}>
-										<Typography className={classes.title}>New Prescpription</Typography>
-										<IconButton onClick={onCancel} color="primary">
-											<CloseIcon />
-										</IconButton>
-									</Grid>
-									<Divider className={classes.divider} />
-
-									<Grid className={classes.section} item>
-										<TextField
-											fullWidth
-											type="text"
-											required
-											value={prescriptionName}
-											onChange={(e) => setPrescriptionName(e.target.value)}
-											label="Prescription Name"
-											variant="outlined"
-										/>
-									</Grid>
-									<Grid className={classes.section} item>
-										<FormControl variant="outlined" fullWidth required>
-											<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
-											<Select
-												labelId="apt-select-label"
-												value={appointmentSelectedId}
-												onChange={(e) => setAppointmentSelectedId(e.target.value)}
-												label="Select Appointment"
-											>
-												{data.appointmentDocAndPatient.map((apt, i) => {
-													return (
-														<MenuItem key={i} value={apt._id}>
-															{formatDateShort(apt.appointmentTimeStart)} -{' '}
-															{convertTime(apt.appointmentTimeStart)}
-														</MenuItem>
-													);
-												})}
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid className={classes.section} item>
-										<ButtonFilled fullWidth type="submit">
-											Next
-										</ButtonFilled>
-									</Grid>
+					<div>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+								setAptSelected(
+									data.appointmentDocAndPatient.filter((apt) => apt._id === appointmentSelectedId)
+								);
+							}}
+						>
+							<Grid container className={classes.wrapper}>
+								<Grid item className={classes.header}>
+									<Typography className={classes.title}>New Prescpription</Typography>
+									<IconButton onClick={onCancel} color="primary">
+										<CloseIcon />
+									</IconButton>
 								</Grid>
-							</form>
-						</div>
-					)}
+								<Divider className={classes.divider} />
+								{/* {loading && (
+									<Container className={classes.emptyState}>
+										<Loader type="TailSpin" color="primary" height={80} width={80} />
+									</Container>
+								)}
+								{error && <ErrorMessage />} */}
+								{data && (
+									<div>
+										<Grid className={classes.section} item>
+											<TextField
+												fullWidth
+												type="text"
+												required
+												value={prescriptionName}
+												onChange={(e) => setPrescriptionName(e.target.value)}
+												label="Prescription Name"
+												variant="outlined"
+											/>
+										</Grid>
+										<Grid className={classes.section} item>
+											<FormControl variant="outlined" fullWidth required>
+												<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
+												<Select
+													labelId="apt-select-label"
+													value={appointmentSelectedId}
+													onChange={(e) => setAppointmentSelectedId(e.target.value)}
+													label="Select Appointment"
+												>
+													{data.appointmentDocAndPatient.map((apt, i) => {
+														return (
+															<MenuItem key={i} value={apt._id}>
+																{formatDateShort(apt.appointmentTimeStart)} -{' '}
+																{convertTime(apt.appointmentTimeStart)}
+															</MenuItem>
+														);
+													})}
+												</Select>
+											</FormControl>
+										</Grid>
+										<Grid className={classes.section} item>
+											<ButtonFilled fullWidth type="submit">
+												Next
+											</ButtonFilled>
+										</Grid>
+									</div>
+								)}
+							</Grid>
+						</form>
+					</div>
 				</Dialog>
 			);
 		case 2:
@@ -206,6 +210,14 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
+							setMedicineList([
+								...medicineList,
+								{
+									name: medication.name,
+									quantity: medication.quantity,
+									directions: medication.directions
+								}
+							]);
 							nextStep();
 						}}
 					>

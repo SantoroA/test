@@ -118,13 +118,19 @@ const useStyles = makeStyles({
 	},
 	prescriptionPaper: {
 		padding: '1rem',
-		margin: '0.5rem'
+		margin: '0.5rem',
+		width: '210mm'
 	},
 	patientBox: {
 		padding: '1rem',
 		backgroundColor: '#F0F9FF',
 		margin: '0.5rem',
 		borderRadius: '10px'
+	},
+	diagnosis: {
+		fontWeight: 'bold',
+		marginBottom: '1.5rem',
+		marginTop: '1.5rem'
 	},
 	bold: {
 		fontWeight: 'bold'
@@ -134,6 +140,11 @@ const useStyles = makeStyles({
 		marginTop: '0.5rem',
 		marginBottom: '0.5rem'
 	},
+	endDivider: {
+		backgroundColor: '#07B597',
+		marginTop: '2rem',
+		marginBottom: '0.5rem'
+	},
 	img: {
 		width: '8rem'
 	},
@@ -141,6 +152,17 @@ const useStyles = makeStyles({
 		alignItems: 'flex-end',
 		justifyContent: 'space-between',
 		marginBottom: '1rem'
+	},
+	tableTitle: {
+		fontWeight: 'bold',
+		borderBottom: 'none'
+	},
+	tableCell: {
+		borderBottom: 'none'
+	},
+	tableContainer: {
+		marginTop: '1rem',
+		marginBottom: '2rem'
 	}
 });
 
