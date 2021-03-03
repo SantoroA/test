@@ -2,25 +2,18 @@ import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import DialogConfirm from '../../groups/DialogConfirm';
-import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../../../context/GraphQl/graphQlQuery';
+import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY, DELETEDOC_MUTATION } from '../../../context/GraphQl/graphQlQuery';
 import { Context as AuthContext } from '../../../context/AuthContext';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
 import IconButton from '@material-ui/core/IconButton';
-import TableCell from '@material-ui/core/TableCell';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { useMutation, gql } from '@apollo/client';
-
-const DELETEDOC_MUTATION = gql`
-	mutation DeleteDoc($idApt: ID!) {
-		patientRemoveDoc(idApt: $idApt)
-	}
-`;
+import { useMutation } from '@apollo/client';
 
 function Row({ value }) {
 	const classes = useStyles();

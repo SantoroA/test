@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { formatDateDisplay, formatFormDate } from '../../helpers/dateHelper';
 import Loader from 'react-loader-spinner';
 import { NavLink } from 'react-router-dom';
 import { convertTime } from '../../helpers/dateHelper';
-import { useQuery, gql } from '@apollo/client';
-import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
 import ErrorMessage from '../groups/ErrorMessage';
+import { MYAPPOINTMENTS_QUERY_DOCPUBLIC } from '../../context/GraphQl/graphQlQuery';
 //CUSTOM UI
 import CalendarApp from '../customUi/CalendarApp';
 import BoxTime from '../customUi/BoxTime';
@@ -104,57 +104,14 @@ const useStyles = makeStyles({
 	}
 });
 
-//QUERY DOCTOR'S AVAILABILITY FOR SPECIFIC DAY
-const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments($date: String!, $id: ID!) {
-		doctorsAppointmentsDayAvailability(date: $date, id: $id) {
-			accountHCPid {
-				_id
-				profilePicture
-			}
-			_id
-			appointmentTimeStart
-			appointmentTimeEnd
-			amount
-			profileHCPid {
-				services
-				phoneNumber
-				lastName
-			}
-		}
-	}
-`;
-
 const TabDocPublicGeneral = ({ docId, disableBooking }) => {
 	const classes = useStyles();
 	const theme = useTheme();
-	const { t } = useTranslation();
 	const [ date, setDate ] = useState(new Date());
 	const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY, {
+	const { loading, error, data } = useQuery(MYAPPOINTMENTS_QUERY_DOCPUBLIC, {
 		variables: { date, id: docId, limit: 2, cursor: null }
 	});
-
-	const appointments = [
-		{
-			idApt: '554as55',
-			start: new Date(),
-			end: new Date(),
-			amount: 85
-		},
-		{
-			idApt: '55455',
-			start: new Date(),
-			end: new Date(),
-			amount: 65
-		},
-		{
-			idApt: '554tg55',
-			start: new Date(),
-			end: new Date(),
-			amount: 75
-		}
-	];
 
 	return (
 		<Grid className={classes.root} container>
