@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import DocLayoutContainer from '../../components/layout/DocLayoutContainer';
 import { useHistory } from 'react-router-dom';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import DialogAppointmentDetail from '../../components/groups/DialogAppoitmentDetail';
 import { Context as AuthContext } from '../../context/AuthContext';
 import Loader from 'react-loader-spinner';
 import ErrorMessage from '../../components/groups/ErrorMessage';
@@ -43,6 +44,8 @@ const useStyles = makeStyles({
 });
 
 const DocPastAppointmentsScreen = () => {
+	const [ appointmentToView, setAppointmentToView ] = useState('');
+	const [ dialogAppDetailOpen, setDialogAppDetailOpen ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const history = useHistory();
 	const { error, loading, data, fetchMore, refetch } = useQuery(LASTAPPOINTMENT_DOCTOR_QUERY, {
@@ -53,29 +56,29 @@ const DocPastAppointmentsScreen = () => {
 		}
 	});
 
-	const lastAppointmentsDoctor = {
-		edges: [
-			{
-				profileHCPid: 'dasd',
-				_id: 'ssf',
-				appointmentTimeStart: new Date(),
-				appointmentTimeEnd: new Date(),
-				amount: 85,
-				reasonForVisit: 'Headache',
-				profilePatientid: {
-					_id: 'asda',
-					firstName: 'Taz',
-					lastName: 'Mania'
-				},
-				accountPatientid: {
-					_id: 'adefewf',
-					profilePicture:
-						'https://images.pexels.com/photos/5414814/pexels-photo-5414814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-					username: 'email@test.com'
-				}
-			}
-		]
-	};
+	// const lastAppointmentsDoctor = {
+	// 	edges: [
+	// 		{
+	// 			profileHCPid: 'dasd',
+	// 			_id: 'ssf',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			amount: 85,
+	// 			reasonForVisit: 'Headache',
+	// 			profilePatientid: {
+	// 				_id: 'asda',
+	// 				firstName: 'Taz',
+	// 				lastName: 'Mania'
+	// 			},
+	// 			accountPatientid: {
+	// 				_id: 'adefewf',
+	// 				profilePicture:
+	// 					'https://images.pexels.com/photos/5414814/pexels-photo-5414814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	// 				username: 'email@test.com'
+	// 			}
+	// 		}
+	// 	]
+	// };
 
 	const classes = useStyles();
 	console.log('data', data);
@@ -95,40 +98,16 @@ const DocPastAppointmentsScreen = () => {
 				)}
 				{error && <ErrorMessage />}
 
-				{/* MOCK DATA */}
-				{/* {lastAppointmentsDoctor.edges.map((ap) => {
-					return (
-						<div>
-							<CardAppointment
-								onSubmit={() => {}}
-								key={ap._id}
-								showPrice={false}
-								state={{
-									appointment: {
-										amount: ap.amount,
-										end: ap.appointmentTimeEnd,
-										id: ap.profilePatientid._id,
-										idap: ap._id,
-										start: ap.appointmentTimeStart
-									},
-									name: `${ap.profilePatientid.firstName} ${ap.profilePatientid.lastName}`,
-									pic: ap.accountPatientid.profilePicture,
-									// ap.accountPatientid.profilePicture
-									buttonText: 'View',
-									title: 'Patient'
-								}}
-							/>
-						</div>
-					);
-				})} */}
-
 				{data && (
 					<div>
 						{data.lastAppointmentsDoctor.edges &&
 							data.lastAppointmentsDoctor.edges.map((ap, i) => {
 								return (
 									<CardAppointment
-										onSubmit={() => {}}
+										onSubmit={() => {
+											setDialogAppDetailOpen(true);
+											setAppointmentToView(ap);
+										}}
 										key={ap._id}
 										showPrice={false}
 										state={{
@@ -175,6 +154,27 @@ const DocPastAppointmentsScreen = () => {
 							</ButtonNoBorder>
 						)}
 					</div>
+				)}
+				{appointmentToView && (
+					<DialogAppointmentDetail
+						appointment={{
+							aptId: appointmentToView._id,
+							cardPic: appointmentToView.accountPatientid.profilePicture,
+							cardName: appointmentToView.profilePatientid.firstName,
+							docId: appointmentToView.profileHCPid,
+							patientId: appointmentToView.profilePatientid._id,
+							timeStart: appointmentToView.appointmentTimeStart,
+							timeEnd: appointmentToView.appointmentTimeEnd,
+							amount: appointmentToView.amount,
+							cardTitle: 'Patient',
+							showPrice: false
+						}}
+						isOpen={dialogAppDetailOpen}
+						close={() => {
+							setDialogAppDetailOpen(false);
+							setAppointmentToView('');
+						}}
+					/>
 				)}
 			</Container>
 		</DocLayoutContainer>
