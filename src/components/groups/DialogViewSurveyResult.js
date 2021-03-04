@@ -49,6 +49,7 @@ const useStyles = makeStyles({
 	}
 });
 
+
 const DialogViewSurveyResult = ({ selectedSurvey, isOpen, close }) => {
 	const { selected, results } = selectedSurvey;
 	const classes = useStyles();

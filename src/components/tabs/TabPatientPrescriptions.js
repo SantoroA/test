@@ -211,9 +211,9 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 						);
 					})}
 					<DialogConfirm
-						action={removePrescription({
+						action={() => {removePrescription({
 							variables: { idApt: deleteId }
-						})}
+						})}}
 						isOpen={dialogConfirmOpen}
 						idApt={deleteId}
 						close={() => setDialogConfirmOpen(false)}

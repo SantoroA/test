@@ -67,6 +67,10 @@ const useStyles = makeStyles({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'flex-end'
+	},
+	buttonLoadMore: {
+		// alignSelf: 'center'
+		justifyContent: 'center'
 	}
 });
 export default useStyles;

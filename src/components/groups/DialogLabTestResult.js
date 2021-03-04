@@ -99,13 +99,13 @@ const useStyles = makeStyles({
 	}
 });
 
-const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName, requestLink }) => {
+const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName, requestLink, refetch }) => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ documentSelected, setDocumentSelected ] = useState('');
 	const [ fileName, setFileName ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const classes = useStyles();
-
+	console.log(requestLink)
 	const onFileChange = (e) => {
 		let file = e.target.files[0];
 		let reader = new FileReader();
@@ -120,10 +120,11 @@ const DialogLabTestResult = ({ isOpen, close, docName, aptId, requestName, reque
 		let labTest = new FormData();
 		const files = documentSelected;
 		labTest.append(`labTest`, files);
-		labTest.append(`requestName`, requestLink);
-
+		labTest.append(`requestLink`, requestLink);
+		
 		try {
 			await dianurseApi.put(`download/labTest/${aptId}`, labTest);
+			await refetch()
 			close();
 		} catch (error) {
 			console.log('inside error');

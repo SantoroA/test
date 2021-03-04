@@ -7,10 +7,12 @@ import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import ErrorMessage from '../../groups/ErrorMessage';
+import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 export const LABTEST_QUERY = gql`
@@ -53,11 +55,11 @@ query GetLabTest($idPatient: ID!, $cursor: String, $limit: Int) {
 
 const TabLabTests = () => {
 	const { state: { userId } } = useContext(AuthContext);
-	const { loading, error, data, fetchMore } = useQuery(LABTEST_QUERY, {
+	const { loading, error, data, fetchMore, refetch } = useQuery(LABTEST_QUERY, {
 		variables: {
 			idPatient: userId,
 			cursor: null,
-			limit: 3
+			limit: 2
 		}
 	});
 
@@ -200,19 +202,46 @@ const TabLabTests = () => {
 			)}
 			{error && <ErrorMessage />}
 			{/* IF DATA */}
-			 {data && ( 
-			<div>
-				{data.patientLabTest.edges.length > 0 ? ( 
-					data.patientLabTest.edges.map((apt) => 
-						 apt.labTestRequests.map((request, i) => {
-						 return <Row value={request} appointment={apt} key={i} />;
-						 })
-					)
-				): (
-			<EmptyLabTestState />
-				)}
-			</div>
-			 )} 
+			{ data && (
+				<div>
+					{ data.patientLabTest.edges.length > 0 ? (
+						<div>
+							{data.patientLabTest.edges.map((apt) => 
+							apt.labTestRequests.map((request, i) => {
+								return <Row value={request} appointment={apt} key={i} refetch={() => refetch()} />
+							}))}
+							{data.patientLabTest.pageInfo.hasNextPage && (
+							<ButtonNoBorder
+								className={classes.buttonLoadMore}
+								onClick={() => {
+									const { endCursor } = data.patientLabTest.pageInfo;
+									fetchMore({
+										variables: {
+											id: userId,
+											limit: 1,
+											cursor: endCursor
+										},
+										updateQuery: (prevResult, { fetchMoreResult }) => {
+											console.log('prev', prevResult);
+											console.log('fetch', fetchMoreResult);
+											fetchMoreResult.patientLabTest.edges = [
+												...prevResult.patientLabTest.edges,
+												...fetchMoreResult.patientLabTest.edges
+											];
+											return fetchMoreResult;
+										}
+									});
+								}}
+							>
+								Load More <ExpandMoreIcon />
+							</ButtonNoBorder>
+						)}
+						</div>
+					): (
+						<EmptyLabTestState />	
+					)}
+				</div>
+			)}
 		</Grid>
 	);
 };

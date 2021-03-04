@@ -11,6 +11,7 @@ import ErrorMessage from '../../groups/ErrorMessage';
 import Loader from 'react-loader-spinner';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
+import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //MATERIAL UI
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -21,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const TabSurveys = () => {
 	const [ page, setPage ] = useState(0);
@@ -30,11 +32,11 @@ const TabSurveys = () => {
 	const { state: { userId } } = useContext(AuthContext);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const [ oldFile, setOldFile ] = useState('');
-	const { loading, error, data, refetch } = useQuery(SURVEYPATIENT_QUERY, {
+	const { loading, error, data, refetch, fetchMore } = useQuery(SURVEYPATIENT_QUERY, {
 		variables: {
 			idPatient: userId,
 			cursor: null,
-			limit: 3
+			limit: 2
 		}
 	});
 
@@ -322,6 +324,32 @@ const TabSurveys = () => {
 							setSelectedSurvey({});
 						}}
 					/>
+						{data.patientSurvey.pageInfo.hasNextPage && (
+							<ButtonNoBorder
+								className={classes.buttonLoadMore}
+								onClick={() => {
+									const { endCursor } = data.patientSurvey.pageInfo;
+									fetchMore({
+										variables: {
+											id: userId,
+											limit: 2,
+											cursor: endCursor
+										},
+										updateQuery: (prevResult, { fetchMoreResult }) => {
+											console.log('prev', prevResult);
+											console.log('fetch', fetchMoreResult);
+											fetchMoreResult.patientSurvey.edges = [
+												...prevResult.patientSurvey.edges,
+												...fetchMoreResult.patientSurvey.edges
+											];
+											return fetchMoreResult;
+										}
+									});
+								}}
+							>
+								Load More <ExpandMoreIcon />
+							</ButtonNoBorder>
+						)}
 				</div>
 			) : (
 				<EmptySurveyState />

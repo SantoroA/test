@@ -11,13 +11,16 @@ import { DOCUMENTS_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import DialogUploadDoc from '../../groups/DialogUploadDoc';
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
+import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //MATERIAL UI
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PublishIcon from '@material-ui/icons/Publish';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // no back fazer um if do horario e fazer grater and litle
+
 
 const TabDocuments = () => {
 	const [ dialogOpen, setDialogOpen ] = useState(false);
@@ -26,7 +29,7 @@ const TabDocuments = () => {
 		variables: {
 			idPatient: userId,
 			cursor: null,
-			limit: 3
+			limit: 2
 		}
 	});
 
@@ -135,17 +138,42 @@ const TabDocuments = () => {
 			{error && <ErrorMessage />}
 			{data && (
 				<div>
-					{data.patientDocuments.edges ? (
-						<div>
-							{data.patientDocuments.edges.map((doc) => {
+					{data.patientDocuments.edges.length > 0 ? (
+							data.patientDocuments.edges.map((doc) => {
 								return <Row value={doc} key={doc._id} />;
-							})}
-						</div>
+							})
 					) : (
 						<EmptyDocState />
 					)}
+					{data.patientDocuments.pageInfo.hasNextPage && (
+							<ButtonNoBorder
+								className={classes.buttonLoadMore}
+								onClick={() => {
+									const { endCursor } = data.patientDocuments.pageInfo;
+									fetchMore({
+										variables: {
+											id: userId,
+											limit: 2,
+											cursor: endCursor
+										},
+										updateQuery: (prevResult, { fetchMoreResult }) => {
+											console.log('prev', prevResult);
+											console.log('fetch', fetchMoreResult);
+											fetchMoreResult.patientDocuments.edges = [
+												...prevResult.patientDocuments.edges,
+												...fetchMoreResult.patientDocuments.edges
+											];
+											return fetchMoreResult;
+										}
+									});
+								}}
+							>
+								Load More <ExpandMoreIcon />
+							</ButtonNoBorder>
+						)}
 				</div>
 			)}
+			
 			<DialogUploadDoc
 				isOpen={dialogOpen}
 				title="Upload new document"
