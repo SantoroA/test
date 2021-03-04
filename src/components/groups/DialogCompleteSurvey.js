@@ -118,7 +118,7 @@ const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close, refetch, idApt })
 	const { _id, selected } = selectedSurvey;
 	const [ patientAnswerSurvey ] = useMutation(ADDSURVEYRESULT_MUTATION);
 	const classes = useStyles();
-	console.log(_id, selected);
+	// console.log(_id, selected);
 	const [ reasonForVisit, setReasonForVisit ] = useState(null);
 	const [ symptomTime, setSymptomTime ] = useState(null);
 	const [ oxygenSaturation, setOxygenStaturation ] = useState(null);
@@ -249,11 +249,11 @@ const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close, refetch, idApt })
 			close();
 			refetch();
 		} catch (err) {
-			console.log(err);
+			// console.log(err);
 			setHasError(true);
 		}
 	};
-	console.log(hasDrugAllergies);
+	// console.log(hasDrugAllergies);
 	return (
 		<Dialog
 			fullScreen

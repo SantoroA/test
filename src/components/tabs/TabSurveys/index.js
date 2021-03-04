@@ -213,7 +213,7 @@ const TabSurveys = () => {
 	// 		]
 	// 	}
 	// };
-	console.log('data', data);
+	// console.log('data', data);
 	const classes = useStyles();
 	const { t } = useTranslation();
 
@@ -333,8 +333,8 @@ const TabSurveys = () => {
 										cursor: endCursor
 									},
 									updateQuery: (prevResult, { fetchMoreResult }) => {
-										console.log('prev', prevResult);
-										console.log('fetch', fetchMoreResult);
+										// console.log('prev', prevResult);
+										// console.log('fetch', fetchMoreResult);
 										fetchMoreResult.patientSurvey.edges = [
 											...prevResult.patientSurvey.edges,
 											...fetchMoreResult.patientSurvey.edges

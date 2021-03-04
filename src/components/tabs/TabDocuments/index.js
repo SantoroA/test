@@ -21,7 +21,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // no back fazer um if do horario e fazer grater and litle
 
-
 const TabDocuments = () => {
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
@@ -111,7 +110,7 @@ const TabDocuments = () => {
 	// 		}
 	// 	}
 	// ];
-	console.log('data', data);
+	// console.log('data', data);
 	const classes = useStyles();
 	const { t } = useTranslation();
 
@@ -139,41 +138,41 @@ const TabDocuments = () => {
 			{data && (
 				<div>
 					{data.patientDocuments.edges.length > 0 ? (
-							data.patientDocuments.edges.map((doc) => {
-								return <Row value={doc} key={doc._id} />;
-							})
+						data.patientDocuments.edges.map((doc) => {
+							return <Row value={doc} key={doc._id} />;
+						})
 					) : (
 						<EmptyDocState />
 					)}
 					{data.patientDocuments.pageInfo.hasNextPage && (
-							<ButtonNoBorder
-								className={classes.buttonLoadMore}
-								onClick={() => {
-									const { endCursor } = data.patientDocuments.pageInfo;
-									fetchMore({
-										variables: {
-											id: userId,
-											limit: 2,
-											cursor: endCursor
-										},
-										updateQuery: (prevResult, { fetchMoreResult }) => {
-											console.log('prev', prevResult);
-											console.log('fetch', fetchMoreResult);
-											fetchMoreResult.patientDocuments.edges = [
-												...prevResult.patientDocuments.edges,
-												...fetchMoreResult.patientDocuments.edges
-											];
-											return fetchMoreResult;
-										}
-									});
-								}}
-							>
-								Load More <ExpandMoreIcon />
-							</ButtonNoBorder>
-						)}
+						<ButtonNoBorder
+							className={classes.buttonLoadMore}
+							onClick={() => {
+								const { endCursor } = data.patientDocuments.pageInfo;
+								fetchMore({
+									variables: {
+										id: userId,
+										limit: 2,
+										cursor: endCursor
+									},
+									updateQuery: (prevResult, { fetchMoreResult }) => {
+										// console.log('prev', prevResult);
+										// console.log('fetch', fetchMoreResult);
+										fetchMoreResult.patientDocuments.edges = [
+											...prevResult.patientDocuments.edges,
+											...fetchMoreResult.patientDocuments.edges
+										];
+										return fetchMoreResult;
+									}
+								});
+							}}
+						>
+							Load More <ExpandMoreIcon />
+						</ButtonNoBorder>
+					)}
 				</div>
 			)}
-			
+
 			<DialogUploadDoc
 				isOpen={dialogOpen}
 				title="Upload new document"

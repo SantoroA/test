@@ -56,7 +56,7 @@ const TimeSlotList = ({ weekDay, weekDayName }) => {
 													<Grid item md={6} xs={12}>
 														<Typography variant="body1">
 															Slot Price: {slot.amount}
-															{console.log('price', slot.amount)}
+															{/* {console.log('price', slot.amount)} */}
 														</Typography>
 													</Grid>
 												</Grid>

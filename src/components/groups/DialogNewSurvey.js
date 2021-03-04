@@ -106,7 +106,7 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 		setSurveysSelected({ ...surveysSelected, [event.target.name]: event.target.checked });
 	};
 
-	console.log(userId);
+	// console.log(userId);
 	// const appointments = [
 	// 	{
 	// 		_id: '60196388539b8sdf800272f3a36',
@@ -202,7 +202,7 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 						refetch();
 						close();
 					} catch (err) {
-						console.log(err);
+						// console.log(err);
 						setHasError(true);
 					}
 				}}

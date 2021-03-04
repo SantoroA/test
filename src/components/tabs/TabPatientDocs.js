@@ -75,7 +75,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 		]
 	});
 
-	console.log(data);
+	// console.log(data);
 
 	// const documents = [
 	// 	{
@@ -148,7 +148,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 											<IconButton
 												href={doc.patientDoc.document}
 												onClick={() => {
-													console.log(doc._id);
+													// console.log(doc._id);
 													try {
 														doctorViewDoc({ variables: { idApt: doc._id } });
 													} catch (err) {
@@ -167,7 +167,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 												target="_blank"
 												color="primary"
 												onClick={() => {
-													console.log(doc._id);
+													// console.log(doc._id);
 													try {
 														doctorViewDoc({ variables: { idApt: doc._id } });
 													} catch (err) {

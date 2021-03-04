@@ -34,7 +34,7 @@ const Preview = ({ diagnosis, recommendation, medicineList, patientInfo }) => {
 		}
 	};
 
-	console.log(patientInfo);
+	// console.log(patientInfo);
 	return (
 		<PaperCustomShadow className={classes.prescriptionPaper}>
 			<Typography className={classes.bold} variant="h5" color="primary">

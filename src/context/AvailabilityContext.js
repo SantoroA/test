@@ -33,7 +33,7 @@ const availabilityReducer = (state, action) => {
 		case 'delete_slot':
 			return { ...state, slots: state.slots.filter((slot) => slot.slotCreated !== action.payload) };
 		case 'update_slots':
-			console.log(action.payload);
+			// console.log(action.payload);
 			return {
 				...state,
 				// slots: [ 'test' ]
@@ -76,7 +76,7 @@ const getSlots = (dispatch) => {
 			const response = await dianurseApi.get(`/appointment/getAvailabilitySlot/${id}`, {
 				withCredentials: true
 			});
-			console.log('getSlot', response);
+			// console.log('getSlot', response);
 			let i = 0;
 			let slotArr = [];
 			let showArr = [];
@@ -86,14 +86,14 @@ const getSlots = (dispatch) => {
 				slotArr = slotArr.concat(response.data[i].slotCreated);
 			}
 			slotArr = [ ...new Set(slotArr) ];
-			console.log(slotArr);
+			// console.log(slotArr);
 			let l = 0;
 			for (l; l < slotArr.length; l++) {
 				// eslint-disable-next-line no-loop-func
 				let data = response.data.filter((el) => {
 					return el.slotCreated === slotArr[l];
 				});
-				console.log(data);
+				// console.log(data);
 				let availability = data.filter((el) => {
 					return el.appointmentStatus === 'Available';
 				});
@@ -119,7 +119,7 @@ const getSlots = (dispatch) => {
 				let endMin = startTime.getMinutes();
 				endMin = endMin > 9 ? endMin : '0' + endMin;
 				let slot = (minEndTime - startTime) / 60000;
-				console.log(data[l].amount);
+				// console.log(data[l].amount);
 				arr = arr.concat({
 					startDay: min,
 					endDay: max,
@@ -135,11 +135,11 @@ const getSlots = (dispatch) => {
 				});
 			}
 			showArr = showArr.concat(arr);
-			console.log(showArr);
+			// console.log(showArr);
 			dispatch({ type: 'get_slots', payload: showArr });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: 'Failed to get saved slots from server' });
-			console.log(err.message);
+			// console.log(err.message);
 		}
 	};
 };
@@ -148,13 +148,13 @@ const createSlot = (dispatch) => {
 	return async ({ availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, timeZone }) => {
 		let day_1 = new Date(`${availableStart}`);
 		let day_2 = new Date(`${availableEnd}`);
-		console.log(day_1, day_2);
+		// console.log(day_1, day_2);
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;
 		let slotCreated = new Date();
-		console.log(availableEnd, availableStart);
-		console.log(id);
+		// console.log(availableEnd, availableStart);
+		// console.log(id);
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
 				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
@@ -163,7 +163,7 @@ const createSlot = (dispatch) => {
 				let slot = (newLastDate - newStartDate) / timeDuration;
 				let t = 1;
 				for (t; t <= slot; t++) {
-					console.log(new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset());
+					// console.log(new Date(newStartDate - i + timeDuration * t - timeDuration).getTimezoneOffset());
 					arr = arr.concat({
 						// id: id,
 						date: new Date(day_2 - i),
@@ -182,7 +182,7 @@ const createSlot = (dispatch) => {
 				arr,
 				withCredentials: true
 			});
-			console.log(response);
+			// console.log(response);
 			// let x = 200;
 			if (response.status === 200) {
 				// if (x === 200) {
@@ -205,13 +205,13 @@ const createSlot = (dispatch) => {
 			}
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
+			// console.log(err.message);
 		}
 	};
 };
 const deleteSlot = (dispatch) => {
 	return async (key, id) => {
-		console.log(id);
+		// console.log(id);
 		let slotData = {
 			slotCreated: key,
 			id
@@ -220,11 +220,11 @@ const deleteSlot = (dispatch) => {
 			const response = await dianurseApi.delete(`/appointment/deleteAvailability`, {
 				params: slotData
 			});
-			console.log(response.data);
+			// console.log(response.data);
 			dispatch({ type: 'delete_slot', payload: key });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
+			// console.log(err.message);
 		}
 	};
 };
@@ -246,7 +246,7 @@ const updateSlot = (dispatch) => {
 		let difference = Math.ceil(day_2 - day_1);
 		let arr = [];
 		let i = 0;
-		console.log('updateslotId', id);
+		// console.log('updateslotId', id);
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
 				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
@@ -274,11 +274,11 @@ const updateSlot = (dispatch) => {
 		// 	id
 		// }
 		try {
-			console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
+			// console.log(availableStart, availableEnd, timeStart, timeEnd, amount, duration, weekDay, id, key);
 			const response = await dianurseApi.post(`/appointment/updateAvailability`, {
 				arr
 			});
-			console.log(response.data);
+			// console.log(response.data);
 			if (response.status === 200) {
 				dispatch({
 					type: 'update_slots',
@@ -300,7 +300,7 @@ const updateSlot = (dispatch) => {
 			}
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
+			// console.log(err.message);
 		}
 	};
 };

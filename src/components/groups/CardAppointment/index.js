@@ -17,7 +17,7 @@ const CardAppointment = ({ onSubmit, state, showPrice }) => {
 	const classes = useStyles();
 	const { appointment, name, pic, buttonText, title } = state;
 
-	console.log(appointment);
+	// console.log(appointment);
 	return (
 		<Grid container className={classes.root}>
 			<Grid item xs={4} sm={2} className={classes.timeWrapper}>

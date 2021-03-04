@@ -36,7 +36,7 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 			await dianurseApi.put(`profile/completeprofile/uploadImage/${id}`, profileImage);
 			setIsDialogOpen(false);
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setHasError(true);
 		}
 	};
@@ -58,7 +58,7 @@ export default function DialogPicture({ isDialogOpen, setIsDialogOpen }) {
 		reader.readAsDataURL(file);
 	};
 
-	console.log(imageSelected);
+	// console.log(imageSelected);
 	// console.log(image);
 	return (
 		<Dialog

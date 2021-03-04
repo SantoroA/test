@@ -136,7 +136,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 		]
 	});
 
-	console.log('data', data);
+	// console.log('data', data);
 
 	// const prescriptions = [
 	// 	{
@@ -197,7 +197,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 										<Tooltip title="Delete">
 											<IconButton
 												onClick={() => {
-													console.log('click prescription');
+													// console.log('click prescription');
 													setDialogConfirmOpen(true);
 													setDeleteId(presc._id);
 												}}

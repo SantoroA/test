@@ -104,7 +104,7 @@ const DialogEditDocument = ({ isOpen, close, title, documentTitle, aptId, docume
 			await dianurseApi.put(`download/documents/${aptId}`, document);
 			close();
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setHasError(true);
 		}
 	};

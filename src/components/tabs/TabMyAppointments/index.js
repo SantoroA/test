@@ -54,9 +54,9 @@ const TabMyAppointments = () => {
 	// console.log(formatFormDate(date));
 	// console.log(new Date(`${formatFormDate(date)}T00:00:00`));
 	// console.log(new Date(formatFormDate(date)));
-	console.log(userId);
-	console.log('data', data);
-	console.log(error);
+	// console.log(userId);
+	// console.log('data', data);
+	// console.log(error);
 
 	const { t } = useTranslation();
 	return (

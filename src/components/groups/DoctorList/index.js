@@ -35,7 +35,7 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 	});
 	const classes = useStyles();
 
-	console.log('data', data);
+	// console.log('data', data);
 
 	return (
 		<div className={classes.mainContent}>
@@ -102,8 +102,8 @@ const DoctorList = ({ filterState, dateFormatted }) => {
 												cursor: endCursor
 											},
 											updateQuery: (prevResult, { fetchMoreResult }) => {
-												console.log('prev', prevResult);
-												console.log('fetch', fetchMoreResult);
+												// console.log('prev', prevResult);
+												// console.log('fetch', fetchMoreResult);
 												fetchMoreResult.searchAppointments.edges = [
 													...prevResult.searchAppointments.edges,
 													...fetchMoreResult.searchAppointments.edges

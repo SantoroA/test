@@ -14,7 +14,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const RatingFilter = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	console.log(filterState.rating);
+	// console.log(filterState.rating);
 	return (
 		<Grid className={classes.rating}>
 			<FormControl component="fieldset">

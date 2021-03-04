@@ -56,7 +56,7 @@ const PatPastAppointmentScreen = () => {
 		}
 	});
 	const classes = useStyles();
-	console.log('data', data);
+	// console.log('data', data);
 
 	// const lastAppointmentsPatient = {
 	// 	edges: [
@@ -144,8 +144,8 @@ const PatPastAppointmentScreen = () => {
 											cursor: endCursor
 										},
 										updateQuery: (prevResult, { fetchMoreResult }) => {
-											console.log('prev', prevResult);
-											console.log('fetch', fetchMoreResult);
+											// console.log('prev', prevResult);
+											// console.log('fetch', fetchMoreResult);
 											fetchMoreResult.lastAppointmentsPatient.edges = [
 												...prevResult.lastAppointmentsPatient.edges,
 												...fetchMoreResult.lastAppointmentsPatient.edges

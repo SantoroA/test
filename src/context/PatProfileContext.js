@@ -5,7 +5,7 @@ import dianurseApi from '../api/dianurseApi';
 const patProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log('patient', action.payload);
+			// console.log('patient', action.payload);
 			return {
 				...state,
 				isFirstTimeUser: action.payload.isFirstTimeUser,
@@ -52,7 +52,7 @@ const getPatProfile = (dispatch) => {
 			const response = await dianurseApi.get(`/profile/patient/getprofile/${id}`, {
 				withCredentials: true
 			});
-			console.log('patient', response.data[0]);
+			// console.log('patient', response.data[0]);
 			dispatch({
 				type: 'get_profile',
 				payload: {
@@ -76,7 +76,7 @@ const getPatProfile = (dispatch) => {
 
 const updateContactInfo = (dispatch) => {
 	return async ({ id, firstName, lastName, gender, phoneNumber, birthPlace, birthday }) => {
-		console.log('inside context', firstName, lastName, birthPlace, birthday);
+		// console.log('inside context', firstName, lastName, birthPlace, birthday);
 		let userInfo = {
 			firstName,
 			lastName,
@@ -92,7 +92,7 @@ const updateContactInfo = (dispatch) => {
 				userInfo,
 				withCredentials: true
 			});
-			console.log(response);
+			// console.log(response);
 			dispatch({
 				type: 'update_contact_info',
 				payload: {
@@ -107,7 +107,7 @@ const updateContactInfo = (dispatch) => {
 			});
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
+			// console.log(err.message);
 		}
 	};
 };

@@ -99,7 +99,7 @@ const TabPrescriptions = () => {
 		}
 	});
 
-	console.log(data);
+	// console.log(data);
 
 	const classes = useStyles();
 	const { t } = useTranslation();
@@ -139,8 +139,8 @@ const TabPrescriptions = () => {
 										cursor: endCursor
 									},
 									updateQuery: (prevResult, { fetchMoreResult }) => {
-										console.log('prev', prevResult);
-										console.log('fetch', fetchMoreResult);
+										// console.log('prev', prevResult);
+										// console.log('fetch', fetchMoreResult);
 										fetchMoreResult.patientPrescription.edges = [
 											...prevResult.patientPrescription.edges,
 											...fetchMoreResult.patientPrescription.edges

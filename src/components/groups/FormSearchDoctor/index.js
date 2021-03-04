@@ -49,7 +49,7 @@ const FormSearchDoctor = () => {
 	useEffect(() => {
 		const today = new Date();
 		const todayFormatted = formatFormDate(today);
-		console.log(todayFormatted);
+		// console.log(todayFormatted);
 		const dateAsString = today.toString();
 		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -96,7 +96,10 @@ const FormSearchDoctor = () => {
 							variant="outlined"
 							value={filterState.date}
 							onChange={(e) =>
-								setFilterState({ ...filterState, date: formatFormDate(new Date(`${e.target.value}T00:00:00`)) })}
+								setFilterState({
+									...filterState,
+									date: formatFormDate(new Date(`${e.target.value}T00:00:00`))
+								})}
 							InputLabelProps={{
 								shrink: true
 							}}

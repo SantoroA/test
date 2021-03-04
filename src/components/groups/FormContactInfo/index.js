@@ -36,7 +36,7 @@ const FormContactInfo = () => {
 	const [ isDisabled, setIsDisabled ] = useState(true);
 	const classes = useStyles();
 
-	console.log(firstName, lastName, gender, phoneNumber, birthday, birthPlace);
+	// console.log(firstName, lastName, gender, phoneNumber, birthday, birthPlace);
 	// console.log(phoneNumber)
 
 	useEffect(() => {
@@ -55,7 +55,7 @@ const FormContactInfo = () => {
 	};
 
 	const handleSubmit = () => {
-		console.log('submit', specialty);
+		// console.log('submit', specialty);
 		updateContactInfo({
 			id: userId,
 			firstName,

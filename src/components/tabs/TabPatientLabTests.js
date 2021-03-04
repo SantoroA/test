@@ -166,7 +166,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 		]
 	});
 
-	console.log('dataDoctorLab', data);
+	// console.log('dataDoctorLab', data);
 
 	// const appointments = [
 	// 	{
@@ -236,9 +236,9 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			{data && (
 				<div>
 					{data.patientLabTestForDoctors.map((apt) => {
-						console.log(apt.labTestRequests);
+						// console.log(apt.labTestRequests);
 						return apt.labTestRequests.map((lab, i) => {
-							console.log(lab, i);
+							// console.log(lab, i);
 							return (
 								<PaperCustomShadow
 									className={classes.paper}

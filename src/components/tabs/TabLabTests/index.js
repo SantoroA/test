@@ -61,7 +61,7 @@ const TabLabTests = () => {
 		}
 	});
 
-	console.log('data', data);
+	// console.log('data', data);
 	const classes = useStyles();
 
 	// const appointments = [
@@ -221,8 +221,8 @@ const TabLabTests = () => {
 												cursor: endCursor
 											},
 											updateQuery: (prevResult, { fetchMoreResult }) => {
-												console.log('prev', prevResult);
-												console.log('fetch', fetchMoreResult);
+												// console.log('prev', prevResult);
+												// console.log('fetch', fetchMoreResult);
 												fetchMoreResult.patientLabTest.edges = [
 													...prevResult.patientLabTest.edges,
 													...fetchMoreResult.patientLabTest.edges

@@ -11,7 +11,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 const MoreFilters = ({ filterState, setFilterState }) => {
 	const classes = useStyles();
-	console.log(filterState.gender);
+	// console.log(filterState.gender);
 	return (
 		<Grid container className={classes.moreFilters}>
 			<FormControl component="fieldset">

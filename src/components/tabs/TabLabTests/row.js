@@ -42,7 +42,7 @@ function Row({ value, appointment, refetch }) {
 		]
 	});
 
-	console.log(value);
+	// console.log(value);
 	// WHEN DOWNLOADED, CHANGE ISNEWForPatient TO FALSE. WHEN UPLOADED, CHANGE HASRESULT TO TRUE
 
 	return (

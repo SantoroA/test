@@ -246,8 +246,8 @@ const PatReserveScreen = (props) => {
 		setMedConditions({ ...medConditions, [event.target.name]: event.target.checked });
 	};
 
-	console.log(dateDisplay);
-	console.log('reserve', appointment);
+	// console.log(dateDisplay);
+	// console.log('reserve', appointment);
 	// if (error) {
 	// 	return (
 	// 		<PatLayoutContainer>
@@ -562,9 +562,9 @@ const PatReserveScreen = (props) => {
 						<Typography variant="subtitle1">SHOWING APPOINTMENT FOR</Typography>
 						<Typography color="primary" className={classes.sub} variant="h5">
 							{dateDisplay}
-							{console.log(dateDisplay)}
+							{/* {console.log(dateDisplay)} */}
 						</Typography>
-						{console.log(appointment)}
+						{/* {console.log(appointment)} */}
 						<CardAppointment
 							state={{
 								appointment: {

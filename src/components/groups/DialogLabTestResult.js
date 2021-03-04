@@ -103,7 +103,7 @@ const DialogLabTestResult = ({ isOpen, close, aptId, requestName, requestLink, r
 	const [ fileName, setFileName ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
 	const classes = useStyles();
-	console.log(requestLink);
+	// console.log(requestLink);
 	const onFileChange = (e) => {
 		let file = e.target.files[0];
 		let reader = new FileReader();
@@ -125,7 +125,7 @@ const DialogLabTestResult = ({ isOpen, close, aptId, requestName, requestLink, r
 			await refetch();
 			close();
 		} catch (error) {
-			console.log('inside error');
+			// console.log('inside error');
 			setHasError(true);
 		}
 	};

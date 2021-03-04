@@ -33,11 +33,11 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 	};
 	let location = useLocation();
 	const [ selected, setSelected ] = useState(null);
-	console.log(selected);
+	// console.log(selected);
 	const activeRoute = (routeName) => {
 		return location.pathname.indexOf(routeName) > -1 ? true : false;
 	};
-	console.log(location);
+	// console.log(location);
 	const { t } = useTranslation();
 	return (
 		<div onClick={() => setDrawerOpen(false)} onKeyDown={() => setDrawerOpen(false)} className={classes.root}>

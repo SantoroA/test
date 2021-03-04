@@ -143,7 +143,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 													{
 														/* {appointments.map((apt, i) => { */
 													}
-													console.log(apt._id);
+													// console.log(apt._id);
 													return (
 														<MenuItem key={i} value={apt._id}>
 															{formatDateShort(apt.appointmentTimeStart)} -{' '}

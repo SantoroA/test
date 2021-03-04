@@ -133,7 +133,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 		]
 	});
 
-	console.log('data', data);
+	// console.log('data', data);
 
 	// const appointments = [
 	// 	{

@@ -103,7 +103,7 @@ const DialogConfirm = ({ isOpen, close, action, actionText, confirmButton, idApt
 									await action();
 									close();
 								} catch (err) {
-									console.log(err);
+									// console.log(err);
 									setHasError(true);
 								}
 							}}

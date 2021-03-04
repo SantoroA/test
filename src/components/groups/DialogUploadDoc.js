@@ -127,7 +127,7 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 
 	// update query appointment and docs
 
-	console.log(userId);
+	// console.log(userId);
 	// const data = {
 	// 	patientAppointmentsForUpload: [
 	// 		{
@@ -216,7 +216,7 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 		document.append('document', file);
 		document.append('documentName', documentName);
 		let aptId = appointmentSelectedId;
-		console.log(aptId);
+		// console.log(aptId);
 		try {
 			await dianurseApi.put(`download/documents/${aptId}`, document);
 			// await refetch({variable: {idPatient: userId}});
@@ -224,7 +224,7 @@ const DialogUploadDoc = ({ isOpen, close, title, updateDoc }) => {
 			updateDoc();
 			close();
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setHasError(true);
 		}
 	};

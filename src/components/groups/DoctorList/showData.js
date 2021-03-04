@@ -21,7 +21,7 @@ import Button from '@material-ui/core/Button';
 const ShowDocData = ({ docs, setAppointments, setApDoc, setDialogReserveOpen }) => {
 	const classes = useStyles();
 	return docs.map((doc) => {
-		console.log(doc);
+		// console.log(doc);
 		return (
 			<Card className={classes.card} key={doc.id}>
 				<CardMedia className={classes.media} image={doc.image} title="Doctor">

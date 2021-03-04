@@ -110,7 +110,7 @@ const PatViewDocPublicProfile = () => {
 	const history = useHistory();
 	const { id, description, firstname, lastname, image } = location.state;
 	const [ value, setValue ] = useState(0);
-	console.log(location.state);
+	// console.log(location.state);
 	return (
 		<PatLayoutContainer>
 			<Button onClick={() => history.goBack()} className={classes.backButton}>

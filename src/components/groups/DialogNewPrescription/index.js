@@ -80,8 +80,8 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 	const nextStep = () => {
 		setStep(step + 1);
 	};
-	console.log(idPatient);
-	console.log('dataPrescription', data);
+	// console.log(idPatient);
+	// console.log('dataPrescription', data);
 
 	const onCancel = () => {
 		close();
@@ -417,7 +417,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 							getImage();
 						}}
 					>
-						{console.log(aptSelected[0])}
+						{/* {console.log(aptSelected[0])} */}
 						<Grid container className={classes.wrapper}>
 							<div ref={ref}>
 								<Preview

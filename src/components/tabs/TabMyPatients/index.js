@@ -79,8 +79,8 @@ const TabMyPatients = () => {
 		setRowsPerPage(parseInt(event.target.value, 10));
 		setPage(0);
 	};
-	console.log(data);
-	console.log(userId);
+	// console.log(data);
+	// console.log(userId);
 	const { t } = useTranslation();
 
 	const doctorsPatients = [
