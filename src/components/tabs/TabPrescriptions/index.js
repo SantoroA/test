@@ -7,10 +7,12 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../groups/ErrorMessage';
 import { Context as AuthContext } from '../../../context/AuthContext';
+import ButtonNoBorder from '../../customUi/ButtonNoBorder';
 //CUSTOM UI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export const PRESCRIPTION_QUERY = gql`
 query GetPrescription($idPatient: ID!, $cursor: String, $limit: Int) {
@@ -96,7 +98,7 @@ const TabPrescriptions = () => {
 		variables: {
 			idPatient: userId,
 			cursor: null,
-			limit: 3
+			limit: 2
 		}
 	});
 
@@ -129,8 +131,33 @@ const TabPrescriptions = () => {
 					})
 				): (
 			<EmptyPrescState />
-				)
-				}
+				)}
+				{data.patientPrescription.pageInfo.hasNextPage && (
+							<ButtonNoBorder
+								className={classes.buttonLoadMore}
+								onClick={() => {
+									const { endCursor } = data.patientPrescription.pageInfo;
+									fetchMore({
+										variables: {
+											id: userId,
+											limit: 2,
+											cursor: endCursor
+										},
+										updateQuery: (prevResult, { fetchMoreResult }) => {
+											console.log('prev', prevResult);
+											console.log('fetch', fetchMoreResult);
+											fetchMoreResult.patientPrescription.edges = [
+												...prevResult.patientPrescription.edges,
+												...fetchMoreResult.patientPrescription.edges
+											];
+											return fetchMoreResult;
+										}
+									});
+								}}
+							>
+								Load More <ExpandMoreIcon />
+							</ButtonNoBorder>
+						)}
 			</div>	
 			 )} 		
 		</Grid>

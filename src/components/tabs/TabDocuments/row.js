@@ -21,12 +21,14 @@ function Row({ value }) {
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid, patientDoc } = value;
 	const filename = value.patientDoc.document;
 	const { state: { userId } } = useContext(AuthContext);
-	const [ patientRemoveDoc, { data } ] = useMutation(DELETEDOC_MUTATION, {
+	const [ patientRemoveDoc ] = useMutation(DELETEDOC_MUTATION, {
 		refetchQueries: () => [
 			{
 				query: DOCUMENTS_QUERY,
 				variables: {
-					idPatient: userId
+					idPatient: userId,
+					cursor: null,
+					limit: 2
 				}
 			},
 			{
@@ -37,9 +39,6 @@ function Row({ value }) {
 			}
 		]
 	});
-
-	console.log(data);
-	console.log(_id);
 
 	return (
 		<PaperCustomShadow className={classes.paper}>
@@ -79,16 +78,16 @@ function Row({ value }) {
 						</IconButton>
 					</Tooltip>
 				</Grid>
-
-				<DialogConfirm
-					action={patientRemoveDoc}
-					idApt={_id}
+			</Grid>
+			<DialogConfirm
+					action={() => {patientRemoveDoc({
+						variables: { idApt: _id }
+					})}}
 					isOpen={dialogConfirmOpen}
 					close={() => setDialogConfirmOpen(false)}
 					actionText="delete this document"
 					confirmButton="Delete"
 				/>
-			</Grid>
 		</PaperCustomShadow>
 	);
 }

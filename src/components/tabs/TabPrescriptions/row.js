@@ -22,16 +22,18 @@ mutation UpdatePrescriptionView($idApt: ID!) {
 function Row({ value }) {
 	const classes = useStyles();
 	const { state: { userId } } = useContext(AuthContext);
-	const [patientViewPrescription] = useMutation(VIEW_MUTATION, {
+	const [patientViewPrescription] = useMutation(VIEW_MUTATION
+		, {
 		refetchQueries: () => [				{
 			  query: PRESCRIPTION_QUERY,
 			  variables: {
 				idPatient: userId,
 				cursor: null,
-				limit: 3
+				limit: 2
 			  }}
 		  ]
-	});
+	}
+	);
 	//PASS IN DOCUMENT LINK
 	const { profileHCPid, accountHCPid ,appointmentTimeStart, appointmentTimeEnd, prescription, _id } = value;
 

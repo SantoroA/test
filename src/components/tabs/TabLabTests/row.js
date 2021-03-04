@@ -25,7 +25,7 @@ mutation UpdateLabTEstViewView($idApt: ID!, $file: String) {
 }
 `;
 
-function Row({ value, appointment }) {
+function Row({ value, appointment, refetch }) {
 	const classes = useStyles();
 	const { t } = useTranslation();
 	const [ dialogOpen, setDialogOpen ] = useState(false);
@@ -74,8 +74,8 @@ function Row({ value, appointment }) {
 					<Tooltip title="Download request">
 						<IconButton
 							href={requestLink}
-							download
-							target="_blank"
+							// download
+							// target="_blank"
 							color="primary"
 							onClick={() => {
 								patientViewLabTest({variables: {
@@ -130,6 +130,7 @@ function Row({ value, appointment }) {
 					requestLink={requestLink}
 					requestName={name}
 					aptId={_id}
+					refetch = {() => refetch()}
 				/>
 			</Grid>
 		</PaperCustomShadow>
