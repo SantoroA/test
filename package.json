@@ -75,6 +75,7 @@
 		"save": "^2.4.0",
 		"smart-table-core": "^3.0.7",
 		"swagger-ui-react": "^3.36.2",
+		"use-react-screenshot": "^1.0.2",
 		"web-vitals": "^0.2.4"
 	},
 	"scripts": {
