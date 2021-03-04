@@ -111,7 +111,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const [ deleteId, setDeleteId ] = useState('');
 	const { state: { lastName, image } } = useContext(DocProfileContext);
-	const { loading, error, data, fetchMore } = useQuery(PRESCRIPTION_QUERY, {
+	const { loading, error, data } = useQuery(PRESCRIPTION_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
@@ -138,14 +138,14 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 
 	console.log('data', data);
 
-	const prescriptions = [
-		{
-			end: '2021-02-01T09:00:00.000Z',
-			comments: '',
-			name: 'May 2021',
-			filename: 'jj'
-		}
-	];
+	// const prescriptions = [
+	// 	{
+	// 		end: '2021-02-01T09:00:00.000Z',
+	// 		comments: '',
+	// 		name: 'May 2021',
+	// 		filename: 'jj'
+	// 	}
+	// ];
 
 	return (
 		<div>
@@ -211,9 +211,11 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 						);
 					})}
 					<DialogConfirm
-						action={() => {removePrescription({
-							variables: { idApt: deleteId }
-						})}}
+						action={() => {
+							removePrescription({
+								variables: { idApt: deleteId }
+							});
+						}}
 						isOpen={dialogConfirmOpen}
 						idApt={deleteId}
 						close={() => setDialogConfirmOpen(false)}

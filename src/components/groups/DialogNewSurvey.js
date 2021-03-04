@@ -5,7 +5,6 @@ import { SURVEY_QUERY } from '../../context/GraphQl/graphQlQuery';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import dianurseApi from '../../api/dianurseApi';
 import ErrorMessage from './ErrorMessage';
 //CUSTOM UI
 import ButtonFilled from '../customUi/ButtonFilled';
@@ -23,11 +22,8 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import CloseIcon from '@material-ui/icons/Close';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles({
@@ -80,22 +76,6 @@ const useStyles = makeStyles({
 	}
 });
 
-const MYAPPOINTMENTS_QUERY = gql`
-	query GetAppointments($id: ID!) {
-		patientAppointmentsForUpload(id: $id) {
-			_id
-			appointmentTimeStart
-			profileHCPid {
-				firstName
-				lastName
-			}
-			accountHCPid {
-				profilePicture
-			}
-		}
-	}
-`;
-
 const SURVEYDOCTORADD_MUTATION = gql`
 	mutation AddSurvey($idApt: ID!, $selected: Selected) {
 		doctorAddNewSurvey(idApt: $idApt, selected: $selected)
@@ -127,74 +107,74 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 	};
 
 	console.log(userId);
-	const appointments = [
-		{
-			_id: '60196388539b8sdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			profileHCPid: {
-				lastName: 'Green'
-			},
-			accountHCPid: {
-				profilePicture:
-					'https://images.pexels.com/photos/6204377/pexels-photo-6204377.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-			}
-		},
-		{
-			_id: '60196388539bsdf88002sdc72f3a36',
-			appointmentTimeStart: new Date(),
-			profileHCPid: {
-				lastName: 'Blue'
-			},
-			accountHCPid: {
-				profilePicture:
-					'https://images.pexels.com/photos/4484145/pexels-photo-4484145.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			}
-		},
-		{
-			_id: '6019638qw8539bdsv8800272f3a36',
-			appointmentTimeStart: new Date(),
-			profileHCPid: {
-				lastName: 'Red'
-			},
-			accountHCPid: {
-				profilePicture:
-					'https://images.pexels.com/photos/704977/pexels-photo-704977.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			}
-		},
-		{
-			_id: '6019ffe63885rg39bdsv8800272f3a36',
-			appointmentTimeStart: new Date(),
-			profileHCPid: {
-				lastName: 'Purple'
-			},
-			accountHCPid: {
-				profilePicture:
-					'https://images.pexels.com/photos/6496035/pexels-photo-6496035.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			}
-		},
-		{
-			_id: '601963885qwefg39bdsv8800272f3a36',
-			appointmentTimeStart: new Date(),
-			profileHCPid: {
-				lastName: 'Orange'
-			},
-			accountHCPid: {
-				profilePicture:
-					'https://images.pexels.com/photos/6033988/pexels-photo-6033988.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-			}
-		},
-		{
-			_id: '60196388539bdsawv8800272f3a36',
-			appointmentTimeStart: new Date(),
-			profileHCPid: {
-				lastName: 'Yellow'
-			},
-			accountHCPid: {
-				profilePicture:
-					'https://images.pexels.com/photos/6641336/pexels-photo-6641336.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			}
-		}
-	];
+	// const appointments = [
+	// 	{
+	// 		_id: '60196388539b8sdf800272f3a36',
+	// 		appointmentTimeStart: new Date(),
+	// 		profileHCPid: {
+	// 			lastName: 'Green'
+	// 		},
+	// 		accountHCPid: {
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/6204377/pexels-photo-6204377.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+	// 		}
+	// 	},
+	// 	{
+	// 		_id: '60196388539bsdf88002sdc72f3a36',
+	// 		appointmentTimeStart: new Date(),
+	// 		profileHCPid: {
+	// 			lastName: 'Blue'
+	// 		},
+	// 		accountHCPid: {
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/4484145/pexels-photo-4484145.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		}
+	// 	},
+	// 	{
+	// 		_id: '6019638qw8539bdsv8800272f3a36',
+	// 		appointmentTimeStart: new Date(),
+	// 		profileHCPid: {
+	// 			lastName: 'Red'
+	// 		},
+	// 		accountHCPid: {
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/704977/pexels-photo-704977.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		}
+	// 	},
+	// 	{
+	// 		_id: '6019ffe63885rg39bdsv8800272f3a36',
+	// 		appointmentTimeStart: new Date(),
+	// 		profileHCPid: {
+	// 			lastName: 'Purple'
+	// 		},
+	// 		accountHCPid: {
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/6496035/pexels-photo-6496035.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		}
+	// 	},
+	// 	{
+	// 		_id: '601963885qwefg39bdsv8800272f3a36',
+	// 		appointmentTimeStart: new Date(),
+	// 		profileHCPid: {
+	// 			lastName: 'Orange'
+	// 		},
+	// 		accountHCPid: {
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/6033988/pexels-photo-6033988.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+	// 		}
+	// 	},
+	// 	{
+	// 		_id: '60196388539bdsawv8800272f3a36',
+	// 		appointmentTimeStart: new Date(),
+	// 		profileHCPid: {
+	// 			lastName: 'Yellow'
+	// 		},
+	// 		accountHCPid: {
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/6641336/pexels-photo-6641336.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		}
+	// 	}
+	// ];
 
 	const classes = useStyles();
 

@@ -59,7 +59,8 @@ const getCookie = (dispatch) => {
 			console.log(response);
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
-			console.log(err.message);
+			// console.log(err.message);
+			dispatch({ type: 'add_error', payload: err.message });
 		}
 	};
 };
@@ -81,7 +82,7 @@ const register = (dispatch) => {
 
 			dispatch({ type: 'set_dialog_message', payload: response.data });
 		} catch (err) {
-			console.log(err.message);
+			// console.log(err.message);
 			dispatch({ type: 'add_error', payload: err.message });
 		}
 	};
@@ -407,7 +408,7 @@ export const { Provider, Context } = createDataContext(
 		errorMessage: '',
 		dialogMessage: '',
 		dialogOpen: false,
-		isLoggedIn: false,
+		isLoggedIn: true,
 		isFirstTimeUser: false,
 		preferredLanguage: 'en-US',
 		image: null,

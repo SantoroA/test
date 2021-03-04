@@ -14,7 +14,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 const TimeSlotList = ({ weekDay, weekDayName }) => {
 	const classes = useStyles();
 	const { state, deleteSlot, setIsEditing } = useContext(AvailabilityContext);
-	const weekDaySlots = state.slots.filter((slot) => slot.weekDay == weekDay);
+	const weekDaySlots = state.slots.filter((slot) => slot.weekDay === weekDay);
 	// console.log(state.slots);
 	// console.log(weekDaySlots);
 	return (

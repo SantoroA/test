@@ -57,7 +57,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
 	const { state: { lastName, image } } = useContext(DocProfileContext);
 
-	const { error, loading, data, refetch } = useQuery(DOCUMENTS_QUERY_DOCVIEW, {
+	const { error, loading, data } = useQuery(DOCUMENTS_QUERY_DOCVIEW, {
 		variables: {
 			idHCP,
 			idPatient

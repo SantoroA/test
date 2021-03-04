@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, gql, useMutation } from '@apollo/client';
-import { formatDateDisplay } from '../../helpers/dateHelper';
+import { gql, useMutation } from '@apollo/client';
 import FormSymptoms from './FormsSurvey/symptoms';
 import FormReason from './FormsSurvey/reason';
 import FormHealthProfile from './FormsSurvey/healthProfile';
@@ -116,7 +115,7 @@ const ADDSURVEYRESULT_MUTATION = gql`
 
 const DialogCompleteSurvey = ({ selectedSurvey, isOpen, close, refetch, idApt }) => {
 	const [ hasError, setHasError ] = useState(false);
-	const { _id, hasResult, isNewForDoctor, selected, results } = selectedSurvey;
+	const { _id, selected } = selectedSurvey;
 	const [ patientAnswerSurvey ] = useMutation(ADDSURVEYRESULT_MUTATION);
 	const classes = useStyles();
 	console.log(_id, selected);

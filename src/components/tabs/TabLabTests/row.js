@@ -2,11 +2,9 @@ import React, { useState, useContext } from 'react';
 import useStyles from './style';
 import { formatDateShort, convertTime } from '../../../helpers/dateHelper';
 import { Context as AuthContext } from '../../../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 import DialogLabTestResult from '../../groups/DialogLabTestResult';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { LABTEST_QUERY } from './index';
-import DialogError from '../../groups/DialogError';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -20,30 +18,31 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import PublishIcon from '@material-ui/icons/Publish';
 
 const VIEW_MUTATION = gql`
-mutation UpdateLabTEstViewView($idApt: ID!, $file: String) {
-	patientViewLabTest(idApt: $idApt, file: $file) 
-}
+	mutation UpdateLabTEstViewView($idApt: ID!, $file: String) {
+		patientViewLabTest(idApt: $idApt, file: $file)
+	}
 `;
 
 function Row({ value, appointment, refetch }) {
 	const classes = useStyles();
-	const { t } = useTranslation();
 	const [ dialogOpen, setDialogOpen ] = useState(false);
 	const { state: { userId } } = useContext(AuthContext);
 	const { profileHCPid, appointmentTimeStart, appointmentTimeEnd, _id, accountHCPid } = appointment;
 	const { name, isNewForPatient, hasResult, requestLink } = value;
-	const [patientViewLabTest] = useMutation(VIEW_MUTATION, {
-		refetchQueries: () => [				{
-			  query: LABTEST_QUERY,
-			  variables: {
-				idPatient: userId,
-				cursor: null,
-				limit: 3
-			  }}
-		  ]
+	const [ patientViewLabTest ] = useMutation(VIEW_MUTATION, {
+		refetchQueries: () => [
+			{
+				query: LABTEST_QUERY,
+				variables: {
+					idPatient: userId,
+					cursor: null,
+					limit: 3
+				}
+			}
+		]
 	});
 
-	console.log(value)
+	console.log(value);
 	// WHEN DOWNLOADED, CHANGE ISNEWForPatient TO FALSE. WHEN UPLOADED, CHANGE HASRESULT TO TRUE
 
 	return (
@@ -54,7 +53,7 @@ function Row({ value, appointment, refetch }) {
 						<Avatar
 							className={classes.avatar}
 							alt={profileHCPid.firstName}
-							src={ accountHCPid.profilePicture }
+							src={accountHCPid.profilePicture}
 						/>
 						Dr. {profileHCPid.lastName}
 					</div>
@@ -78,10 +77,12 @@ function Row({ value, appointment, refetch }) {
 							// target="_blank"
 							color="primary"
 							onClick={() => {
-								patientViewLabTest({variables: {
-									idApt: _id,
-									file: requestLink
-								}})
+								patientViewLabTest({
+									variables: {
+										idApt: _id,
+										file: requestLink
+									}
+								});
 							}}
 						>
 							<GetAppIcon />
@@ -130,7 +131,7 @@ function Row({ value, appointment, refetch }) {
 					requestLink={requestLink}
 					requestName={name}
 					aptId={_id}
-					refetch = {() => refetch()}
+					refetch={() => refetch()}
 				/>
 			</Grid>
 		</PaperCustomShadow>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
@@ -282,10 +282,10 @@ const TabMyPatients = () => {
 					)}
 					{error && <ErrorMessage />}
 					{/* {doctorsPatients && ( */}
-						 {data && (
+					{data && (
 						<div>
 							{/* {doctorsPatients.length > 0 ? ( */}
-								  {data.doctorsPatients.length > 0 ? (
+							{data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -307,7 +307,7 @@ const TabMyPatients = () => {
 												: data.doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody> 
+										</TableBody>
 										{/* <TableBody>
 											{(rowsPerPage > 0
 												? doctorsPatients.slice(

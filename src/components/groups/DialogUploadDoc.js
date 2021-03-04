@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { formatDateShort } from '../../helpers/dateHelper';
 import { Context as AuthContext } from '../../context/AuthContext';
-import { useQuery, gql, useLazyQuery } from '@apollo/client';
-import { DOCUMENTS_QUERY, MYAPPOINTMENTS_QUERY } from '../../context/GraphQl/graphQlQuery';
+import { useQuery } from '@apollo/client';
+import { MYAPPOINTMENTS_QUERY } from '../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import dianurseApi from '../../api/dianurseApi';
@@ -21,7 +21,6 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';

@@ -16,7 +16,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Container from '@material-ui/core/Container';
 
 const Preview = ({ diagnosis, recommendation, medicineList, patientInfo }) => {
 	const { state: { firstName, lastName, email, phoneNumber, country, city, zipcode, street, num } } = useContext(

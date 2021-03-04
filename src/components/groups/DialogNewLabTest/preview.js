@@ -3,7 +3,6 @@ import logo from '../../../assets/dianurse-vertical.svg';
 import { formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import useStyles from './style';
-import { useTranslation } from 'react-i18next';
 //CUSTOM UI
 import PaperCustomShadow from '../../customUi/PaperCustomShadow';
 //MATERIAL UI
@@ -11,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
 
 //QUERY DOCTOR AND PATIENT INFORMATION
 

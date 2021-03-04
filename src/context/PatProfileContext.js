@@ -5,7 +5,7 @@ import dianurseApi from '../api/dianurseApi';
 const patProfileReducer = (state, action) => {
 	switch (action.type) {
 		case 'get_profile':
-			console.log('patient', action.payload)
+			console.log('patient', action.payload);
 			return {
 				...state,
 				isFirstTimeUser: action.payload.isFirstTimeUser,
@@ -30,8 +30,7 @@ const patProfileReducer = (state, action) => {
 				phoneNumber: action.payload.phoneNumber,
 				birthday: action.payload.birthday,
 				birthPlace: action.payload.birthPlace,
-				isFirstTimeUser: action.payload.isFirstTimeUser,
-				
+				isFirstTimeUser: action.payload.isFirstTimeUser
 			};
 		case 'add_error':
 			return { ...state, dialogMessage: action.payload, dialogOpen: true };
@@ -48,7 +47,7 @@ const patProfileReducer = (state, action) => {
 
 const getPatProfile = (dispatch) => {
 	return async (id) => {
-		console.log(id);
+		// console.log(id);
 		try {
 			const response = await dianurseApi.get(`/profile/patient/getprofile/${id}`, {
 				withCredentials: true
@@ -70,7 +69,7 @@ const getPatProfile = (dispatch) => {
 			});
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
-			console.log(err.message);
+			// console.log(err.message);
 		}
 	};
 };
@@ -130,7 +129,7 @@ export const { Context, Provider } = createDataContext(
 		image:
 			'https://images.pexels.com/photos/2050994/pexels-photo-2050994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 		// email: 'patient@test.com',
-		email:'',
+		email: '',
 		// image: '',
 		dialogMessage: '',
 		dialogOpen: false,

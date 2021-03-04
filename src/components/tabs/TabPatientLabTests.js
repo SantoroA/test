@@ -128,7 +128,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	const [ dialogTestOpen, setDialogTestOpen ] = useState(false);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
-	const { error, data, fetchMore } = useQuery(LABTEST_QUERY, {
+	const { error, data } = useQuery(LABTEST_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
@@ -168,56 +168,56 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 
 	console.log('dataDoctorLab', data);
 
-	const appointments = [
-		{
-			labTest: {
-				doctorRequest: [
-					{
-						name: 'X-Ray',
-						requestLink: 'filename',
-						hasResult: true,
-						isNewForDoctor: true,
-						resultLink: 'filename'
-					}
-				]
-			},
-			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
-			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
-			status: ''
-		},
-		{
-			labTest: {
-				doctorRequest: [
-					{
-						name: 'Blood Test - 1',
-						requestLink: 'filename',
-						hasResult: false,
-						isNewForDoctor: false,
-						resultLink: 'filename'
-					}
-				]
-			},
-			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
-			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
-			status: ''
-		},
-		{
-			labTest: {
-				doctorRequest: [
-					{
-						name: 'Blood Test - 2',
-						requestLink: 'filename',
-						hasResult: true,
-						isNewForDoctor: false,
-						resultLink: 'filename'
-					}
-				]
-			},
-			appointmentTimeStart: '2021-02-01T06:30:00.000Z',
-			appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
-			status: ''
-		}
-	];
+	// const appointments = [
+	// 	{
+	// 		labTest: {
+	// 			doctorRequest: [
+	// 				{
+	// 					name: 'X-Ray',
+	// 					requestLink: 'filename',
+	// 					hasResult: true,
+	// 					isNewForDoctor: true,
+	// 					resultLink: 'filename'
+	// 				}
+	// 			]
+	// 		},
+	// 		appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+	// 		appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+	// 		status: ''
+	// 	},
+	// 	{
+	// 		labTest: {
+	// 			doctorRequest: [
+	// 				{
+	// 					name: 'Blood Test - 1',
+	// 					requestLink: 'filename',
+	// 					hasResult: false,
+	// 					isNewForDoctor: false,
+	// 					resultLink: 'filename'
+	// 				}
+	// 			]
+	// 		},
+	// 		appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+	// 		appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+	// 		status: ''
+	// 	},
+	// 	{
+	// 		labTest: {
+	// 			doctorRequest: [
+	// 				{
+	// 					name: 'Blood Test - 2',
+	// 					requestLink: 'filename',
+	// 					hasResult: true,
+	// 					isNewForDoctor: false,
+	// 					resultLink: 'filename'
+	// 				}
+	// 			]
+	// 		},
+	// 		appointmentTimeStart: '2021-02-01T06:30:00.000Z',
+	// 		appointmentTimeEnd: '2021-02-01T07:00:00.000Z',
+	// 		status: ''
+	// 	}
+	// ];
 
 	return (
 		<div>
@@ -236,9 +236,6 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 			{data && (
 				<div>
 					{data.patientLabTestForDoctors.map((apt) => {
-						{
-							/* {appointments.map((apt) => { */
-						}
 						console.log(apt.labTestRequests);
 						return apt.labTestRequests.map((lab, i) => {
 							console.log(lab, i);
@@ -324,12 +321,14 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 						});
 					})}
 					<DialogConfirm
-						action={() => {doctorRemoveLabTest({
-							variables: {
-								idApt,
-								oldFile
-							}
-						})}}
+						action={() => {
+							doctorRemoveLabTest({
+								variables: {
+									idApt,
+									oldFile
+								}
+							});
+						}}
 						idApt={idApt}
 						oldFile={oldFile}
 						isOpen={dialogConfirmOpen}

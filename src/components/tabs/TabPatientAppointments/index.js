@@ -52,8 +52,8 @@ const TabPatientAppointments = () => {
 	});
 
 	const { t } = useTranslation();
-	console.log('data', data);
-	console.log(error);
+	// console.log('data', data);
+	// console.log(error);
 	return (
 		<Grid className={classes.root} container>
 			<Grid item sm={7} md={8}>
@@ -107,27 +107,29 @@ const TabPatientAppointments = () => {
 					<div>
 						{data.patientAppointments.length > 0 ? (
 							data.patientAppointments.map((apt) => {
-								return <ShowAppData
-								setDialogAppDetailOpen={setDialogAppDetailOpen}
-								appointments={[
-									{
-										profilePatientid: apt.profilePatientid,
-										_id: apt._id,
-										appointmentTimeStart: apt.appointmentTimeStart,
-										appointmentTimeEnd: apt.appointmentTimeEnd,
-										accountHCPid: {
-											profilePicture: apt.accountHCPid.profilePicture
-										},
-										profileHCPid: {
-											_id: apt.profileHCPid._id,
-											firstName: apt.profileHCPid.firstName,
-											lastName: apt.profileHCPid.lastName
-										},
-										amount: apt.amount
-									}
-								]}
-								setAppointmentToView={setAppointmentToView}
-							/>
+								return (
+									<ShowAppData
+										setDialogAppDetailOpen={setDialogAppDetailOpen}
+										appointments={[
+											{
+												profilePatientid: apt.profilePatientid,
+												_id: apt._id,
+												appointmentTimeStart: apt.appointmentTimeStart,
+												appointmentTimeEnd: apt.appointmentTimeEnd,
+												accountHCPid: {
+													profilePicture: apt.accountHCPid.profilePicture
+												},
+												profileHCPid: {
+													_id: apt.profileHCPid._id,
+													firstName: apt.profileHCPid.firstName,
+													lastName: apt.profileHCPid.lastName
+												},
+												amount: apt.amount
+											}
+										]}
+										setAppointmentToView={setAppointmentToView}
+									/>
+								);
 							})
 						) : (
 							<EmptyAppState />
@@ -140,7 +142,7 @@ const TabPatientAppointments = () => {
 					<CalendarApp value={date} onChange={setDate} />
 				</Grid>
 			)}
-			{console.log(appointmentToView)}
+			{/* {console.log(appointmentToView)} */}
 			{appointmentToView && (
 				<DialogAppointmentDetail
 					//  appointment={appointmentToView}

@@ -4,7 +4,7 @@ import EmptySurveyState from './emptyState';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { useTranslation } from 'react-i18next';
 import DialogCompleteSurvey from '../../groups/DialogCompleteSurvey';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { SURVEYPATIENT_QUERY } from '../../../context/GraphQl/graphQlQuery';
 import { Context as AuthContext } from '../../../context/AuthContext';
 import ErrorMessage from '../../groups/ErrorMessage';
@@ -25,13 +25,10 @@ import Container from '@material-ui/core/Container';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const TabSurveys = () => {
-	const [ page, setPage ] = useState(0);
 	const [ isDialogCompleteOpen, setIsDialogCompleteOpen ] = useState(false);
 	const [ selectedSurvey, setSelectedSurvey ] = useState({});
 	const [ idApt, setIdApt ] = useState();
 	const { state: { userId } } = useContext(AuthContext);
-	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
-	const [ oldFile, setOldFile ] = useState('');
 	const { loading, error, data, refetch, fetchMore } = useQuery(SURVEYPATIENT_QUERY, {
 		variables: {
 			idPatient: userId,
@@ -324,32 +321,32 @@ const TabSurveys = () => {
 							setSelectedSurvey({});
 						}}
 					/>
-						{data.patientSurvey.pageInfo.hasNextPage && (
-							<ButtonNoBorder
-								className={classes.buttonLoadMore}
-								onClick={() => {
-									const { endCursor } = data.patientSurvey.pageInfo;
-									fetchMore({
-										variables: {
-											id: userId,
-											limit: 2,
-											cursor: endCursor
-										},
-										updateQuery: (prevResult, { fetchMoreResult }) => {
-											console.log('prev', prevResult);
-											console.log('fetch', fetchMoreResult);
-											fetchMoreResult.patientSurvey.edges = [
-												...prevResult.patientSurvey.edges,
-												...fetchMoreResult.patientSurvey.edges
-											];
-											return fetchMoreResult;
-										}
-									});
-								}}
-							>
-								Load More <ExpandMoreIcon />
-							</ButtonNoBorder>
-						)}
+					{data.patientSurvey.pageInfo.hasNextPage && (
+						<ButtonNoBorder
+							className={classes.buttonLoadMore}
+							onClick={() => {
+								const { endCursor } = data.patientSurvey.pageInfo;
+								fetchMore({
+									variables: {
+										id: userId,
+										limit: 2,
+										cursor: endCursor
+									},
+									updateQuery: (prevResult, { fetchMoreResult }) => {
+										console.log('prev', prevResult);
+										console.log('fetch', fetchMoreResult);
+										fetchMoreResult.patientSurvey.edges = [
+											...prevResult.patientSurvey.edges,
+											...fetchMoreResult.patientSurvey.edges
+										];
+										return fetchMoreResult;
+									}
+								});
+							}}
+						>
+							Load More <ExpandMoreIcon />
+						</ButtonNoBorder>
+					)}
 				</div>
 			) : (
 				<EmptySurveyState />

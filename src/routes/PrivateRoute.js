@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Context as AuthContext } from '../context/AuthContext';
-import { Context as PatProfileContext } from '../context/PatProfileContext';
-import { Context as DocProfileContext } from '../context/DocProfileContext';
 import LoadingScreen from '../screens/public/LoadingScreen';
 //doctor screens
 import DocDashboardScreen from '../screens/doctor/DocDashboardScreen';
