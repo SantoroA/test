@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, createRef } from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
 import { useQuery, gql } from '@apollo/client';
 import { APPOINTMENTS_QUERY_TESTDIALOG } from '../../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
+import { useScreenshot } from 'use-react-screenshot';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import ErrorMessage from '../ErrorMessage';
 import useStyles from './style';
@@ -30,9 +31,11 @@ import Container from '@material-ui/core/Container';
 
 const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 	const [ step, setStep ] = useState(1);
-	const { state: { lastName, image } } = useContext(DocProfileContext);
+	// const { state: { lastName, image } } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ exams, setExams ] = useState('');
+	const [ image, takeScreenShot ] = useScreenshot();
+	const ref = createRef(null);
 	const [ hasError, setHasError ] = useState(false);
 	const [ testName, setTestName ] = useState('');
 	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
@@ -74,6 +77,8 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 			appointmentTimeEnd: new Date()
 		}
 	];
+
+	const getImage = () => takeScreenShot(ref.current);
 
 	const classes = useStyles();
 
@@ -173,12 +178,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-describedby="new-prescription"
 				>
 					<Grid container className={classes.titleWrapper}>
-						<Grid item>
+						{/* <Grid item>
 							<div className={classes.name}>
 								<Avatar className={classes.avatar} alt={lastName} src={image} />
 								Dr. {lastName}
 							</div>
-						</Grid>
+						</Grid> */}
 						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
 						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
@@ -246,12 +251,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					aria-describedby="new-prescription"
 				>
 					<Grid container className={classes.titleWrapper}>
-						<Grid item>
+						{/* <Grid item>
 							<div className={classes.name}>
 								<Avatar className={classes.avatar} alt={lastName} src={image} />
 								Dr. {lastName}
 							</div>
-						</Grid>
+						</Grid> */}
 						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
 						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
@@ -266,16 +271,19 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
+							getImage();
 						}}
 					>
 						<Grid container className={classes.wrapper}>
-							<Preview
-								diagnosis={diagnosis}
-								idHCP={idHCP}
-								idPatient={idPatient}
-								exams={exams}
-								patientInfo={aptSelected[0]}
-							/>
+							<div ref={ref}>
+								<Preview
+									diagnosis={diagnosis}
+									idHCP={idHCP}
+									idPatient={idPatient}
+									exams={exams}
+									patientInfo={aptSelected[0]}
+								/>
+							</div>
 							<Grid className={classes.buttonContainer} item>
 								<ButtonOutlined fullWidth className={classes.backButton} onClick={previousStep}>
 									Back
