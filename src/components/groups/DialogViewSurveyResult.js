@@ -42,6 +42,10 @@ const useStyles = makeStyles({
 	},
 	answer: {
 		fontWeight: 'bold'
+	},
+	title: {
+		marginTop: '1rem',
+		textDecoration: 'underline'
 	}
 });
 
@@ -60,6 +64,9 @@ const DialogViewSurveyResult = ({ selectedSurvey, isOpen, close }) => {
 				</div>
 				<Divider className={classes.divider} />
 				<Grid container className={classes.container}>
+					<Typography className={classes.title} variant="h3">
+						Results
+					</Typography>
 					{selected &&
 					results && (
 						<div>
