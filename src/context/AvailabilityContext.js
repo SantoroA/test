@@ -76,7 +76,7 @@ const getSlots = (dispatch) => {
 			const response = await dianurseApi.get(`/appointment/getAvailabilitySlot/${id}`, {
 				withCredentials: true
 			});
-			// console.log('getSlot', response);
+			console.log('getSlot', response);
 			let i = 0;
 			let slotArr = [];
 			let showArr = [];
@@ -220,7 +220,7 @@ const deleteSlot = (dispatch) => {
 			const response = await dianurseApi.delete(`/appointment/deleteAvailability`, {
 				params: slotData
 			});
-			// console.log(response.data);
+			console.log(response.data);
 			dispatch({ type: 'delete_slot', payload: key });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });

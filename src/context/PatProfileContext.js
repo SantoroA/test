@@ -92,7 +92,7 @@ const updateContactInfo = (dispatch) => {
 				userInfo,
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({
 				type: 'update_contact_info',
 				payload: {

@@ -56,7 +56,7 @@ const getCookie = (dispatch) => {
 			const response = await dianurseApi.get('/account/getcookie', {
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			// console.log(err.message);
@@ -78,7 +78,7 @@ const register = (dispatch) => {
 				subdomain
 			});
 
-			// console.log(response);
+			console.log(response);
 
 			dispatch({ type: 'set_dialog_message', payload: response.data });
 		} catch (err) {
@@ -103,7 +103,7 @@ const login = (dispatch) => {
 				},
 				withCredentials: true
 			});
-			// console.log(cookieResponse);
+			console.log(cookieResponse);
 			dispatch({ type: 'login', payload: response.data });
 		} catch (err) {
 			dispatch({
@@ -120,7 +120,7 @@ const logout = (dispatch) => {
 			const response = await dianurseApi.get('/account/logout', {
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 
 			dispatch({ type: 'logout' });
 		} catch (err) {
@@ -142,14 +142,14 @@ const handleFacebookLogin = (dispatch) => async (fbResponse) => {
 			email: fbResponse.email,
 			id: fbResponse.id
 		});
-		// console.log(response);
+		console.log(response);
 		const cookieResponse = await dianurseApi.get('/account/savecookie', {
 			headers: {
 				token: response.data.token
 			},
 			withCredentials: true
 		});
-		// console.log(cookieResponse);
+		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
 		// dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
@@ -174,7 +174,7 @@ const handleFacebookRegister = (dispatch) => async ({ fbResponse, language, subd
 			amIHCP: isHCP,
 			type: 'facebook'
 		});
-		// console.log(response);
+		console.log(response);
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -193,14 +193,14 @@ const handleAppleLogin = (dispatch) => async (appleResponse) => {
 			email: appleResponse.user.email[0],
 			id: appleResponse.authorization.id_token
 		});
-		// console.log(response);
+		console.log(response);
 		const cookieResponse = await dianurseApi.get('/account/savecookie', {
 			headers: {
 				token: response.data.token
 			},
 			withCredentials: true
 		});
-		// console.log(cookieResponse);
+		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
 		// dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
@@ -225,7 +225,7 @@ const handleAppleRegister = (dispatch) => async ({ appleResponse, language, subd
 			amIHCP: isHCP,
 			type: 'apple'
 		});
-		// console.log(response);
+		console.log(response);
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -244,14 +244,14 @@ const handleGoogleLogin = (dispatch) => async (ggResponse) => {
 			email: ggResponse.profileObj.email,
 			id: ggResponse.googleId
 		});
-		// console.log(response);
+		console.log(response);
 		const cookieResponse = await dianurseApi.get('/account/savecookie', {
 			headers: {
 				token: response.data.token
 			},
 			withCredentials: true
 		});
-		// console.log(cookieResponse);
+		console.log(cookieResponse);
 		dispatch({ type: 'login', payload: response.data });
 		// dispatch({ type: 'set_is_social_media', payload: true });
 	} catch (err) {
@@ -275,7 +275,7 @@ const handleGoogleRegister = (dispatch) => async ({ ggResponse, language, subdom
 			amIHCP: isHCP,
 			type: 'google'
 		});
-		// console.log(response);
+		console.log(response);
 	} catch (err) {
 		dispatch({
 			type: 'add_error',
@@ -322,7 +322,7 @@ const updateImage = (dispatch) => async ({ id, image, userAmIHCP }) => {
 			type: 'update_image',
 			payload: image
 		});
-		// console.log(response.data);
+		console.log(response.data);
 	} catch (err) {
 		dispatch({
 			type: 'add_error',

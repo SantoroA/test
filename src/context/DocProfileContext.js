@@ -104,7 +104,7 @@ const getSpeciality = (dispatch) => {
 	return async () => {
 		try {
 			const response = await dianurseApi.get('/profile/doctor/getspeciality');
-			// console.log(response);
+			console.log(response);
 			dispatch({ type: 'get_speciality', payload: response.data });
 		} catch (err) {
 			dispatch({ type: 'add_error', payload: err.message });
@@ -194,7 +194,7 @@ const updateContactInfo = (dispatch) => {
 				userInfo,
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({
 				type: 'update_contact_info',
 				payload: {
@@ -228,7 +228,7 @@ const updateProfileInfo = (dispatch) => {
 				userInfo,
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({
 				type: 'update_profile_info',
 				payload: {
@@ -259,7 +259,7 @@ const updateLocationInfo = (dispatch) => {
 			const response = await dianurseApi.put(`/profile/doctor/completeprofile/${id}`, {
 				userInfo
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({
 				type: 'update_location_info',
 				payload: {
@@ -288,7 +288,7 @@ const updateEducation = (dispatch) => {
 				userInfo,
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({
 				type: 'update_education',
 				payload: {
@@ -314,7 +314,7 @@ const updateExperience = (dispatch) => {
 				userInfo,
 				withCredentials: true
 			});
-			// console.log(response);
+			console.log(response);
 			dispatch({
 				type: 'update_experience',
 				payload: {

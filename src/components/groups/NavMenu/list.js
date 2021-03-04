@@ -32,8 +32,6 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 		setOpen(!open);
 	};
 	let location = useLocation();
-	const [ selected, setSelected ] = useState(null);
-	// console.log(selected);
 	const activeRoute = (routeName) => {
 		return location.pathname.indexOf(routeName) > -1 ? true : false;
 	};
@@ -49,7 +47,6 @@ const DrawerList = ({ setDrawerOpen, logout }) => {
 							divider
 							to="/in/doctor/dashboard/appointments"
 							selected={activeRoute('/in/doctor/dashboard/appointments')}
-							onClick={() => setSelected(0)}
 							className={classes.listItems}
 						>
 							<CalendarIcon className={classes.icons} />
