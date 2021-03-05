@@ -1,17 +1,17 @@
 import React, { useState, useContext, createRef } from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
-import b64ToBlob from 'b64-to-blob'
-import { useQuery, gql } from '@apollo/client';
+import b64ToBlob from 'b64-to-blob';
+import { useQuery } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import ErrorMessage from '../ErrorMessage';
+import SuccessMessage from '../SuccessMessage';
 import useStyles from './style';
 import { useScreenshot } from 'use-react-screenshot';
 import { APPOINTMENTS_QUERY_PRESCDIALOG } from '../../../context/GraphQl/graphQlQuery';
 import Preview from './preview';
 import dianurseApi from '../../../api/dianurseApi';
-
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
 import ButtonOutlined from '../../customUi/ButtonOutlined';
@@ -40,9 +40,8 @@ import AddIcon from '@material-ui/icons/Add';
 const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const [ step, setStep ] = useState(1);
 	const ref = createRef(null);
-	const [ width, setWidth ] = useState(900);
 	const [ image, takeScreenShot ] = useScreenshot();
-	// const { state: { lastName, image } } = useContext(DocProfileContext);
+	const { state } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ recommendation, setRecommendation ] = useState('');
 	const [ hasError, setHasError ] = useState(false);
@@ -53,31 +52,55 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	});
 	const [ medicineList, setMedicineList ] = useState([]);
 	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_PRESCDIALOG, {
-	 	variables: { idPatient, idHCP }
-	 });
+		variables: { idPatient, idHCP }
+	});
 
-	const datas = {
-		appointmentDocAndPatient: [
-			{
-				_id: '60196388539b8thrtsdf800272f3a36',
-				appointmentTimeStart: new Date(),
-				appointmentTimeEnd: new Date()
-			},
-			{
-				_id: '601963885rtmhj39b8sdf800272f3a36',
-				appointmentTimeStart: new Date(),
-				appointmentTimeEnd: new Date()
-			},
-			{
-				_id: '60196388539b8sdf800272f3a36',
-				appointmentTimeStart: new Date(),
-				appointmentTimeEnd: new Date()
-			}
-		]
-	};
+	// const data = {
+	// 	appointmentDocAndPatient: [
+	// 		{
+	// 			_id: '60196388539b8thrtsdf800272f3a36',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			profilePatientid: {
+	// 				firstName: 'Peach',
+	// 				lastName: 'Nintendo',
+	// 				phoneNumber: '2424545432'
+	// 			},
+	// 			accountPatientid: {
+	// 				username: 'peach@nintendo.com'
+	// 			}
+	// 		},
+	// 		{
+	// 			_id: '601963885rtmhj39b8sdf800272f3a36',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			profilePatientid: {
+	// 				firstName: 'Peach',
+	// 				lastName: 'Nintendo',
+	// 				phoneNumber: '2424545432'
+	// 			},
+	// 			accountPatientid: {
+	// 				username: 'peach@nintendo.com'
+	// 			}
+	// 		},
+	// 		{
+	// 			_id: '60196388539b8sdf800272f3a36',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			profilePatientid: {
+	// 				firstName: 'Peach',
+	// 				lastName: 'Nintendo',
+	// 				phoneNumber: '2424545432'
+	// 			},
+	// 			accountPatientid: {
+	// 				username: 'peach@nintendo.com'
+	// 			}
+	// 		}
+	// 	]
+	// };
 
 	const [ prescriptionName, setPrescriptionName ] = useState('');
-	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('0000000000000000');
+	const [ appointmentSelectedId, setAppointmentSelectedId ] = useState('');
 	const [ aptSelected, setAptSelected ] = useState('');
 	const nextStep = () => {
 		setStep(step + 1);
@@ -105,32 +128,31 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	};
 
 	const onFileUpload = async () => {
-		let oldFile = image
-		console.log(image)
-		let file = await oldFile.split(';base64,').pop();
-
+		await takeScreenShot(ref.current);
+		let file = image.split(';base64,').pop();
 		let newFile = b64ToBlob(file, 'image/png');
+		console.log(newFile);
 		let prescription = new FormData();
-		
 		prescription.append('prescription', newFile);
 		prescription.append('name', prescriptionName);
 		prescription.append('idHCP', idHCP);
 		prescription.append('idPatient', idPatient);
 		let aptId = appointmentSelectedId;
-		console.log(aptId);
+		console.log(prescription);
+
+		// console.log(aptId);
 		try {
 			await dianurseApi.put(`download/prescription/${aptId}`, prescription);
-			 await refetch();
-			 await reload();
-			// updateDoc();
-			close();
+			await refetch();
+			await reload();
+			nextStep();
 		} catch (error) {
 			console.log(error);
 			setHasError(true);
+			nextStep();
 		}
 	};
 
-	const getImage = () => takeScreenShot(ref.current);
 	const classes = useStyles();
 
 	switch (step) {
@@ -160,12 +182,12 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 									</IconButton>
 								</Grid>
 								<Divider className={classes.divider} />
-								 {loading && (
+								{loading && (
 									<Container className={classes.emptyState}>
 										<Loader type="TailSpin" color="primary" height={80} width={80} />
 									</Container>
 								)}
-								{error && <ErrorMessage />} 
+								{error && <ErrorMessage />}
 								{data && (
 									<div>
 										<Grid className={classes.section} item>
@@ -213,23 +235,14 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 			);
 		case 2:
 			return (
-				<Dialog
-					open={isOpen}
-					onClose={() => {
-						close();
-					}}
-					fullWidth
-					maxWidth={false}
-					aria-labelledby="new-prescription"
-					aria-describedby="new-prescription"
-				>
+				<Dialog open={isOpen} onClose={onCancel} fullWidth maxWidth={false}>
 					<Grid container className={classes.titleWrapper}>
-						{/* <Grid item>
+						<Grid item>
 							<div className={classes.name}>
-								<Avatar className={classes.avatar} alt={lastName} src={image} />
-								Dr. {lastName}
+								<Avatar className={classes.avatar} alt={state.lastName} src={state.image} />
+								Dr. {state.lastName}
 							</div>
-						</Grid> */}
+						</Grid>
 						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
 						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
@@ -411,23 +424,14 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 			);
 		case 3:
 			return (
-				<Dialog
-					open={isOpen}
-					onClose={() => {
-						close();
-					}}
-					fullWidth
-					maxWidth={false}
-					aria-labelledby="new-prescription"
-					aria-describedby="new-prescription"
-				>
+				<Dialog open={isOpen} onClose={onCancel} fullWidth maxWidth={false}>
 					<Grid container className={classes.titleWrapper}>
-						{/* <Grid item>
+						<Grid item>
 							<div className={classes.name}>
-								<Avatar className={classes.avatar} alt={lastName} src={image} />
-								Dr. {lastName}
+								<Avatar className={classes.avatar} alt={state.lastName} src={state.image} />
+								Dr. {state.lastName}
 							</div>
-						</Grid> */}
+						</Grid>
 						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
 						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
@@ -440,11 +444,9 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					</Grid>
 					<Divider />
 					<form
-						onSubmit={async(e) => {
+						onSubmit={(e) => {
 							e.preventDefault();
-							getImage();
-							await onFileUpload();
-
+							onFileUpload();
 						}}
 					>
 						{/* {console.log(aptSelected[0])} */}
@@ -460,7 +462,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 									recommendation={recommendation}
 								/>
 							</div>
-							<img width={width} src={image} alt={'Screenshot'} />
+							{/* <img width={900} src={image} alt={'Screenshot'} /> */}
 							<Grid className={classes.buttonContainer} item>
 								<ButtonOutlined fullWidth className={classes.backButton} onClick={previousStep}>
 									Back
@@ -474,6 +476,23 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 				</Dialog>
 			);
 		default:
+			return (
+				<Dialog
+					open={isOpen}
+					onClose={onCancel}
+					fullWidth
+					maxWidth={false}
+					aria-labelledby="new-prescription"
+					aria-describedby="new-prescription"
+				>
+					<Grid container className={classes.titleWrapper}>
+						<IconButton onClick={onCancel} color="primary">
+							<CloseIcon />
+						</IconButton>
+					</Grid>
+					{hasError ? <ErrorMessage /> : <SuccessMessage />}
+				</Dialog>
+			);
 	}
 };
 
