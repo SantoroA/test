@@ -1,13 +1,14 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, useContext } from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { APPOINTMENTS_QUERY_TESTDIALOG } from '../../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
-import b64ToBlob from 'b64-to-blob'
+import b64ToBlob from 'b64-to-blob';
 import { useScreenshot } from 'use-react-screenshot';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import ErrorMessage from '../ErrorMessage';
+import SuccessMessage from '../SuccessMessage';
 import useStyles from './style';
 import Preview from './preview';
 //CUSTOM UI
@@ -33,10 +34,10 @@ import dianurseApi from '../../../api/dianurseApi';
 
 const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const [ step, setStep ] = useState(1);
-	// const { state: { lastName, image } } = useContext(DocProfileContext);
+	const { state } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ exams, setExams ] = useState('');
-	const [ image, takeScreenShot ] = useScreenshot();
+	const [ takeScreenShot ] = useScreenshot();
 	const ref = createRef(null);
 	const [ hasError, setHasError ] = useState(false);
 	const [ testName, setTestName ] = useState('');
@@ -61,52 +62,73 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const previousStep = () => {
 		setStep(step - 1);
 	};
+	// const data = {
+	// 	appointmentDocUploadLabTest: [
+	// 		{
+	// 			_id: '60196388539b8thrtsdf800272f3a36',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			profilePatientid: {
+	// 				firstName: 'Peach',
+	// 				lastName: 'Nintendo',
+	// 				phoneNumber: '2424545432'
+	// 			},
+	// 			accountPatientid: {
+	// 				username: 'peach@nintendo.com'
+	// 			}
+	// 		},
+	// 		{
+	// 			_id: '601963885rtmhj39b8sdf800272f3a36',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			profilePatientid: {
+	// 				firstName: 'Peach',
+	// 				lastName: 'Nintendo',
+	// 				phoneNumber: '2424545432'
+	// 			},
+	// 			accountPatientid: {
+	// 				username: 'peach@nintendo.com'
+	// 			}
+	// 		},
+	// 		{
+	// 			_id: '60196388539b8sdf800272f3a36',
+	// 			appointmentTimeStart: new Date(),
+	// 			appointmentTimeEnd: new Date(),
+	// 			profilePatientid: {
+	// 				firstName: 'Peach',
+	// 				lastName: 'Nintendo',
+	// 				phoneNumber: '2424545432'
+	// 			},
+	// 			accountPatientid: {
+	// 				username: 'peach@nintendo.com'
+	// 			}
+	// 		}
+	// 	]
+	// };
 
-	const appointments = [
-		{
-			_id: '60196388539b8thrtsdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			appointmentTimeEnd: new Date()
-		},
-		{
-			_id: '601963885rtmhj39b8sdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			appointmentTimeEnd: new Date()
-		},
-		{
-			_id: '60196388539b8sdf800272f3a36',
-			appointmentTimeStart: new Date(),
-			appointmentTimeEnd: new Date()
-		}
-	];
-
-
-	const onFileUpload = async () => {
-		let oldFile = image
-		console.log(image)
-		let file = oldFile.split(';base64,').pop();
-
+	const onFileUpload = async (image) => {
+		console.log(image);
+		let file = image.split(';base64,').pop();
 		let newFile = b64ToBlob(file, 'image/png');
+		console.log(newFile);
 		let labTest = new FormData();
-		
 		labTest.append('labTest', newFile);
 		labTest.append('name', testName);
-
 		let aptId = appointmentSelectedId;
 		console.log(aptId);
+
+		// console.log(aptId);
 		try {
 			await dianurseApi.put(`download/uploadLabTest/${aptId}`, labTest);
 			await refetch();
 			await reload();
-			// updateDoc();
-			close();
+			nextStep();
 		} catch (error) {
 			console.log(error);
 			setHasError(true);
+			nextStep();
 		}
 	};
-
-	const getImage = () => takeScreenShot(ref.current);
 
 	const classes = useStyles();
 
@@ -125,72 +147,68 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 						</Container>
 					)}
 					{error && <ErrorMessage />}
-					{data && (
-						<div>
-							<form
-								onSubmit={(e) => {
-									e.preventDefault();
-									nextStep();
-									setAptSelected(
-										data.appointmentDocUploadLabTest.filter(
-											(apt) => apt._id === appointmentSelectedId
-										)
-									);
-								}}
-							>
-								<Grid container className={classes.wrapper}>
-									<Grid item className={classes.header}>
-										<Typography className={classes.title}>New Lab Test Request</Typography>
-										<IconButton onClick={onCancel} color="primary">
-											<CloseIcon />
-										</IconButton>
-									</Grid>
-									<Divider className={classes.divider} />
 
-									<Grid className={classes.section} item>
-										<TextField
-											fullWidth
-											type="text"
-											required
-											value={testName}
-											onChange={(e) => setTestName(e.target.value)}
-											label="Test Name"
-											variant="outlined"
-										/>
-									</Grid>
-									<Grid className={classes.section} item>
-										<FormControl variant="outlined" fullWidth required>
-											<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
-											<Select
-												labelId="apt-select-label"
-												value={appointmentSelectedId}
-												onChange={(e) => setAppointmentSelectedId(e.target.value)}
-												label="Select Appointment"
-											>
-												{data.appointmentDocUploadLabTest.map((apt, i) => {
-													{
-														/* {appointments.map((apt, i) => { */
-													}
-													// console.log(apt._id);
-													return (
-														<MenuItem key={i} value={apt._id}>
-															{formatDateShort(apt.appointmentTimeStart)} -{' '}
-															{convertTime(apt.appointmentTimeStart)}
-														</MenuItem>
-													);
-												})}
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid className={classes.section} item>
-										<ButtonFilled fullWidth type="submit">
-											Next
-										</ButtonFilled>
-									</Grid>
+					<div>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								nextStep();
+								setAptSelected(
+									data.appointmentDocUploadLabTest.filter((apt) => apt._id === appointmentSelectedId)
+								);
+							}}
+						>
+							<Grid container className={classes.wrapper}>
+								<Grid item className={classes.header}>
+									<Typography className={classes.title}>New Lab Test Request</Typography>
+									<IconButton onClick={onCancel} color="primary">
+										<CloseIcon />
+									</IconButton>
 								</Grid>
-							</form>
-						</div>
-					)}
+								<Divider className={classes.divider} />
+								{data && (
+									<div>
+										<Grid className={classes.section} item>
+											<TextField
+												fullWidth
+												type="text"
+												required
+												value={testName}
+												onChange={(e) => setTestName(e.target.value)}
+												label="Test Name"
+												variant="outlined"
+											/>
+										</Grid>
+										<Grid className={classes.section} item>
+											<FormControl variant="outlined" fullWidth required>
+												<InputLabel id="apt-select-label">Select Appoitment</InputLabel>
+												<Select
+													labelId="apt-select-label"
+													value={appointmentSelectedId}
+													onChange={(e) => setAppointmentSelectedId(e.target.value)}
+													label="Select Appointment"
+												>
+													{data.appointmentDocUploadLabTest.map((apt, i) => {
+														return (
+															<MenuItem key={i} value={apt._id}>
+																{formatDateShort(apt.appointmentTimeStart)} -{' '}
+																{convertTime(apt.appointmentTimeStart)}
+															</MenuItem>
+														);
+													})}
+												</Select>
+											</FormControl>
+										</Grid>
+										<Grid className={classes.section} item>
+											<ButtonFilled fullWidth type="submit">
+												Next
+											</ButtonFilled>
+										</Grid>
+									</div>
+								)}
+							</Grid>
+						</form>
+					</div>
 				</Dialog>
 			);
 		case 2:
@@ -206,12 +224,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					aria-describedby="new-prescription"
 				>
 					<Grid container className={classes.titleWrapper}>
-						{/* <Grid item>
+						<Grid item>
 							<div className={classes.name}>
-								<Avatar className={classes.avatar} alt={lastName} src={image} />
-								Dr. {lastName}
+								<Avatar className={classes.avatar} alt={state.lastName} src={state.image} />
+								Dr. {state.lastName}
 							</div>
-						</Grid> */}
+						</Grid>
 						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
 						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
@@ -279,12 +297,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					aria-describedby="new-prescription"
 				>
 					<Grid container className={classes.titleWrapper}>
-						{/* <Grid item>
+						<Grid item>
 							<div className={classes.name}>
-								<Avatar className={classes.avatar} alt={lastName} src={image} />
-								Dr. {lastName}
+								<Avatar className={classes.avatar} alt={state.lastName} src={state.image} />
+								Dr. {state.lastName}
 							</div>
-						</Grid> */}
+						</Grid>
 						<Grid item>{formatDateShort(aptSelected[0].appointmentTimeStart)}</Grid>
 						<Grid item>
 							{convertTime(aptSelected[0].appointmentTimeStart)} -{' '}
@@ -297,15 +315,9 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					</Grid>
 					<Divider />
 					<form
-						onSubmit={async(e) => {
+						onSubmit={(e) => {
 							e.preventDefault();
-							await getImage();
-							try {
-								await onFileUpload();
-							}catch(err){
-								console.log(err)
-							}
-							
+							takeScreenShot(ref.current).then(onFileUpload);
 						}}
 					>
 						<Grid container className={classes.wrapper}>
@@ -331,6 +343,23 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 				</Dialog>
 			);
 		default:
+			return (
+				<Dialog
+					open={isOpen}
+					onClose={onCancel}
+					fullWidth
+					maxWidth={false}
+					aria-labelledby="new-prescription"
+					aria-describedby="new-prescription"
+				>
+					<Grid container className={classes.titleWrapper}>
+						<IconButton onClick={onCancel} color="primary">
+							<CloseIcon />
+						</IconButton>
+					</Grid>
+					{hasError ? <ErrorMessage /> : <SuccessMessage />}
+				</Dialog>
+			);
 	}
 };
 
