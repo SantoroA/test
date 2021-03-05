@@ -23,17 +23,6 @@ const Preview = ({ diagnosis, recommendation, medicineList, patientInfo }) => {
 	);
 	const classes = useStyles();
 
-	const mockPatientInfo = {
-		profilePatientid: {
-			firstName: 'Peach',
-			lastName: 'Nintendo',
-			phoneNumber: '2424545432'
-		},
-		accountPatientid: {
-			username: 'peach@nintendo.com'
-		}
-	};
-
 	// console.log(patientInfo);
 	return (
 		<PaperCustomShadow className={classes.prescriptionPaper}>
@@ -68,22 +57,6 @@ const Preview = ({ diagnosis, recommendation, medicineList, patientInfo }) => {
 							{/* {mockPatientInfo.profilePatientid.adress} */}
 						</Typography>
 					</Grid>
-					{/* <Grid item xs={6}>
-						<Typography className={classes.bold} variant="subtitle1">
-							Patient Information: {patientInfo.profilePatientid.firstName}{' '}
-							{patientInfo.profilePatientid.lastName}
-						</Typography>
-						<Typography color="textSecondary" variant="body2">
-							Phone: {patientInfo.profilePatientid.phoneNumber}
-						</Typography>
-						<Typography color="textSecondary" variant="body2">
-							Email: {patientInfo.accountPatientid.username}
-						</Typography>
-						<Typography color="textSecondary" variant="body2">
-							Address:
-							{patientInfo.profilePatientid.adress}
-						</Typography>
-					</Grid> */}
 
 					<Grid item xs={6}>
 						<Typography className={classes.bold} variant="h5">
