@@ -4,6 +4,7 @@ import { Context as DocProfileContext } from '../../../context/DocProfileContext
 import { useQuery, gql } from '@apollo/client';
 import { APPOINTMENTS_QUERY_TESTDIALOG } from '../../../context/GraphQl/graphQlQuery';
 import Loader from 'react-loader-spinner';
+import b64ToBlob from 'b64-to-blob'
 import { useScreenshot } from 'use-react-screenshot';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import ErrorMessage from '../ErrorMessage';
@@ -26,10 +27,11 @@ import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import dianurseApi from '../../../api/dianurseApi';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
-const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
+const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const [ step, setStep ] = useState(1);
 	// const { state: { lastName, image } } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
@@ -77,6 +79,32 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 			appointmentTimeEnd: new Date()
 		}
 	];
+
+
+	const onFileUpload = async () => {
+		let oldFile = image
+		console.log(image)
+		let file = oldFile.split(';base64,').pop();
+
+		let newFile = b64ToBlob(file, 'image/png');
+		let labTest = new FormData();
+		
+		labTest.append('labTest', newFile);
+		labTest.append('name', testName);
+
+		let aptId = appointmentSelectedId;
+		console.log(aptId);
+		try {
+			await dianurseApi.put(`download/uploadLabTest/${aptId}`, labTest);
+			await refetch();
+			await reload();
+			// updateDoc();
+			close();
+		} catch (error) {
+			console.log(error);
+			setHasError(true);
+		}
+	};
 
 	const getImage = () => takeScreenShot(ref.current);
 
@@ -269,9 +297,15 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient }) => {
 					</Grid>
 					<Divider />
 					<form
-						onSubmit={(e) => {
+						onSubmit={async(e) => {
 							e.preventDefault();
-							getImage();
+							await getImage();
+							try {
+								await onFileUpload();
+							}catch(err){
+								console.log(err)
+							}
+							
 						}}
 					>
 						<Grid container className={classes.wrapper}>

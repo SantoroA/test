@@ -32,6 +32,7 @@ export const LABTEST_QUERY = gql`
 				}
 				amount
 				labTestRequests {
+					_id
 					name
 					requestLink
 					isNewForPatient
@@ -57,7 +58,7 @@ const TabLabTests = () => {
 		variables: {
 			idPatient: userId,
 			cursor: null,
-			limit: 2
+			limit: 1
 		}
 	});
 
@@ -206,6 +207,7 @@ const TabLabTests = () => {
 						<div>
 							{data.patientLabTest.edges.map((apt) =>
 								apt.labTestRequests.map((request, i) => {
+									console.log(apt)
 									return <Row value={request} appointment={apt} key={i} refetch={() => refetch()} />;
 								})
 							)}

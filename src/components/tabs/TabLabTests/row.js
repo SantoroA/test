@@ -128,7 +128,6 @@ function Row({ value, appointment, refetch }) {
 					isOpen={dialogOpen}
 					close={() => setDialogOpen(false)}
 					docName={profileHCPid.firstName}
-					requestLink={requestLink}
 					requestName={name}
 					aptId={_id}
 					refetch={() => refetch()}

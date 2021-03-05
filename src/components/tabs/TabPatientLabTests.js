@@ -96,6 +96,7 @@ const LABTEST_QUERY = gql`
 			appointmentTimeStart
 			appointmentTimeEnd
 			labTestRequests {
+				_id
 				name
 				requestLink
 				isNewForPatient
@@ -108,8 +109,8 @@ const LABTEST_QUERY = gql`
 `;
 
 const DELETEDOC_MUTATION = gql`
-	mutation DeleteLabTest($idApt: ID!, $oldFile: String!) {
-		doctorRemoveLabTest(idApt: $idApt, oldFile: $oldFile)
+	mutation DeleteLabTest($idApt: ID!, $labTestId: ID!) {
+		doctorRemoveLabTest(idApt: $idApt, labTestId: $labTestId)
 	}
 `;
 
@@ -123,12 +124,12 @@ const VIEW_MUTATION = gql`
 
 const TabPatientLabTests = ({ idHCP, idPatient }) => {
 	const classes = useStyles();
-	const [ oldFile, setOldFile ] = useState('');
+	const [ labTestId, setLabTestId ] = useState('');
 	const [ idApt, setidApt ] = useState('');
 	const [ dialogTestOpen, setDialogTestOpen ] = useState(false);
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const { state: { lastName, image } } = useContext(DocProfileContext);
-	const { error, data } = useQuery(LABTEST_QUERY, {
+	const { error, data, refetch } = useQuery(LABTEST_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
@@ -237,6 +238,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 				<div>
 					{data.patientLabTestForDoctors.map((apt) => {
 						// console.log(apt.labTestRequests);
+						console.log(apt)
 						return apt.labTestRequests.map((lab, i) => {
 							// console.log(lab, i);
 							return (
@@ -306,7 +308,8 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 											<Tooltip title="Delete request">
 												<IconButton
 													onClick={() => {
-														setOldFile(lab.requestLink);
+														console.log(lab)
+														setLabTestId(lab._id);
 														setidApt(apt._id);
 														setDialogConfirmOpen(true);
 													}}
@@ -325,16 +328,16 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 							doctorRemoveLabTest({
 								variables: {
 									idApt,
-									oldFile
+									labTestId
 								}
 							});
 						}}
 						idApt={idApt}
-						oldFile={oldFile}
+						labTestId={labTestId}
 						isOpen={dialogConfirmOpen}
 						close={() => {
 							setDialogConfirmOpen(false);
-							setOldFile('');
+							setLabTestId('');
 						}}
 						actionText="delete this lab test request"
 						confirmButton="Delete"
@@ -346,6 +349,7 @@ const TabPatientLabTests = ({ idHCP, idPatient }) => {
 				idPatient={idPatient}
 				isOpen={dialogTestOpen}
 				close={() => setDialogTestOpen(false)}
+				reload={() => refetch()}
 			/>
 		</div>
 	);
