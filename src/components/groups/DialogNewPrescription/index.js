@@ -40,7 +40,7 @@ import AddIcon from '@material-ui/icons/Add';
 const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const [ step, setStep ] = useState(1);
 	const ref = createRef(null);
-	const [ image, takeScreenShot ] = useScreenshot();
+	const [ takeScreenShot ] = useScreenshot();
 	const { state } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ recommendation, setRecommendation ] = useState('');
@@ -127,8 +127,8 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 		setStep(step - 1);
 	};
 
-	const onFileUpload = async () => {
-		await takeScreenShot(ref.current);
+	const onFileUpload = async (image) => {
+		console.log(image);
 		let file = image.split(';base64,').pop();
 		let newFile = b64ToBlob(file, 'image/png');
 		console.log(newFile);
@@ -446,7 +446,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							onFileUpload();
+							takeScreenShot(ref.current).then(onFileUpload);
 						}}
 					>
 						{/* {console.log(aptSelected[0])} */}
