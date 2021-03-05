@@ -111,7 +111,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 	const [ dialogConfirmOpen, setDialogConfirmOpen ] = useState(false);
 	const [ deleteId, setDeleteId ] = useState('');
 	const { state: { lastName, image } } = useContext(DocProfileContext);
-	const { loading, error, data, fetchMore } = useQuery(PRESCRIPTION_QUERY, {
+	const { loading, error, data, fetchMore, refetch } = useQuery(PRESCRIPTION_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
@@ -227,6 +227,7 @@ const TabPatientDocs = ({ idHCP, idPatient }) => {
 				idPatient={idPatient}
 				isOpen={dialogPrescOpen}
 				close={() => setDialogPrescOpen(false)}
+				reload={() => refetch()}
 			/>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import React, { useState, useContext, createRef } from 'react';
 import { convertTime, formatDateShort } from '../../../helpers/dateHelper';
 import { Context as DocProfileContext } from '../../../context/DocProfileContext';
+import b64ToBlob from 'b64-to-blob'
 import { useQuery, gql } from '@apollo/client';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -9,6 +10,7 @@ import useStyles from './style';
 import { useScreenshot } from 'use-react-screenshot';
 import { APPOINTMENTS_QUERY_PRESCDIALOG } from '../../../context/GraphQl/graphQlQuery';
 import Preview from './preview';
+import dianurseApi from '../../../api/dianurseApi';
 
 //CUSTOM UI
 import ButtonFilled from '../../customUi/ButtonFilled';
@@ -35,7 +37,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 //QUERY OS APPOINTMENTS QUE COM O ID DO DOCTOR E DO PACIENTE
 
-const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
+const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const [ step, setStep ] = useState(1);
 	const ref = createRef(null);
 	const [ width, setWidth ] = useState(900);
@@ -50,11 +52,11 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 		directions: ''
 	});
 	const [ medicineList, setMedicineList ] = useState([]);
-	// const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_PRESCDIALOG, {
-	// 	variables: { idPatient, idHCP }
-	// });
+	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_PRESCDIALOG, {
+	 	variables: { idPatient, idHCP }
+	 });
 
-	const data = {
+	const datas = {
 		appointmentDocAndPatient: [
 			{
 				_id: '60196388539b8thrtsdf800272f3a36',
@@ -102,6 +104,32 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 		setStep(step - 1);
 	};
 
+	const onFileUpload = async () => {
+		let oldFile = image
+		console.log(image)
+		let file = await oldFile.split(';base64,').pop();
+
+		let newFile = b64ToBlob(file, 'image/png');
+		let prescription = new FormData();
+		
+		prescription.append('prescription', newFile);
+		prescription.append('name', prescriptionName);
+		prescription.append('idHCP', idHCP);
+		prescription.append('idPatient', idPatient);
+		let aptId = appointmentSelectedId;
+		console.log(aptId);
+		try {
+			await dianurseApi.put(`download/prescription/${aptId}`, prescription);
+			 await refetch();
+			 await reload();
+			// updateDoc();
+			close();
+		} catch (error) {
+			console.log(error);
+			setHasError(true);
+		}
+	};
+
 	const getImage = () => takeScreenShot(ref.current);
 	const classes = useStyles();
 
@@ -132,12 +160,12 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 									</IconButton>
 								</Grid>
 								<Divider className={classes.divider} />
-								{/* {loading && (
+								 {loading && (
 									<Container className={classes.emptyState}>
 										<Loader type="TailSpin" color="primary" height={80} width={80} />
 									</Container>
 								)}
-								{error && <ErrorMessage />} */}
+								{error && <ErrorMessage />} 
 								{data && (
 									<div>
 										<Grid className={classes.section} item>
@@ -412,9 +440,11 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient }) => {
 					</Grid>
 					<Divider />
 					<form
-						onSubmit={(e) => {
+						onSubmit={async(e) => {
 							e.preventDefault();
 							getImage();
+							await onFileUpload();
+
 						}}
 					>
 						{console.log(aptSelected[0])}
