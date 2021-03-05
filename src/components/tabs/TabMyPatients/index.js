@@ -83,160 +83,160 @@ const TabMyPatients = () => {
 	// console.log(userId);
 	const { t } = useTranslation();
 
-	const doctorsPatients = [
-		{
-			accountPatientid: {
-				username: 'white@clue.com',
-				profilePicture:
-					'https://images.pexels.com/photos/4511649/pexels-photo-4511649.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			},
-			profilePatientid: {
-				lastName: 'White',
-				firstName: 'Mrs.',
-				_id: '6011887772a95e0028bcbaasdcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'headache',
-			idApt: '6019638853gre9b8800272f3a35',
-			appointmentTimeEnd: '2021-02-10T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-10T07:00:00.000Z',
+	// const doctorsPatients = [
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'white@clue.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/4511649/pexels-photo-4511649.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'White',
+	// 			firstName: 'Mrs.',
+	// 			_id: '6011887772a95e0028bcbaasdcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'headache',
+	// 		idApt: '6019638853gre9b8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-10T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-10T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'scarlet@clue.com',
-				profilePicture:
-					'https://images.pexels.com/photos/3727219/pexels-photo-3727219.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-			},
-			profilePatientid: {
-				lastName: 'Scarlet',
-				firstName: 'Miss',
-				_id: '6011887772a95e0saa028bcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'covid',
-			idApt: '60196388539asdb8800272f3a35',
-			appointmentTimeEnd: '2021-02-05T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-05T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'scarlet@clue.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/3727219/pexels-photo-3727219.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Scarlet',
+	// 			firstName: 'Miss',
+	// 			_id: '6011887772a95e0saa028bcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'covid',
+	// 		idApt: '60196388539asdb8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-05T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-05T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'peacock@clue.com',
-				profilePicture:
-					'https://images.pexels.com/photos/4407897/pexels-photo-4407897.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-			},
-			profilePatientid: {
-				lastName: 'Peacock',
-				firstName: 'Mrs.',
-				_id: '6011887772ass95e0028bcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'allergies',
-			idApt: '60196388gf539b8800272f3a35',
-			appointmentTimeEnd: '2021-02-04T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-04T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'peacock@clue.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/4407897/pexels-photo-4407897.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Peacock',
+	// 			firstName: 'Mrs.',
+	// 			_id: '6011887772ass95e0028bcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'allergies',
+	// 		idApt: '60196388gf539b8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-04T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-04T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'mustard@clue.com',
-				profilePicture:
-					'https://images.pexels.com/photos/34534/people-peoples-homeless-male.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-			},
-			profilePatientid: {
-				lastName: 'Mustard',
-				firstName: 'Col.',
-				_id: '6011887772a95e0028abcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'cold',
-			idApt: '601963rgw88539b8800272f3a35',
-			appointmentTimeEnd: '2021-02-09T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-09T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'mustard@clue.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/34534/people-peoples-homeless-male.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Mustard',
+	// 			firstName: 'Col.',
+	// 			_id: '6011887772a95e0028abcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'cold',
+	// 		idApt: '601963rgw88539b8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-09T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-09T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'green@clue.com',
-				profilePicture:
-					'https://images.pexels.com/photos/1250426/pexels-photo-1250426.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			},
-			profilePatientid: {
-				lastName: 'Green',
-				firstName: 'Mr.',
-				_id: '6011887a772a95e0028abcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'cardiac palpitations',
-			idApt: '60196388539rgbaa8800272f3a35',
-			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'green@clue.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/1250426/pexels-photo-1250426.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Green',
+	// 			firstName: 'Mr.',
+	// 			_id: '6011887a772a95e0028abcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'cardiac palpitations',
+	// 		idApt: '60196388539rgbaa8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'plum@clue.com',
-				profilePicture:
-					'https://images.pexels.com/photos/25758/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			},
-			profilePatientid: {
-				lastName: 'Plum',
-				firstName: 'Prof.',
-				_id: '6011as887a772a95e0028abcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'neck pain',
-			idApt: '601963gr8s8539baa8800272f3a35',
-			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'plum@clue.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/25758/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Plum',
+	// 			firstName: 'Prof.',
+	// 			_id: '6011as887a772a95e0028abcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'neck pain',
+	// 		idApt: '601963gr8s8539baa8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'luigi@nintendo.com',
-				profilePicture:
-					'https://images.pexels.com/photos/316680/pexels-photo-316680.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			},
-			profilePatientid: {
-				lastName: 'Nintendo',
-				firstName: 'Luigi',
-				_id: '6011as887a772a95e0028abcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'nausea',
-			idApt: '60196ff38s8539baa8800272f3a35',
-			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'luigi@nintendo.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/316680/pexels-photo-316680.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Nintendo',
+	// 			firstName: 'Luigi',
+	// 			_id: '6011as887a772a95e0028abcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'nausea',
+	// 		idApt: '60196ff38s8539baa8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
-			amount: '$45.56'
-		},
-		{
-			accountPatientid: {
-				username: 'bowser@nintendo.com',
-				profilePicture:
-					'https://images.pexels.com/photos/3831645/pexels-photo-3831645.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-			},
-			profilePatientid: {
-				lastName: 'Nintendo',
-				firstName: 'Bowser',
-				_id: '6011as887a772a95e0028abcbcd8',
-				phoneNumber: '94652512555'
-			},
-			reasonForVisit: 'acne',
-			idApt: '601963asd8s8539baa8800272f3a35',
-			appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
-			appointmentTimeStart: '2021-02-01T07:00:00.000Z',
+	// 		amount: '$45.56'
+	// 	},
+	// 	{
+	// 		accountPatientid: {
+	// 			username: 'bowser@nintendo.com',
+	// 			profilePicture:
+	// 				'https://images.pexels.com/photos/3831645/pexels-photo-3831645.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+	// 		},
+	// 		profilePatientid: {
+	// 			lastName: 'Nintendo',
+	// 			firstName: 'Bowser',
+	// 			_id: '6011as887a772a95e0028abcbcd8',
+	// 			phoneNumber: '94652512555'
+	// 		},
+	// 		reasonForVisit: 'acne',
+	// 		idApt: '601963asd8s8539baa8800272f3a35',
+	// 		appointmentTimeEnd: '2021-02-01T07:30:00.000Z',
+	// 		appointmentTimeStart: '2021-02-01T07:00:00.000Z',
 
-			amount: '$45.55'
-		}
-	];
+	// 		amount: '$45.55'
+	// 	}
+	// ];
 	return (
 		<Grid className={classes.root} container>
 			<Grid container>
@@ -281,11 +281,11 @@ const TabMyPatients = () => {
 						</Container>
 					)}
 					{error && <ErrorMessage />}
-					{doctorsPatients && (
-						// {data && (
+					{/* {doctorsPatients && ( */}
+					{data && (
 						<div>
-							{doctorsPatients.length > 0 ? (
-								// {data.doctorsPatients.length > 0 ? (
+							{/* {doctorsPatients.length > 0 ? ( */}
+							{data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -298,7 +298,7 @@ const TabMyPatients = () => {
 												<TableCell />
 											</TableRow>
 										</TableHead>
-										{/* <TableBody>
+										<TableBody>
 											{(rowsPerPage > 0
 												? data.doctorsPatients.slice(
 														page * rowsPerPage,
@@ -307,8 +307,8 @@ const TabMyPatients = () => {
 												: data.doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody> */}
-										<TableBody>
+										</TableBody>
+										{/* <TableBody>
 											{(rowsPerPage > 0
 												? doctorsPatients.slice(
 														page * rowsPerPage,
@@ -317,7 +317,7 @@ const TabMyPatients = () => {
 												: doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody>
+										</TableBody> */}
 									</Table>
 									<TablePagination
 										rowsPerPageOptions={[ 5, 10, 20 ]}
@@ -325,8 +325,8 @@ const TabMyPatients = () => {
 										onChangePage={(e, newPage) => setPage(newPage)}
 										rowsPerPage={rowsPerPage}
 										component="div"
-										// count={data.doctorsPatients.length}
-										count={doctorsPatients.length}
+										count={data.doctorsPatients.length}
+										// count={doctorsPatients.length}
 										onChangeRowsPerPage={handleChangeRowsPerPage}
 									/>
 								</TableContainer>

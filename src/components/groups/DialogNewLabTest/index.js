@@ -37,7 +37,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const { state } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ exams, setExams ] = useState('');
-	const [ takeScreenShot ] = useScreenshot();
+	const [ image, takeScreenShot ] = useScreenshot();
 	const ref = createRef(null);
 	const [ hasError, setHasError ] = useState(false);
 	const [ testName, setTestName ] = useState('');
@@ -141,13 +141,6 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
-					{loading && (
-						<Container className={classes.emptyState}>
-							<Loader type="TailSpin" color="primary" height={80} width={80} />
-						</Container>
-					)}
-					{error && <ErrorMessage />}
-
 					<div>
 						<form
 							onSubmit={(e) => {
@@ -166,6 +159,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 									</IconButton>
 								</Grid>
 								<Divider className={classes.divider} />
+								{loading && (
+									<Container className={classes.emptyState}>
+										<Loader type="TailSpin" color="primary" height={80} width={80} />
+									</Container>
+								)}
+								{error && <ErrorMessage />}
 								{data && (
 									<div>
 										<Grid className={classes.section} item>

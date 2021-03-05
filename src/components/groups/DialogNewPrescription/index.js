@@ -40,7 +40,7 @@ import AddIcon from '@material-ui/icons/Add';
 const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const [ step, setStep ] = useState(1);
 	const ref = createRef(null);
-	const [ takeScreenShot ] = useScreenshot();
+	const [ image, takeScreenShot ] = useScreenshot();
 	const { state } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ recommendation, setRecommendation ] = useState('');

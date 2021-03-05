@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 //CUSTOM ICONS
 import ErrorIcon from '../customIcons/ErrorIcon';
-import { DOCUMENTS_QUERY } from '../../context/GraphQl/graphQlQuery';
-import { Context as AuthContext } from '../../context/AuthContext';
 //MATERIAL UI
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -51,7 +49,6 @@ const useStyles = makeStyles({
 
 const DialogConfirm = ({ isOpen, close, action, actionText, confirmButton, idApt, oldFile, refetch }) => {
 	const [ hasError, setHasError ] = useState(false);
-	const { state: { userId } } = useContext(AuthContext);
 	const classes = useStyles();
 	return (
 		<Dialog
