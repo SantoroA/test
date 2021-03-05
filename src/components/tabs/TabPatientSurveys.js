@@ -104,7 +104,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 	const [ deleteId, setDeleteId ] = useState('');
 	const [ surveyId, setSurveyId ] = useState('');
 	const classes = useStyles();
-	const { loading, error, data } = useQuery(SURVEY_QUERY, {
+	const { loading, error, data, refetch } = useQuery(SURVEY_QUERY, {
 		variables: {
 			idHCP,
 			idPatient
@@ -380,7 +380,7 @@ const TabPatientSurveys = ({ idHCP, idPatient }) => {
 				idPatient={idPatient}
 				isOpen={dialogSurveyOpen}
 				close={() => setDialogSurveyOpen(false)}
-				// refetch={refetch}
+				refetch={() => refetch()}
 			/>
 		</div>
 	);

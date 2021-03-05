@@ -281,11 +281,11 @@ const TabMyPatients = () => {
 						</Container>
 					)}
 					{error && <ErrorMessage />}
-					{doctorsPatients && (
-						// {data && (
+					{/* {doctorsPatients && ( */}
+						 {data && (
 						<div>
-							{doctorsPatients.length > 0 ? (
-								// {data.doctorsPatients.length > 0 ? (
+							{/* {doctorsPatients.length > 0 ? ( */}
+								 {data.doctorsPatients.length > 0 ? (
 								<TableContainer component={PaperCustomShadow}>
 									<Table className={classes.table}>
 										<TableHead>
@@ -298,17 +298,18 @@ const TabMyPatients = () => {
 												<TableCell />
 											</TableRow>
 										</TableHead>
-										{/* <TableBody>
+										<TableBody>
 											{(rowsPerPage > 0
 												? data.doctorsPatients.slice(
 														page * rowsPerPage,
 														page * rowsPerPage + rowsPerPage
 													)
 												: data.doctorsPatients).map((patient) => {
-												return <Row value={patient} key={patient.idApt} buttonText="More" />;
+
+												return <Row value={patient} key={patient._id} buttonText="More" />;
 											})}
-										</TableBody> */}
-										<TableBody>
+										</TableBody>
+										{/* <TableBody>
 											{(rowsPerPage > 0
 												? doctorsPatients.slice(
 														page * rowsPerPage,
@@ -317,7 +318,7 @@ const TabMyPatients = () => {
 												: doctorsPatients).map((patient) => {
 												return <Row value={patient} key={patient.idApt} buttonText="More" />;
 											})}
-										</TableBody>
+										</TableBody> */}
 									</Table>
 									<TablePagination
 										rowsPerPageOptions={[ 5, 10, 20 ]}

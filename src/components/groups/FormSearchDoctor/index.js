@@ -51,7 +51,7 @@ const FormSearchDoctor = () => {
 		const todayFormatted = formatFormDate(today);
 		// console.log(todayFormatted);
 		const dateAsString = today.toString();
-		const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
+		const timezone = dateAsString.match(/\(([^)]+)\)$/)[1];
 		const nameTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 		setTimezone(timezone);
 		setNameZone(nameTimeZone);

@@ -177,6 +177,7 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 	// ];
 
 	const classes = useStyles();
+	console.log(data)
 
 	return (
 		<Dialog
@@ -192,6 +193,8 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 			<form
 				onSubmit={async (e) => {
 					e.preventDefault();
+					console.log(surveysSelected)
+					console.log(appointmentSelectedId)
 					try {
 						await doctorAddNewSurvey({
 							variables: {
@@ -202,7 +205,7 @@ const DialogNewSurvey = ({ isOpen, close, idHCP, idPatient, refetch }) => {
 						refetch();
 						close();
 					} catch (err) {
-						// console.log(err);
+						console.log(err);
 						setHasError(true);
 					}
 				}}

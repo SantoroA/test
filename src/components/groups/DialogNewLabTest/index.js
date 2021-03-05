@@ -37,7 +37,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const { state } = useContext(DocProfileContext);
 	const [ diagnosis, setDiagnosis ] = useState('');
 	const [ exams, setExams ] = useState('');
-	const [ takeScreenShot ] = useScreenshot();
+	const [ image, takeScreenShot ] = useScreenshot();
 	const ref = createRef(null);
 	const [ hasError, setHasError ] = useState(false);
 	const [ testName, setTestName ] = useState('');
