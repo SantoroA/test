@@ -54,14 +54,14 @@ const Preview = ({ diagnosis, recommendation, medicineList, patientInfo }) => {
 				<Grid container>
 					<Grid item xs={6}>
 						<Typography className={classes.bold} variant="subtitle1">
-							Patient Information: {mockPatientInfo.profilePatientid.firstName}{' '}
-							{mockPatientInfo.profilePatientid.lastName}
+							Patient Information: {patientInfo.profilePatientid.firstName}{' '}
+							{patientInfo.profilePatientid.lastName}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
-							Phone: {mockPatientInfo.profilePatientid.phoneNumber}
+							Phone: {patientInfo.profilePatientid.phoneNumber}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
-							Email: {mockPatientInfo.accountPatientid.username}
+							Email: {patientInfo.accountPatientid.username}
 						</Typography>
 						<Typography color="textSecondary" variant="body2">
 							Address:
