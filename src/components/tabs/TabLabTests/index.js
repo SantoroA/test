@@ -207,7 +207,6 @@ const TabLabTests = () => {
 						<div>
 							{data.patientLabTest.edges.map((apt) =>
 								apt.labTestRequests.map((request, i) => {
-									console.log(apt)
 									return <Row value={request} appointment={apt} key={i} refetch={() => refetch()} />;
 								})
 							)}

@@ -107,15 +107,15 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	// };
 
 	const onFileUpload = async (image) => {
-		console.log(image);
+
 		let file = image.split(';base64,').pop();
 		let newFile = b64ToBlob(file, 'image/png');
-		console.log(newFile);
+
 		let labTest = new FormData();
 		labTest.append('labTest', newFile);
 		labTest.append('name', testName);
 		let aptId = appointmentSelectedId;
-		console.log(aptId);
+
 
 		// console.log(aptId);
 		try {
@@ -124,7 +124,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 			await reload();
 			nextStep();
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setHasError(true);
 			nextStep();
 		}
@@ -141,13 +141,6 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 					aria-labelledby="new-prescription"
 					aria-describedby="new-prescription"
 				>
-					{loading && (
-						<Container className={classes.emptyState}>
-							<Loader type="TailSpin" color="primary" height={80} width={80} />
-						</Container>
-					)}
-					{error && <ErrorMessage />}
-
 					<div>
 						<form
 							onSubmit={(e) => {
@@ -166,6 +159,12 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 									</IconButton>
 								</Grid>
 								<Divider className={classes.divider} />
+								{loading && (
+									<Container className={classes.emptyState}>
+										<Loader type="TailSpin" color="primary" height={80} width={80} />
+									</Container>
+								)}
+								{error && <ErrorMessage />}
 								{data && (
 									<div>
 										<Grid className={classes.section} item>

@@ -128,17 +128,17 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	};
 
 	const onFileUpload = async (image) => {
-		console.log(image);
+		// console.log(image);
 		let file = image.split(';base64,').pop();
 		let newFile = b64ToBlob(file, 'image/png');
-		console.log(newFile);
+		// console.log(newFile);
 		let prescription = new FormData();
 		prescription.append('prescription', newFile);
 		prescription.append('name', prescriptionName);
 		prescription.append('idHCP', idHCP);
 		prescription.append('idPatient', idPatient);
 		let aptId = appointmentSelectedId;
-		console.log(prescription);
+		// console.log(prescription);
 
 		// console.log(aptId);
 		try {
@@ -147,7 +147,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 			await reload();
 			nextStep();
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setHasError(true);
 			nextStep();
 		}

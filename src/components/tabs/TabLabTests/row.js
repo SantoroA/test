@@ -130,6 +130,7 @@ function Row({ value, appointment, refetch }) {
 					docName={profileHCPid.firstName}
 					requestName={name}
 					aptId={_id}
+					labTestId = {value._id}
 					refetch={() => refetch()}
 				/>
 			</Grid>
