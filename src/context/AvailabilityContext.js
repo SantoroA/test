@@ -157,8 +157,8 @@ const createSlot = (dispatch) => {
 		// console.log(id);
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
-				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
-				let newLastDate = new Date(`${availableEnd}, ${timeEnd}`);
+				let newStartDate = new Date(`${availableEnd} ${timeStart}`);
+				let newLastDate = new Date(`${availableEnd} ${timeEnd}`);
 				let timeDuration = duration * 60000;
 				let slot = (newLastDate - newStartDate) / timeDuration;
 				let t = 1;
@@ -249,8 +249,8 @@ const updateSlot = (dispatch) => {
 		// console.log('updateslotId', id);
 		for (i; difference >= i; i += 86400000) {
 			if (new Date(day_2 - i).getDay() === weekDay) {
-				let newStartDate = new Date(`${availableEnd}, ${timeStart}`);
-				let newLastDate = new Date(`${availableEnd}, ${timeEnd}`);
+				let newStartDate = new Date(`${availableEnd} ${timeStart}`);
+				let newLastDate = new Date(`${availableEnd} ${timeEnd}`);
 				let timeDuration = duration * 60000;
 				let slot = (newLastDate - newStartDate) / timeDuration;
 				let t = 1;
