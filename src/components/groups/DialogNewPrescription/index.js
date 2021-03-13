@@ -54,7 +54,7 @@ const DialogNewPrescription = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const { loading, error, data, refetch } = useQuery(APPOINTMENTS_QUERY_PRESCDIALOG, {
 		variables: { idPatient, idHCP }
 	});
-
+	console.log(image);
 	// const data = {
 	// 	appointmentDocAndPatient: [
 	// 		{

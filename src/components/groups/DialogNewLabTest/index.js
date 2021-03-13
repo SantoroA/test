@@ -49,7 +49,7 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	const nextStep = () => {
 		setStep(step + 1);
 	};
-
+	console.log(image);
 	const onCancel = () => {
 		close();
 		setTestName('');
@@ -107,7 +107,6 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 	// };
 
 	const onFileUpload = async (image) => {
-
 		let file = image.split(';base64,').pop();
 		let newFile = b64ToBlob(file, 'image/png');
 
@@ -115,7 +114,6 @@ const DialogNewLabTest = ({ isOpen, close, idHCP, idPatient, reload }) => {
 		labTest.append('labTest', newFile);
 		labTest.append('name', testName);
 		let aptId = appointmentSelectedId;
-
 
 		// console.log(aptId);
 		try {
